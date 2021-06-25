@@ -1,0 +1,45 @@
+{
+	"extends": "@tsconfig/svelte/tsconfig.json",
+	"include": [ "src/**/*", "src/node_modules/**/*" ],
+	"exclude": [
+		"node_modules/*",
+		"dist/*",
+		"src/assets/*",
+		"src/**/*.spec.ts"
+	],
+	"compilerOptions": {
+		"moduleResolution": "node",
+		"target": "esnext",
+		"module": "esnext",
+		"importsNotUsedAsValues": "preserve",
+		"allowSyntheticDefaultImports": true,
+		"noFallthroughCasesInSwitch": true,
+		"downlevelIteration": true,
+		"noImplicitReturns": false,
+		"resolveJsonModule": true,
+		"strictNullChecks": false,
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+		"removeComments": true,
+		"noImplicitAny": false,
+		"declaration": false,
+		"diagnostics": false,
+		"sourceMap": true,
+		"noLib": false,
+		"typeRoots": [
+			"src/**/*",
+			"node_modules/@types",
+			"src/types/*"
+		],
+		"types": [ "svelte", "node", "src/types/*" ],
+		"lib": [
+			"es2020",
+			"dom"
+		],
+		"baseUrl": "./",
+		"paths": {
+			"@": [ "src" ],
+			"@/*": [ "src/*" ]
+		}
+	}
+}

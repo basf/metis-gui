@@ -3,9 +3,14 @@
 # Learn more about .gitignore:
 #     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
 
-# Node artifact files
+# Artifact files
 node_modules/
 dist/
+cypress/screenshots/
+!src/node_modules/
+src/node_modules/**/node_modules/
+bower_components/
+web_modules/
 
 # Compiled Java class files
 *.class
@@ -15,6 +20,7 @@ dist/
 
 # Log files
 *.log
+*.txt
 
 # Package files
 *.jar
@@ -23,8 +29,13 @@ dist/
 target/
 dist/
 
-# JetBrains IDE
+# IDEs and editors
 .idea/
+.classpath
+*.launch
+.settings
+.sessions
+.vcode
 
 # Unit test reports
 TEST*.xml
@@ -47,4 +58,3 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
-
