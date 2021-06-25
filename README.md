@@ -1,7 +1,7 @@
 Dev hints
 ==========
 
-# Instalation
+# Installation
 
 ```sh
 npm install
