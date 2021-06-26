@@ -5,15 +5,11 @@ const assets = 'src/assets';
 module.exports = {
     name: 'app',
     input: 'src/main.ts',
-    template: 'src/index.html',
     files: [
         { src: `${assets}/*`, dest, },
     ],
-    externals: [
-//        { type: 'js', file: '', pos: 'before',  inject: 'head', },
-    ],
     replace: {
-        'process.env.NODE_ENV': JSON.stringify(dev ? 'development' : 'production'),
+        __env: JSON.stringify(dev ? 'development' : 'production'),
     },
     alias: {
         '@': './src',
@@ -30,8 +26,8 @@ module.exports = {
         'module',
         'main'
     ],
-    sourceMap: dev,
-    legacy: true,
+    sourceMap: !dev,
+    legacy: false,
     assets,
     dest,
     dev,

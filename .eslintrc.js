@@ -33,7 +33,6 @@ module.exports = {
         "@typescript-eslint/no-var-requires": 0,
     },
     globals: {
-        __platform: true,
         __env: true,
     }
 };

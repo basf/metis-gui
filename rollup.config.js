@@ -9,7 +9,6 @@ import babel from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import typescript from '@rollup/plugin-typescript';
 import svelte from 'rollup-plugin-svelte';
-import html from 'rollup-plugin-bundle-html-plus';
 import css from 'rollup-plugin-css-only';
 import svg from 'rollup-plugin-inline-svg';
 import json from '@rollup/plugin-json';
@@ -26,8 +25,6 @@ const {
 	files,
 	assets,
 	legacy,
-	template,
-	externals,
 	sourceMap,
 	extensions,
 	mainFields,
@@ -39,10 +36,9 @@ const svelteConfig = require('./svelte.config.js');
 export default {
 	input,
 	output: {
-		inlineDynamicImports: true,
-		file: `${dest}/${name}.js`,
+		dir: `${dest}/build`,
 		sourcemap: sourceMap,
-		format: 'iife',
+		format: 'esm',
 		name,
 	},
 	plugins: [
@@ -102,15 +98,6 @@ export default {
 		}),
 		!dev && terser(),
 		dev && visualizer({ filename: `${dest}/stats.html`, }),
-		html({
-			filename: 'index.html',
-			minifyCss: !dev,
-			inline: false,
-			clean: false,
-			externals,
-			template,
-			dest,
-		}),
 		dev && serve(),
 		dev && livereload(dest),
 		!dev && zipdir({ dest, name })
