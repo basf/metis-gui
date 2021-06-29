@@ -1,12 +1,12 @@
 <div class="container grid-{size}">
-    <slot />
+	<slot />
 </div>
 
 <script context="module">
-    import type { Size } from '@/types/size';
-    export type { Size };
+	import type { Size } from '@/types/size';
+	export type { Size };
 </script>
 
 <script>
-    export let size: Size = 'md';
+	export let size: Size = 'md';
 </script>

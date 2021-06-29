@@ -1,11 +1,11 @@
 <div class:btn-group-block={block} class="btn-group">
-    <slot />
+	<slot />
 </div>
 
 <script>
-    export let block = false;
+	export let block = false;
 </script>
 
 <style lang="scss">
-    @import 'spectre.css/src/buttons';
+	@import 'spectre.css/src/buttons';
 </style>

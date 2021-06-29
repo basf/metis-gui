@@ -6,8 +6,7 @@ export interface HttpError extends Error {
 export type HttpHeaders = Record<string, string>;
 export type QueryParams = Record<string, unknown>;
 
-export async function login(login: string, password: string): Promise<any>  {
-
+export async function login(login: string, password: string): Promise<any> {
     const body = new FormData();
     body.append('login', login);
     body.append('password', password);
@@ -40,7 +39,7 @@ export async function getJSON<T>(
 }
 
 export async function postJSON<T, U>(
-    path: string, 
+    path: string,
     data: T,
     headers?: HttpHeaders
 ): Promise<U> {
@@ -57,7 +56,7 @@ export async function postJSON<T, U>(
 }
 
 export async function putJSON<T, U>(
-    path: string, 
+    path: string,
     data: T,
     headers?: HttpHeaders
 ): Promise<U> {
@@ -73,10 +72,13 @@ export async function putJSON<T, U>(
     });
 }
 
-export default async function fetchJSON<T>(url: string, init?: RequestInit): Promise<T> {
+export default async function fetchJSON<T>(
+    url: string,
+    init?: RequestInit
+): Promise<T> {
     const req = new Request(url, init);
-    const res = await fetch(req);
 
+    const res = await fetch(req);
     if (!res.ok) {
         const err: HttpError = new Error(res.statusText);
         err.response = res;

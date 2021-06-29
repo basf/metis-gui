@@ -1,0 +1,20 @@
+<div class="toast toast-{type}">
+	{#if closable}
+		<button class="btn btn-clear float-right" type="button" />
+	{/if}
+	<slot>Default text</slot>
+</div>
+
+<script context="module">
+	import type { Color } from '@/types/bg';
+	export type { Color };
+</script>
+
+<script>
+	export let closable = false;
+	export let type: Color = 'initial';
+</script>
+
+<style lang="scss">
+	@import 'spectre.css/src/toasts';
+</style>
