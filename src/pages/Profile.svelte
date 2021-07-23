@@ -24,7 +24,7 @@
 					</div>
 
 					<svelte:fragment slot="footer">
-						<Button on:click={logout} variant="primary" block>Logout</Button>
+						<Button on:click={doLogout} variant="primary" block>Logout</Button>
 					</svelte:fragment>
 				</Panel>
 			{/if}
@@ -41,12 +41,14 @@
 	import Button from '@/components/Button';
 
 	import user from '@/stores/user';
+	import { logout } from '@/services/api';
 
 	onMount(() => {
 		!$user && redirect('/');
 	});
 
-	function logout() {
+	async function doLogout() {
+		await logout();
 		$user = null;
 		goto('/');
 	}
