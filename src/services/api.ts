@@ -1,4 +1,5 @@
 import { API_BASEURL } from '@/config';
+import type { User as UserDTO } from '@/types/dto'; 
 
 export interface HttpError extends Error {
     response?: Response;
@@ -6,23 +7,43 @@ export interface HttpError extends Error {
 export type HttpHeaders = Record<string, string>;
 export type QueryParams = Record<string, unknown>;
 
-export async function getCounter(): Promise<void>  {
-    return getJSON('/counter');
+export async function getData(): Promise<void>  {
+    return getJSON('/data');
 }
 
-export async function setCounter(counter: number): Promise<void> {
-    return postJSON('/counter', { counter });
+export async function setData(content: string): Promise<void> {
+    return postJSON('/data', { content });
 }
 
-export async function login(login: string, password: string): Promise<any> {
+export async function delData(uuid: string): Promise<void>  {
+    return putJSON(`/data`, { uuid });
+}
+
+export async function getCalculations(): Promise<void>  {
+    return getJSON('/calculations');
+}
+
+export async function getCalculation(uuid: string): Promise<void>  {
+    return getJSON(`/calculations/${uuid}`);
+}
+
+export async function setCalculation(uuid: string): Promise<void> {
+    return postJSON('/calculations', { uuid });
+}
+
+export async function delCalculation(uuid: string): Promise<void>  {
+    return putJSON(`/calculations`, { uuid });
+}
+
+export async function login(login: string, password: string): Promise<void> {
     return postJSON('/users/login', { login, password });
 }
 
-export async function logout(): Promise<any> {
+export async function logout(): Promise<void> {
     return delJSON('/users/login');
 }
 
-export async function me(): Promise<any> {
+export async function me(): Promise<UserDTO> {
     return getJSON('/users/me');
 }
 

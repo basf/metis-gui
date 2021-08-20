@@ -1,6 +1,6 @@
 <Container>
 	<div class="columns">
-		<div class="column col-4 col-mx-auto">
+		<div class="column col-6 col-mx-auto">
 			{#if $user}
 				<Panel>
 					<div slot="header" class="text-center">
@@ -15,12 +15,9 @@
 						<!-- / TODO: split to separate component -->
 					</nav>
 					<div slot="body">
-						<div class="tile tile-centered">
-							<div class="tile-content">
-								<div class="tile-title text-bold">E-mail</div>
-								<div class="tile-subtitle">{$user.email}</div>
-							</div>
-						</div>
+						<Tile>
+							<b slot="title">E-mail: {$user.email}</b>
+						</Tile>
 					</div>
 
 					<svelte:fragment slot="footer">
@@ -33,24 +30,17 @@
 </Container>
 
 <script>
-	import { onMount } from 'svelte';
-	import { redirect, goto } from 'svelte-pathfinder';
-
 	import Container from '@/layouts/Container.svelte';
 	import Panel from '@/layouts/Panel.svelte';
+	import Tile from '@/layouts/Tile.svelte';
 	import Button from '@/components/Button';
 
 	import user from '@/stores/user';
 	import { logout } from '@/services/api';
 
-	onMount(() => {
-		!$user && redirect('/');
-	});
-
 	async function doLogout() {
 		await logout();
 		$user = null;
-		goto('/');
 	}
 </script>
 
