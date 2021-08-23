@@ -23,7 +23,7 @@
 
 	import user from '@/stores/user';
 
-	import { login } from '@/services/api';
+	import { login, me } from '@/services/api';
 
 	let username = '';
 	let password = '';
@@ -31,8 +31,8 @@
 
 	async function submit() {
 		try {
-			$user = await login(username, password);
-			//goto('/profile');
+			await login(username, password);
+			$user = await me();
 		} catch (err) {
 			error = err;
 		}

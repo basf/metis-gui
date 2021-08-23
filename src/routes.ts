@@ -15,12 +15,44 @@ export interface Route {
 
 const routes: Route[] = [
     {
+        path: '/login',
+        component: () => import('@/pages/Login.svelte'),
+    },
+    {
         path: '/profile',
         component: () => import('@/pages/Profile.svelte'),
     },
     {
+        path: '/data',
+        component: () => import('@/pages/Empty.svelte'),
+        menu: {
+            title: 'Data',
+            path: '',
+        }
+    },
+    {
+        path: '/materials',
+        component: () => import('@/pages/Empty.svelte'),
+        menu: {
+            title: 'Materials',
+            path: '',
+        }
+    },
+    {
+        path: '/projects',
+        component: () => import('@/pages/Empty.svelte'),
+        menu: {
+            title: 'Projects',
+            path: '',
+        }
+    },
+    {
         path: '/',
-        component: () => import('@/pages/Login.svelte'),
+        component: () => import('@/pages/Calculations.svelte'),
+        menu: {
+            title: 'Calculations',
+            pos: 0
+        }
     },
 ];
 

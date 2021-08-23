@@ -1,7 +1,9 @@
 <svelte:window on:click={click} />
 
 <main>
-	<Header />
+
+		<Header />
+
 	<Viewpoint {...page}>
 		<svelte:fragment slot="loading">Loading...</svelte:fragment>
 	</Viewpoint>
@@ -18,9 +20,7 @@
 	import routes from '@/routes';
 
 	$: page = routes.find((route) => $pattern(route.path)) || null;
-	$: if ($user) {
-		redirect('/profile');
-	}
+	$: $user ? redirect('/') : redirect('/login');
 </script>
 
 <style lang="scss" global>
