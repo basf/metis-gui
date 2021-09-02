@@ -1,5 +1,5 @@
 import { API_BASEURL } from '@/config';
-import type { User as UserDTO } from '@/types/dto'; 
+import type { User as UserDTO } from '@/types/dto';
 
 export interface HttpError extends Error {
     response?: Response;
@@ -15,15 +15,15 @@ export async function setData(content: string): Promise<void> {
     return postJSON('/data', { content });
 }
 
-export async function delData(uuid: string): Promise<void>  {
-    return putJSON(`/data`, { uuid });
+export async function delData(uuid: string): Promise<void> {
+    return delJSON('/data', { uuid });
 }
 
 export async function getCalculations(): Promise<void>  {
     return getJSON('/calculations');
 }
 
-export async function getCalculation(uuid: string): Promise<void>  {
+export async function getCalculation(uuid: string): Promise<void> {
     return getJSON(`/calculations/${uuid}`);
 }
 
@@ -31,8 +31,8 @@ export async function setCalculation(uuid: string): Promise<void> {
     return postJSON('/calculations', { uuid });
 }
 
-export async function delCalculation(uuid: string): Promise<void>  {
-    return putJSON(`/calculations`, { uuid });
+export async function delCalculation(uuid: string): Promise<void> {
+    return delJSON('/calculations', { uuid });
 }
 
 export async function login(login: string, password: string): Promise<void> {
@@ -56,7 +56,7 @@ export async function getJSON<T>(
 
     if (params) {
         Object.entries(params).forEach((param: [string, string]) =>
-            url.searchParams.append(...param)
+            url.searchParams.append(...param);
         );
     }
 
@@ -91,23 +91,25 @@ export async function putJSON<T, U>(
     });
 }
 
-export async function delJSON<U>(
+export async function delJSON<T, U>(
     path: string,
+    data: T,
     headers?: HttpHeaders
 ): Promise<U> {
     const url = new URL(API_BASEURL + path);
 
     return fetchJSON<U>(url.toString(), {
         method: 'delete',
+        body: JSON.stringify(data),
         headers,
     });
 }
 
-
+// low-level transport
 export default async function fetchJSON<T>(
     url: string,
     { headers, ...options }: RequestInit = {}
-): Promise<T> {    
+): Promise<T> {
     const req = new Request(url, {
         ...options,
         headers: {
