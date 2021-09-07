@@ -32,13 +32,21 @@ npm run build
 # Sources file layout
 
 `assets` - static files etc.
+
 `components` - low-level modules
+
 `helpers` - auxiliary utils
+
 `layouts` - CSS framework modules
+
 `pages` - concrete content sections
+
 `services` - API consumption
+
 `stores` - where the data flow comes from
+
 `types` - TS definitions
+
 `views` - high-level (smarter) modules, cf. `components`
 
 # License
