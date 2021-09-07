@@ -1,40 +1,38 @@
 <Container>
-	<div class="column col-4 col-mx-auto">
-		{#if error}
-			<Toast type="error">
-				{error.message || 'Login/Password incorrect'}
-			</Toast>
-		{/if}
-		<form on:submit|preventDefault={submit}>
-			<Input bind:value={username} placeholder="Name" inline>Name</Input>
-			<Input bind:value={password} placeholder="Password" type="password" inline
-				>Password</Input
-			>
-			<Button variant="primary" type="submit" block>Login</Button>
-		</form>
-	</div>
+    <div class="column col-4 col-mx-auto">
+        {#if errmsg}
+            <Toast type="error">
+                {errmsg.error || 'Login/Password incorrect'}
+            </Toast>
+        {/if}
+        <form on:submit|preventDefault={submit}>
+            <Input bind:value={username} placeholder="Name" inline>Name</Input>
+            <Input bind:value={password} placeholder="Password" type="password" inline>Password</Input>
+            <Button variant="primary" type="submit" block>Login</Button>
+        </form>
+    </div>
 </Container>
 
 <script>
-	import Container from '@/layouts/Container.svelte';
-	import Input from '@/components/Input';
-	import Button from '@/components/Button';
-	import Toast from '@/components/Toast';
+    import Container from '@/layouts/Container.svelte';
+    import Input from '@/components/Input';
+    import Button from '@/components/Button';
+    import Toast from '@/components/Toast';
 
-	import user from '@/stores/user';
+    import user from '@/stores/user';
 
-	import { login, me } from '@/services/api';
+    import { login, me } from '@/services/api';
 
-	let username = '';
-	let password = '';
-	let error;
+    let username = '';
+    let password = '';
+    let errmsg;
 
-	async function submit() {
-		try {
-			await login(username, password);
-			$user = await me();
-		} catch (err) {
-			error = err;
-		}
-	}
+    async function submit() {
+        try {
+            await login(username, password);
+            $user = await me();
+        } catch (err) {
+            errmsg = err;
+        }
+    }
 </script>
