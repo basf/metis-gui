@@ -9,7 +9,6 @@ dist/
 cypress/screenshots/
 !src/node_modules/
 src/node_modules/**/node_modules/
-src/node_modules/**/package/
 bower_components/
 web_modules/
 
