@@ -9,7 +9,7 @@
 
 	<svelte:fragment slot="center">
 		<img src="./b-science.png" width="64px" height="64px" alt="Brand-Name" />
-		<Button />
+		<Button href="http://localhost:5050/" />
 		<IconButton icon="icon-people" iconSize="1x" href="#_" />
 		<Icon icon="icon-back" />
 	</svelte:fragment>
