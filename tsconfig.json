@@ -1,6 +1,9 @@
 {
 	"extends": "@tsconfig/svelte/tsconfig.json",
-	"include": [ "src/**/*", "src/node_modules/**/*" ],
+	"include": [
+		"src/**/*",
+		"src/node_modules/**/*"
+	],
 	"exclude": [
 		"node_modules/*",
 		"dist/*",
@@ -32,15 +35,23 @@
 			"node_modules/@types",
 			"src/types/*"
 		],
-		"types": [ "svelte", "node", "src/types/*" ],
+		"types": [
+			"svelte",
+			"node",
+			"src/types/*"
+		],
 		"lib": [
 			"es2020",
 			"dom"
 		],
 		"baseUrl": "./",
 		"paths": {
-			"@": [ "src" ],
-			"@/*": [ "src/*" ]
+			"@": [
+				"src"
+			],
+			"@/*": [
+				"src/*"
+			]
 		}
 	}
 }

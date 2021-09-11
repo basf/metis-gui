@@ -43,4 +43,3 @@ describe('Button', () => {
         expect(a).not.toBeNull();
     });
 });
-
