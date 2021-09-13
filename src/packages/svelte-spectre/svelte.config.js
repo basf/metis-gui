@@ -1,6 +1,5 @@
 import { preprocess } from 'svelte/compiler';
 import sveltePreprocess from 'svelte-preprocess';
-import adapterStatic from '@sveltejs/adapter-static';
 
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
@@ -38,12 +37,12 @@ export default {
 	preprocess: [!dev ? prodPreprocess(options) : sveltePreprocess(options)],
 	extensions: ['.svelte'],
 	kit: {
-		adapter: adapterStatic({
-			// default options are shown
-			pages: 'build',
-			assets: 'build',
-			fallback: null
-		}),
+		// adapter: adapterStatic({
+		// 	// default options are shown
+		// 	pages: 'build',
+		// 	assets: 'build',
+		// 	fallback: null
+		// }),
 		amp: false,
 		appDir: '_app',
 		files: {
