@@ -86,6 +86,8 @@ export default {
 		ssr: true,
 		target: '',
 		trailingSlash: 'never',
-		vite: () => ({})
+		vite: {
+			server: { port: 3030 }
+		}
 	}
 };
