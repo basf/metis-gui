@@ -1,6 +1,9 @@
 import { preprocess } from 'svelte/compiler';
 import sveltePreprocess from 'svelte-preprocess';
-import sassPlugin from 'esbuild-plugin-sass'
+// import sassPlugin from 'esbuild-plugin-sass'
+// import { resolve } from "path"
+// import postcss from 'postcss';
+// import sass from 'sass';
 
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
@@ -14,7 +17,6 @@ const options = {
 		prependData: `
 			@import './node_modules/spectre.css/src/variables';
 			@import './node_modules/spectre.css/src/mixins';
-			@import './node_modules/spectre.css/src/icons/icons-core';
 		`,
 	},
 	postcss: true,
@@ -38,7 +40,9 @@ function prodPreprocess(options) {
 /** @type {import('@sveltejs/kit').Config} */
 export default {
 	// https://github.com/sveltejs/svelte-preprocess
-	compilerOptions: null,
+	compilerOptions: {
+		// cssHash: () => ({ name: 'spectre' })
+	},
 	preprocess: [!dev ? prodPreprocess(options) : sveltePreprocess(options)],
 	extensions: ['.svelte'],
 	kit: {
@@ -102,7 +106,13 @@ export default {
 					},
 				},
 			},
-			// plugins: [sassPlugin()]
+			plugins: [
+				// postcss({
+				// 	include: "./src/lib/spectre.scss",
+				// 	extract: resolve('package/spectre.css')
+				// }),
+				// sassPlugin(),
+			]
 		})
 	}
 };
