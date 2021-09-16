@@ -1,6 +1,6 @@
 <div class:d-flex={inline} class="form-group">
 	{#if $$slots.default}
-		<div class="col-2 col-{size}-12">
+		<div class="col-4 col-{size}-12">
 			<label for="input-{fid}" class="form-label label-{size}">
 				<slot />
 			</label>
