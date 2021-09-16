@@ -1,0 +1,12 @@
+<div class="container grid-{size}">
+	<slot />
+</div>
+
+<script context="module" lang="ts">
+	import type { Size } from '../../types/size';
+	export type { Size };
+</script>
+
+<script lang="ts">
+	export let size: Size = 'md';
+</script>
