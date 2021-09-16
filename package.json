@@ -19,7 +19,8 @@
 		"clean": "rm -rf ./dist"
 	},
 	"engines": {
-		"node": ">= 10"
+		"node": ">= 15",
+		"npm": ">= 7"
 	},
 	"browserslist": [
 		"extends browserslist-config-google"
