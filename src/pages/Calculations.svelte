@@ -93,13 +93,6 @@
 		Progress,
 		Input,
 	} from 'svelte-spectre';
-	// import Container from '@/layouts/Container.svelte';
-	// import Panel from '@/layouts/Panel.svelte';
-	// import Tile from '@/layouts/Tile.svelte';
-	// import Button, { IconButton } from '@/components/Button';
-	// import Toast from '@/components/Toast';
-	// import Progress from '@/components/Progress';
-	// import Input from '@/components/Input';
 	import { menu } from '@/routes';
 
 	import {

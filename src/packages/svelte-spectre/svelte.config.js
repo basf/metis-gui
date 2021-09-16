@@ -40,9 +40,10 @@ function prodPreprocess(options) {
 /** @type {import('@sveltejs/kit').Config} */
 export default {
 	// https://github.com/sveltejs/svelte-preprocess
-	compilerOptions: {
-		// cssHash: () => ({ name: 'spectre' })
-	},
+	compilerOptions: null,
+	// {
+	// 	cssHash: () => ({ name: 'spectre' })
+	// },
 	preprocess: [!dev ? prodPreprocess(options) : sveltePreprocess(options)],
 	extensions: ['.svelte'],
 	kit: {
@@ -70,11 +71,11 @@ export default {
 			dir: 'package',
 			exports: {
 				include: ['**'],
-				exclude: ['**/_*', 'str_to_rgb.ts', 'spectre.scss'],
+				exclude: ['**/_*', 'spectre.scss'],
 			},
 			files: {
 				include: ['**'],
-				exclude: ['helpers/str_to_rgb.ts', 'types/asset.ts', 'types/asyncable.ts', 'spectre.scss'],
+				exclude: ['spectre.scss'],
 			},
 			emitTypes: true,
 		},

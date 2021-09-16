@@ -11,15 +11,8 @@
 </script>
 
 <style lang="scss">
-	// :global {
-	@import 'spectre.css/src/icons/icons-core';
-	// }
-	@import 'spectre.css/src/icons/icons-navigation';
-	@import 'spectre.css/src/icons/icons-action';
-	@import 'spectre.css/src/icons/icons-object';
-
-	// // missed global class
-	// :global(.accordion, .btn, menu, .toast) :where(.icon) {
-	// 	vertical-align: -10%;
-	// }
+	@import 'spectre.css/src/icons';
+	:global {
+		@import 'spectre.css/src/icons/icons-core';
+	}
 </style>

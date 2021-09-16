@@ -5,7 +5,7 @@
 	</p>
 	<Button variant="primary" {loading} on:click={(e) => (loading = !loading)} />
 	<IconButton icon="icon-people" shape="square" variant="link" />
-	<div class="columns">
+	<div class="columns my-2">
 		<div class="column col-4 col-xs-12">
 			<Card>
 				<img class="img-responsive" src="./img/macos-sierra.jpg" alt="img" slot="img" />

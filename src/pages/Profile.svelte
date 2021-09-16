@@ -31,12 +31,9 @@
 
 <script>
 	import { Container, Panel, Tile, Button } from 'svelte-spectre';
-	// import Container from '@/layouts/Container.svelte';
-	// import Panel from '@/layouts/Panel.svelte';
-	// import Tile from '@/layouts/Tile.svelte';
-	// import Button from '@/components/Button';
 
 	import user from '@/stores/user';
+
 	import { logout } from '@/services/api';
 
 	async function doLogout() {

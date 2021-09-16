@@ -2,15 +2,15 @@
 	<slot />
 </div>
 
-<script></script>
-
 <style lang="scss">
+	:global {
+		@import 'spectre.css/src/base';
+		@import 'spectre.css/src/normalize';
+	}
 	.spectre {
 		display: contents;
 	}
 	.spectre :global {
-		@import 'spectre.css/src/normalize';
-		@import 'spectre.css/src/base';
 		@import 'spectre.css/src/typography';
 		@import 'spectre.css/src/layout';
 		@import 'spectre.css/src/animations';

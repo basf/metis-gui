@@ -22,9 +22,6 @@
 
 <script>
 	import { back, path } from 'svelte-pathfinder';
-	import { Navbar, Button, IconButton, Icon } from 'svelte-spectre';
-	// import Navbar from '@/layouts/Navbar.svelte';
-	// import { IconButton } from '@/components/Button';
-	// import Icon from '@/components/Icon';
+	import { Navbar, IconButton } from 'svelte-spectre';
 	import user from '@/stores/user';
 </script>

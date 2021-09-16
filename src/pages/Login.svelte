@@ -17,10 +17,6 @@
 
 <script>
 	import { Container, Input, Button, Toast } from 'svelte-spectre';
-	// import Container from '@/layouts/Container.svelte';
-	// import Input from '@/components/Input';
-	// import Button from '@/components/Button';
-	// import Toast from '@/components/Toast';
 
 	import user from '@/stores/user';
 
