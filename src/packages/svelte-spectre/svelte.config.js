@@ -1,10 +1,15 @@
 import { preprocess } from 'svelte/compiler';
 import sveltePreprocess from 'svelte-preprocess';
+import sassPlugin from 'esbuild-plugin-sass'
 
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
 const options = {
 	sourceMap: dev,
+	defaults: {
+		script: 'typescript',
+		style: 'scss',
+	},
 	scss: {
 		prependData: `
 			@import './node_modules/spectre.css/src/variables';
@@ -61,11 +66,11 @@ export default {
 			dir: 'package',
 			exports: {
 				include: ['**'],
-				exclude: ['**/_*', 'str_to_rgb.ts'],
+				exclude: ['**/_*', 'str_to_rgb.ts', 'spectre.scss'],
 			},
 			files: {
 				include: ['**'],
-				exclude: ['helpers/str_to_rgb.ts', 'types/asset.ts', 'types/asyncable.ts'],
+				exclude: ['helpers/str_to_rgb.ts', 'types/asset.ts', 'types/asyncable.ts', 'spectre.scss'],
 			},
 			emitTypes: true,
 		},
@@ -86,8 +91,18 @@ export default {
 		ssr: true,
 		target: '',
 		trailingSlash: 'never',
-		vite: {
-			server: { port: 3030 }
-		}
+		vite: () => ({
+			server: { port: 3030 },
+			css: {
+				preprocessorOptions: {
+					scss: {
+						// example : additionalData: `@import "./src/design/styles/variables";`
+						// dont need include file extend .scss
+						// additionalData: `@import "./src/lib/spectre.scss";`
+					},
+				},
+			},
+			// plugins: [sassPlugin()]
+		})
 	}
 };
