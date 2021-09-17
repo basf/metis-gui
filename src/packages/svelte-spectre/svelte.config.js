@@ -1,9 +1,4 @@
-import { preprocess } from 'svelte/compiler';
-import sveltePreprocess from 'svelte-preprocess';
-// import sassPlugin from 'esbuild-plugin-sass'
-// import { resolve } from "path"
-// import postcss from 'postcss';
-// import sass from 'sass';
+import preprocess from 'svelte-preprocess';
 
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
@@ -21,30 +16,14 @@ const options = {
 	},
 	postcss: true,
 	typescript: true,
+	replace: !dev ? [[/ lang=("|')(.*?)("|')/g, '']] : [],
 };
-
-function prodPreprocess(options) {
-	return {
-		markup: async ({ content, filename }) => {
-			const preprocessed = await preprocess(content, [sveltePreprocess(options)], {
-				filename,
-			});
-			const regexp = /lang="ts"|lang="scss"|(<script lang="ts" context="module"><\/script>)/g;
-			const code = preprocessed.code.replaceAll(regexp, '');
-			preprocessed.code = code.trim();
-			return preprocessed;
-		}
-	}
-}
 
 /** @type {import('@sveltejs/kit').Config} */
 export default {
 	// https://github.com/sveltejs/svelte-preprocess
 	compilerOptions: null,
-	// {
-	// 	cssHash: () => ({ name: 'spectre' })
-	// },
-	preprocess: [!dev ? prodPreprocess(options) : sveltePreprocess(options)],
+	preprocess: [preprocess(options)],
 	extensions: ['.svelte'],
 	kit: {
 		// adapter: adapterStatic({
@@ -61,7 +40,7 @@ export default {
 			lib: 'src/lib',
 			routes: 'src/routes',
 			serviceWorker: 'src/service-worker',
-			template: 'src/app.html'
+			template: 'src/app.html',
 		},
 		floc: false,
 		host: '',
@@ -81,17 +60,17 @@ export default {
 		},
 		paths: {
 			assets: '',
-			base: ''
+			base: '',
 		},
 		prerender: {
 			crawl: true,
 			enabled: true,
 			entries: ['*'],
-			onError: 'fail'
+			onError: 'fail',
 		},
 		router: true,
 		serviceWorker: {
-			exclude: []
+			exclude: [],
 		},
 		ssr: true,
 		target: '',
@@ -113,7 +92,7 @@ export default {
 				// 	extract: resolve('package/spectre.css')
 				// }),
 				// sassPlugin(),
-			]
-		})
-	}
+			],
+		}),
+	},
 };
