@@ -50,7 +50,7 @@
 							</Tile>
 						{/if}
 					{:else}
-						<center>Upload a structure to start...</center>
+						<center><br /><br />Upload a structure to start...<br /><br /></center>
 					{/each}
 				</div>
 				<svelte:fragment slot="footer">
@@ -93,6 +93,7 @@
 		Progress,
 		Input,
 	} from 'svelte-spectre';
+
 	import { menu } from '@/routes';
 
 	import {
