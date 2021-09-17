@@ -1,3 +1,5 @@
+import { goto } from 'svelte-pathfinder';
+
 import { API_BASEURL } from '@/config';
 import type { User as UserDTO } from '@/types/dto';
 
@@ -7,7 +9,7 @@ export interface HttpError extends Error {
 export type HttpHeaders = Record<string, string>;
 export type QueryParams = Record<string, unknown>;
 
-export async function getData(): Promise<void>  {
+export async function getData(): Promise<void> {
     return getJSON('/data');
 }
 
@@ -19,7 +21,7 @@ export async function delData(uuid: string): Promise<void> {
     return delJSON('/data', { uuid });
 }
 
-export async function getCalculations(): Promise<void>  {
+export async function getCalculations(): Promise<void> {
     return getJSON('/calculations');
 }
 
@@ -56,7 +58,7 @@ export async function getJSON<T>(
 
     if (params) {
         Object.entries(params).forEach((param: [string, string]) =>
-            url.searchParams.append(...param);
+            url.searchParams.append(...param)
         );
     }
 
@@ -123,6 +125,9 @@ export default async function fetchJSON<T>(
     const res = await fetch(req);
 
     if (!res.ok) {
+        if (res.status === 401) {
+            goto('/login');
+        }
         const err: HttpError = new Error(res.statusText);
         err.response = res;
         throw err;

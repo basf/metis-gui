@@ -4,8 +4,8 @@ UIkit based on spectre.css compiled & powered by SvelteJS.
 
 ### Required:
 
-- `node -v >= 15`
-- `npm -v >= 7`
+-   `node -v >= 15`
+-   `npm -v >= 7`
 
 ## Install
 

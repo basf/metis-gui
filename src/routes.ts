@@ -27,32 +27,36 @@ const routes: Route[] = [
         component: () => import('@/pages/Empty.svelte'),
         menu: {
             title: 'Data',
-            path: '',
-        }
+        },
     },
     {
         path: '/materials',
         component: () => import('@/pages/Empty.svelte'),
         menu: {
             title: 'Materials',
-            path: '',
-        }
+        },
     },
     {
         path: '/projects',
         component: () => import('@/pages/Empty.svelte'),
         menu: {
             title: 'Projects',
-            path: '',
-        }
+        },
+    },
+    {
+        path: '/search',
+        component: () => import('@/pages/Search.svelte'),
+        menu: {
+            title: 'Search',
+        },
     },
     {
         path: '/',
         component: () => import('@/pages/Calculations.svelte'),
         menu: {
             title: 'Calculations',
-            pos: 0
-        }
+            pos: 0,
+        },
     },
 ];
 
