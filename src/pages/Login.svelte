@@ -11,6 +11,13 @@
 				>Password</Input
 			>
 			<Button variant="primary" type="submit" block>Login</Button>
+			<div class="divider text-center p-1" data-content="OR" />
+			<Button variant="secondary" type="button" block>
+				Sign in with <i class="social-icon pl-2">{@html githubIcon}</i>
+			</Button>
+			<Button variant="secondary" type="button" block style="margin-top: 0.4rem">
+				Sign in with <i class="social-icon pl-2">{@html linkedinIcon}</i>
+			</Button>
 		</form>
 	</div>
 </Container>
@@ -21,6 +28,9 @@
 	import user from '@/stores/user';
 
 	import { login, me } from '@/services/api';
+
+	import githubIcon from '@/assets/img/github.svg';
+	import linkedinIcon from '@/assets/img/linkedin.svg';
 
 	let username = '';
 	let password = '';
@@ -35,3 +45,11 @@
 		}
 	}
 </script>
+
+<style>
+	.social-icon > :global(svg) {
+		fill: #5755d9;
+		height: 0.8rem;
+		vertical-align: middle;
+	}
+</style>

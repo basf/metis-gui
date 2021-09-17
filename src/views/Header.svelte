@@ -2,7 +2,7 @@
 	<nav slot="left">
 		{#if $path.length > 1 && $path.toString() !== '/login'}
 			<div class="ml-2">
-				<IconButton icon="icon-back icon-2x text-dark" on:click={back} />
+				<IconButton icon="icon-back" iconSize="2x" size="xl" on:click={back} />
 			</div>
 		{/if}
 	</nav>
@@ -14,7 +14,7 @@
 	<nav slot="right">
 		{#if $user}
 			<div class="mr-2">
-				<IconButton icon="icon-people icon-2x text-dark" href="/profile" />
+				<IconButton icon="icon-people" iconSize="2x" size="xl" href="/profile" />
 			</div>
 		{/if}
 	</nav>
