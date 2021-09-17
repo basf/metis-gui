@@ -16,7 +16,8 @@
 		"test": "jest src",
 		"test:watch": "npm run test -- --watch",
 		"size": "size-limit",
-		"clean": "rm -rf ./dist"
+		"clean": "rm -rf ./dist",
+		"spectre": "npm run package --workspaces"
 	},
 	"engines": {
 		"node": ">= 15",
