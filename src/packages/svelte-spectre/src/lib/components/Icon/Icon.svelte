@@ -1,4 +1,4 @@
-<i class="icon icon-{size} {icon}" {...$$restProps} />
+<i class="icon icon-{size} icon-{icon}" {...$$restProps} />
 
 <script lang="ts" context="module">
 	import type { Zoom } from '../../types/size';

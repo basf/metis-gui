@@ -2,9 +2,11 @@ import type { Props } from 'svelte-viewpoint';
 
 type MenuProp = {
     title: string;
-    icon?: string;
-    pos?: number;
     path?: string;
+    pos?: number;
+    icon?: string;
+    badge?: string;
+    clear?: boolean;
 };
 
 export interface Route {
@@ -27,6 +29,7 @@ const routes: Route[] = [
         component: () => import('@/pages/Empty.svelte'),
         menu: {
             title: 'Data',
+            icon: 'emoji'
         },
     },
     {
@@ -34,6 +37,7 @@ const routes: Route[] = [
         component: () => import('@/pages/Empty.svelte'),
         menu: {
             title: 'Materials',
+            clear: true
         },
     },
     {
@@ -56,6 +60,7 @@ const routes: Route[] = [
         menu: {
             title: 'Calculations',
             pos: 0,
+            badge: '9'
         },
     },
 ];

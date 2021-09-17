@@ -10,13 +10,7 @@
 			{/if}
 			<Panel>
 				<nav slot="nav">
-					<ul class="tab tab-block">
-						{#each menu as item}
-							<li class:active={$path.toString() === item.path} class="tab-item">
-								<a href={item.path}>{item.title}</a>
-							</li>
-						{/each}
-					</ul>
+					<Tabs items={menu} active={$path.toString()} block />
 				</nav>
 				<div slot="body" class="mt-2">
 					<slot />
@@ -28,13 +22,11 @@
 
 <script>
 	import { path } from 'svelte-pathfinder';
-	import { Container, Panel, Toast } from 'svelte-spectre';
+	import { Container, Panel, Tabs, Toast } from 'svelte-spectre';
 
 	import errors from '@/stores/errors';
 
 	import { menu } from '@/routes';
 </script>
 
-<style lang="scss">
-	@import 'spectre.css/src/tabs';
-</style>
+<style lang="scss"></style>

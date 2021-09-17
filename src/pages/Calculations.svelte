@@ -15,16 +15,13 @@
 				<svelte:fragment slot="action">
 					{#if item.inProgress}
 						<IconButton
-							icon="icon-stop"
+							icon="stop"
 							on:click={() => delCalculation(item.calculation.uuid)}
 						/>
 					{:else}
-						<IconButton
-							icon="icon-forward"
-							on:click={() => setCalculation(item.uuid)}
-						/>
+						<IconButton icon="forward" on:click={() => setCalculation(item.uuid)} />
 					{/if}
-					<IconButton icon="icon-cross" on:click={() => delData(item.uuid)} />
+					<IconButton icon="cross" on:click={() => delData(item.uuid)} />
 				</svelte:fragment>
 			</Tile>
 		{/if}
