@@ -29,7 +29,7 @@ const routes: Route[] = [
         component: () => import('@/pages/Empty.svelte'),
         menu: {
             title: 'Data',
-            icon: 'emoji'
+            icon: 'emoji',
         },
     },
     {
@@ -37,7 +37,7 @@ const routes: Route[] = [
         component: () => import('@/pages/Empty.svelte'),
         menu: {
             title: 'Materials',
-            clear: true
+            clear: true,
         },
     },
     {
@@ -60,7 +60,7 @@ const routes: Route[] = [
         menu: {
             title: 'Calculations',
             pos: 0,
-            badge: '9'
+            badge: '9',
         },
     },
 ];
