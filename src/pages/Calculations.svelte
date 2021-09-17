@@ -8,13 +8,14 @@
 			{/if}
 			<Panel>
 				<nav slot="nav">
-					<ul class="tab tab-block">
+					<Tabs items={menu} active={$path.toString()} />
+					<!-- <ul class="tab tab-block">
 						{#each menu as item}
 							<li class:active={$path.toString() === item.path} class="tab-item">
 								<a href={item.path}>{item.title}</a>
 							</li>
 						{/each}
-					</ul>
+					</ul> -->
 				</nav>
 				<div slot="body" class="mt-2">
 					{#each dataCalc as item, i (item.uuid)}
@@ -92,6 +93,7 @@
 		Toast,
 		Progress,
 		Input,
+		Tabs,
 	} from 'svelte-spectre';
 
 	import { menu } from '@/routes';
@@ -135,5 +137,5 @@
 </script>
 
 <style lang="scss">
-	@import 'spectre.css/src/tabs';
+	// @import 'spectre.css/src/tabs';
 </style>

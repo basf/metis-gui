@@ -1,3 +1,6 @@
+export * from './Spectre.svelte';
+export { default } from './Spectre.svelte';
+export { default as Spectre } from './Spectre.svelte';
 export {
     Avatar,
     Button,
@@ -8,9 +11,7 @@ export {
     Progress,
     Steps,
     Switch,
+    Tabs,
     Toast,
 } from './components/';
 export { Card, Container, Modal, Navbar, Panel, Tile } from './layouts/';
-export * from './Spectre.svelte';
-export { default } from './Spectre.svelte';
-export { default as Spectre } from './Spectre.svelte';
