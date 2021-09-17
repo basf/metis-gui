@@ -12,7 +12,7 @@
 		on:dblclick
 	>
 		<slot name="iconRight" />
-		<slot>Text</slot>
+		{#if $$slots.default}<slot>Text</slot>{/if}
 		<slot name="iconLeft" />
 	</a>
 {:else}
@@ -28,7 +28,7 @@
 		on:dblclick
 	>
 		<slot name="iconRight" />
-		<slot>Text</slot>
+		{#if $$slots.default}<slot>Text</slot>{/if}
 		<slot name="iconLeft" />
 	</button>
 {/if}
@@ -36,7 +36,7 @@
 <script lang="ts" context="module">
 	import type { Size } from '../../types/size';
 
-	type Variant = 'default' | 'primary' | 'link' | 'success' | 'error';
+	type Variant = 'default' | 'primary' | 'link' | 'success' | 'error' | 'clear';
 	type Shape = 'square' | 'circle' | false;
 
 	export type { Size, Variant, Shape };

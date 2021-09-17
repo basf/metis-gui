@@ -21,5 +21,6 @@
 		@import 'spectre.css/src/animations';
 		@import 'spectre.css/src/utilities';
 		@import 'spectre.css/src/media';
+		@import 'spectre.css/src/badges';
 	}
 </style>
