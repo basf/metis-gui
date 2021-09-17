@@ -1,12 +1,12 @@
 <Main>
-	<div class="hero bg-gray s-rounded p-2">
-		<div class="hero-body p-2">
-			<h3>Coming soon...</h3>
-			<p>This section is under development</p>
-		</div>
-	</div>
+	<Empty icon="mail" buttonVariant="primary" buttonText="button">
+		<svelte:fragment slot="title">Subtitle</svelte:fragment>
+		<svelte:fragment slot="subtitle">Title</svelte:fragment>
+	</Empty>
 </Main>
 
-<script>
+<script lang="ts">
+	import { Empty } from 'svelte-spectre';
+
 	import Main from '@/layouts/Main';
 </script>
