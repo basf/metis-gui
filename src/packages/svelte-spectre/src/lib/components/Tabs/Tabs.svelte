@@ -2,13 +2,9 @@
 	{#each items as item, i (item.pos)}
 		<li class:active={item.path === active} class="tab-item">
 			<a class:badge={item.badge} data-badge={item.badge} href={item.path}>
-				{#if item.icon}
-					<Icon icon={item.icon} />
-				{/if}
-				{item.title}
-				{#if item.clear}
-					<Button variant="clear" />
-				{/if}
+				{#if item.icon}<Icon icon={item.icon} />{/if}
+				{#if item.title}{item.title}{/if}
+				{#if item.clear}<Button variant="clear" />{/if}
 			</a>
 		</li>
 	{/each}
