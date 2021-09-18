@@ -1,6 +1,6 @@
 <Main>
 	<Empty
-		icon=""
+		icon="home"
 		title="Comming soon..."
 		titleSize="h1"
 		subtitle="This section is under development"
@@ -15,5 +15,5 @@
 <script lang="ts">
 	import { Empty } from 'svelte-spectre';
 
-	import Main from '@/layouts/Main';
+	import Main from '@/layouts/Main.svelte';
 </script>

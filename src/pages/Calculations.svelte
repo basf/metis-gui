@@ -51,7 +51,7 @@
 
 	import { Tile, Button, IconButton, Progress, Input } from 'svelte-spectre';
 
-	import Main from '@/layouts/Main';
+	import Main from '@/layouts/Main.svelte';
 
 	import {
 		getData,
@@ -67,7 +67,7 @@
 
 	import calculations from '@/stores/calculations';
 
-	import Upload from '@/components/Upload';
+	import Upload from '@/components/Upload.svelte';
 
 	$: dataCalc = $data.map((item) => {
 		if (item.error) errors.append(new Error(item.error));

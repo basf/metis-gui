@@ -43,4 +43,4 @@ export type Icons =
     | 'circle-check'
     | 'wifi'
     | 'audio'
-    | ''
+    | '';

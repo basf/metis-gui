@@ -4,7 +4,7 @@
 
 <script lang="ts" context="module">
 	import Button from './Button.svelte';
-	import Icon from '../Icon';
+	import { Icon, Icons } from '../Icon';
 
 	import type { Zoom } from '../Icon';
 	export type { Size } from './Button.svelte';
@@ -12,6 +12,6 @@
 </script>
 
 <script lang="ts">
-	export let icon: string = '';
-	export let iconSize: Zoom;
+	export let icon: Icons;
+	export let iconSize: Zoom = '1x';
 </script>

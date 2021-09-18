@@ -25,13 +25,13 @@
 
 <script lang="ts" context="module">
 	import type { Header } from '../../types/text';
+	import { Icon, Zoom, Icons } from '../../components/Icon/';
+	import { Button, Variant } from '../../components/Button/';
+
 	export type { Icons, Header };
 </script>
 
 <script lang="ts">
-	import { Icon, Zoom, Icons } from '../../components/Icon/';
-	import { Button, Variant } from '../../components/Button/';
-
 	// type titleSize = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 
 	export let icon: Icons = 'emoji';
