@@ -1,7 +1,14 @@
 <Main>
-	<Empty icon="mail" buttonVariant="primary" buttonText="button">
-		<svelte:fragment slot="title">Subtitle</svelte:fragment>
-		<svelte:fragment slot="subtitle">Title</svelte:fragment>
+	<Empty
+		icon=""
+		title="Comming soon..."
+		titleSize="h1"
+		subtitle="This section is under development"
+		buttonVariant="primary"
+		buttonText="Send a message"
+	>
+		<!-- <svelte:fragment slot="title">Title</svelte:fragment> -->
+		<!-- <svelte:fragment slot="subtitle">Subtitle</svelte:fragment> -->
 	</Empty>
 </Main>
 

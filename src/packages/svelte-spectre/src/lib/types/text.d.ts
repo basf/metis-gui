@@ -22,3 +22,4 @@ export type Weight =
     | 'tiny';
 export type Overflow = 'clip' | 'ellipsis' | 'break';
 export type Visibility = 'show' | 'hide' | 'assistive';
+export type Header = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';

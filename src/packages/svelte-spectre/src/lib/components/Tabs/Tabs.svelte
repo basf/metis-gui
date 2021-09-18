@@ -15,7 +15,7 @@
 </ul>
 
 <script lang="ts">
-	import { Icon } from '../Icon/'; // trouble with positioning
+	import { Icon, Icons } from '../Icon/'; // trouble with positioning
 	import { Button } from '../Button/'; // same trouble
 	// type Item = typeof items[number]; // dynamicly get type from array (exp)
 
@@ -24,7 +24,7 @@
 		title: string;
 		path?: string;
 		pos?: number;
-		icon?: string;
+		icon?: Icons;
 		badge?: string;
 		clear?: boolean;
 	};
