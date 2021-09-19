@@ -2,7 +2,7 @@
 	<Navbar>
 		<nav slot="left">
 			<div class="ml-2">
-				<IconButton icon="icon-back" />
+				<IconButton icon="back" />
 			</div>
 		</nav>
 
@@ -12,7 +12,7 @@
 
 		<nav slot="right">
 			<div class="mr-2">
-				<IconButton icon="icon-people" />
+				<IconButton icon="people" />
 			</div>
 		</nav>
 	</Navbar>
@@ -27,6 +27,6 @@
 	import { Spectre } from '$lib';
 	// import '../../package/spectre.css';
 	// import '$lib/spectre.scss';
-	import { Navbar } from '$lib/layouts';
-	import { IconButton } from '$lib/components';
+	import { Navbar } from '$lib/layouts/';
+	import { IconButton } from '$lib/components/';
 </script>

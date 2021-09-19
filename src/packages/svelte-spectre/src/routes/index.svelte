@@ -4,7 +4,7 @@
 		Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation
 	</p>
 	<Button variant="primary" {loading} on:click={(e) => (loading = !loading)} />
-	<IconButton icon="icon-people" shape="square" variant="link" />
+	<IconButton icon="people" shape="square" variant="link" />
 	<div class="columns my-2">
 		<div class="column col-4 col-xs-12">
 			<Card>
@@ -46,7 +46,7 @@
 </Container>
 
 <script lang="ts">
-	import { Button, IconButton } from '$lib/components';
+	import { Button, IconButton } from '$lib/components/';
 	import { Card, Container } from '$lib/layouts/';
 	// import { Button } from 'package';
 
