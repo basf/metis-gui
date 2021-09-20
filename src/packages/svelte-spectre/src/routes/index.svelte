@@ -3,7 +3,7 @@
 	<p>
 		Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation
 	</p>
-	<Button variant="primary" {loading} on:click={(e) => (loading = !loading)} />
+	<Button variant="primary" {loading} on:click={(e) => (loading = !loading)}>Button</Button>
 	<IconButton icon="people" shape="square" variant="link" />
 	<div class="columns my-2">
 		<div class="column col-4 col-xs-12">
@@ -43,11 +43,12 @@
 			</Card>
 		</div>
 	</div>
+	<Empty icon="home" titleSize="h1" buttonVariant="primary" buttonHref="#_" />
 </Container>
 
 <script lang="ts">
 	import { Button, IconButton } from '$lib/components/';
-	import { Card, Container } from '$lib/layouts/';
+	import { Card, Container, Empty } from '$lib/layouts/';
 	// import { Button } from 'package';
 
 	let loading = false;

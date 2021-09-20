@@ -53,7 +53,9 @@
 </script>
 
 <style lang="scss">
-	@import 'spectre.css/src/buttons';
+	:global(.spectre) {
+		@import 'spectre.css/src/buttons';
+	}
 	.circle {
 		border-radius: 50%;
 	}

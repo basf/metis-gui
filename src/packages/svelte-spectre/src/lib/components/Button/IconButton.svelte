@@ -4,14 +4,14 @@
 
 <script lang="ts" context="module">
 	import Button from './Button.svelte';
-	import { Icon, Icons } from '../Icon';
+	import { Icon } from '../Icon';
 
-	import type { Zoom } from '../Icon';
+	import type { Zoom, Icons } from '../Icon';
 	export type { Size } from './Button.svelte';
-	export type { Zoom } from '../Icon';
+	export type { Zoom, Icons };
 </script>
 
 <script lang="ts">
-	export let icon: Icons;
+	export let icon: Icons = 'emoji';
 	export let iconSize: Zoom = '1x';
 </script>
