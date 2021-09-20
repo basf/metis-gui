@@ -5,5 +5,7 @@
 </script>
 
 <style lang="scss">
-	@import 'spectre.css/src/progress';
+	:global(.spectre) {
+		@import 'spectre.css/src/progress';
+	}
 </style>

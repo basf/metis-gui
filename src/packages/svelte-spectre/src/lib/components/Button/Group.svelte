@@ -7,5 +7,7 @@
 </script>
 
 <style lang="scss">
-	@import 'spectre.css/src/buttons';
+	:global(.spectre) {
+		@import 'spectre.css/src/buttons';
+	}
 </style>

@@ -11,5 +11,7 @@
 </header>
 
 <style lang="scss">
-	@import 'spectre.css/src/navbar';
+	:global(.spectre) {
+		@import 'spectre.css/src/navbar';
+	}
 </style>

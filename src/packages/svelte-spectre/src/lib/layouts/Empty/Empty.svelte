@@ -1,4 +1,4 @@
-<div class="empty">
+<div class="empty {$$props.class}">
 	{#if icon || $$slots.icon}
 		<div class="empty-icon">
 			<slot name="icon"><Icon {icon} size={iconSize} /></slot>
@@ -46,5 +46,7 @@
 </script>
 
 <style lang="scss">
-	@import 'spectre.css/src/empty';
+	:global(.spectre) {
+		@import 'spectre.css/src/empty';
+	}
 </style>

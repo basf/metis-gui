@@ -35,7 +35,9 @@
 </script>
 
 <style lang="scss">
-	@import 'spectre.css/src/tabs';
+	:global(.spectre) {
+		@import 'spectre.css/src/tabs';
+	}
 
 	.tab-item :global(.icon) {
 		margin-top: -0.35rem;

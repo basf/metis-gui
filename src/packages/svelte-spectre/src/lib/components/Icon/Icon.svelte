@@ -12,7 +12,9 @@
 </script>
 
 <style lang="scss">
-	@import 'spectre.css/src/icons';
+	:global(.spectre) {
+		@import 'spectre.css/src/icons';
+	}
 	:global {
 		@import 'spectre.css/src/icons/icons-core';
 	}

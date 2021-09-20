@@ -44,11 +44,12 @@
 		</div>
 	</div>
 	<Empty icon="home" titleSize="h1" buttonVariant="primary" buttonHref="#_" />
+	<Hero class="my-2" bg="dark" />
 </Container>
 
 <script lang="ts">
 	import { Button, IconButton } from '$lib/components/';
-	import { Card, Container, Empty } from '$lib/layouts/';
+	import { Card, Container, Empty, Hero } from '$lib/layouts/';
 	// import { Button } from 'package';
 
 	let loading = false;

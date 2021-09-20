@@ -16,5 +16,7 @@
 </script>
 
 <style lang="scss">
-	@import 'spectre.css/src/toasts';
+	:global(.spectre) {
+		@import 'spectre.css/src/toasts';
+	}
 </style>

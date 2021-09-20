@@ -10,3 +10,9 @@
 <script lang="ts">
 	export let size: Size = 'md';
 </script>
+
+<style lang="scss">
+	:global(.spectre) {
+		@import url('spectre.css/src/layout');
+	}
+</style>

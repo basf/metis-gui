@@ -6,6 +6,7 @@
 		subtitle="This section is under development"
 		buttonVariant="primary"
 		buttonText="Send a message"
+		class="my-2"
 	>
 		<!-- <svelte:fragment slot="title">Title</svelte:fragment> -->
 		<!-- <svelte:fragment slot="subtitle">Subtitle</svelte:fragment> -->
