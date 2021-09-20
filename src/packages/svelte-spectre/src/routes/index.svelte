@@ -8,17 +8,16 @@
 	<Hero class="my-2">
 		<h2>Grid</h2>
 		<Grid stack>
-			<Col md="1" xs="2" lg="3" sm="4" xl="5" col="6" class="class"
-				><div class="bg-secondary">col</div></Col
-			>
+			<Col col="5" class="class"><div class="bg-secondary">col</div></Col>
 			<Col col="7"><div class="bg-primary">col</div></Col>
 			<Col col="8"><div class="bg-secondary">col</div></Col>
 			<Col col="4"><div class="bg-primary">col</div></Col>
 			<Col><div class="bg-secondary">col</div></Col>
 		</Grid>
 	</Hero>
-	<Grid class="my-2">
-		<Col col="4" xs="12">
+	<Divider text="OR" />
+	<Grid class="my-2" stretch>
+		<Col>
 			<Card>
 				<img class="img-responsive" src="./img/macos-sierra.jpg" alt="img" slot="img" />
 				<div slot="title" class="h5">Title</div>
@@ -30,7 +29,8 @@
 				</svelte:fragment>
 			</Card>
 		</Col>
-		<Col col="4" xs="12">
+		<Divider vertical text="OR" />
+		<Col>
 			<Card pos="middle">
 				<img class="img-responsive" src="./img/macos-sierra-2.jpg" alt="img" slot="img" />
 				<div slot="title" class="h5">Title</div>
@@ -42,7 +42,7 @@
 				</svelte:fragment>
 			</Card>
 		</Col>
-		<Col col="4" xs="12">
+		<Col>
 			<Card pos="bottom">
 				<img class="img-responsive" src="./img/osx-el-capitan-2.jpg" alt="img" slot="img" />
 				<div slot="title" class="h5">Title</div>
@@ -60,7 +60,7 @@
 </Container>
 
 <script lang="ts">
-	import { Button, IconButton } from '$lib/components/';
+	import { Button, Divider, IconButton } from '$lib/components/';
 	import { Card, Container, Empty, Hero, Grid, Col } from '$lib/layouts/';
 	// import { Button } from 'package';
 

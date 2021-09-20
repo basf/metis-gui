@@ -5,6 +5,7 @@
 			class:col-gapless={gapless}
 			class:col-oneline={oneline}
 			class:stack
+			class:stretch
 		>
 			<slot />
 		</div>
@@ -15,6 +16,7 @@
 		class:col-gapless={gapless}
 		class:col-oneline={oneline}
 		class:stack
+		class:stretch
 	>
 		<slot />
 	</div>
@@ -34,6 +36,8 @@
 	export let oneline: boolean = false;
 	export let container: boolean = false;
 	export let stack: boolean = false;
+	export let stretch: boolean = false;
+	export let vertical: boolean = false;
 </script>
 
 <style lang="scss">
@@ -44,6 +48,12 @@
 		margin-top: $layout-spacing * -2;
 		& > :global(*) {
 			margin-top: $layout-spacing * 2;
+		}
+	}
+	.stretch {
+		// margin-top: $layout-spacing * -2;
+		& > :global(* > *) {
+			height: 100%;
 		}
 	}
 </style>
