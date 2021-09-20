@@ -28,19 +28,19 @@
 	{:else}
 		<div class="text-center m-2 p-2">Upload a structure to start...</div>
 	{/each}
-	<div class="columns mb-2 mt-2">
-		<div class="column">
+	<Grid class="mb-2 mt-2">
+		<Col>
 			<Input
 				rows={4}
 				placeholder="Paste POSCAR, CIF, or Optimade JSON"
 				bind:value={content}
 			/>
-		</div>
+		</Col>
 		<div class="divider-vert" data-content="OR" />
-		<div class="column">
+		<Col>
 			<Upload />
-		</div>
-	</div>
+		</Col>
+	</Grid>
 	<Button variant="primary" block disabled={dataCalc.length >= 5} on:click={addDataItem}>
 		Add structure
 	</Button>
@@ -49,7 +49,7 @@
 <script>
 	import { onMount } from 'svelte';
 
-	import { Tile, Button, IconButton, Progress, Input } from 'svelte-spectre';
+	import { Tile, Button, IconButton, Progress, Input, Grid, Col } from 'svelte-spectre';
 
 	import Main from '@/layouts/Main.svelte';
 

@@ -33,12 +33,8 @@
 	:global(.spectre) {
 		@import 'spectre.css/src/layout';
 	}
-	[class~='col-'],
-	.column {
-		// flex: 1;
-		// max-width: 100%;
-		// padding-left: $layout-spacing;
-		// padding-right: $layout-spacing;
-		padding-bottom: $layout-spacing * 2;
-	}
+	// [class~='col-'],
+	// .column {
+	// 	padding-bottom: $layout-spacing * 2;
+	// }
 </style>

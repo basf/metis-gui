@@ -7,18 +7,18 @@
 	<IconButton icon="people" shape="square" variant="link" />
 	<Hero class="my-2">
 		<h2>Grid</h2>
-		<Grid>
+		<Grid stack>
 			<Col md="1" xs="2" lg="3" sm="4" xl="5" col="6" class="class"
 				><div class="bg-secondary">col</div></Col
 			>
 			<Col col="7"><div class="bg-primary">col</div></Col>
-			<Col><div class="bg-secondary">col</div></Col>
-			<Col><div class="bg-primary">col</div></Col>
+			<Col col="8"><div class="bg-secondary">col</div></Col>
+			<Col col="4"><div class="bg-primary">col</div></Col>
 			<Col><div class="bg-secondary">col</div></Col>
 		</Grid>
 	</Hero>
-	<div class="columns my-2">
-		<div class="column col-4 col-xs-12">
+	<Grid class="my-2">
+		<Col col="4" xs="12">
 			<Card>
 				<img class="img-responsive" src="./img/macos-sierra.jpg" alt="img" slot="img" />
 				<div slot="title" class="h5">Title</div>
@@ -29,8 +29,8 @@
 					<Button variant="link" href="#cards">Link</Button>
 				</svelte:fragment>
 			</Card>
-		</div>
-		<div class="column col-4 col-xs-12">
+		</Col>
+		<Col col="4" xs="12">
 			<Card pos="middle">
 				<img class="img-responsive" src="./img/macos-sierra-2.jpg" alt="img" slot="img" />
 				<div slot="title" class="h5">Title</div>
@@ -41,8 +41,8 @@
 					<Button variant="link" href="#cards">Link</Button>
 				</svelte:fragment>
 			</Card>
-		</div>
-		<div class="column col-4 col-xs-12">
+		</Col>
+		<Col col="4" xs="12">
 			<Card pos="bottom">
 				<img class="img-responsive" src="./img/osx-el-capitan-2.jpg" alt="img" slot="img" />
 				<div slot="title" class="h5">Title</div>
@@ -53,8 +53,8 @@
 					<Button variant="link" href="#cards">Link</Button>
 				</svelte:fragment>
 			</Card>
-		</div>
-	</div>
+		</Col>
+	</Grid>
 	<Empty icon="home" titleSize="h1" buttonVariant="primary" buttonHref="#_" />
 	<Hero class="my-2" bg="dark" />
 </Container>
