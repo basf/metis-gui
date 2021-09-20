@@ -6,4 +6,5 @@ export type Color =
     | 'gray'
     | 'success'
     | 'warning'
-    | 'error';
+    | 'error'
+    | '';

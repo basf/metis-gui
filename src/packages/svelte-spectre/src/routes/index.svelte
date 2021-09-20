@@ -5,6 +5,18 @@
 	</p>
 	<Button variant="primary" {loading} on:click={(e) => (loading = !loading)}>Button</Button>
 	<IconButton icon="people" shape="square" variant="link" />
+	<Hero class="my-2">
+		<h2>Grid</h2>
+		<Grid>
+			<Col md="1" xs="2" lg="3" sm="4" xl="5" col="6" class="class"
+				><div class="bg-secondary">col</div></Col
+			>
+			<Col col="7"><div class="bg-primary">col</div></Col>
+			<Col><div class="bg-secondary">col</div></Col>
+			<Col><div class="bg-primary">col</div></Col>
+			<Col><div class="bg-secondary">col</div></Col>
+		</Grid>
+	</Hero>
 	<div class="columns my-2">
 		<div class="column col-4 col-xs-12">
 			<Card>
@@ -49,7 +61,7 @@
 
 <script lang="ts">
 	import { Button, IconButton } from '$lib/components/';
-	import { Card, Container, Empty, Hero } from '$lib/layouts/';
+	import { Card, Container, Empty, Hero, Grid, Col } from '$lib/layouts/';
 	// import { Button } from 'package';
 
 	let loading = false;
@@ -64,4 +76,7 @@
 	// img {
 	// 	max-height: 200px;
 	// }
+	div[class~='bg-'] {
+		border-radius: 0.1rem;
+	}
 </style>

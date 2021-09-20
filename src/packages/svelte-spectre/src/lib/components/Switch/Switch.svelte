@@ -12,7 +12,5 @@
 </script>
 
 <style lang="scss">
-	:global(.spectre) {
-		@import 'spectre.css/src/forms';
-	}
+	@import 'spectre.css/src/forms';
 </style>

@@ -56,10 +56,8 @@
 </script>
 
 <style lang="scss">
-	:global(.spectre) {
-		@import 'spectre.css/src/avatars';
-		@import 'spectre.css/src/utilities';
-	}
+	@import 'spectre.css/src/avatars';
+	@import 'spectre.css/src/utilities';
 	.avatar .avatar-icon {
 		border-radius: 50%;
 		padding: $unit-o $unit-h;

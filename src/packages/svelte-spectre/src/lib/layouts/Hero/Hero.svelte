@@ -1,4 +1,4 @@
-<div class="hero hero-{size} bg-{bg} {$$props.class}">
+<div class="hero {size && `hero-${size}`} {bg && `bg-${bg}`} {$$props.class || ''}">
 	<div class="hero-body">
 		<slot>
 			<h1>Hero title</h1>
@@ -15,8 +15,8 @@
 </script>
 
 <script lang="ts">
-	export let size: Size = 'sm';
-	export let bg: Color = 'gray';
+	export let size: Size = 'xs';
+	export let bg: Color = '';
 </script>
 
 <style lang="scss">
