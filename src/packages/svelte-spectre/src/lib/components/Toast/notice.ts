@@ -66,8 +66,8 @@ function createToast() {
 			send(msg, 'default', timeout, title, close),
 		error: (msg, timeout, title, close, icon: Icons = 'stop') =>
 			send(msg, 'error', timeout, title, close, icon),
-		warning: (msg, timeout, title, close) =>
-			send(msg, 'warning', timeout, title, close),
+		warning: (msg, timeout, title, close, icon: Icons = 'mail') =>
+			send(msg, 'warning', timeout, title, close, icon),
 		primary: (msg, timeout, title, close) =>
 			send(msg, 'primary', timeout, title, close),
 		success: (msg, timeout, title, close, icon: Icons = 'emoji') =>

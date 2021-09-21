@@ -14,8 +14,7 @@
 			<div class="mr-2">
 				<IconButton
 					icon="people"
-					on:click={(e) =>
-						notice.warning('authenticate-please', 5000, 'session-logout', true)}
+					on:click={(e) => notice.warning('Warning', 5000, 'Warning', true)}
 				/>
 			</div>
 		</nav>
