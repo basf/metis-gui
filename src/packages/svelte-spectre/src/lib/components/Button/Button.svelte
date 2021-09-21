@@ -36,7 +36,7 @@
 <script lang="ts" context="module">
 	import type { Size } from '../../types/size';
 
-	type Variant = 'default' | 'primary' | 'link' | 'success' | 'error' | 'clear';
+	type Variant = 'default' | 'primary' | 'secondary' | 'link' | 'success' | 'error' | 'clear';
 	type Shape = 'square' | 'circle' | false;
 
 	export type { Size, Variant, Shape };

@@ -12,18 +12,59 @@
 			>
 			<Button variant="primary" type="submit" block>Login</Button>
 			<div class="divider text-center p-1" data-content="OR" />
-			<Button variant="secondary" type="button" block>
-				Sign in with <i class="social-icon pl-2">{@html githubIcon}</i>
-			</Button>
-			<Button variant="secondary" type="button" block style="margin-top: 0.4rem">
-				Sign in with <i class="social-icon pl-2">{@html linkedinIcon}</i>
-			</Button>
+			<Grid align="center">
+				<Col col="4">Login with</Col>
+				<Col col="8">
+					<IconButton
+						svg={basfIcon}
+						shape="square"
+						variant="link"
+						iconSize="2x"
+						size="xl"
+						class=""
+					/>
+					<IconButton
+						svg={orcidIcon}
+						shae="circle"
+						variant="link"
+						iconSize="2x"
+						size="xl"
+						class=""
+					/>
+					<IconButton
+						svg={githubIcon}
+						shape="circle"
+						variant="link"
+						iconSize="2x"
+						size="xl"
+						class=""
+					/>
+					<IconButton
+						svg={linkedinIcon}
+						shape="circle"
+						variant="link"
+						iconSize="2x"
+						size="xl"
+						class=""
+					/>
+				</Col>
+			</Grid>
 		</form>
 	</Col>
 </Grid>
 
 <script>
-	import { Container, Grid, Col, Input, Button, Toast, notice } from 'svelte-spectre';
+	import {
+		Container,
+		Grid,
+		Col,
+		Input,
+		Button,
+		IconButton,
+		Toast,
+		notice,
+		Icon,
+	} from 'svelte-spectre';
 
 	import user from '@/stores/user';
 
@@ -31,6 +72,8 @@
 
 	import githubIcon from '@/assets/img/github.svg';
 	import linkedinIcon from '@/assets/img/linkedin.svg';
+	import basfIcon from '@/assets/img/BASF-invert.svg';
+	import orcidIcon from '@/assets/img/ORCID-invert.svg';
 
 	let username = '';
 	let password = '';
@@ -53,9 +96,9 @@
 </script>
 
 <style>
-	.social-icon > :global(svg) {
+	/* .social-icon > :global(svg) {
 		fill: #5755d9;
 		height: 0.8rem;
 		vertical-align: middle;
-	}
+	} */
 </style>

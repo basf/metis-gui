@@ -15,7 +15,7 @@
 				<IconButton
 					icon="people"
 					on:click={(e) =>
-						notice.success({ title: 'title', msg: 'msg', timeout: 1000, close: true })}
+						notice.success({ title: 'title', msg: 'msg', timeout: 0, close: true })}
 				/>
 			</div>
 		</nav>

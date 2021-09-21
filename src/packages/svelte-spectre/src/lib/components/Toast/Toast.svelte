@@ -1,11 +1,13 @@
 <div class="toast toast-{type}">
 	{#if closable}
-		<button class="btn btn-clear float-right" type="button" />
+		<Button variant="clear" class="float-right c-hand" />
 	{/if}
 	<slot>Default text</slot>
 </div>
 
 <script context="module" lang="ts">
+	import { Button } from '../Button';
+
 	import type { Color } from '../../types/bg';
 	export type { Color };
 </script>

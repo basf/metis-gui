@@ -1,4 +1,10 @@
-<i class="icon icon-{size} icon-{icon}" {...$$restProps} />
+<i
+	{...$$restProps}
+	class="icon icon-{size} {!svg && `icon-${icon}`} {$$props.class || ''}"
+	class:svg
+>
+	{#if svg}{@html svg}{/if}
+</i>
 
 <script lang="ts" context="module">
 	import type { Zoom } from '../../types/size';
@@ -9,6 +15,7 @@
 <script lang="ts">
 	export let icon: Icons = 'emoji';
 	export let size: Zoom = '1x';
+	export let svg: string = '';
 </script>
 
 <style lang="scss">
@@ -17,6 +24,27 @@
 		@import 'spectre.css/src/icons/icons-core';
 	}
 
+	.icon.svg {
+		text-indent: 0;
+		& > :global(svg) {
+			fill: #5755d9;
+			// height: 0.8rem;
+			// vertical-align: sub;
+		}
+	}
+	:global(.btn) .icon.svg {
+		text-indent: 0;
+		vertical-align: inherit;
+		:global(.btn-action) & {
+			margin-top: -0.25rem;
+		}
+		& > :global(svg > path) {
+			fill: $primary-color;
+		}
+	}
+	:global(.btn.btn-action) .icon.svg {
+		margin-top: -0.3rem;
+	}
 	// icon-dimond - DRAFT!!!
 	.icon-diamond {
 		border-style: solid;

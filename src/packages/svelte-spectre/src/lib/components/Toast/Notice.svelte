@@ -38,13 +38,12 @@
 	import { flip } from 'svelte/animate';
 	import { fly, fade } from 'svelte/transition';
 
-	import { notice } from './notice';
-	import type { Toast } from './notice';
+	import { notice, Toast } from './notice';
 
 	import { Button, Icon } from '../../components';
 	import { Grid, Col } from '../../layouts';
 
-	let timered = [];
+	let timered: number[] = [];
 
 	function checkTimeout(toast: Toast) {
 		if (toast.timeout > 0) timered = [...timered, toast.id];
