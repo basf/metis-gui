@@ -36,14 +36,18 @@
 	let password = '';
 	let errmsg;
 
-	$: errmsg && notice.error(errmsg.error || 'Login/Password incorrect', 5000, '', true);
+	// $: errmsg
+	// 	? notice.error(errmsg.error || 'Login/Password incorrect', 5000)
+	// 	: notice.success('You are logged in 👍🏻', 5000);
 
 	async function submit() {
 		try {
 			await login(username, password);
 			$user = await me();
+			notice.success('You are logged in 👍🏻', 5000);
 		} catch (err) {
 			errmsg = err;
+			notice.error(errmsg.error || 'Login/Password incorrect', 5000);
 		}
 	}
 </script>

@@ -70,8 +70,8 @@ function createToast() {
 			send(msg, 'warning', timeout, title, close),
 		primary: (msg, timeout, title, close) =>
 			send(msg, 'primary', timeout, title, close),
-		success: (msg, timeout, title, close) =>
-			send(msg, 'success', timeout, title, close),
+		success: (msg, timeout, title, close, icon: Icons = 'emoji') =>
+			send(msg, 'success', timeout, title, close, icon),
 	};
 }
 
