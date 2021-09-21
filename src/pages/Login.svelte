@@ -1,5 +1,5 @@
-<Container>
-	<div class="column col-4 col-mx-auto">
+<Grid container>
+	<Col col="4" offset="mx">
 		<!-- {#if errmsg}
 			<Toast type="error">
 				{errmsg.error || 'Login/Password incorrect'}
@@ -19,11 +19,11 @@
 				Sign in with <i class="social-icon pl-2">{@html linkedinIcon}</i>
 			</Button>
 		</form>
-	</div>
-</Container>
+	</Col>
+</Grid>
 
 <script>
-	import { Container, Input, Button, Toast, notice } from 'svelte-spectre';
+	import { Container, Grid, Col, Input, Button, Toast, notice } from 'svelte-spectre';
 
 	import user from '@/stores/user';
 
