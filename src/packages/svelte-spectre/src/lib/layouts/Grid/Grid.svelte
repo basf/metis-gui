@@ -1,7 +1,7 @@
 {#if container}
 	<Container {size}>
 		<div
-			class="columns {$$props.class || ''}"
+			class="columns grid-align-{align} {$$props.class || ''}"
 			class:col-gapless={gapless}
 			class:col-oneline={oneline}
 			class:stack
@@ -12,7 +12,7 @@
 	</Container>
 {:else}
 	<div
-		class="columns {$$props.class || ''}"
+		class="columns grid-align-{align} {$$props.class || ''}"
 		class:col-gapless={gapless}
 		class:col-oneline={oneline}
 		class:stack
@@ -25,8 +25,9 @@
 <script lang="ts" context="module">
 	import { Container } from '../Container/';
 
-	import type { Size } from '../Container/';
+	type Align = 'start' | 'center' | 'end' | 'stretch';
 
+	import type { Size } from '../Container/';
 	export type { Size };
 </script>
 
@@ -37,7 +38,7 @@
 	export let container: boolean = false;
 	export let stack: boolean = false;
 	export let stretch: boolean = false;
-	export let vertical: boolean = false;
+	export let align: Align = 'start';
 </script>
 
 <style lang="scss">
@@ -51,7 +52,20 @@
 		}
 	}
 	.stretch {
-		// margin-top: $layout-spacing * -2;
+		& > :global(* > *) {
+			height: 100%;
+		}
+	}
+	.grid-align-start {
+		align-items: flex-start;
+	}
+	.grid-align-center {
+		align-items: center;
+	}
+	.grid-align-end {
+		align-items: flex-end;
+	}
+	.grid-align-stretch {
 		& > :global(* > *) {
 			height: 100%;
 		}

@@ -5,7 +5,7 @@
 	</p>
 	<Button variant="primary" {loading} on:click={(e) => (loading = !loading)}>Button</Button>
 	<IconButton icon="people" shape="square" variant="link" />
-	<Hero class="my-2">
+	<Hero class="my-2" size="sm">
 		<h2>Grid</h2>
 		<Grid stack>
 			<Col col="5" class="class"><div class="bg-secondary">col</div></Col>
@@ -15,46 +15,28 @@
 			<Col><div class="bg-secondary">col</div></Col>
 		</Grid>
 	</Hero>
-	<Divider text="OR" />
-	<Grid class="my-2" stretch>
-		<Col>
-			<Card>
-				<img class="img-responsive" src="./img/macos-sierra.jpg" alt="img" slot="img" />
-				<div slot="title" class="h5">Title</div>
-				<div slot="subtitle" class="text-gray">SubTitle</div>
-				<p>Lightweight (~10KB gzipped) starting point for your projects</p>
-				<svelte:fragment slot="footer">
-					<Button variant="primary" href="#cards">Primary</Button>
-					<Button variant="link" href="#cards">Link</Button>
-				</svelte:fragment>
-			</Card>
-		</Col>
-		<Divider vertical text="OR" />
-		<Col>
-			<Card pos="middle">
-				<img class="img-responsive" src="./img/macos-sierra-2.jpg" alt="img" slot="img" />
-				<div slot="title" class="h5">Title</div>
-				<div slot="subtitle" class="text-gray">SubTitle</div>
-				<p>Flexbox-based, responsive and mobile-friendly layout</p>
-				<svelte:fragment slot="footer">
-					<Button variant="primary" href="#cards">Primary</Button>
-					<Button variant="link" href="#cards">Link</Button>
-				</svelte:fragment>
-			</Card>
-		</Col>
-		<Col>
-			<Card pos="bottom">
-				<img class="img-responsive" src="./img/osx-el-capitan-2.jpg" alt="img" slot="img" />
-				<div slot="title" class="h5">Title</div>
-				<div slot="subtitle" class="text-gray">SubTitle</div>
-				<p>Elegantly designed and developed elements and components</p>
-				<svelte:fragment slot="footer">
-					<Button variant="primary" href="#cards">Primary</Button>
-					<Button variant="link" href="#cards">Link</Button>
-				</svelte:fragment>
-			</Card>
-		</Col>
-	</Grid>
+	<Divider text="&&" />
+	<Hero size="sm">
+		<h2>Cards</h2>
+		<Grid class="my-2" oneline align="top">
+			<Divider vertical text="LEFT" />
+			{#each CARDS as { col, pos, img, text }}
+				<Col {col}>
+					<Card pos={pos || 'top'}>
+						<img class="img-responsive" src="img/{img}" alt="img" slot="img" />
+						<div slot="title" class="h5">Title</div>
+						<div slot="subtitle" class="text-gray">SubTitle</div>
+						<p>{text}</p>
+						<svelte:fragment slot="footer">
+							<Button variant="primary" href="#cards">Primary</Button>
+							<Button variant="link" href="#cards">Link</Button>
+						</svelte:fragment>
+					</Card>
+				</Col>
+			{/each}
+			<Divider vertical text="RIGHT" />
+		</Grid>
+	</Hero>
 	<Empty icon="home" titleSize="h1" buttonVariant="primary" buttonHref="#_" />
 	<Hero class="my-2" bg="dark" />
 </Container>
@@ -66,6 +48,39 @@
 
 	let loading = false;
 
+	const CARDS = [
+		{
+			pos: 'top',
+			col: '4',
+			img: 'macos-sierra.jpg',
+			text: 'Lightweight (~10KB gzipped) starting point for your projects',
+		},
+		{
+			pos: 'middle',
+			col: '6',
+			img: 'macos-sierra-2.jpg',
+			text: 'Flexbox-based, responsive and mobile-friendly layout',
+		},
+		{
+			pos: 'bottom',
+			col: '8',
+			img: 'osx-el-capitan.jpg',
+			text: 'Elegantly designed and developed elements and components',
+		},
+		{
+			pos: 'middle',
+			col: '10',
+			img: 'osx-yosemite.jpg',
+			text: 'Lightweight (~10KB gzipped) starting point for your projects',
+		},
+		{
+			pos: 'top',
+			col: '12',
+			img: 'osx-yosemite-2.jpg',
+			text: 'Flexbox-based, responsive and mobile-friendly layout',
+		},
+	];
+
 	export let name: string = 'Spectre';
 </script>
 
@@ -76,7 +91,7 @@
 	// img {
 	// 	max-height: 200px;
 	// }
-	div[class~='bg-'] {
-		border-radius: 0.1rem;
-	}
+	// div[class~='bg-'] {
+	// 	border-radius: 0.1rem;
+	// }
 </style>
