@@ -12,7 +12,11 @@
 
 		<nav slot="right">
 			<div class="mr-2">
-				<IconButton icon="people" />
+				<IconButton
+					icon="people"
+					on:click={(e) =>
+						notice.warning('authenticate-please', 5000, 'session-logout', true)}
+				/>
 			</div>
 		</nav>
 	</Navbar>
@@ -20,6 +24,7 @@
 	<main class="text-center">
 		<slot />
 	</main>
+	<Toasts />
 </Spectre>
 
 <script>
@@ -29,4 +34,6 @@
 	// import '$lib/spectre.scss';
 	import { Navbar } from '$lib/layouts/';
 	import { IconButton } from '$lib/components/';
+	import Toasts from '$lib/components/Toast/Notices.svelte';
+	import { notice } from '$lib/components/Toast/notice';
 </script>

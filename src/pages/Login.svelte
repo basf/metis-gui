@@ -1,10 +1,10 @@
 <Container>
 	<div class="column col-4 col-mx-auto">
-		{#if errmsg}
+		<!-- {#if errmsg}
 			<Toast type="error">
 				{errmsg.error || 'Login/Password incorrect'}
 			</Toast>
-		{/if}
+		{/if} -->
 		<form on:submit|preventDefault={submit}>
 			<Input bind:value={username} placeholder="Name" inline>Name</Input>
 			<Input bind:value={password} placeholder="Password" type="password" inline
@@ -23,7 +23,7 @@
 </Container>
 
 <script>
-	import { Container, Input, Button, Toast } from 'svelte-spectre';
+	import { Container, Input, Button, Toast, notice } from 'svelte-spectre';
 
 	import user from '@/stores/user';
 
@@ -35,6 +35,8 @@
 	let username = '';
 	let password = '';
 	let errmsg;
+
+	$: errmsg && notice.error(errmsg.error || 'Login/Password incorrect', 5000, '', true);
 
 	async function submit() {
 		try {

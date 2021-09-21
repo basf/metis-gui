@@ -2,7 +2,7 @@
 	<a
 		{...$$restProps}
 		{href}
-		class="btn btn-{variant} btn-{size}"
+		class="btn btn-{variant} btn-{size} {$$props.class || ''}"
 		class:btn-block={block}
 		class:btn-action={!!shape}
 		class:circle={shape === 'circle'}
@@ -18,7 +18,7 @@
 {:else}
 	<button
 		{...$$restProps}
-		class="btn btn-{variant} btn-{size}"
+		class="btn btn-{variant} btn-{size} {$$props.class || ''}"
 		class:btn-block={block}
 		class:btn-action={!!shape}
 		class:circle={shape === 'circle'}

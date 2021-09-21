@@ -8,12 +8,13 @@
 			<svelte:fragment slot="loading">Loading...</svelte:fragment>
 		</Viewpoint>
 	</main>
+	<Toasts />
 </Spectre>
 
 <script>
 	import { pattern, click, redirect } from 'svelte-pathfinder';
 	import Viewpoint from 'svelte-viewpoint';
-	import { Spectre } from 'svelte-spectre';
+	import { Spectre, Toasts } from 'svelte-spectre';
 
 	import Header from '@/views/Header.svelte';
 
