@@ -38,7 +38,7 @@ function createToast() {
 	function send(toast: Toast): void {
 		const id = curId++;
 		toasts.update((state) => {
-			state = state.filter((t) => t.timeout > 0);
+			state = state.filter((t) => t.timeout >= 0);
 			return [...state, { id, ...toast }];
 		});
 		if (toast.timeout > 0) {
@@ -64,15 +64,15 @@ function createToast() {
 		close,
 		clear,
 		default: (toast: Toast) =>
-			send({ ...toast, msg: 'default', icon: 'message' }),
+			send({ ...toast, msg: 'default', icon: 'message', close: true }),
 		error: (toast: Toast) =>
-			send({ ...toast, type: 'error', icon: 'stop' }),
+			send({ ...toast, type: 'error', icon: 'stop', close: true }),
 		warning: (toast: Toast) =>
-			send({ ...toast, type: 'warning', icon: 'mail' }),
+			send({ ...toast, type: 'warning', icon: 'mail', close: true }),
 		primary: (toast: Toast) =>
-			send({ ...toast, type: 'primary', icon: 'flag' }),
+			send({ ...toast, type: 'primary', icon: 'flag', close: true }),
 		success: (toast: Toast) =>
-			send({ ...toast, type: 'success', icon: 'emoji' }),
+			send({ ...toast, type: 'success', icon: 'emoji', close: true }),
 	};
 }
 

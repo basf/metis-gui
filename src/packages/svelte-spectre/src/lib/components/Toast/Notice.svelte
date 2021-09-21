@@ -19,7 +19,7 @@
 			{#if toast.icon}
 				<Grid align="center">
 					<Col col="auto">
-						<Icon icon={toast.icon} size="1x" />
+						<Icon icon={toast.icon} size="2x" />
 					</Col>
 					<Col>
 						{#if toast.title}<h5>{toast.title}</h5>{/if}
