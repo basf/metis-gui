@@ -14,7 +14,8 @@
 			<div class="mr-2">
 				<IconButton
 					icon="people"
-					on:click={(e) => notice.warning('Warning', 5000, 'Warning', true)}
+					on:click={(e) =>
+						notice.success({ title: 'title', msg: 'msg', timeout: 1000, close: true })}
 				/>
 			</div>
 		</nav>

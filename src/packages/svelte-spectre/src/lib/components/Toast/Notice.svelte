@@ -4,7 +4,7 @@
 			animate:flip
 			style={toast.timeout && `--timeout: ${toast.timeout}ms`}
 			class:timeout={timered.includes(toast.id)}
-			class="toast {!toast.type.default ? `toast-${toast.type}` : ''} my-1"
+			class="toast {toast.type ? `toast-${toast.type}` : ''} my-1"
 			on:introstart={(e) => checkTimeout(toast)}
 			in:fly={{ y: -48 }}
 			out:fade
@@ -19,16 +19,16 @@
 			{#if toast.icon}
 				<Grid align="center">
 					<Col col="auto">
-						<Icon icon={toast.icon} size="2x" />
+						<Icon icon={toast.icon} size="1x" />
 					</Col>
 					<Col>
 						{#if toast.title}<h5>{toast.title}</h5>{/if}
-						<p>{toast.message}</p>
+						<p>{toast.msg}</p>
 					</Col>
 				</Grid>
 			{:else}
 				{#if toast.title}<h5>{toast.title}</h5>{/if}
-				<p>{toast.message}</p>
+				<p>{toast.msg}</p>
 			{/if}
 		</div>
 	{/each}
@@ -37,14 +37,16 @@
 <script lang="ts">
 	import { flip } from 'svelte/animate';
 	import { fly, fade } from 'svelte/transition';
+
 	import { notice } from './notice';
+	import type { Toast } from './notice';
 
 	import { Button, Icon } from '../../components';
 	import { Grid, Col } from '../../layouts';
 
 	let timered = [];
 
-	function checkTimeout(toast) {
+	function checkTimeout(toast: Toast) {
 		if (toast.timeout > 0) timered = [...timered, toast.id];
 	}
 </script>
@@ -60,6 +62,9 @@
 		flex-direction: column;
 		justify-content: flex-start;
 		align-items: center;
+		max-width: 300px;
+		left: 50%;
+		transform: translateX(-50%);
 	}
 	.toast {
 		max-width: 300px;

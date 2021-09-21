@@ -1,56 +1,57 @@
-import { readable, writable, derived, get } from 'svelte/store';
+import { writable } from 'svelte/store';
 import type { Icons } from '../../types/icons';
+import type { Color } from '../../types/bg';
 
+export type Toast = {
+	id?: number,
+	type?: Color,
+	title?: string,
+	msg?: string,
+	icon?: Icons,
+	close?: boolean,
+	timeout?: number,
+}
 function createToast() {
-	const options = {
-		message: 'toast',
-		type: 'default',
-		timeout: 0,
-		title: '',
-		close: true,
-	};
+	// let toast: Toast = {
+	// 	type: '',
+	// 	title: '',
+	// 	msg: '',
+	// 	icon: '',
+	// 	close: true,
+	// 	timeout: 0,
+	// };
 
-	function createTimer(duration: number) {
-		return readable(duration, (set) => {
-			const timer = setInterval(() => {
-				duration > 0
-					? set((duration = duration - 1))
-					: clearInterval(timer);
-			}, 10);
-		});
-	}
+	// function createTimer(duration: number) {
+	// 	return readable(duration, (set) => {
+	// 		const timer = setInterval(() => {
+	// 			duration > 0
+	// 				? set((duration = duration - 1))
+	// 				: clearInterval(timer);
+	// 		}, 10);
+	// 	});
+	// }
 
 	const toasts = writable([]);
 
-	let currentId = 1;
+	let curId = 1;
 
-	function send(
-		message: string = 'noticy',
-		type: string = 'default',
-		timeout: number = 0,
-		title: string = '',
-		close: boolean = true,
-		icon: Icons
-	) {
-		const id = currentId++;
+	function send(toast: Toast): void {
+		const id = curId++;
 		toasts.update((state) => {
-			state = state.filter((n) => n.timeout > 0);
-			return [
-				...state,
-				{ id, type, message, timeout, title, close, icon },
-			];
+			state = state.filter((t) => t.timeout > 0);
+			return [...state, { id, ...toast }];
 		});
-		if (timeout > 0) {
+		if (toast.timeout > 0) {
 			setTimeout(() => {
 				toasts.update((state) => {
-					return [...state.filter((n) => n.id !== id)];
+					return [...state.filter((t) => t.id !== id)];
 				});
-			}, timeout);
+			}, toast.timeout);
 		}
 	}
 	function close(id: number) {
 		toasts.update((state) => {
-			return [...state.filter((n) => n.id !== id)];
+			return [...state.filter((t) => t.id !== id)];
 		});
 	}
 	function clear() {
@@ -62,16 +63,16 @@ function createToast() {
 		send,
 		close,
 		clear,
-		default: (msg, timeout, title, close) =>
-			send(msg, 'default', timeout, title, close),
-		error: (msg, timeout, title, close, icon: Icons = 'stop') =>
-			send(msg, 'error', timeout, title, close, icon),
-		warning: (msg, timeout, title, close, icon: Icons = 'mail') =>
-			send(msg, 'warning', timeout, title, close, icon),
-		primary: (msg, timeout, title, close) =>
-			send(msg, 'primary', timeout, title, close),
-		success: (msg, timeout, title, close, icon: Icons = 'emoji') =>
-			send(msg, 'success', timeout, title, close, icon),
+		default: (toast: Toast) =>
+			send({ ...toast, msg: 'default', icon: 'message' }),
+		error: (toast: Toast) =>
+			send({ ...toast, type: 'error', icon: 'stop' }),
+		warning: (toast: Toast) =>
+			send({ ...toast, type: 'warning', icon: 'mail' }),
+		primary: (toast: Toast) =>
+			send({ ...toast, type: 'primary', icon: 'flag' }),
+		success: (toast: Toast) =>
+			send({ ...toast, type: 'success', icon: 'emoji' }),
 	};
 }
 
