@@ -1,10 +1,5 @@
 <Grid container>
 	<Col col="4" offset="mx">
-		<!-- {#if errmsg}
-			<Toast type="error">
-				{errmsg.error || 'Login/Password incorrect'}
-			</Toast>
-		{/if} -->
 		<form on:submit|preventDefault={submit}>
 			<Input bind:value={username} placeholder="Name" inline>Name</Input>
 			<Input bind:value={password} placeholder="Password" type="password" inline
@@ -15,38 +10,9 @@
 			<Grid align="center">
 				<Col col="4">Login with</Col>
 				<Col col="8">
-					<IconButton
-						svg={basfIcon}
-						shape="square"
-						variant="link"
-						iconSize="2x"
-						size="xl"
-						class=""
-					/>
-					<IconButton
-						svg={orcidIcon}
-						shae="circle"
-						variant="link"
-						iconSize="2x"
-						size="xl"
-						class=""
-					/>
-					<IconButton
-						svg={githubIcon}
-						shape="circle"
-						variant="link"
-						iconSize="2x"
-						size="xl"
-						class=""
-					/>
-					<IconButton
-						svg={linkedinIcon}
-						shape="circle"
-						variant="link"
-						iconSize="2x"
-						size="xl"
-						class=""
-					/>
+					{#each oauth as icon}
+						<IconButton svg={icon} variant="link" iconSize="2x" size="xl" class="" />
+					{/each}
 				</Col>
 			</Grid>
 		</form>
@@ -54,17 +20,7 @@
 </Grid>
 
 <script>
-	import {
-		Container,
-		Grid,
-		Col,
-		Input,
-		Button,
-		IconButton,
-		Toast,
-		notice,
-		Icon,
-	} from 'svelte-spectre';
+	import { Grid, Col, Input, Button, IconButton, notice } from 'svelte-spectre';
 
 	import user from '@/stores/user';
 
@@ -79,9 +35,7 @@
 	let password = '';
 	let errmsg;
 
-	// $: errmsg
-	// 	? notice.error(errmsg.error || 'Login/Password incorrect', 5000)
-	// 	: notice.success('You are logged in 👍🏻', 5000);
+	const oauth: string[] = [githubIcon, linkedinIcon, basfIcon, orcidIcon];
 
 	async function submit() {
 		try {
@@ -94,11 +48,3 @@
 		}
 	}
 </script>
-
-<style>
-	/* .social-icon > :global(svg) {
-		fill: #5755d9;
-		height: 0.8rem;
-		vertical-align: middle;
-	} */
-</style>
