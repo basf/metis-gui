@@ -18,7 +18,7 @@
 						notice.success({
 							title: 'title',
 							msg: 'msg',
-							timeout: 1000,
+							timeout: 0,
 						})}
 				/>
 			</div>

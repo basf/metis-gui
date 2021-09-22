@@ -1,39 +1,36 @@
-<section class="noticy container p-absolute">
-	{#each $notice as toast (toast.id)}
-		<div
-			animate:flip
-			style="--nextpos: {nextpos}%; {toast.timeout && `--timeout: ${toast.timeout}ms`}"
-			class:timeout={timered.includes(toast.id)}
-			class="toast {toast.type ? `toast-${toast.type}` : ''} m-2 pos-{toast.pos}"
-			on:introstart={(e) => checkTimeout(toast)}
-			in:fly={{ y: -48 }}
-			out:fade
-			use:portalAction={spectre}
-		>
-			{#if toast.close}
-				<Button
-					variant="clear"
-					class="float-right c-hand"
-					on:click={(e) => notice.close(toast.id)}
-				/>
-			{/if}
-			{#if toast.icon}
-				<Grid align="center">
-					<Col col="auto">
-						<Icon icon={toast.icon} size="2x" />
-					</Col>
-					<Col>
-						{#if toast.title}<h5>{toast.title}</h5>{/if}
-						<p>{toast.msg}</p>
-					</Col>
-				</Grid>
-			{:else}
-				{#if toast.title}<h5>{toast.title}</h5>{/if}
-				<p>{toast.msg}</p>
-			{/if}
-		</div>
-	{/each}
-</section>
+{#each $notice as toast (toast.id)}
+	<div
+		animate:flip
+		style="--nextpos: {nextpos}%; {toast.timeout && `--timeout: ${toast.timeout}ms`}"
+		class:timeout={timered.includes(toast.id)}
+		class="toast {toast.type ? `toast-${toast.type}` : ''} m-2 pos-{toast.pos}"
+		on:introstart={(e) => checkTimeout(toast)}
+		in:fly={{ y: -48 }}
+		out:fade
+	>
+		{#if toast.close}
+			<Button
+				variant="clear"
+				class="float-right c-hand"
+				on:click={(e) => notice.close(toast.id)}
+			/>
+		{/if}
+		{#if toast.icon}
+			<Grid align="center">
+				<Col col="auto">
+					<Icon icon={toast.icon} size="2x" />
+				</Col>
+				<Col>
+					{#if toast.title}<h5>{toast.title}</h5>{/if}
+					<p>{toast.msg}</p>
+				</Col>
+			</Grid>
+		{:else}
+			{#if toast.title}<h5>{toast.title}</h5>{/if}
+			<p>{toast.msg}</p>
+		{/if}
+	</div>
+{/each}
 
 <script lang="ts">
 	import { onMount } from 'svelte';
@@ -49,8 +46,10 @@
 
 	function checkTimeout(toast: Toast) {
 		if (toast.timeout > 0) timered = [...timered, toast.id];
+		else timered = [];
 	}
-	const spectre = document.querySelector('.spectre');
+	$: console.log($notice.length ? '1' : '0');
+	const spectre = document.querySelector('.notices');
 	let pos = 'top-center',
 		nextpos = 0;
 
@@ -65,21 +64,9 @@
 <style lang="scss">
 	:global(.spectre) {
 		@import 'spectre.css/src/toasts';
-
-		.noticy {
-			z-index: 99;
-			top: 1em;
-			display: flex;
-			flex-direction: column;
-			justify-content: flex-start;
-			align-items: center;
-			max-width: 300px;
-			left: 50%;
-			transform: translateX(-50%);
-		}
 		.toast {
 			max-width: 300px;
-			position: fixed;
+			position: relative;
 			&.pos {
 				&-top-center {
 					top: 0;
