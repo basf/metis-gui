@@ -27,9 +27,28 @@
 	.icon.svg {
 		text-indent: 0;
 		& > :global(svg) {
-			fill: #5755d9;
+			fill: $primary-color;
+			transition: fill 0.2s, border 0.2s, box-shadow 0.2s, color 0.2s;
 			// height: 0.8rem;
 			// vertical-align: sub;
+		}
+		&:focus,
+		&:hover {
+			& > :global(svg) {
+				fill: darken($primary-color-dark, 2%);
+			}
+		}
+		&:active,
+		&.active {
+			& > :global(svg) {
+				fill: darken($primary-color-dark, 4%);
+			}
+		}
+		&.loading {
+			&::after {
+				border-bottom-color: $light-color;
+				border-left-color: $light-color;
+			}
 		}
 	}
 	:global(.btn) .icon.svg {
@@ -39,7 +58,26 @@
 			margin-top: -0.25rem;
 		}
 		& > :global(svg > path) {
+			transition: fill 0.2s, border 0.2s, box-shadow 0.2s, color 0.2s;
 			fill: $primary-color;
+		}
+		&:focus,
+		&:hover {
+			& > :global(svg > path) {
+				fill: darken($primary-color-dark, 2%);
+			}
+		}
+		&:active,
+		&.active {
+			& > :global(svg > path) {
+				fill: darken($primary-color-dark, 4%);
+			}
+		}
+		&.loading {
+			&::after {
+				border-bottom-color: $light-color;
+				border-left-color: $light-color;
+			}
 		}
 	}
 	:global(.btn.btn-action) .icon.svg {
