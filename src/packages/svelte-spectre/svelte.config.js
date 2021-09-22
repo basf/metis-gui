@@ -50,11 +50,11 @@ export default {
 			dir: 'package',
 			exports: {
 				include: ['**'],
-				exclude: ['**/_*', 'spectre.scss'],
+				exclude: ['**/_*', 'spectre.scss', 'fix.scss', 'scss/*'],
 			},
 			files: {
 				include: ['**'],
-				exclude: ['spectre.scss'],
+				exclude: ['spectre.scss', 'fix.scss', 'scss/*'],
 			},
 			emitTypes: true,
 		},

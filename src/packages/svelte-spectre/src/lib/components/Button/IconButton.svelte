@@ -3,9 +3,11 @@
 </Button>
 
 <script lang="ts" context="module">
-	import Button, { Size, Shape, Variant } from './Button.svelte';
-	import { Icon, Zoom, Icons } from '../Icon';
+	import Button from './Button.svelte';
+	import { Icon } from '../Icon';
 
+	import type { Size, Shape, Variant } from './Button.svelte';
+	import type { Zoom, Icons } from '../Icon';
 	export type { Zoom, Icons, Shape, Variant };
 </script>
 
