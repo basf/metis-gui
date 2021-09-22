@@ -128,7 +128,7 @@ export default async function fetchJSON<T>(
         if (res.status === 401) {
             goto('/login');
         }
-        const err: HttpError = new Error(res.statusText);
+        const err: HttpError = new Error(res.status);
         err.response = res;
         throw err;
     }
