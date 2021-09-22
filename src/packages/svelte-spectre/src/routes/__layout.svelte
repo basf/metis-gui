@@ -16,7 +16,7 @@
 					icon="people"
 					on:click={(e) =>
 						notice.success({
-							title: 'title',
+							// title: 'title',
 							msg: 'msg',
 							timeout: 0,
 						})}
