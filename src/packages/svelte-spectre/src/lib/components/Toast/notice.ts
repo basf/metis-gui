@@ -10,6 +10,7 @@ export type Toast = {
 	icon?: Icons,
 	close?: boolean,
 	timeout?: number,
+	pos?: string
 }
 function createToast() {
 	// let toast: Toast = {
@@ -63,16 +64,16 @@ function createToast() {
 		send,
 		close,
 		clear,
-		default: (toast: Toast) =>
-			send({ ...toast, msg: 'default', icon: 'message', close: true }),
-		error: (toast: Toast) =>
-			send({ ...toast, type: 'error', icon: 'stop', close: true }),
-		warning: (toast: Toast) =>
-			send({ ...toast, type: 'warning', icon: 'mail', close: true }),
-		primary: (toast: Toast) =>
-			send({ ...toast, type: 'primary', icon: 'flag', close: true }),
-		success: (toast: Toast) =>
-			send({ ...toast, type: 'success', icon: 'emoji', close: true }),
+		default: (toast: Toast = {}) =>
+			send({ msg: 'default', icon: 'message', close: true, pos: 'top-center', ...toast }),
+		error: (toast: Toast = {}) =>
+			send({ type: 'error', icon: 'stop', close: true, pos: 'top-center', ...toast }),
+		warning: (toast: Toast = {}) =>
+			send({ type: 'warning', icon: 'mail', close: true, pos: 'top-center', ...toast }),
+		primary: (toast: Toast = {}) =>
+			send({ type: 'primary', icon: 'flag', close: true, pos: 'top-center', ...toast }),
+		success: (toast: Toast = {}) =>
+			send({ type: 'success', icon: 'emoji', close: true, pos: 'top-center', ...toast }),
 	};
 }
 
