@@ -1,21 +1,17 @@
-<Button {...$$restProps} {size} {shape} {variant} on:click on:dblclick>
-	<Icon {icon} {svg} size={iconSize} />
+<Button shape="square" variant="link" {...$$restProps} on:click on:dblclick>
+	<Icon {icon} size={iconSize}><slot /></Icon>
 </Button>
 
 <script lang="ts" context="module">
 	import Button from './Button.svelte';
 	import { Icon } from '../Icon';
 
-	import type { Size, Shape, Variant } from './Button.svelte';
+	import type { Variant } from '../Button';
 	import type { Zoom, Icons } from '../Icon';
-	export type { Zoom, Icons, Shape, Variant };
+	export type { Zoom, Icons, Variant };
 </script>
 
 <script lang="ts">
-	export let icon: Icons = 'emoji';
+	export let icon: Icons = '';
 	export let iconSize: Zoom = '1x';
-	export let size: Size = 'md';
-	export let svg: string = '';
-	export let variant: Variant = 'link';
-	export let shape: Shape = 'square';
 </script>

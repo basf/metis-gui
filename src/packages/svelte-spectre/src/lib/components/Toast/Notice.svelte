@@ -15,9 +15,9 @@
 				bind:this={nodes[i]}
 			>
 				{#if toast.close}
-					<Button
-						variant="clear"
-						class="float-right c-hand"
+					<IconButton
+						size="xs"
+						icon="cross"
 						on:click={(e) => notice.close(toast.id, toast.pos)}
 					/>
 				{/if}
@@ -46,7 +46,7 @@
 	import { flip } from 'svelte/animate';
 	import { fly, fade } from 'svelte/transition';
 
-	import { Button, Icon } from '../../components';
+	import { Button, Icon, IconButton } from '../../components';
 	import { Grid, Col } from '../../layouts';
 
 	import { notice } from './notice';
@@ -82,6 +82,25 @@
 		.toast {
 			max-width: 300px;
 			position: fixed;
+			:global(.btn-link) {
+				float: right;
+				background: transparent;
+				border: 0;
+				color: currentColor;
+				height: 1rem;
+				line-height: 0.8rem;
+				margin-left: 0.2rem;
+				margin-right: -2px;
+				opacity: 1;
+				padding: 0.1rem;
+				text-decoration: none;
+				width: 1rem !important;
+				&:hover {
+					background: rgba(247, 248, 249, 0.5);
+					opacity: 0.95;
+					color: inherit;
+				}
+			}
 			&.pos {
 				&-top_center {
 					top: var(--next-top_center);

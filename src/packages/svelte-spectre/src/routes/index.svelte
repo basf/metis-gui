@@ -24,8 +24,8 @@
 	<Divider text="&&" />
 	<Hero size="sm">
 		<h2>Cards</h2>
-		<Grid offset="my-2" oneline align="start">
-			<Divider align="vertical" text="LEFT" />
+		<Grid offset="my-2" oneline align="">
+			<Col><Divider align="vertical" text="LEFT" /></Col>
 			{#each CARDS as { col, pos, img, text }}
 				<Col {col}>
 					<Card {pos}>
@@ -40,7 +40,7 @@
 					</Card>
 				</Col>
 			{/each}
-			<Divider align="vertical" text="RIGHT" />
+			<Col><Divider align="vertical" text="RIGHT" /></Col>
 		</Grid>
 	</Hero>
 	<Empty icon="home" titleSize="h1" buttonVariant="primary" buttonHref="#_" />

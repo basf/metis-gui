@@ -1,5 +1,5 @@
 <div
-	class:divider={align === 'vertical'}
+	class:divider={align === 'horizontal'}
 	class:text-center={align === 'horizontal'}
 	class:divider-vert={align === 'vertical'}
 	data-content={text || undefined}
@@ -16,17 +16,20 @@
 </script>
 
 <style lang="scss">
-	@import 'spectre.css/src/utilities/divider';
+	/* TODO - vertical height in flex-align scope */
+
 	:global(.spectre) {
-		.divider {
-			&[data-content]::after {
-				transform: translateY(-50%) !important;
-			}
-		}
+		@import 'spectre.css/src/utilities/divider';
+		// .divider {
+		// 	&[data-content]::after {
+		// 		transform: translateY(-50%) !important;
+		// 	}
+		// }
 		.divider-vert {
-			&[data-content]::after {
-				transform: translate(-50%, -50%) !important;
-			}
+			height: 100%;
+			// &[data-content]::after {
+			// 	transform: translate(-50%, -50%) !important;
+			// }
 		}
 	}
 </style>

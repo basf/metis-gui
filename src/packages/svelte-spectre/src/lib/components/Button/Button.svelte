@@ -37,7 +37,7 @@
 	import type { Size } from '../../types/size';
 	import type { Offset } from '../../types/position';
 
-	type Variant = 'default' | 'primary' | 'secondary' | 'link' | 'success' | 'error' | 'clear';
+	type Variant = 'default' | 'primary' | 'secondary' | 'link' | 'success' | 'error';
 	type Shape = 'square' | 'circle' | false;
 
 	export type { Size, Variant, Shape };

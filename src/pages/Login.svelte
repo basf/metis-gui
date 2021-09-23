@@ -12,7 +12,9 @@
 					<Col col="4">Login with</Col>
 					<Col col="8">
 						{#each oauth as icon}
-							<IconButton svg={icon} variant="link" iconSize="2x" size="xl" />
+							<IconButton variant="link" iconSize="2x" size="xl">
+								{@html icon}
+							</IconButton>
 						{/each}
 					</Col>
 				</Grid>

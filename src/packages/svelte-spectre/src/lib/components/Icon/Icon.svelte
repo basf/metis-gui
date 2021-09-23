@@ -1,5 +1,5 @@
-<i {...$$restProps} class="icon icon-{size} {!svg && `icon-${icon}`} " class:svg>
-	{#if svg}{@html svg}{/if}
+<i {...$$restProps} class="icon icon-{size} {icon && `icon-${icon}`} " class:svg={$$slots.default}>
+	<slot />
 </i>
 
 <script lang="ts" context="module">
@@ -9,9 +9,8 @@
 </script>
 
 <script lang="ts">
-	export let icon: Icons = 'emoji';
+	export let icon: Icons = '';
 	export let size: Zoom = '1x';
-	export let svg: string = '';
 </script>
 
 <style lang="scss">
