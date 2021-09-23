@@ -9,10 +9,14 @@
 				<Button variant="primary" type="submit" block>Login</Button>
 				<div class="divider text-center p-1" data-content="OR" />
 				<Grid align="center">
-					<Col col="4">Login with</Col>
-					<Col col="8">
+					<Col col="auto">Login with</Col>
+					<Col
+						col="8"
+						offset="ml-auto"
+						style="display: flex; justify-content: space-between"
+					>
 						{#each oauth as icon}
-							<IconButton variant="link" iconSize="2x" size="xl">
+							<IconButton variant="link" iconSize="2x" size="lg">
 								{@html icon}
 							</IconButton>
 						{/each}

@@ -14,9 +14,6 @@
 	export let icon: Icons = '';
 	export let size: Zoom = '1x';
 	export let offset: Offset = '';
-	let svg;
-
-	$: console.log($$slots.default);
 </script>
 
 <style lang="scss">
@@ -24,7 +21,6 @@
 	:global {
 		@import 'spectre.css/src/icons/icons-core';
 	}
-
 	:global(.accordion),
 	:global(.btn),
 	:global(.toast),
@@ -32,6 +28,9 @@
 		.icon {
 			vertical-align: sub;
 		}
+	}
+	:global(.btn) {
+		position: relative;
 	}
 
 	.icon {
@@ -60,9 +59,12 @@
 		}
 	}
 	:global(.btn) .icon[svg='true'] {
-		:global(.btn-action) & {
-			margin-top: -0.25rem;
-		}
+		display: flex;
+		justify-content: center;
+		position: absolute;
+		inset: 0;
+		width: auto;
+		height: auto;
 		& > :global(svg) {
 			transition: fill 0.2s, border 0.2s, box-shadow 0.2s, color 0.2s;
 			fill: $primary-color;

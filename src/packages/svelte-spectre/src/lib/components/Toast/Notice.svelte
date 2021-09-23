@@ -16,7 +16,7 @@
 			>
 				{#if toast.close}
 					<IconButton
-						size="xs"
+						size="md"
 						icon="cross"
 						on:click={(e) => notice.close(toast.id, toast.pos)}
 					/>
@@ -83,20 +83,15 @@
 			max-width: 300px;
 			position: fixed;
 			:global(.btn-link) {
-				float: right;
-				background: transparent;
-				border: 0;
+				position: absolute;
+				top: 0;
+				right: 0;
 				color: currentColor;
-				height: 1rem;
-				line-height: 0.8rem;
-				margin-left: 0.2rem;
-				margin-right: -2px;
 				opacity: 1;
-				padding: 0.1rem;
-				text-decoration: none;
-				width: 1rem !important;
-				&:hover {
-					background: rgba(247, 248, 249, 0.5);
+				&:hover,
+				&:active,
+				&:focus {
+					background: rgba($bg-color, 0.5);
 					opacity: 0.95;
 					color: inherit;
 				}
