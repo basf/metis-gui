@@ -1,5 +1,4 @@
 <Container offset="mt-2">
-	<!-- <Col col="12" mx="auto" class="mt-2"> -->
 	{#if $errors.length}
 		{#each $errors as error}
 			<Toast type="error">
@@ -15,12 +14,11 @@
 			<slot />
 		</div>
 	</Panel>
-	<!-- </Col> -->
 </Container>
 
 <script>
 	import { path } from 'svelte-pathfinder';
-	import { Col, Container, Panel, Tabs, Toast } from 'svelte-spectre';
+	import { Container, Panel, Tabs, Toast } from 'svelte-spectre';
 
 	import errors from '@/stores/errors';
 

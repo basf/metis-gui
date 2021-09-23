@@ -1,8 +1,4 @@
-<i
-	{...$$restProps}
-	class="icon icon-{size} {!svg && `icon-${icon}`} {$$props.class || ''}"
-	class:svg
->
+<i {...$$restProps} class="icon icon-{size} {!svg && `icon-${icon}`} " class:svg>
 	{#if svg}{@html svg}{/if}
 </i>
 

@@ -2,7 +2,7 @@
 	<a
 		{...$$restProps}
 		{href}
-		class="btn btn-{variant} btn-{size} {$$props.class || ''}"
+		class="btn btn-{variant} btn-{size} {offset}"
 		class:btn-block={block}
 		class:btn-action={!!shape}
 		class:circle={shape === 'circle'}
@@ -12,13 +12,13 @@
 		on:dblclick
 	>
 		<slot name="iconRight" />
-		{#if $$slots.default}<slot>Text</slot>{/if}
+		<slot>Text</slot>
 		<slot name="iconLeft" />
 	</a>
 {:else}
 	<button
 		{...$$restProps}
-		class="btn btn-{variant} btn-{size} {$$props.class || ''}"
+		class="btn btn-{variant} btn-{size} {offset}"
 		class:btn-block={block}
 		class:btn-action={!!shape}
 		class:circle={shape === 'circle'}
@@ -28,13 +28,14 @@
 		on:dblclick
 	>
 		<slot name="iconRight" />
-		{#if $$slots.default}<slot>Text</slot>{/if}
+		<slot>Text</slot>
 		<slot name="iconLeft" />
 	</button>
 {/if}
 
 <script lang="ts" context="module">
 	import type { Size } from '../../types/size';
+	import type { Offset } from '../../types/position';
 
 	type Variant = 'default' | 'primary' | 'secondary' | 'link' | 'success' | 'error' | 'clear';
 	type Shape = 'square' | 'circle' | false;
@@ -50,6 +51,7 @@
 	export let loading: boolean = false;
 	export let block: boolean = false;
 	export let href: string = '';
+	export let offset: Offset = '';
 </script>
 
 <style lang="scss">

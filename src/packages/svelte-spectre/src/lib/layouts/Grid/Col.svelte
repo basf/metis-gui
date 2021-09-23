@@ -1,22 +1,19 @@
-<div class="column {classes} {offset && `col-${offset}-auto`} {$$props.class || ''}">
+<div class="column {cols} {offset}">
 	<slot />
 </div>
 
 <script lang="ts" context="module">
-	// import type { Size } from '../../types/size';
-
-	// type Col = 'auto' | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 	type Mq = 'col' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-	type Offset = '' | 'mx' | 'ml' | 'mr';
+
+	import type { Offset } from '../../types/position';
 	export type { Mq, Offset };
 </script>
 
 <script lang="ts">
-	// export let size: Col = 'auto';
 	export let mq: Mq[] = ['col', 'xs', 'sm', 'md', 'lg', 'xl'];
 	export let offset: Offset = '';
 
-	$: classes =
+	$: cols =
 		$$restProps &&
 		Object.entries($$restProps)
 			.map(([k, v]) => {
@@ -33,8 +30,4 @@
 	:global(.spectre) {
 		@import 'spectre.css/src/layout';
 	}
-	// [class~='col-'],
-	// .column {
-	// 	padding-bottom: $layout-spacing * 2;
-	// }
 </style>

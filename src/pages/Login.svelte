@@ -1,6 +1,6 @@
 <Container>
 	<Grid>
-		<Col col="4" offset="mx">
+		<Col col="4" offset="mx-auto">
 			<form on:submit|preventDefault={submit}>
 				<Input bind:value={username} placeholder="Name" inline>Name</Input>
 				<Input bind:value={password} placeholder="Password" type="password" inline
@@ -12,13 +12,7 @@
 					<Col col="4">Login with</Col>
 					<Col col="8">
 						{#each oauth as icon}
-							<IconButton
-								svg={icon}
-								variant="link"
-								iconSize="2x"
-								size="xl"
-								class=""
-							/>
+							<IconButton svg={icon} variant="link" iconSize="2x" size="xl" />
 						{/each}
 					</Col>
 				</Grid>

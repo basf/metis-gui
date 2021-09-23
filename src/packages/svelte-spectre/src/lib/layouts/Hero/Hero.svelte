@@ -1,4 +1,4 @@
-<div class="hero {size && `hero-${size}`} {bg && `bg-${bg}`} {$$props.class || ''}">
+<div class="hero {classes} {offset}">
 	<div class="hero-body">
 		<slot>
 			<h1>Hero title</h1>
@@ -10,6 +10,7 @@
 <script lang="ts" context="module">
 	import type { Size } from '../../types/size';
 	import type { Color } from '../../types/bg';
+	import type { Offset } from '../../types/position';
 
 	export type { Size, Color };
 </script>
@@ -17,6 +18,11 @@
 <script lang="ts">
 	export let size: Size = 'xs';
 	export let bg: Color = '';
+	export let offset: Offset = '';
+
+	$: classes = () => {
+		return `${size && `hero-${size}` + bg && `bg-${bg}`}`;
+	};
 </script>
 
 <style lang="scss">

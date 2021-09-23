@@ -1,54 +1,48 @@
 <div
-	class="columns grid-align-{align} {$$props.class || ''}"
+	class="columns col-align-{align} {offset}"
 	class:col-gapless={gapless}
 	class:col-oneline={oneline}
-	class:stack
-	class:stretch
+	class:col-stack={stack}
 >
 	<slot />
 </div>
 
 <script lang="ts" context="module">
+	import type { Offset } from '../../types/position';
+
 	type Align = 'start' | 'center' | 'end' | 'stretch';
 
-	import type { Size } from '../Container/';
-	export type { Size };
+	export type { Align, Offset };
 </script>
 
 <script lang="ts">
-	export let size: Size = 'md';
 	export let gapless: boolean = false;
 	export let oneline: boolean = false;
 	export let stack: boolean = false;
-	export let stretch: boolean = false;
 	export let align: Align = 'start';
+	export let offset: Offset = '';
 </script>
 
 <style lang="scss">
 	:global(.spectre) {
 		@import 'spectre.css/src/layout';
 	}
-	.stack {
+	.col-stack {
 		margin-top: $layout-spacing * -2;
 		& > :global(*) {
 			margin-top: $layout-spacing * 2;
 		}
 	}
-	.stretch {
-		& > :global(* > *) {
-			height: 100%;
-		}
-	}
-	.grid-align-start {
+	.col-align-start {
 		align-items: flex-start;
 	}
-	.grid-align-center {
+	.col-align-center {
 		align-items: center;
 	}
-	.grid-align-end {
+	.col-align-end {
 		align-items: flex-end;
 	}
-	.grid-align-stretch {
+	.col-align-stretch {
 		& > :global(* > *) {
 			height: 100%;
 		}

@@ -1,6 +1,6 @@
 <Container>
 	<Grid>
-		<Col col="6" offset="mx">
+		<Col col="6" offset="mx-auto">
 			{#if $user}
 				<Panel>
 					<div slot="header" class="text-center">

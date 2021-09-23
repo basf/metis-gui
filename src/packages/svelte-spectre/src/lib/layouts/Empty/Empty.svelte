@@ -1,4 +1,4 @@
-<div class="empty {$$props.class || ''}">
+<div class="empty ">
 	{#if icon || $$slots.icon}
 		<div class="empty-icon">
 			<slot name="icon"><Icon {icon} size={iconSize} /></slot>
