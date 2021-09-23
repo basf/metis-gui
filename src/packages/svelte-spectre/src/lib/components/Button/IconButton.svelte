@@ -14,8 +14,4 @@
 <script lang="ts">
 	export let icon: Icons = '';
 	export let iconSize: Zoom = '1x';
-
-	// let svg: string = '';
-
-	$: console.log($$slots.default);
 </script>
