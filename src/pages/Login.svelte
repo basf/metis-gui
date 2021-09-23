@@ -10,16 +10,14 @@
 				<div class="divider text-center p-1" data-content="OR" />
 				<Grid align="center">
 					<Col col="auto">Login with</Col>
-					<Col
-						col="8"
-						offset="ml-auto"
-						style="display: flex; justify-content: space-between"
-					>
-						{#each oauth as icon}
-							<IconButton variant="link" iconSize="2x" size="lg">
-								{@html icon}
-							</IconButton>
-						{/each}
+					<Col col="8" offset="ml-auto">
+						<ButtonGroup>
+							{#each oauth as icon}
+								<IconButton variant="link" iconSize="2x" size="lg">
+									{@html icon}
+								</IconButton>
+							{/each}
+						</ButtonGroup>
 					</Col>
 				</Grid>
 			</form>
@@ -28,7 +26,16 @@
 </Container>
 
 <script>
-	import { Container, Grid, Col, Input, Button, IconButton, notice } from 'svelte-spectre';
+	import {
+		Button,
+		ButtonGroup,
+		Col,
+		Container,
+		Grid,
+		Input,
+		IconButton,
+		notice,
+	} from 'svelte-spectre';
 
 	import user from '@/stores/user';
 
