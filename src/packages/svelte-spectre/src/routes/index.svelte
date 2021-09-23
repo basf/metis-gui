@@ -11,7 +11,7 @@
 			on:click={(e) => notice.success({ msg: pos, pos: pos })}
 		/>
 	{/each}
-	<Hero class="my-2" size="sm">
+	<Hero offset="my-2" size="sm">
 		<h2>Grid</h2>
 		<Grid stack>
 			<Col col="5" class="class"><div class="bg-secondary">col</div></Col>
@@ -24,11 +24,11 @@
 	<Divider text="&&" />
 	<Hero size="sm">
 		<h2>Cards</h2>
-		<Grid class="my-2" oneline align="start">
-			<Divider vertical text="LEFT" />
+		<Grid offset="my-2" oneline align="start">
+			<Divider align="vertical" text="LEFT" />
 			{#each CARDS as { col, pos, img, text }}
 				<Col {col}>
-					<Card pos={pos || 'top'}>
+					<Card {pos}>
 						<img class="img-responsive" src="img/{img}" alt="img" slot="img" />
 						<div slot="title" class="h5">Title</div>
 						<div slot="subtitle" class="text-gray">SubTitle</div>
@@ -40,11 +40,11 @@
 					</Card>
 				</Col>
 			{/each}
-			<Divider vertical text="RIGHT" />
+			<Divider align="vertical" text="RIGHT" />
 		</Grid>
 	</Hero>
 	<Empty icon="home" titleSize="h1" buttonVariant="primary" buttonHref="#_" />
-	<Hero class="my-2" bg="dark" />
+	<Hero offset="my-2" bg="dark" />
 </Container>
 
 <script lang="ts">

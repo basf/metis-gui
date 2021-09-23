@@ -1,12 +1,17 @@
 <div
-	class:divider={!vertical}
-	class:text-center={!vertical}
-	class:divider-vert={vertical}
+	class:divider={align === 'vertical'}
+	class:text-center={align === 'horizontal'}
+	class:divider-vert={align === 'vertical'}
 	data-content={text || undefined}
 />
 
+<script lang="ts" context="module">
+	type Align = 'vertical' | 'horizontal';
+	export type { Align };
+</script>
+
 <script lang="ts">
-	export let vertical: boolean = false;
+	export let align: Align = 'horizontal';
 	export let text: string = '';
 </script>
 
