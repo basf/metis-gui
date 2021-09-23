@@ -37,11 +37,11 @@
 	<Hero offset="my-2" size="sm">
 		<h2>Grid</h2>
 		<Grid stack>
-			<Col col="5" class="class"><div class="bg-secondary">col</div></Col>
-			<Col col="7"><div class="bg-primary">col</div></Col>
-			<Col col="8"><div class="bg-secondary">col</div></Col>
-			<Col col="4"><div class="bg-primary">col</div></Col>
-			<Col><div class="bg-secondary">col</div></Col>
+			<Col col="5"><div class="bg-secondary p-1">col-5</div></Col>
+			<Col col="7"><div class="bg-primary p-1">col-7</div></Col>
+			<Col col="8"><div class="bg-secondary p-1">col-8</div></Col>
+			<Col col="4"><div class="bg-primary p-1">col-4</div></Col>
+			<Col><div class="bg-secondary p-1">col</div></Col>
 		</Grid>
 	</Hero>
 	<Divider text="&&" />

@@ -11,9 +11,7 @@
 		on:click
 		on:dblclick
 	>
-		<slot name="iconRight" />
 		<slot>Text</slot>
-		<slot name="iconLeft" />
 	</a>
 {:else}
 	<button
@@ -27,9 +25,7 @@
 		on:click
 		on:dblclick
 	>
-		<slot name="iconRight" />
 		<slot>Text</slot>
-		<slot name="iconLeft" />
 	</button>
 {/if}
 
