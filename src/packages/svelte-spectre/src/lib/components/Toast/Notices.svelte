@@ -1,9 +1,9 @@
-{#if $notice.length}
-	<section class="notices container p-absolute">
-		<Notice />
-	</section>
-{/if}
+<!-- {#if $notice.length} -->
+<!-- <section class="notices container p-absolute"> -->
+<Notice />
+<!-- </section> -->
 
+<!-- {/if} -->
 <script lang="ts">
 	import Notice from './Notice.svelte';
 	import { notice } from './notice';

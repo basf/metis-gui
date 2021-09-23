@@ -1,64 +1,79 @@
-{#each $notice as toast (toast.id)}
-	<div
-		animate:flip
-		style="--nextpos: {nextpos}%; {toast.timeout && `--timeout: ${toast.timeout}ms`}"
-		class:timeout={timered.includes(toast.id)}
-		class="toast {toast.type ? `toast-${toast.type}` : ''} m-2 pos-{toast.pos}"
-		on:introstart={(e) => checkTimeout(toast)}
-		in:fly={{ y: -48 }}
-		out:fade
-	>
-		{#if toast.close}
-			<Button
-				variant="clear"
-				class="float-right c-hand"
-				on:click={(e) => notice.close(toast.id)}
-			/>
-		{/if}
-		{#if toast.icon}
-			<Grid align="center">
-				<Col col="auto">
-					<Icon icon={toast.icon} size={toast.title ? '2x' : '1x'} />
-				</Col>
-				<Col>
+{#if Object.keys($notice).length}
+	{#each Object.entries($notice) as [k, v]}
+		<!-- {#each k as pos} -->
+		{#each v as toast, i (toast.id)}
+			<div
+				style="--next-{toast.pos}: {nodes && nextPos(i)}px; {toast.timeout
+					? `--timeout: ${toast.timeout}ms`
+					: ''}"
+				class:timeout={timered.includes(toast.id)}
+				class="toast {toast.type && `toast-${toast.type}`} m-2 pos-{toast.pos}"
+				on:introstart={(e) => checkTimeout(toast)}
+				in:fly={{ y: -48 }}
+				out:fade
+				use:portalAction={spectre}
+				bind:this={nodes[i]}
+			>
+				{#if toast.close}
+					<Button
+						variant="clear"
+						class="float-right c-hand"
+						on:click={(e) => notice.close(toast.id, toast.pos)}
+					/>
+				{/if}
+				{#if toast.icon}
+					<Grid align="center">
+						<Col col="auto">
+							<Icon icon={toast.icon} size={toast.title ? '2x' : '1x'} />
+						</Col>
+						<Col>
+							{#if toast.title}<h5>{toast.title}</h5>{/if}
+							<p>{toast.msg}</p>
+						</Col>
+					</Grid>
+				{:else}
 					{#if toast.title}<h5>{toast.title}</h5>{/if}
 					<p>{toast.msg}</p>
-				</Col>
-			</Grid>
-		{:else}
-			{#if toast.title}<h5>{toast.title}</h5>{/if}
-			<p>{toast.msg}</p>
-		{/if}
-	</div>
-{/each}
+				{/if}
+			</div>
+		{/each}
+		<!-- {/each} -->
+	{/each}
+{/if}
 
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { flip } from 'svelte/animate';
 	import { fly, fade } from 'svelte/transition';
 
-	import { notice, Toast } from './notice';
-
 	import { Button, Icon } from '../../components';
 	import { Grid, Col } from '../../layouts';
 
-	let timered: number[] = [];
+	import { notice } from './notice';
+	import { positions } from './positions';
+	import type { Pos, Toast } from './notice';
+
+	let timered: number[] = [],
+		nodes: HTMLElement[] = [],
+		spectre: HTMLElement;
+
+	onMount(() => (spectre = document.querySelector('.spectre')));
 
 	function checkTimeout(toast: Toast) {
 		if (toast.timeout > 0) timered = [...timered, toast.id];
-		else timered = [];
+		// else timered = [];
 	}
-	$: console.log($notice.length ? '1' : '0');
-	const spectre = document.querySelector('.notices');
-	let pos = 'top-center',
-		nextpos = 0;
 
-	$: nextpos = $notice.length * 10;
-	// onMount(() => (spectre = document.querySelector('.spectre')));
 	function portalAction(node: Element, parent: Element): void {
 		parent = parent || document.body;
 		parent.appendChild(node);
 	}
+
+	function nextPos(i: number) {
+		return i * ((nodes[i] && nodes[i].offsetHeight) + 8);
+	}
+
+	$: console.log($notice);
 </script>
 
 <style lang="scss">
@@ -66,45 +81,45 @@
 		@import 'spectre.css/src/toasts';
 		.toast {
 			max-width: 300px;
-			position: relative;
+			position: fixed;
 			&.pos {
-				&-top-center {
-					top: 0;
+				&-top_center {
+					top: var(--next-top_center);
 					left: 50%;
 					transform: translate(-50%, 0);
 				}
-				&-top-right {
+				&-top_right {
 					top: 0;
 					right: 0;
 				}
-				&-center-right {
+				&-center_right {
 					top: 50%;
 					right: 0;
 					transform: translate(0, -50%);
 				}
-				&-bottom-right {
-					bottom: 0;
+				&-bottom_right {
+					bottom: var(--next-bottom_right);
 					right: 0;
 				}
-				&-bottom-center {
+				&-bottom_center {
 					bottom: 0;
 					left: 50%;
 					transform: translate(-50%, 0);
 				}
-				&-bottom-left {
+				&-bottom_left {
 					bottom: 0;
 					left: 0;
 				}
-				&-center-left {
+				&-center_left {
 					top: 50%;
 					left: 0;
 					transform: translate(0, -50%);
 				}
-				&-top-left {
+				&-top_left {
 					top: 0;
 					left: 0;
 				}
-				&-center-center {
+				&-center_center {
 					top: 50%;
 					left: 50%;
 					transform: translate(-50%, -50%);

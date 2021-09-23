@@ -4,7 +4,13 @@
 		Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation
 	</p>
 	<Button variant="primary" {loading} on:click={(e) => (loading = !loading)}>Button</Button>
-	<IconButton icon="people" shape="square" variant="link" />
+	{#each positions as pos}
+		<IconButton
+			icon="message"
+			variant="default"
+			on:click={(e) => notice.success({ msg: pos, pos: pos })}
+		/>
+	{/each}
 	<Hero class="my-2" size="sm">
 		<h2>Grid</h2>
 		<Grid stack>
@@ -45,8 +51,20 @@
 	import { Button, Divider, IconButton } from '$lib/components/';
 	import { Card, Container, Empty, Hero, Grid, Col } from '$lib/layouts/';
 	// import { Button } from 'package';
+	import { notice, Pos } from '$lib/components/Toast/notice';
 
-	let loading = false;
+	let loading = false,
+		positions: Pos[] = [
+			'top_center',
+			'top_right',
+			'center_right',
+			'bottom_right',
+			'bottom_center',
+			'bottom_left',
+			'center_left',
+			'top_left',
+			'center_center',
+		];
 
 	const CARDS = [
 		{
