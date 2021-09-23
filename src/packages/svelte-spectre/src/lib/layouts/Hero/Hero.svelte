@@ -1,4 +1,4 @@
-<div class="hero {classes} {offset}">
+<div class="hero {size && `hero-${size}`} {bg && `bg-${bg}`} {offset}">
 	<div class="hero-body">
 		<slot>
 			<h1>Hero title</h1>
@@ -19,10 +19,6 @@
 	export let size: Size = 'xs';
 	export let bg: Color = '';
 	export let offset: Offset = '';
-
-	$: classes = () => {
-		return `${size && `hero-${size}` + bg && `bg-${bg}`}`;
-	};
 </script>
 
 <style lang="scss">

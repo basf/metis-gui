@@ -1,16 +1,22 @@
-<i {...$$restProps} class="icon icon-{size} {icon && `icon-${icon}`} " class:svg={$$slots.default}>
+<i {...$$restProps} class="icon icon-{size} {icon && `icon-${icon}`} {offset}">
 	<slot />
 </i>
 
 <script lang="ts" context="module">
 	import type { Zoom } from '../../types/size';
 	import type { Icons } from '../../types/icons';
+	import type { Offset } from '../../types/position';
+
 	export type { Zoom, Icons };
 </script>
 
 <script lang="ts">
 	export let icon: Icons = '';
 	export let size: Zoom = '1x';
+	export let offset: Offset = '';
+	let svg;
+
+	$: console.log($$slots.default);
 </script>
 
 <style lang="scss">
@@ -19,13 +25,20 @@
 		@import 'spectre.css/src/icons/icons-core';
 	}
 
-	.icon.svg {
+	:global(.accordion),
+	:global(.btn),
+	:global(.toast),
+	:global(.menu) {
+		.icon {
+			vertical-align: sub;
+		}
+	}
+
+	.icon {
 		text-indent: 0;
 		& > :global(svg) {
 			fill: $primary-color;
 			transition: fill 0.2s, border 0.2s, box-shadow 0.2s, color 0.2s;
-			// height: 0.8rem;
-			// vertical-align: sub;
 		}
 		&:focus,
 		&:hover {
@@ -46,25 +59,23 @@
 			}
 		}
 	}
-	:global(.btn) .icon.svg {
-		text-indent: 0;
-		vertical-align: inherit;
+	:global(.btn) .icon[svg='true'] {
 		:global(.btn-action) & {
 			margin-top: -0.25rem;
 		}
-		& > :global(svg > path) {
+		& > :global(svg) {
 			transition: fill 0.2s, border 0.2s, box-shadow 0.2s, color 0.2s;
 			fill: $primary-color;
 		}
 		&:focus,
 		&:hover {
-			& > :global(svg > path) {
+			& > :global(svg) {
 				fill: darken($primary-color-dark, 2%);
 			}
 		}
 		&:active,
 		&.active {
-			& > :global(svg > path) {
+			& > :global(svg) {
 				fill: darken($primary-color-dark, 4%);
 			}
 		}
@@ -75,9 +86,7 @@
 			}
 		}
 	}
-	:global(.btn.btn-action) .icon.svg {
-		margin-top: -0.3rem;
-	}
+
 	// icon-dimond - DRAFT!!!
 	.icon-diamond {
 		border-style: solid;
