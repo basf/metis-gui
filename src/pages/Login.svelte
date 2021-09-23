@@ -1,26 +1,34 @@
-<Grid container>
-	<Col col="4" offset="mx">
-		<form on:submit|preventDefault={submit}>
-			<Input bind:value={username} placeholder="Name" inline>Name</Input>
-			<Input bind:value={password} placeholder="Password" type="password" inline
-				>Password</Input
-			>
-			<Button variant="primary" type="submit" block>Login</Button>
-			<div class="divider text-center p-1" data-content="OR" />
-			<Grid align="center">
-				<Col col="4">Login with</Col>
-				<Col col="8">
-					{#each oauth as icon}
-						<IconButton svg={icon} variant="link" iconSize="2x" size="xl" class="" />
-					{/each}
-				</Col>
-			</Grid>
-		</form>
-	</Col>
-</Grid>
+<Container>
+	<Grid>
+		<Col col="4" offset="mx">
+			<form on:submit|preventDefault={submit}>
+				<Input bind:value={username} placeholder="Name" inline>Name</Input>
+				<Input bind:value={password} placeholder="Password" type="password" inline
+					>Password</Input
+				>
+				<Button variant="primary" type="submit" block>Login</Button>
+				<div class="divider text-center p-1" data-content="OR" />
+				<Grid align="center">
+					<Col col="4">Login with</Col>
+					<Col col="8">
+						{#each oauth as icon}
+							<IconButton
+								svg={icon}
+								variant="link"
+								iconSize="2x"
+								size="xl"
+								class=""
+							/>
+						{/each}
+					</Col>
+				</Grid>
+			</form>
+		</Col>
+	</Grid>
+</Container>
 
 <script>
-	import { Grid, Col, Input, Button, IconButton, notice } from 'svelte-spectre';
+	import { Container, Grid, Col, Input, Button, IconButton, notice } from 'svelte-spectre';
 
 	import user from '@/stores/user';
 

@@ -24,7 +24,7 @@
 	<Divider text="&&" />
 	<Hero size="sm">
 		<h2>Cards</h2>
-		<Grid class="my-2" oneline align="top">
+		<Grid class="my-2" oneline align="start">
 			<Divider vertical text="LEFT" />
 			{#each CARDS as { col, pos, img, text }}
 				<Col {col}>
