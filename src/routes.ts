@@ -25,33 +25,11 @@ const routes: Route[] = [
         component: () => import('@/pages/Profile.svelte'),
     },
     {
-        path: '/data',
-        component: () => import('@/pages/Empty.svelte'),
-        menu: {
-            title: 'Data',
-            icon: 'emoji',
-        },
-    },
-    {
-        path: '/materials',
-        component: () => import('@/pages/Empty.svelte'),
-        menu: {
-            title: 'Materials',
-            clear: true,
-        },
-    },
-    {
-        path: '/projects',
-        component: () => import('@/pages/Empty.svelte'),
-        menu: {
-            title: 'Projects',
-        },
-    },
-    {
         path: '/search',
         component: () => import('@/pages/Search.svelte'),
         menu: {
             title: 'Search',
+            pos: 0,
         },
     },
     {
@@ -59,8 +37,31 @@ const routes: Route[] = [
         component: () => import('@/pages/Calculations.svelte'),
         menu: {
             title: 'Calculations',
-            pos: 0,
-            badge: '9',
+            pos: 1,
+        },
+    },
+    {
+        path: '/data',
+        component: () => import('@/pages/Empty.svelte'),
+        menu: {
+            title: 'Data',
+            pos: 2,
+        },
+    },
+    {
+        path: '/materials',
+        component: () => import('@/pages/Empty.svelte'),
+        menu: {
+            title: 'Materials',
+            pos: 3,
+        },
+    },
+    {
+        path: '/projects',
+        component: () => import('@/pages/Empty.svelte'),
+        menu: {
+            title: 'Projects',
+            pos: 4,
         },
     },
 ];
