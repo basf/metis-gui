@@ -54,24 +54,23 @@
 		height: auto;
 		& > :global(svg) {
 			transition: fill 0.2s, border 0.2s, box-shadow 0.2s, color 0.2s;
-			fill: $primary-color;
+			fill: currentColor;
 		}
 		&:focus,
 		&:hover {
 			& > :global(svg) {
-				fill: darken($primary-color-dark, 2%);
+				fill: currentColor;
 			}
 		}
 		&:active,
 		&.active {
 			& > :global(svg) {
-				fill: darken($primary-color-dark, 4%);
+				fill: currentColor;
 			}
 		}
 		&.loading {
 			&::after {
-				border-bottom-color: $light-color;
-				border-left-color: $light-color;
+				fill: none;
 			}
 		}
 	}
