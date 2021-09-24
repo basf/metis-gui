@@ -9,7 +9,8 @@ export type Color =
     | 'light'
     | 'success'
     | 'warning'
-    | 'error';
+    | 'error'
+    | '';
 export type Position = 'inherit' | 'left' | 'center' | 'right' | 'justify';
 export type Case = 'none' | 'lowercase' | 'uppercase' | 'capitalize';
 export type Weight =

@@ -1,7 +1,6 @@
 <i
 	{...$$restProps}
 	class="icon icon-{size} {icon && `icon-${icon}`} {color && `text-${color}`} {offset}"
-	style="--color: {color}"
 >
 	<slot />
 </i>
@@ -19,7 +18,7 @@
 	export let icon: Icons = '';
 	export let size: Zoom = '1x';
 	export let offset: Offset = '';
-	export let color: Color;
+	export let color: Color = '';
 </script>
 
 <style lang="scss">

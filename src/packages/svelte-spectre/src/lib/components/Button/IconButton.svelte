@@ -12,6 +12,6 @@
 </script>
 
 <script lang="ts">
-	export let icon: Icons = '';
+	export let icon: Icons;
 	export let iconSize: Zoom = '1x';
 </script>
