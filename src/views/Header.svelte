@@ -8,9 +8,10 @@
 	</nav>
 
 	<svelte:fragment slot="center">
-		<a href="/"
+		<IconButton size="xxl" href="/">{@html Xray}</IconButton>
+		<!-- <a href="/"
 			><img src="./b-science.svg" width="64px" height="64px" alt="Basf-dot-Science" /></a
-		>
+		> -->
 	</svelte:fragment>
 
 	<nav slot="right">
@@ -26,4 +27,5 @@
 	import { back, path } from 'svelte-pathfinder';
 	import { Navbar, IconButton } from 'svelte-spectre';
 	import user from '@/stores/user';
+	import Xray from '@/assets/img/b-science.svg';
 </script>

@@ -63,6 +63,14 @@
 		width: $unit-12;
 		height: $unit-12;
 	}
+	.btn.btn-xxl {
+		@extend .btn;
+		height: $unit-16;
+	}
+	.btn.btn-action.btn-xxl {
+		width: $unit-16;
+		height: $unit-16;
+	}
 	.btn.btn-xs {
 		@extend .btn;
 		height: $unit-5;

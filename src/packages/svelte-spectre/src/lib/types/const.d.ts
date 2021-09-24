@@ -2,8 +2,9 @@ export const SIZE = {
     xs: 16,
     sm: 24,
     md: 32,
-    lg: 48,
-    xl: 64,
+    lg: 40,
+    xl: 48,
+    xxl: 64,
 } as const;
 
 export const ZOOM = {
