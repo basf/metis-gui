@@ -3,6 +3,7 @@
 		<!-- {#each k as pos} -->
 		{#each v as toast, i (toast.id)}
 			<div
+				animate:flip
 				style="--next-{toast.pos}: {nextPos(i, toast)}px; {toast.timeout
 					? `--timeout: ${toast.timeout}ms`
 					: ''}"

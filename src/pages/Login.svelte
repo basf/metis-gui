@@ -7,7 +7,7 @@
 					>Password</Input
 				>
 				<Button variant="primary" type="submit" block>Login</Button>
-				<div class="divider text-center p-1" data-content="OR" />
+				<Divider align="horizontal" text="OR" />
 				<Grid align="center">
 					<Col col="auto">Login with</Col>
 					<Col col="8" offset="ml-auto">
@@ -31,6 +31,7 @@
 		ButtonGroup,
 		Col,
 		Container,
+		Divider,
 		Grid,
 		Input,
 		IconButton,
