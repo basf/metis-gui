@@ -1,7 +1,7 @@
 <i
 	{...$$restProps}
-	class="icon icon-{size} {icon && `icon-${icon}`} {offset}"
-	style={color && `--color: ${color}`}
+	class="icon icon-{size} {icon && `icon-${icon}`} {color && `text-${color}`} {offset}"
+	style="--color: {color}"
 >
 	<slot />
 </i>
@@ -10,6 +10,7 @@
 	import type { Zoom } from '../../types/size';
 	import type { Icons } from '../../types/icons';
 	import type { Offset } from '../../types/position';
+	import type { Color } from '../../types/text';
 
 	export type { Zoom, Icons };
 </script>
@@ -18,7 +19,7 @@
 	export let icon: Icons = '';
 	export let size: Zoom = '1x';
 	export let offset: Offset = '';
-	export let color: string; // SVG's need be like sinlge path=""
+	export let color: Color;
 </script>
 
 <style lang="scss">
@@ -40,9 +41,8 @@
 
 	.icon {
 		text-indent: 0;
-		color: var(--color, $primary-color);
 		& > :global(svg) {
-			fill: var(--color, $primary-color);
+			fill: currentColor;
 		}
 	}
 	:global(.btn) .icon[svg='true'] {
