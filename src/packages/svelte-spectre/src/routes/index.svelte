@@ -86,7 +86,14 @@
 			<Col><Divider align="vertical" text="RIGHT" /></Col>
 		</Grid>
 	</Hero>
-	<Empty icon="home" titleSize="h1" buttonVariant="primary" buttonHref="#_" />
+
+	<Empty offset="">
+		<Icon slot="icon" icon="home" size="3x" color="primary" />
+		<h1 slot="title">Title</h1>
+		<p slot="subtitle">Subtitle</p>
+		<Button slot="action" variant="primary">Action</Button>
+	</Empty>
+	<!-- <Empty icon="home" titleSize="h1" buttonVariant="primary" buttonHref="#_" /> -->
 	<Hero offset="my-2" bg="dark" />
 </Container>
 

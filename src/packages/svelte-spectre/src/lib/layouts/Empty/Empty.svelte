@@ -1,52 +1,40 @@
-<div class="empty ">
-	{#if icon || $$slots.icon}
+<div class="empty {offset}">
+	{#if $$slots.icon}
 		<div class="empty-icon">
-			<slot name="icon"><Icon {icon} size={iconSize} /></slot>
+			<slot name="icon" />
 		</div>
 	{/if}
-	{#if title || $$slots.title}
-		<div class="empty-title {titleSize}">
-			<slot name="title">{title}</slot>
+	{#if $$slots.title}
+		<div class="empty-title">
+			<slot name="title" />
 		</div>
 	{/if}
-	{#if subtitle || $$slots.subtitle}
+	{#if $$slots.subtitle}
 		<div class="empty-subtitle">
-			<slot name="subtitle">{subtitle}</slot>
+			<slot name="subtitle" />
 		</div>
 	{/if}
-	{#if buttonText || $$slots.action || buttonVariant}
+	{#if $$slots.action}
 		<div class="empty-action">
-			<slot name="action">
-				<Button href={buttonHref} variant={buttonVariant}>{buttonText}</Button>
-			</slot>
+			<slot name="action" />
 		</div>
 	{/if}
 </div>
 
 <script lang="ts" context="module">
-	import type { Header } from '../../types/text';
-	import type { Zoom, Icons } from '../../components/Icon/';
-	import type { Variant } from '../../components/Button/';
-
-	import { Icon } from '../../components/Icon/';
-	import { Button } from '../../components/Button/';
-
-	export type { Icons, Header };
+	import type { Offset } from '../../types/position';
+	export type { Offset };
 </script>
 
 <script lang="ts">
-	export let icon: Icons = 'emoji';
-	export let iconSize: Zoom = '3x';
-	export let title: string = 'Title';
-	export let titleSize: Header = 'h3';
-	export let subtitle: string = 'Subtitle';
-	export let buttonVariant: Variant = 'primary';
-	export let buttonText: string = 'Button';
-	export let buttonHref: string = '';
+	export let offset: Offset = '';
 </script>
 
 <style lang="scss">
 	:global(.spectre) {
 		@import 'spectre.css/src/empty';
+	}
+	.empty > :global(:nth-child(n + 2) > *) {
+		margin: 0;
 	}
 </style>

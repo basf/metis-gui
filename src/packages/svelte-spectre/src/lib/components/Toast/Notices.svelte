@@ -1,4 +1,4 @@
-<!-- {#if $notice.length} -->
+<!-- {#if Object.keys($notice).length} -->
 <!-- <section class="notices container p-absolute"> -->
 <Notice />
 <!-- </section> -->

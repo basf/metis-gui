@@ -27,7 +27,7 @@
 	<Toasts />
 </Spectre>
 
-<script>
+<script lang="ts">
 	import '../app.scss';
 	import { Spectre } from '$lib';
 	// import '../../package/spectre.css';

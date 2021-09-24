@@ -3,7 +3,7 @@
 		<!-- {#each k as pos} -->
 		{#each v as toast, i (toast.id)}
 			<div
-				style="--next-{toast.pos}: {nodes && nextPos(i)}px; {toast.timeout
+				style="--next-{toast.pos}: {nextPos(i, toast)}px; {toast.timeout
 					? `--timeout: ${toast.timeout}ms`
 					: ''}"
 				class:timeout={timered.includes(toast.id)}
@@ -11,7 +11,6 @@
 				on:introstart={(e) => checkTimeout(toast)}
 				in:fly={{ y: -48 }}
 				out:fade
-				use:portalAction={spectre}
 				bind:this={nodes[i]}
 			>
 				{#if toast.close}
@@ -42,7 +41,7 @@
 {/if}
 
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, afterUpdate, tick } from 'svelte';
 	import { flip } from 'svelte/animate';
 	import { fly, fade } from 'svelte/transition';
 
@@ -52,6 +51,7 @@
 	import { notice } from './notice';
 	import { positions } from './positions';
 	import type { Pos, Toast } from './notice';
+	import Toast from './Toast.svelte';
 
 	let timered: number[] = [],
 		nodes: HTMLElement[] = [],
@@ -69,8 +69,9 @@
 		parent.appendChild(node);
 	}
 
-	function nextPos(i: number) {
-		return i * ((nodes[i] && nodes[i].offsetHeight) + 8);
+	function nextPos(i: number, toast: Toast) {
+		// $notice = {...$notice, {toast.pos: [...toast]}}
+		return (nodes[i] && i * (nodes[i].offsetHeight + 8)) || 0;
 	}
 
 	$: console.log($notice);

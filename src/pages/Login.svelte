@@ -1,6 +1,6 @@
 <Container>
 	<Grid>
-		<Col col="4" offset="mx-auto">
+		<Col col="auto" offset="mx-auto">
 			<form on:submit|preventDefault={submit}>
 				<Input bind:value={username} placeholder="Name" inline>Name</Input>
 				<Input bind:value={password} placeholder="Password" type="password" inline

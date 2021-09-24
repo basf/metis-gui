@@ -84,9 +84,9 @@ const send = (toast: Toast, update: Function): void => {
 	const { id = curId++, pos, ...rest } = toast;
 	update((toast: Toast) => {
 		const exist = () => {
-			return Object.keys(toast).includes(pos) ? [...toast[pos]] : []
+			if (pos in toast) return [...toast[pos]]
 		}
-		return { ...toast, [pos]: [...exist(), { id, pos, ...rest }] }
+		return { ...toast, [pos]: [...exist() || [], { id, pos, ...rest }] }
 	});
 	if (toast.timeout > 0) {
 		setTimeout(() => close(id, pos, update), toast.timeout);
@@ -106,6 +106,7 @@ const createToast = () => {
 
 	return {
 		subscribe,
+		set,
 		send: (toast: Toast) => send(toast, update),
 		close: (id: number, pos: string) => close(id, pos, update),
 		clear: () => clear(set),
