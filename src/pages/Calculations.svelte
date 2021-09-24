@@ -28,7 +28,7 @@
 	{:else}
 		<div class="text-center m-2 p-2">Upload a structure to start...</div>
 	{/each}
-	<Grid class="mb-2 mt-2">
+	<Grid offset="my-2" align="">
 		<Col>
 			<Input
 				rows={4}
@@ -36,7 +36,7 @@
 				bind:value={content}
 			/>
 		</Col>
-		<div class="divider-vert" data-content="OR" />
+		<Divider align="vertical" text="OR" />
 		<Col>
 			<Upload />
 		</Col>
@@ -49,7 +49,7 @@
 <script>
 	import { onMount } from 'svelte';
 
-	import { Tile, Button, IconButton, Progress, Input, Grid, Col } from 'svelte-spectre';
+	import { Tile, Button, Divider, IconButton, Progress, Input, Grid, Col } from 'svelte-spectre';
 
 	import Main from '@/layouts/Main.svelte';
 

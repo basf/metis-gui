@@ -1,5 +1,5 @@
 <div
-	class="columns col-align-{align} {offset}"
+	class="columns {align && `col-align-${align}`} {offset}"
 	class:col-gapless={gapless}
 	class:col-oneline={oneline}
 	class:col-stack={stack}
@@ -10,7 +10,7 @@
 <script lang="ts" context="module">
 	import type { Offset } from '../../types/position';
 
-	type Align = 'start' | 'center' | 'end' | 'stretch';
+	type Align = 'start' | 'center' | 'end' | 'stretch' | '';
 
 	export type { Align, Offset };
 </script>
@@ -19,7 +19,7 @@
 	export let gapless: boolean = false;
 	export let oneline: boolean = false;
 	export let stack: boolean = false;
-	export let align: Align = 'start';
+	export let align: Align = '';
 	export let offset: Offset = '';
 </script>
 

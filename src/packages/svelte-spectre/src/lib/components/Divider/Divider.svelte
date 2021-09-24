@@ -16,20 +16,7 @@
 </script>
 
 <style lang="scss">
-	/* TODO - vertical height in flex-align scope */
-
 	:global(.spectre) {
 		@import 'spectre.css/src/utilities/divider';
-		// .divider {
-		// 	&[data-content]::after {
-		// 		transform: translateY(-50%) !important;
-		// 	}
-		// }
-		.divider-vert {
-			height: 100%;
-			// &[data-content]::after {
-			// 	transform: translate(-50%, -50%) !important;
-			// }
-		}
 	}
 </style>
