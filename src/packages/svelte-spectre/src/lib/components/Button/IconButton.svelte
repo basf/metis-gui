@@ -1,5 +1,5 @@
 <Button shape="square" variant="link" {...$$restProps} on:click on:dblclick>
-	<Icon {icon} size={iconSize} svg={$$slots.default}><slot /></Icon>
+	<Icon {icon} size={iconSize} color={iconColor} svg={$$slots.default}><slot /></Icon>
 </Button>
 
 <script lang="ts" context="module">
@@ -14,4 +14,5 @@
 <script lang="ts">
 	export let icon: Icons = '';
 	export let iconSize: Zoom = '1x';
+	export let iconColor: string;
 </script>
