@@ -35,7 +35,7 @@
 		Grid,
 		Input,
 		IconButton,
-		notice,
+		toast,
 	} from 'svelte-spectre';
 
 	import user from '@/stores/user';
@@ -57,10 +57,10 @@
 		try {
 			await login(username, password);
 			$user = await me();
-			notice.success({ msg: 'You are logged in 👍🏻', timeout: 5000 });
+			toast.success({ msg: 'You are logged in 👍🏻', timeout: 5000 });
 		} catch (err) {
 			errmsg = err;
-			notice.error({ msg: errmsg.error || 'Login/Password incorrect', timeout: 5000 });
+			toast.error({ msg: errmsg.error || 'Login/Password incorrect', timeout: 5000 });
 		}
 	}
 </script>

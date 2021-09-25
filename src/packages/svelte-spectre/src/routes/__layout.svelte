@@ -14,8 +14,7 @@
 			<div class="mr-2">
 				<IconButton
 					icon="people"
-					on:click={(e) =>
-						notice.success({ msg: 'msg', timeout: 0, pos: 'bottom_right' })}
+					on:click={(e) => toast.success({ msg: 'msg', timeout: 0, pos: 'bottom_right' })}
 				/>
 			</div>
 		</nav>
@@ -24,7 +23,7 @@
 	<main class="text-center">
 		<slot />
 	</main>
-	<Toasts />
+	<Toaster />
 </Spectre>
 
 <script lang="ts">
@@ -34,6 +33,6 @@
 	// import '$lib/spectre.scss';
 	import { Navbar } from '$lib/layouts/';
 	import { IconButton } from '$lib/components/';
-	import Toasts from '$lib/components/Toast/Notices.svelte';
-	import { notice } from '$lib/components/Toast/notice';
+	import { Toaster } from '$lib/components/Toast/';
+	import { toast } from '$lib/components/Toast/toast';
 </script>

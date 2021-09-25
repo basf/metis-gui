@@ -8,7 +8,7 @@
 		<IconButton
 			icon="message"
 			variant="default"
-			on:click={(e) => notice.success({ msg: pos, pos: pos })}
+			on:click={(e) => toast.success({ msg: pos, pos: pos, timeout: 0 })}
 		/>
 	{/each}
 	<IconButton
@@ -68,7 +68,7 @@
 	<Hero size="sm">
 		<h2>Cards</h2>
 		<Grid offset="my-2" oneline align="">
-			<Col><Divider align="vertical" text="LEFT" /></Col>
+			<Divider align="vertical" text="LEFT" />
 			{#each CARDS as { col, pos, img, text }}
 				<Col {col}>
 					<Card {pos}>
@@ -83,7 +83,7 @@
 					</Card>
 				</Col>
 			{/each}
-			<Col><Divider align="vertical" text="RIGHT" /></Col>
+			<Divider align="vertical" text="RIGHT" />
 		</Grid>
 	</Hero>
 
@@ -101,7 +101,7 @@
 	import { Button, Divider, IconButton, Icon } from '$lib/components/';
 	import { Card, Container, Empty, Hero, Grid, Col } from '$lib/layouts/';
 	// import { Button } from 'package';
-	import { notice, Pos } from '$lib/components/Toast/notice';
+	import { toast, Pos } from '$lib/components/Toast/toast';
 	import icon from '/b-science.svg';
 	// let icon = async () => {
 	// 	const res = await import('../../static/b-science.svg');
