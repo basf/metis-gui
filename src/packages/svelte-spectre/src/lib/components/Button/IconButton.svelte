@@ -1,5 +1,5 @@
 <Button shape="square" variant="link" {...$$restProps} on:click on:dblclick>
-	<Icon {icon} size={iconSize} svg={$$slots.default}><slot /></Icon>
+	<Icon {icon} {color} size={iconSize} svg={$$slots.default}><slot /></Icon>
 </Button>
 
 <script lang="ts" context="module">
@@ -8,10 +8,12 @@
 
 	import type { Variant } from '../Button';
 	import type { Zoom, Icons } from '../Icon';
-	export type { Zoom, Icons, Variant };
+	import type { Color } from '../../types/text';
+	export type { Zoom, Icons, Variant, Color };
 </script>
 
 <script lang="ts">
 	export let icon: Icons;
 	export let iconSize: Zoom = '1x';
+	export let color: Color = '';
 </script>

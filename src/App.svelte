@@ -1,9 +1,8 @@
 <svelte:window on:click={click} />
 
 <Spectre>
+	<Header />
 	<main>
-		<Header />
-
 		<Viewpoint {...page}>
 			<svelte:fragment slot="loading">Loading...</svelte:fragment>
 		</Viewpoint>

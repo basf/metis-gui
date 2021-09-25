@@ -13,7 +13,7 @@
 			<slot><p>Default text</p></slot>
 		</Col>
 		{#if closable}
-			<IconButton icon="cross" on:click />
+			<IconButton icon="cross" on:click={() => dispatch('close', 'любые данные')} />
 		{/if}
 	</Grid>
 </div>
@@ -29,10 +29,13 @@
 </script>
 
 <script lang="ts">
+	import { createEventDispatcher } from 'svelte';
+	const dispatch = createEventDispatcher();
+
 	export let icon: Icons = 'emoji';
-	export let closable = false;
 	export let type: Color = 'initial';
 	export let timeout: number = 0;
+	export let closable = false;
 </script>
 
 <style lang="scss">

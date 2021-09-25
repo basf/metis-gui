@@ -1,24 +1,22 @@
 <section class="toaster">
 	{#each positions as position}
 		<ul class="toast-list pos-{position}">
-			{#each $toast as tost, i (tost.id)}
+			{#each $toast.filter((t) => t.pos === position) as tost, i (tost.id)}
 				<li
-					animate:flip={{ duration: 500 }}
-					in:fly={{ y: -48 }}
+					in:fly={flying(tost)}
 					out:fade
-					on:introstart={(e) => checkTimeout(tost)}
+					animate:flip={{ duration: 500 }}
+					on:introstart={(e) => timeouted(tost)}
 				>
-					{#if tost.pos === position}
-						<Toast
-							type={tost.type}
-							closable={tost.close}
-							timeout={timered.includes(tost.id) && tost.timeout}
-							on:click={(e) => toast.close(tost.id)}
-						>
-							{#if tost.title}<h5>{tost.title}</h5>{/if}
-							<p>{tost.msg}</p>
-						</Toast>
-					{/if}
+					<Toast
+						type={tost.type}
+						closable={tost.close}
+						timeout={timered.includes(tost.id) && tost.timeout}
+						on:close={(e) => toast.close(tost.id)}
+					>
+						{#if tost.title}<h5>{tost.title}</h5>{/if}
+						<p>{tost.msg}</p>
+					</Toast>
 				</li>
 			{/each}
 		</ul>
@@ -32,8 +30,6 @@
 	import { positions } from './positions';
 	import { toast } from './toast';
 	import Toast from './';
-	import Icon from '../Icon/';
-	import { Grid, Col } from '../../layouts/Grid/';
 
 	import type { Tost } from './toast';
 </script>
@@ -41,8 +37,11 @@
 <script lang="ts">
 	let timered: number[] = [];
 
-	function checkTimeout(toast: Tost) {
-		if (toast.timeout > 0) timered = [...timered, toast.id];
+	function timeouted(t: Tost) {
+		if (t.timeout > 0) timered = [...timered, t.id];
+	}
+	function flying(t: Tost) {
+		return t.pos.includes('top') ? { y: -48 } : { y: 48 };
 	}
 </script>
 

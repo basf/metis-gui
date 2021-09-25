@@ -1,5 +1,5 @@
-<Container
-	><h1>Welcome to Svelte{name}</h1>
+<Container classes={['text-primary']}>
+	<h1>Welcome to Svelte{name}</h1>
 	<p>
 		Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation
 	</p>
