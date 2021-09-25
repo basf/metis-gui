@@ -16,7 +16,7 @@
 	</nav>
 </Navbar>
 
-<script>
+<script lang="ts">
 	import { back, path } from 'svelte-pathfinder';
 	import { Container, Navbar, IconButton } from 'svelte-spectre';
 	import user from '@/stores/user';

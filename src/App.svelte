@@ -7,6 +7,7 @@
 			<svelte:fragment slot="loading">Loading...</svelte:fragment>
 		</Viewpoint>
 	</main>
+	<Footer />
 	<Toaster />
 </Spectre>
 
@@ -16,6 +17,7 @@
 	import { Spectre, Toaster } from 'svelte-spectre';
 
 	import Header from '@/views/Header.svelte';
+	import Footer from '@/views/Footer.svelte';
 
 	import user from '@/stores/user';
 
