@@ -13,6 +13,8 @@
 		<nav slot="right">
 			<div class="mr-2">
 				<IconButton
+					href="#_"
+					size="xl"
 					icon="people"
 					on:click={(e) => toast.success({ msg: 'msg', timeout: 0, pos: 'bottom_right' })}
 				/>

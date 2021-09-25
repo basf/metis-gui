@@ -26,20 +26,8 @@
 	:global {
 		@import 'spectre.css/src/icons/icons-core';
 	}
-	:global(.accordion),
-	:global(.btn),
-	:global(.toast),
-	:global(.menu) {
-		.icon {
-			vertical-align: sub;
-		}
-	}
-	:global(.btn) {
-		position: relative;
-	}
 
 	.icon {
-		text-indent: 0;
 		& > :global(svg) {
 			fill: currentColor;
 		}

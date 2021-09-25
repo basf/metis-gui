@@ -55,6 +55,12 @@
 	.circle {
 		border-radius: 50%;
 	}
+	.btn {
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+	}
 	.btn.btn-xl {
 		@extend .btn;
 		height: $unit-12;
@@ -73,10 +79,10 @@
 	}
 	.btn.btn-xs {
 		@extend .btn;
-		height: $unit-5;
+		height: $unit-6;
 	}
 	.btn.btn-action.btn-xs {
-		width: $unit-5;
-		height: $unit-5;
+		width: $unit-6;
+		height: $unit-6;
 	}
 </style>

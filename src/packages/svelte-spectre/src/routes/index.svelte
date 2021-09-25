@@ -11,6 +11,7 @@
 			on:click={(e) => toast.success({ msg: pos, pos: pos, timeout: 0 })}
 		/>
 	{/each}
+	<IconButton size="xs" icon="message" variant="default" />
 	<IconButton
 		size="xl"
 		variant="error"
