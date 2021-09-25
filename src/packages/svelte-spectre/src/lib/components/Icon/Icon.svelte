@@ -28,37 +28,17 @@
 	}
 
 	.icon {
+		text-indent: 0;
 		& > :global(svg) {
 			fill: currentColor;
 		}
-	}
-	:global(.btn) .icon[svg='true'] {
-		display: flex;
-		justify-content: center;
-		position: absolute;
-		inset: 0;
-		width: auto;
-		height: auto;
-		& > :global(svg) {
-			transition: fill 0.2s, border 0.2s, box-shadow 0.2s, color 0.2s;
-			fill: currentColor;
-		}
-		&:focus,
-		&:hover {
-			& > :global(svg) {
-				fill: currentColor;
-			}
-		}
-		&:active,
-		&.active {
-			& > :global(svg) {
-				fill: currentColor;
-			}
-		}
-		&.loading {
-			&::after {
-				fill: none;
-			}
+		&[svg='true'] {
+			display: flex;
+			// justify-content: center;
+			// position: absolute;
+			// inset: 0;
+			// width: auto;
+			height: auto;
 		}
 	}
 
