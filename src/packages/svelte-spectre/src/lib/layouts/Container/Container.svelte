@@ -13,7 +13,7 @@
 <script lang="ts">
 	export let size: Size = 'md';
 	export let offset: Offset = '';
-	export let classes: string[];
+	export let classes: string[] = [];
 </script>
 
 <style lang="scss">
