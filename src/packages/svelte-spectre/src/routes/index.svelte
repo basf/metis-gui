@@ -1,4 +1,4 @@
-<Container classes={['text-primary']}>
+<Container>
 	<h1>Welcome to Svelte{name}</h1>
 	<p>
 		Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation
@@ -10,7 +10,7 @@
 		<IconButton
 			icon="message"
 			variant="default"
-			on:click={(e) => toast.success({ msg: pos, pos: pos, timeout: 0 })}
+			on:click={(e) => toast.success({ msg: pos, pos: pos, timeout: 5000 })}
 		/>
 	{/each}
 	<IconButton

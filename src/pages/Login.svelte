@@ -13,7 +13,7 @@
 					<Col col="8" offset="ml-auto">
 						<ButtonGroup>
 							{#each oauth as icon}
-								<IconButton variant="link" iconSize="2x" size="lg">
+								<IconButton variant="link" iconSize="3x" size="lg">
 									{@html icon}
 								</IconButton>
 							{/each}

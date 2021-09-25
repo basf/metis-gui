@@ -1,27 +1,29 @@
-<section class="toaster">
-	{#each positions as position}
-		<ul class="toast-list pos-{position}">
-			{#each $toast.filter((t) => t.pos === position) as tost, i (tost.id)}
-				<li
-					in:fly={flying(tost)}
-					out:fade
-					animate:flip={{ duration: 500 }}
-					on:introstart={(e) => timeouted(tost)}
-				>
-					<Toast
-						type={tost.type}
-						closable={tost.close}
-						timeout={timered.includes(tost.id) && tost.timeout}
-						on:close={(e) => toast.close(tost.id)}
+{#if $toast.length}
+	<section class="toaster">
+		{#each positions.filter((p) => $toast.some((t) => t.pos === p)) as position}
+			<ul class="toast-list pos-{position}">
+				{#each $toast.filter((t) => t.pos === position) as tost, i (tost.id)}
+					<li
+						in:fly={flying(tost)}
+						out:fade
+						animate:flip={{ duration: 500 }}
+						on:introstart={(e) => timeouted(tost)}
 					>
-						{#if tost.title}<h5>{tost.title}</h5>{/if}
-						<p>{tost.msg}</p>
-					</Toast>
-				</li>
-			{/each}
-		</ul>
-	{/each}
-</section>
+						<Toast
+							type={tost.type}
+							closable={tost.close}
+							timeout={timered.includes(tost.id) && tost.timeout}
+							on:close={(e) => toast.close(tost.id)}
+						>
+							{#if tost.title}<h5>{tost.title}</h5>{/if}
+							<p>{tost.msg}</p>
+						</Toast>
+					</li>
+				{/each}
+			</ul>
+		{/each}
+	</section>
+{/if}
 
 <script lang="ts" context="module">
 	import { flip } from 'svelte/animate';

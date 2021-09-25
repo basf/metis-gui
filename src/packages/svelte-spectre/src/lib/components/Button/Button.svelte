@@ -56,10 +56,10 @@
 		border-radius: 50%;
 	}
 	.btn {
-		position: relative;
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
+		position: relative !important;
+		display: inline-flex !important;
+		align-items: center !important;
+		justify-content: center !important;
 	}
 	.btn.btn-xl {
 		@extend .btn;

@@ -2,7 +2,6 @@ import { writable } from 'svelte/store';
 import type { Icons } from '../../types/icons';
 import type { Color } from '../../types/bg';
 import type { Pos } from './positions';
-import { positions } from './positions';
 
 export type { Pos, Tost }
 
@@ -25,15 +24,15 @@ function createToast() {
 	let curId = 1;
 
 	function send(toast: Tost): void {
-		const id = curId++;
+		toast.id = curId++
 		toasts.update((state) => {
 			state = state.filter((t) => t.timeout >= 0);
-			return [...state, { id, ...toast }];
+			return [...state, toast];
 		});
 		if (toast.timeout > 0) {
 			setTimeout(() => {
 				toasts.update((state) => {
-					return [...state.filter((t) => t.id !== id)];
+					return [...state.filter((t) => t.id !== toast.id)];
 				});
 			}, toast.timeout);
 		}

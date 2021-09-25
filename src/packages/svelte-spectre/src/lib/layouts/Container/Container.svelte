@@ -1,9 +1,8 @@
-<div class="container grid-{size} {offset}" use:addClass={classes}>
+<div class="container grid-{size} {offset}">
 	<slot />
 </div>
 
 <script context="module" lang="ts">
-	import { addClass } from '../../helpers/actions';
 	import type { Size } from '../../types/size';
 	import type { Offset } from '../../types/position';
 
@@ -13,7 +12,6 @@
 <script lang="ts">
 	export let size: Size = 'md';
 	export let offset: Offset = '';
-	export let classes: string[] = [];
 </script>
 
 <style lang="scss">

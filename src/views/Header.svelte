@@ -1,4 +1,4 @@
-<Navbar classes={'container grid-md red'}>
+<Navbar classes={'container grid-md'}>
 	<nav slot="left">
 		{#if $path.length > 1 && $path.toString() !== '/login'}
 			<IconButton icon="back" iconSize="1x" size="xl" on:click={back} />
@@ -22,9 +22,3 @@
 	import user from '@/stores/user';
 	import Xray from '@/assets/img/b-science.svg';
 </script>
-
-<style lang="scss">
-	.red {
-		color: red !important;
-	}
-</style>

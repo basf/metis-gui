@@ -13,7 +13,7 @@
 			<slot><p>Default text</p></slot>
 		</Col>
 		{#if closable}
-			<IconButton icon="cross" on:click={() => dispatch('close', 'любые данные')} />
+			<IconButton icon="cross" on:click={() => dispatch('close', 'this toast closing')} />
 		{/if}
 	</Grid>
 </div>
