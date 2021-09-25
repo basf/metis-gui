@@ -1,36 +1,33 @@
-<Container>
-	<Grid>
-		<Col col="auto" offset="mx-auto">
-			<form on:submit|preventDefault={submit}>
-				<Input bind:value={username} placeholder="Name" inline>Name</Input>
-				<Input bind:value={password} placeholder="Password" type="password" inline
-					>Password</Input
-				>
-				<Button variant="primary" type="submit" block>Login</Button>
-				<Divider align="horizontal" text="OR" />
-				<Grid align="center">
-					<Col col="auto">Login with</Col>
-					<Col col="8" offset="ml-auto">
-						<ButtonGroup>
-							{#each oauth as icon}
-								<IconButton variant="link" iconSize="3x" size="lg">
-									{@html icon}
-								</IconButton>
-							{/each}
-						</ButtonGroup>
-					</Col>
-				</Grid>
-			</form>
-		</Col>
-	</Grid>
-</Container>
+<Grid>
+	<Col col="auto" offset="mx-auto">
+		<form on:submit|preventDefault={submit}>
+			<Input bind:value={username} placeholder="Name" inline>Name</Input>
+			<Input bind:value={password} placeholder="Password" type="password" inline
+				>Password</Input
+			>
+			<Button variant="primary" type="submit" block>Login</Button>
+			<Divider align="horizontal" text="OR" />
+			<Grid align="center">
+				<Col col="auto">Login with</Col>
+				<Col col="8" offset="ml-auto">
+					<ButtonGroup>
+						{#each oauth as icon}
+							<IconButton variant="link" iconSize="3x" size="lg">
+								{@html icon}
+							</IconButton>
+						{/each}
+					</ButtonGroup>
+				</Col>
+			</Grid>
+		</form>
+	</Col>
+</Grid>
 
 <script>
 	import {
 		Button,
 		ButtonGroup,
 		Col,
-		Container,
 		Divider,
 		Grid,
 		Input,

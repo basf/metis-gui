@@ -2,7 +2,7 @@
 
 <Spectre>
 	<Header />
-	<main>
+	<main class="container grid-md mt-2">
 		<Viewpoint {...page}>
 			<svelte:fragment slot="loading">Loading...</svelte:fragment>
 		</Viewpoint>
