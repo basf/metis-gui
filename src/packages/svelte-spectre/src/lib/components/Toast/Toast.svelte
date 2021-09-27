@@ -6,7 +6,6 @@
 			</Col>
 		{/if}
 		<Col inset="py-2">
-			{tost.id}
 			<slot>Default text</slot>
 		</Col>
 		{#if tost.close}

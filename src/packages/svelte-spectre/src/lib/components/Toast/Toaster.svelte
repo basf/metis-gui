@@ -20,41 +20,15 @@
 	import { fly, fade } from 'svelte/transition';
 
 	import { positions } from './positions';
-	import { toast } from './toast';
+	import { toast } from './';
 	import Toast from './';
 
-	import type { Tweened } from 'svelte/motion';
-	import type { Tost } from './toast';
+	import type { Tost } from './';
 </script>
 
 <script lang="ts">
-	let progress: Tweened<number>;
-
-	function flying(t: Tost) {
-		return t.pos.includes('top') ? { y: -48 } : { y: 48 };
-	}
-
-	function mount(t: Tost) {
-		// progress.set(t.progress, { duration: t.timeout });
-	}
-	function pause(t: Tost) {
-		// toast.pause(t);
-		// progress.set($progress, { duration: 0 });
-	}
-	function resume(t: Tost) {
-		// toast.resume();
-		// progress.set(t.progress, { duration: t.timeout });
-	}
-	function destroy(t: Tost) {
-		// progress.set(1, { duration: 0 });
-	}
-	function close(t: Tost) {
-		// progress.set(0, { duration: 0 });
-		// toast.close(t.id);
-	}
+	const flying = (t: Tost) => (t.pos.includes('top') ? { y: -48 } : { y: 48 });
 	$: toasted = (pos: string) => $toast.filter((t) => t.pos === pos);
-
-	$: console.log($toast);
 </script>
 
 <style lang="scss">
