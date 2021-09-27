@@ -39,8 +39,6 @@
 <script lang="ts">
 	let progress: Tweened<number>;
 
-	$: console.log(progress);
-
 	function flying(t: Tost) {
 		return t.pos.includes('top') ? { y: -48 } : { y: 48 };
 	}

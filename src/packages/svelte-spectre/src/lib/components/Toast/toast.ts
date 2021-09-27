@@ -18,7 +18,6 @@ type Tost = {
 	pos?: Pos
 }
 
-
 function createToast() {
 
 	const toasts = writable([]);
