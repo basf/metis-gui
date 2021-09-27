@@ -1,41 +1,87 @@
-<div
-	class="toast {type && `toast-${type}`}"
-	class:timeout={timeout > 0}
-	style={timeout > 0 ? `--timeout: ${timeout}ms` : ''}
->
+<div class="toast {tost.type && `toast-${tost.type}`}" on:mouseenter={pause} on:mouseleave={resume}>
 	<Grid align="center">
-		{#if icon}
+		{#if tost.icon}
 			<Col col="auto">
-				<Icon {icon} />
+				<Icon icon={tost.icon} />
 			</Col>
 		{/if}
 		<Col inset="py-2">
-			<slot><p>Default text</p></slot>
+			<slot>Default text</slot>
 		</Col>
-		{#if closable}
-			<IconButton icon="cross" on:click={() => dispatch('close', 'this toast closing')} />
+		{#if tost.close}
+			<IconButton icon="cross" on:click={close} />
 		{/if}
 	</Grid>
+	{#if tost.timeout}
+		<Progress bind:progress bind:value {next} {options} {invert} />
+	{/if}
 </div>
 
 <script context="module" lang="ts">
+	import { onDestroy, onMount } from 'svelte';
 	import { IconButton } from '../Button';
 	import { Icon } from '../Icon';
-	import { Grid, Col } from '../../layouts/Grid/';
+	import { Grid, Col } from '../../layouts/Grid';
+	import { Progress } from '../Progress';
 
+	import type { Tweened } from 'svelte/motion';
+	import type { Tost } from './toast';
+	import type { Options } from '../Progress';
 	import type { Color } from '../../types/bg';
 	import type { Icons } from '../../types/icons';
-	export type { Color };
+
+	export type { Color, Icons };
 </script>
 
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
 
-	export let icon: Icons = 'emoji';
-	export let type: Color = 'initial';
-	export let timeout: number = 0;
-	export let closable = false;
+	export let tost: Tost;
+	export let invert: boolean = false;
+	export let next: number;
+	export let options: Options;
+	export let value: number;
+	export let progress: Tweened<number>;
+
+	let start: number, remaining: number;
+
+	onMount(() => {
+		dispatch('mount', 'this toast mounted');
+		next = tost.progress;
+		start = Date.now();
+		remaining = tost.timeout;
+		options = { duration: remaining };
+		// progress.set(tprogress, { duration: ttimeout });
+	});
+
+	onDestroy(() => {
+		dispatch('destroy', 'this toast mounted');
+		next = 1;
+		options = { duration: 0 };
+		// progress.set(1, { duration: 0 });
+	});
+
+	function pause() {
+		dispatch('hover', 'this toast hovered');
+		remaining -= Date.now() - start;
+		next = value;
+		options = { duration: 0 };
+		// progress.set($progress, { duration: 0 });
+	}
+	function resume() {
+		dispatch('leave', 'this toast leaved');
+		start = Date.now();
+		next = tost.progress;
+		options = { duration: remaining };
+		// progress.set(tprogress, { duration: tprogress });
+	}
+	function close() {
+		dispatch('close', 'this toast closing');
+		next = 1;
+		options = { duration: 0 };
+		// progress.set(1, { duration: 0 });
+	}
 </script>
 
 <style lang="scss">
@@ -48,9 +94,6 @@
 			padding-top: 0;
 			padding-bottom: 0;
 			:global(.btn-link) {
-				// position: absolute;
-				// top: 0;
-				// right: 0;
 				color: currentColor;
 				opacity: 1;
 				&:hover,
@@ -61,27 +104,18 @@
 					color: inherit;
 				}
 			}
-			&::after {
-				content: '';
-				display: flex;
-				opacity: 0;
-				position: absolute;
-				left: -1px;
-				right: -1px;
-				bottom: -1px;
-				height: 0.36em;
-				background: $bg-color;
-				transform: scaleX(1);
-				transition: transform var(--timeout);
-			}
-			&.timeout::after {
-				opacity: 0.69;
-				transform: scaleX(0);
-				transform-origin: bottom right;
-			}
-			:global(p) {
-				white-space: pre-line;
-				margin-bottom: 0;
+			:global {
+				p {
+					margin: 0;
+				}
+				.progress {
+					position: absolute;
+					inset: -1px;
+					top: auto;
+					width: calc(100% + 2px);
+					opacity: 0.69;
+					background: transparent;
+				}
 			}
 		}
 	}

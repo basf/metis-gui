@@ -1,19 +1,18 @@
 {#if $toast.length}
 	<section class="toaster">
-		{#each positions.filter((p) => $toast.some((t) => t.pos === p)) as position}
-			<ul class="toast-list pos-{position}">
-				{#each $toast.filter((t) => t.pos === position) as tost, i (tost.id)}
-					<li
-						in:fly={flying(tost)}
-						out:fade
-						animate:flip={{ duration: 500 }}
-						on:introstart={(e) => timeouted(tost)}
-					>
+		{#each positions as pos}
+			<ul class="toast-list pos-{pos}">
+				{#each toasted(pos) as tost, i (tost.id)}
+					<li in:fly={flying(tost)} out:fade animate:flip={{ duration: 500 }}>
 						<Toast
-							type={tost.type}
-							closable={tost.close}
-							timeout={timered.includes(tost.id) && tost.timeout}
-							on:close={(e) => toast.close(tost.id)}
+							{tost}
+							invert
+							bind:progress
+							on:mount={(e) => mount(tost)}
+							on:hover={(e) => pause(tost)}
+							on:leave={(e) => resume(tost)}
+							on:destroy={(e) => destroy(tost)}
+							on:close={(e) => close(tost)}
 						>
 							{#if tost.title}<h5>{tost.title}</h5>{/if}
 							<p>{tost.msg}</p>
@@ -33,18 +32,38 @@
 	import { toast } from './toast';
 	import Toast from './';
 
+	import type { Tweened } from 'svelte/motion';
 	import type { Tost } from './toast';
 </script>
 
 <script lang="ts">
-	let timered: number[] = [];
+	let progress: Tweened<number>;
 
-	function timeouted(t: Tost) {
-		if (t.timeout > 0) timered = [...timered, t.id];
-	}
+	$: console.log(progress);
+
 	function flying(t: Tost) {
 		return t.pos.includes('top') ? { y: -48 } : { y: 48 };
 	}
+
+	function mount(t: Tost) {
+		// progress.set(t.progress, { duration: t.timeout });
+	}
+	function pause(t: Tost) {
+		toast.pause();
+		// progress.set($progress, { duration: 0 });
+	}
+	function resume(t: Tost) {
+		toast.resume();
+		// progress.set(t.progress, { duration: t.timeout });
+	}
+	function destroy(t: Tost) {
+		// progress.set(1, { duration: 0 });
+	}
+	function close(t: Tost) {
+		// progress.set(0, { duration: 0 });
+		toast.close(t.id);
+	}
+	$: toasted = (pos: string) => $toast.filter((t) => t.pos === pos);
 </script>
 
 <style lang="scss">
