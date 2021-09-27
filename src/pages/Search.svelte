@@ -1,4 +1,4 @@
-<iframe src="http://optimade.science/" title="optimade.science" />
+<iframe src="optimade.html" title="Search" />
 
 <style>
 	iframe {
