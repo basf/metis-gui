@@ -10,7 +10,7 @@
 		<IconButton
 			icon="message"
 			variant="default"
-			on:click={(e) => toast.success({ msg: pos, pos: pos, timeout: 5000 })}
+			on:click={(e) => toast.success({ msg: pos, pos: pos, timeout: 5000, init: 1, next: 0 })}
 		/>
 	{/each}
 	<IconButton
@@ -71,6 +71,20 @@
 		</svg>
 	</Icon>
 	<Hero offset="my-2" size="sm">
+		<h2>Toast</h2>
+		<Toast
+			tost={{
+				id: 1,
+				init: 0,
+				next: 1,
+				timeout: 5000,
+				close: true,
+				icon: 'home',
+				type: 'primary',
+			}}>Toast</Toast
+		>
+	</Hero>
+	<Hero offset="my-2" size="sm">
 		<h2>Grid</h2>
 		<Grid stack>
 			<Col col="5"><div class="bg-secondary p-1">col-5</div></Col>
@@ -114,7 +128,7 @@
 </Container>
 
 <script lang="ts">
-	import { Button, Divider, IconButton, Icon } from '$lib/components/';
+	import { Button, Divider, IconButton, Icon, Toast } from '$lib/components/';
 	import { Card, Container, Empty, Hero, Grid, Col } from '$lib/layouts/';
 	// import { Button } from 'package';
 	import { toast, Pos } from '$lib/components/Toast/toast';

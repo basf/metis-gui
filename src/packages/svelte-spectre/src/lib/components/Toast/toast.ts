@@ -2,7 +2,6 @@ import { writable } from 'svelte/store';
 import type { Icons } from '../../types/icons';
 import type { Color } from '../../types/bg';
 import type { Pos } from './positions';
-import { Timer } from './timer'
 
 export type { Pos, Tost }
 
@@ -14,61 +13,50 @@ type Tost = {
 	icon?: Icons,
 	close?: boolean,
 	timeout?: number,
-	progress?: number,
+	init?: number,
+	next?: number,
+	pause?: boolean,
 	pos?: Pos
 }
 
+const defaults: Tost = { close: true, timeout: 0, init: 1, next: 0, pos: 'top_center' }
+
 function createToast() {
+	const { subscribe, set, update } = writable([]);
 
-	const toasts = writable([]);
-	const dafault: Tost = { close: true, timeout: 0, progress: 0, pos: 'top_center' }
+	let curId = 0
 
-	let curId = 0, timer: Timer;
-
-	const send = (toast: Tost): void => {
+	const send = (toast: Tost) => {
 		toast.id = curId++
-		toasts.update((state) => {
+		update((state) => {
 			state = state.filter((t) => t.timeout >= 0);
-			return [...state, toast];
+			return [...state, { ...defaults, ...toast }];
 		});
-		if (toast.timeout > 0) {
-			timer = new Timer(() => {
-				toasts.update((state) => {
-					return [...state.filter((t) => t.id !== toast.id)];
-				});
-			}, toast.timeout);
-		}
 	}
-	const pause = () => timer.pause()
-	const resume = () => timer.resume()
 	const close = (id: number) => {
-		toasts.update((state) => {
+		update((state) => {
 			return [...state.filter((t) => t.id !== id)];
 		});
-		timer.clear();
 	}
 	const clear = () => {
-		toasts.set([]);
-		timer.clear();
+		set([]);
 	}
 
 	return {
-		subscribe: toasts.subscribe,
+		subscribe,
 		send,
-		pause,
-		resume,
 		close,
 		clear,
 		default: (toast: Tost = {}) =>
-			send({ msg: 'default', icon: 'message', ...dafault, ...toast }),
+			send({ msg: 'default', icon: 'message', ...toast }),
 		error: (toast: Tost = {}) =>
-			send({ type: 'error', icon: 'stop', ...dafault, ...toast }),
+			send({ type: 'error', icon: 'stop', ...toast }),
 		warning: (toast: Tost = {}) =>
-			send({ type: 'warning', icon: 'mail', ...dafault, ...toast }),
+			send({ type: 'warning', icon: 'mail', ...toast }),
 		primary: (toast: Tost = {}) =>
-			send({ type: 'primary', icon: 'flag', ...dafault, ...toast }),
+			send({ type: 'primary', icon: 'flag', ...toast }),
 		success: (toast: Tost = {}) =>
-			send({ type: 'success', icon: 'emoji', ...dafault, ...toast }),
+			send({ type: 'success', icon: 'emoji', ...toast }),
 	};
 }
 

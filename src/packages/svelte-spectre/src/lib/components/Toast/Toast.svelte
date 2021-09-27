@@ -1,4 +1,4 @@
-<div class="toast {tost.type && `toast-${tost.type}`}" on:mouseenter={pause} on:mouseleave={resume}>
+<div class="toast {tost.type && `toast-${tost.type}`}" use:pausable={$progress > 0}>
 	<Grid align="center">
 		{#if tost.icon}
 			<Col col="auto">
@@ -6,6 +6,7 @@
 			</Col>
 		{/if}
 		<Col inset="py-2">
+			{tost.id}
 			<slot>Default text</slot>
 		</Col>
 		{#if tost.close}
@@ -13,16 +14,18 @@
 		{/if}
 	</Grid>
 	{#if tost.timeout}
-		<Progress bind:progress bind:value {next} {options} {invert} />
+		<Progress value={$progress} {invert} />
 	{/if}
 </div>
 
 <script context="module" lang="ts">
-	import { onDestroy, onMount } from 'svelte';
+	import { tweened } from 'svelte/motion';
+	import { linear } from 'svelte/easing';
 	import { IconButton } from '../Button';
 	import { Icon } from '../Icon';
 	import { Grid, Col } from '../../layouts/Grid';
 	import { Progress } from '../Progress';
+	import { toast } from './toast';
 
 	import type { Tweened } from 'svelte/motion';
 	import type { Tost } from './toast';
@@ -30,57 +33,58 @@
 	import type { Color } from '../../types/bg';
 	import type { Icons } from '../../types/icons';
 
-	export type { Color, Icons };
+	export type { Color, Icons, Tost };
 </script>
 
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
-	const dispatch = createEventDispatcher();
-
 	export let tost: Tost;
 	export let invert: boolean = false;
-	export let next: number;
+	export let next: number = tost.init;
 	export let options: Options;
 	export let value: number;
-	export let progress: Tweened<number>;
+
+	const defaults: Options = { delay: 0, duration: 5000, easing: linear };
+	const progress: Tweened<number> = tweened(tost.init, { ...defaults });
+
+	const autoclose = () => ($progress === 1 || $progress === 0) && toast.close(tost.id);
+
+	function pausable(node: HTMLElement, paused: boolean) {
+		return {
+			update(paused: boolean) {
+				node.onmouseenter = pause;
+				node.onmouseleave = resume;
+			},
+			destroy() {
+				node.onmouseenter = null;
+				node.onmouseleave = null;
+			},
+		};
+	}
+
+	$: if (next !== tost.next) {
+		start = Date.now();
+		next = tost.next;
+		remaining = tost.timeout;
+		progress.set(next, { duration: remaining }).then(autoclose);
+	}
 
 	let start: number, remaining: number;
 
-	onMount(() => {
-		dispatch('mount', 'this toast mounted');
-		next = tost.progress;
-		start = Date.now();
-		remaining = tost.timeout;
-		options = { duration: remaining };
-		// progress.set(tprogress, { duration: ttimeout });
-	});
-
-	onDestroy(() => {
-		dispatch('destroy', 'this toast mounted');
-		next = 1;
-		options = { duration: 0 };
-		// progress.set(1, { duration: 0 });
-	});
-
 	function pause() {
-		dispatch('hover', 'this toast hovered');
 		remaining -= Date.now() - start;
-		next = value;
 		options = { duration: 0 };
-		// progress.set($progress, { duration: 0 });
+		progress.set($progress, { duration: 0 });
 	}
 	function resume() {
-		dispatch('leave', 'this toast leaved');
 		start = Date.now();
-		next = tost.progress;
 		options = { duration: remaining };
-		// progress.set(tprogress, { duration: tprogress });
+		next = tost.next;
+		progress.set(next, { duration: remaining }).then(autoclose);
 	}
 	function close() {
-		dispatch('close', 'this toast closing');
 		next = 1;
 		options = { duration: 0 };
-		// progress.set(1, { duration: 0 });
+		progress.set(1, { duration: 0 }).then(autoclose);
 	}
 </script>
 
@@ -105,7 +109,7 @@
 				}
 			}
 			:global {
-				p {
+				* {
 					margin: 0;
 				}
 				.progress {

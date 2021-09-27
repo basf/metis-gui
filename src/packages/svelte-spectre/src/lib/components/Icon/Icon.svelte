@@ -31,14 +31,11 @@
 		text-indent: 0;
 		& > :global(svg) {
 			fill: currentColor;
+			width: 100%;
+			height: 100%;
 		}
 		&[svg='true'] {
 			display: flex;
-			// justify-content: center;
-			// position: absolute;
-			// inset: 0;
-			// width: auto;
-			height: auto;
 		}
 	}
 

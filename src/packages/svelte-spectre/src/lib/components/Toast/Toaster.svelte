@@ -4,16 +4,7 @@
 			<ul class="toast-list pos-{pos}">
 				{#each toasted(pos) as tost, i (tost.id)}
 					<li in:fly={flying(tost)} out:fade animate:flip={{ duration: 500 }}>
-						<Toast
-							{tost}
-							invert
-							bind:progress
-							on:mount={(e) => mount(tost)}
-							on:hover={(e) => pause(tost)}
-							on:leave={(e) => resume(tost)}
-							on:destroy={(e) => destroy(tost)}
-							on:close={(e) => close(tost)}
-						>
+						<Toast {tost} invert>
 							{#if tost.title}<h5>{tost.title}</h5>{/if}
 							<p>{tost.msg}</p>
 						</Toast>
@@ -47,11 +38,11 @@
 		// progress.set(t.progress, { duration: t.timeout });
 	}
 	function pause(t: Tost) {
-		toast.pause();
+		// toast.pause(t);
 		// progress.set($progress, { duration: 0 });
 	}
 	function resume(t: Tost) {
-		toast.resume();
+		// toast.resume();
 		// progress.set(t.progress, { duration: t.timeout });
 	}
 	function destroy(t: Tost) {
@@ -59,9 +50,11 @@
 	}
 	function close(t: Tost) {
 		// progress.set(0, { duration: 0 });
-		toast.close(t.id);
+		// toast.close(t.id);
 	}
 	$: toasted = (pos: string) => $toast.filter((t) => t.pos === pos);
+
+	$: console.log($toast);
 </script>
 
 <style lang="scss">

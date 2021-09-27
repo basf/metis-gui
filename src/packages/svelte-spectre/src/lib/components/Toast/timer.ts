@@ -31,5 +31,5 @@ export function Timer(callback: Function, delay: number): void {
 
     resume();
 
-    return { set, pause, resume, clear }
+    return { set, pause, resume, clear, timerId }
 }
