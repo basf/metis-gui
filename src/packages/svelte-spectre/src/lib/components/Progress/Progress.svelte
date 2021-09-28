@@ -11,7 +11,7 @@
 </script>
 
 <script lang="ts">
-	export let color: Color = 'secondary';
+	export let color: Color = 'light';
 	export let invert: boolean = false;
 	export let value: number;
 	export let max: number = 0;

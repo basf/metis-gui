@@ -3,14 +3,18 @@
 	<p>
 		Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation
 	</p>
-	<Button variant="primary" {loading} on:click={(e) => (loading = !loading)}>
+	<Button
+		variant="primary"
+		{loading}
+		on:click={(e) => toast.primary({ msg: 'top_left', pos: 'top_left' })}
+	>
 		<Icon icon="emoji" offset="mr-2" />Button
 	</Button>
 	{#each positions as pos}
 		<IconButton
 			icon="message"
 			variant="default"
-			on:click={(e) => toast.success({ msg: pos, pos: pos, timeout: 5000, init: 1, next: 0 })}
+			on:click={(e) => toast.success({ msg: pos, pos: pos, timeout: 5000 })}
 		/>
 	{/each}
 	<IconButton
@@ -72,16 +76,21 @@
 	</Icon>
 	<Hero offset="my-2" size="sm">
 		<h2>Toast</h2>
-		<Toast
-			tost={{
-				id: 1,
-				init: 0,
-				next: 1,
-				timeout: 5000,
-				close: true,
-				icon: 'home',
-				type: 'primary',
-			}}>Toast</Toast
+		{#if tostVis}
+			<Toast
+				reverse
+				bind:visible={tostVis}
+				tost={{
+					id: 1,
+					timeout: 5000,
+					close: true,
+					icon: 'home',
+					type: 'warning',
+				}}>Toast</Toast
+			>
+		{/if}
+		<Button variant={tostVis ? 'error' : 'default'} on:click={(e) => (tostVis = !tostVis)}
+			>Toast {!tostVis ? 'open' : 'close'}</Button
 		>
 	</Hero>
 	<Hero offset="my-2" size="sm">
@@ -150,7 +159,8 @@
 			'center_left',
 			'top_left',
 			'center_center',
-		];
+		],
+		tostVis;
 
 	const CARDS = [
 		{
