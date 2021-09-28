@@ -15,35 +15,32 @@
 				<svelte:fragment slot="action">
 					{#if item.inProgress}
 						<IconButton
-							icon="icon-stop"
+							icon="stop"
 							on:click={() => delCalculation(item.calculation.uuid)}
 						/>
 					{:else}
-						<IconButton
-							icon="icon-forward"
-							on:click={() => setCalculation(item.uuid)}
-						/>
+						<IconButton icon="forward" on:click={() => setCalculation(item.uuid)} />
 					{/if}
-					<IconButton icon="icon-cross" on:click={() => delData(item.uuid)} />
+					<IconButton icon="cross" on:click={() => delData(item.uuid)} />
 				</svelte:fragment>
 			</Tile>
 		{/if}
 	{:else}
 		<div class="text-center m-2 p-2">Upload a structure to start...</div>
 	{/each}
-	<div class="columns mb-2 mt-2">
-		<div class="column">
+	<Grid offset="my-2" align="">
+		<Col>
 			<Input
 				rows={4}
 				placeholder="Paste POSCAR, CIF, or Optimade JSON"
 				bind:value={content}
 			/>
-		</div>
-		<div class="divider-vert" data-content="OR" />
-		<div class="column">
+		</Col>
+		<Divider align="vertical" text="OR" />
+		<Col>
 			<Upload />
-		</div>
-	</div>
+		</Col>
+	</Grid>
 	<Button variant="primary" block disabled={dataCalc.length >= 5} on:click={addDataItem}>
 		Add structure
 	</Button>
@@ -52,9 +49,9 @@
 <script>
 	import { onMount } from 'svelte';
 
-	import { Tile, Button, IconButton, Progress, Input } from 'svelte-spectre';
+	import { Tile, Button, Divider, IconButton, Progress, Input, Grid, Col } from 'svelte-spectre';
 
-	import Main from '@/layouts/Main';
+	import Main from '@/layouts/Main.svelte';
 
 	import {
 		getData,
@@ -70,7 +67,7 @@
 
 	import calculations from '@/stores/calculations';
 
-	import Upload from '@/components/Upload';
+	import Upload from '@/components/Upload.svelte';
 
 	$: dataCalc = $data.map((item) => {
 		if (item.error) errors.append(new Error(item.error));

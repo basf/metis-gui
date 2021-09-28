@@ -17,5 +17,7 @@
 </div>
 
 <style lang="scss">
-	@import 'spectre.css/src/tiles';
+	:global(.spectre) {
+		@import 'spectre.css/src/tiles';
+	}
 </style>

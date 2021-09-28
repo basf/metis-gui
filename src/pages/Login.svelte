@@ -1,29 +1,39 @@
-<Container>
-	<div class="column col-4 col-mx-auto">
-		{#if errmsg}
-			<Toast type="error">
-				{errmsg.error || 'Login/Password incorrect'}
-			</Toast>
-		{/if}
+<Grid>
+	<Col col="auto" offset="mx-auto">
 		<form on:submit|preventDefault={submit}>
 			<Input bind:value={username} placeholder="Name" inline>Name</Input>
 			<Input bind:value={password} placeholder="Password" type="password" inline
 				>Password</Input
 			>
 			<Button variant="primary" type="submit" block>Login</Button>
-			<div class="divider text-center p-1" data-content="OR" />
-			<Button variant="secondary" type="button" block>
-				Sign in with <i class="social-icon pl-2">{@html githubIcon}</i>
-			</Button>
-			<Button variant="secondary" type="button" block style="margin-top: 0.4rem">
-				Sign in with <i class="social-icon pl-2">{@html linkedinIcon}</i>
-			</Button>
+			<Divider align="horizontal" text="OR" />
+			<Grid align="center">
+				<Col col="auto">Login with</Col>
+				<Col col="8" offset="ml-auto">
+					<ButtonGroup>
+						{#each oauth as icon}
+							<IconButton variant="link" iconSize="3x" size="lg">
+								{@html icon}
+							</IconButton>
+						{/each}
+					</ButtonGroup>
+				</Col>
+			</Grid>
 		</form>
-	</div>
-</Container>
+	</Col>
+</Grid>
 
 <script>
-	import { Container, Input, Button, Toast } from 'svelte-spectre';
+	import {
+		Button,
+		ButtonGroup,
+		Col,
+		Divider,
+		Grid,
+		Input,
+		IconButton,
+		toast,
+	} from 'svelte-spectre';
 
 	import user from '@/stores/user';
 
@@ -31,25 +41,23 @@
 
 	import githubIcon from '@/assets/img/github.svg';
 	import linkedinIcon from '@/assets/img/linkedin.svg';
+	import basfIcon from '@/assets/img/BASF-invert.svg';
+	import orcidIcon from '@/assets/img/ORCID-invert.svg';
 
 	let username = '';
 	let password = '';
 	let errmsg;
 
+	const oauth: string[] = [githubIcon, linkedinIcon, basfIcon, orcidIcon];
+
 	async function submit() {
 		try {
 			await login(username, password);
 			$user = await me();
+			toast.success({ msg: 'You are logged in 👍🏻', timeout: 5000 });
 		} catch (err) {
 			errmsg = err;
+			toast.error({ msg: errmsg.error || 'Login/Password incorrect', timeout: 5000 });
 		}
 	}
 </script>
-
-<style>
-	.social-icon > :global(svg) {
-		fill: #5755d9;
-		height: 0.8rem;
-		vertical-align: middle;
-	}
-</style>

@@ -1,4 +1,5 @@
 import preprocess from 'svelte-preprocess';
+import mm from 'micromatch';
 
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
@@ -16,7 +17,7 @@ const options = {
 	},
 	postcss: true,
 	typescript: true,
-	replace: !dev ? [[/ lang=("|')(.*?)("|')/g, '']] : [],
+	// replace: !dev ? [[/ lang=("|')(.*?)("|')/g, '']] : [],
 };
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -48,14 +49,22 @@ export default {
 		hydrate: true,
 		package: {
 			dir: 'package',
-			exports: {
-				include: ['**'],
-				exclude: ['**/_*', 'spectre.scss'],
+			exports: (filepath) => {
+				if (mm.isMatch(filepath, ['**/_*', 'spectre.scss', 'fix.scss', 'scss/*'])) return false;
+				return mm.isMatch(filepath, ['**'])
 			},
-			files: {
-				include: ['**'],
-				exclude: ['spectre.scss'],
+			files: (filepath) => {
+				if (mm.isMatch(filepath, ['**/_*', 'spectre.scss', 'fix.scss', 'scss/*'])) return false
+				return mm.isMatch(filepath, ['**'])
 			},
+			// exports: {
+			// 	include: ['**'],
+			// 	exclude: ['**/_*', 'spectre.scss', 'fix.scss', 'scss/*'],
+			// },
+			// files: {
+			// 	include: ['**'],
+			// 	exclude: ['spectre.scss', 'fix.scss', 'scss/*'],
+			// },
 			emitTypes: true,
 		},
 		paths: {
@@ -70,7 +79,7 @@ export default {
 		},
 		router: true,
 		serviceWorker: {
-			exclude: [],
+			files: (filepath) => true,
 		},
 		ssr: true,
 		target: '',

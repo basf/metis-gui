@@ -47,7 +47,9 @@
 </script>
 
 <style lang="scss">
-	@import 'spectre.css/src/cards';
+	:global(.spectre) {
+		@import 'spectre.css/src/cards';
+	}
 	.card {
 		margin: 0;
 	}

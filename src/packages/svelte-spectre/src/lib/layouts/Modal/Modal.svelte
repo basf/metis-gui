@@ -44,7 +44,9 @@
 </script>
 
 <style lang="scss">
-	@import 'spectre.css/src/modals';
+	:global(.spectre) {
+		@import 'spectre.css/src/modals';
+	}
 	.modal-sm {
 		@extend .modal, .modal-sm;
 	}

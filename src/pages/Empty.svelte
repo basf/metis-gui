@@ -1,12 +1,18 @@
 <Main>
-	<div class="hero bg-gray s-rounded p-2">
-		<div class="hero-body p-2">
-			<h3>Nothing here...</h3>
-			<p>This section is under development</p>
-		</div>
-	</div>
+	<Empty offset="my-2">
+		<Icon slot="icon" icon="home" size="3x" />
+		<h1 slot="title">Comming soon...</h1>
+		<p slot="subtitle">This section is under development</p>
+		<Button slot="action" variant="primary" {loading} on:click={() => (loading = !loading)}
+			>Action</Button
+		>
+	</Empty>
 </Main>
 
-<script>
-	import Main from '@/layouts/Main';
+<script lang="ts">
+	import { Button, Empty, Icon } from 'svelte-spectre';
+
+	import Main from '@/layouts/Main.svelte';
+
+	let loading;
 </script>

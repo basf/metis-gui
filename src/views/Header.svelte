@@ -1,27 +1,24 @@
-<Navbar>
+<Navbar classes={'container grid-md'}>
 	<nav slot="left">
 		{#if $path.length > 1 && $path.toString() !== '/login'}
-			<div class="ml-2">
-				<IconButton icon="icon-back" iconSize="1x" size="xl" on:click={back} />
-			</div>
+			<IconButton icon="back" iconSize="1x" size="xl" on:click={back} />
 		{/if}
 	</nav>
 
 	<svelte:fragment slot="center">
-		<a href="/"><img src="./b-science.png" width="64px" height="64px" alt="Basf-dot-Science" /></a>
+		<IconButton size="xxl" iconSize="4x" color="dark" href="/">{@html Xray}</IconButton>
 	</svelte:fragment>
 
 	<nav slot="right">
 		{#if $user}
-			<div class="mr-2">
-				<IconButton icon="icon-people" iconSize="1x" size="xl" href="/profile" />
-			</div>
+			<IconButton class="mr-2" icon="people" iconSize="1x" size="xl" href="/profile" />
 		{/if}
 	</nav>
 </Navbar>
 
-<script>
+<script lang="ts">
 	import { back, path } from 'svelte-pathfinder';
-	import { Navbar, IconButton } from 'svelte-spectre';
+	import { Container, Navbar, IconButton } from 'svelte-spectre';
 	import user from '@/stores/user';
+	import Xray from '@/assets/img/b-science.svg';
 </script>

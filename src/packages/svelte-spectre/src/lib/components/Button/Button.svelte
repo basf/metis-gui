@@ -11,9 +11,7 @@
 		on:click
 		on:dblclick
 	>
-		<slot name="iconRight" />
 		<slot>Text</slot>
-		<slot name="iconLeft" />
 	</a>
 {:else}
 	<button
@@ -27,16 +25,14 @@
 		on:click
 		on:dblclick
 	>
-		<slot name="iconRight" />
 		<slot>Text</slot>
-		<slot name="iconLeft" />
 	</button>
 {/if}
 
 <script lang="ts" context="module">
 	import type { Size } from '../../types/size';
 
-	type Variant = 'default' | 'primary' | 'link' | 'success' | 'error';
+	type Variant = 'default' | 'primary' | 'secondary' | 'link' | 'success' | 'error';
 	type Shape = 'square' | 'circle' | false;
 
 	export type { Size, Variant, Shape };
@@ -53,22 +49,40 @@
 </script>
 
 <style lang="scss">
-	@import 'spectre.css/src/buttons';
+	:global(.spectre) {
+		@import 'spectre.css/src/buttons';
+	}
 	.circle {
 		border-radius: 50%;
 	}
+	.btn {
+		position: relative !important;
+		display: inline-flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+	}
 	.btn.btn-xl {
-		@extend .btn, .btn-lg;
+		@extend .btn;
 		height: $unit-12;
 	}
 	.btn.btn-action.btn-xl {
 		width: $unit-12;
+		height: $unit-12;
+	}
+	.btn.btn-xxl {
+		@extend .btn;
+		height: $unit-16;
+	}
+	.btn.btn-action.btn-xxl {
+		width: $unit-16;
+		height: $unit-16;
 	}
 	.btn.btn-xs {
-		@extend .btn, .btn-sm;
-		height: $unit-5;
+		@extend .btn;
+		height: $unit-6;
 	}
 	.btn.btn-action.btn-xs {
-		width: $unit-5;
+		width: $unit-6;
+		height: $unit-6;
 	}
 </style>

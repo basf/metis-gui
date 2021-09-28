@@ -2,7 +2,7 @@
 	<Navbar>
 		<nav slot="left">
 			<div class="ml-2">
-				<IconButton icon="icon-back" />
+				<IconButton icon="back" />
 			</div>
 		</nav>
 
@@ -12,7 +12,12 @@
 
 		<nav slot="right">
 			<div class="mr-2">
-				<IconButton icon="icon-people" />
+				<IconButton
+					href="#_"
+					size="xl"
+					icon="people"
+					on:click={(e) => toast.success({ msg: 'msg', timeout: 0, pos: 'bottom_right' })}
+				/>
 			</div>
 		</nav>
 	</Navbar>
@@ -20,13 +25,16 @@
 	<main class="text-center">
 		<slot />
 	</main>
+	<Toaster />
 </Spectre>
 
-<script>
+<script lang="ts">
 	import '../app.scss';
 	import { Spectre } from '$lib';
 	// import '../../package/spectre.css';
 	// import '$lib/spectre.scss';
-	import { Navbar } from '$lib/layouts';
-	import { IconButton } from '$lib/components';
+	import { Navbar } from '$lib/layouts/';
+	import { IconButton } from '$lib/components/';
+	import { Toaster } from '$lib/components/Toast/';
+	import { toast } from '$lib/components/Toast/toast';
 </script>

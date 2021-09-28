@@ -2,9 +2,11 @@ import type { Props } from 'svelte-viewpoint';
 
 type MenuProp = {
     title: string;
-    icon?: string;
-    pos?: number;
     path?: string;
+    pos?: number;
+    icon?: string;
+    badge?: string;
+    clear?: boolean;
 };
 
 export interface Route {

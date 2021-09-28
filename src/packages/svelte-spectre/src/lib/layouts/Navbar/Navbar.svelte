@@ -1,4 +1,4 @@
-<header class="navbar">
+<header class="navbar {classes}">
 	<div class="navbar-section">
 		<slot name="left" />
 	</div>
@@ -10,6 +10,12 @@
 	</div>
 </header>
 
+<script lang="ts">
+	export let classes: string;
+</script>
+
 <style lang="scss">
-	@import 'spectre.css/src/navbar';
+	:global(.spectre) {
+		@import 'spectre.css/src/navbar';
+	}
 </style>

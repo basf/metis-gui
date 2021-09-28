@@ -18,5 +18,7 @@
 </script>
 
 <style lang="scss">
-	@import 'spectre.css/src/steps';
+	:global(.spectre) {
+		@import 'spectre.css/src/steps';
+	}
 </style>

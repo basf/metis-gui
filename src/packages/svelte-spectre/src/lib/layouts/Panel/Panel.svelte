@@ -14,5 +14,7 @@
 </div>
 
 <style lang="scss">
-	@import 'spectre.css/src/panels';
+	:global(.spectre) {
+		@import 'spectre.css/src/panels';
+	}
 </style>

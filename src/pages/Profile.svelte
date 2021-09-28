@@ -1,6 +1,6 @@
 <Container>
-	<div class="columns">
-		<div class="column col-6 col-mx-auto">
+	<Grid>
+		<Col col="6" offset="mx-auto">
 			{#if $user}
 				<Panel>
 					<div slot="header" class="text-center">
@@ -25,12 +25,12 @@
 					</svelte:fragment>
 				</Panel>
 			{/if}
-		</div>
-	</div>
+		</Col>
+	</Grid>
 </Container>
 
 <script>
-	import { Container, Panel, Tile, Button } from 'svelte-spectre';
+	import { Button, Col, Container, Grid, Panel, Tile } from 'svelte-spectre';
 
 	import user from '@/stores/user';
 
