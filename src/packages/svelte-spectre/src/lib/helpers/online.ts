@@ -6,6 +6,7 @@ export async function online(url: string) {
         } catch (e) {
             return false;
         }
+    return false
 }
 
 // use example
