@@ -55,6 +55,7 @@
 </div>
 
 <script lang="ts" context="module">
+	import uuid from '../../helpers/uuid';
 	import type { Size } from '../../types/size';
 
 	type Validity = 'success' | 'error' | false;
@@ -70,7 +71,7 @@
 	export let validity: Validity = false;
 	export let size: Size = 'md';
 
-	const fid: number = Date.now();
+	const fid: string = uuid();
 </script>
 
 <style lang="scss">
