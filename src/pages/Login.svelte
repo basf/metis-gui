@@ -1,15 +1,15 @@
 <Grid>
 	<Col col="auto" offset="mx-auto">
 		<Form on:submit={submit} horizontal>
-			<Input bind:value={username} placeholder="Name" inline>Name</Input>
-			<Input bind:value={password} placeholder="Password" type="password" inline
+			<Input bind:value={username} mq="xs" placeholder="Name" inline>Name</Input>
+			<Input bind:value={password} mq="xs" placeholder="Password" type="password" inline
 				>Password</Input
 			>
 			<Button variant="primary" type="submit" block>Login</Button>
 			<Divider align="horizontal" text="OR" />
 			<Grid align="center">
 				<Col col="auto">Login with</Col>
-				<Col col="8" offset="ml-auto">
+				<Col col="auto">
 					<ButtonGroup>
 						{#each oauth as icon}
 							<IconButton variant="link" iconSize="3x" size="lg">
