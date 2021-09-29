@@ -76,6 +76,12 @@
 
 <style lang="scss">
 	@import 'spectre.css/src/forms';
+
+	.form-group {
+		&.d-flex {
+			flex-wrap: wrap;
+		}
+	}
 	.form-icon > :global(*) {
 		display: flex;
 	}
