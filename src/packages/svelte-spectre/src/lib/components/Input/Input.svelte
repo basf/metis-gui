@@ -84,7 +84,7 @@
 		}
 	}
 	.form-icon > :global(*) {
-		display: flex;
+		display: flex !important;
 	}
 	.label-xl {
 		@extend .label-lg;
