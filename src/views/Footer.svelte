@@ -5,7 +5,6 @@
 </footer>
 
 <script lang="ts">
-	// import { Container, Navbar, IconButton } from 'svelte-spectre';
 </script>
 
 <style lang="scss">
