@@ -1,6 +1,6 @@
 <Grid>
 	<Col col="auto" offset="mx-auto">
-		<form on:submit|preventDefault={submit}>
+		<Formm on:submit={submit} horizontal>
 			<Input bind:value={username} placeholder="Name" inline>Name</Input>
 			<Input bind:value={password} placeholder="Password" type="password" inline
 				>Password</Input
@@ -19,7 +19,7 @@
 					</ButtonGroup>
 				</Col>
 			</Grid>
-		</form>
+		</Form>
 	</Col>
 </Grid>
 
@@ -29,6 +29,7 @@
 		ButtonGroup,
 		Col,
 		Divider,
+		Form,
 		Grid,
 		Input,
 		IconButton,
