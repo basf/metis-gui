@@ -1,6 +1,6 @@
 <Grid>
 	<Col col="auto" offset="mx-auto">
-		<Formm on:submit={submit} horizontal>
+		<Form on:submit={submit} horizontal>
 			<Input bind:value={username} placeholder="Name" inline>Name</Input>
 			<Input bind:value={password} placeholder="Password" type="password" inline
 				>Password</Input
