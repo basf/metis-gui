@@ -9,7 +9,7 @@
 			<Divider align="horizontal" text="OR" />
 			<Grid align="center">
 				<Col col="auto">Login with</Col>
-				<Col col="auto">
+				<Col>
 					<ButtonGroup>
 						{#each oauth as icon}
 							<IconButton variant="link" iconSize="3x" size="lg">
