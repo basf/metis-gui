@@ -1,4 +1,4 @@
-<form class:form-horizontal={horizontal} on:submit|preventDefault>
+<form {...$$restProps} class:form-horizontal={horizontal} on:submit|preventDefault>
 	<slot />
 </form>
 
@@ -13,7 +13,6 @@
 	@import 'spectre.css/src/forms';
 
 	:global(.spectre) {
-		// Form horizontal
 		.form-horizontal {
 			padding: $layout-spacing 0;
 

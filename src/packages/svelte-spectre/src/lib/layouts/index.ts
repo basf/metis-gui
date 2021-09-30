@@ -1,6 +1,7 @@
 export * from './Card/';
 export * from './Container/';
 export * from './Empty/';
+export * from './Form/';
 export * from './Grid/';
 export * from './Hero/';
 export * from './Modal/';
