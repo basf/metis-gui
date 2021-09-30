@@ -10,8 +10,9 @@
 </script>
 
 <style lang="scss">
+	@import 'spectre.css/src/forms';
+
 	:global(.spectre) {
-		@import 'spectre.css/src/forms';
 		.form-horizontal {
 			padding: $layout-spacing 0;
 
