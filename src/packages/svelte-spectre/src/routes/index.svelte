@@ -76,6 +76,11 @@
 	</Icon>
 	<Hero offset="my-2" size="sm">
 		<h2>Toast</h2>
+		<Input />
+		<Input />
+	</Hero>
+	<Hero offset="my-2" size="sm">
+		<h2>Toast</h2>
 		{#if tostVis}
 			<Toast
 				reverse
@@ -137,7 +142,7 @@
 </Container>
 
 <script lang="ts">
-	import { Button, Divider, IconButton, Icon, Toast } from '$lib/components/';
+	import { Button, Divider, IconButton, Icon, Input, Toast } from '$lib/components/';
 	import { Card, Container, Empty, Hero, Grid, Col } from '$lib/layouts/';
 	// import { Button } from 'package';
 	import { toast, Pos } from '$lib/components/Toast/toast';
