@@ -1,4 +1,4 @@
-export async function online(url: string) {
+export async function ping(url: string) {
     if (navigator.onLine)
         try {
             const r = await fetch(url, { mode: 'no-cors' });
@@ -11,5 +11,5 @@ export async function online(url: string) {
 
 // use example
 // (async () => {
-//     console.log('online', await online('https://basf.science'))
+//     console.log('online', await ping('https://basf.science'))
 // })()
