@@ -23,7 +23,7 @@
 	</Col>
 </Grid>
 
-<script>
+<script lang="ts">
 	import {
 		Button,
 		ButtonGroup,
