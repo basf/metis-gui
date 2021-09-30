@@ -130,10 +130,11 @@
 	</Empty>
 	<!-- <Empty icon="home" titleSize="h1" buttonVariant="primary" buttonHref="#_" /> -->
 	<Hero offset="my-2" bg="dark" />
+	<Pinger bind:on />
 </Container>
 
 <script lang="ts">
-	import { Button, Divider, IconButton, Icon, Input, Toast } from '$lib/components/';
+	import { Button, Divider, IconButton, Icon, Input, Pinger, Toast } from '$lib/components/';
 	import { Card, Container, Empty, Hero, Grid, Col } from '$lib/layouts/';
 	// import { Button } from 'package';
 	import { toast, Pos } from '$lib/components/Toast/toast';
@@ -155,7 +156,19 @@
 			'center_left',
 			'top_left',
 			'center_center',
-		];
+		],
+		on: boolean;
+
+	$: {
+		if (on) {
+			toast.success({ msg: 'BFF is ON 👍🏻', timeout: 5000 });
+			toast.close(0);
+		} else if (on === undefined) {
+			toast.warning({ msg: 'Await BFF response', timeout: 5000 });
+		} else if (on === false) {
+			toast.error({ msg: 'BFF is OFF 👎🏻', timeout: 5000 });
+		}
+	}
 
 	const CARDS = [
 		{

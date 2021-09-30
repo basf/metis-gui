@@ -3,6 +3,7 @@ export * from './Button/';
 export * from './Divider/';
 export * from './Icon/';
 export * from './Input/';
+export * from './Pinger/';
 export * from './Progress/';
 export * from './Steps/';
 export * from './Switch/';
