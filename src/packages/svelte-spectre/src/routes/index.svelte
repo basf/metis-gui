@@ -75,7 +75,7 @@
 		</svg>
 	</Icon>
 	<Hero offset="my-2" size="sm">
-		<h2>Toast</h2>
+		<h2>Form</h2>
 		<Input />
 		<Input />
 	</Hero>
