@@ -2,9 +2,6 @@
 	<slot />
 </form>
 
-<script context="module" lang="ts">
-</script>
-
 <script lang="ts">
 	export let horizontal: boolean = true;
 </script>

@@ -72,9 +72,9 @@
 	</Icon>
 	<Hero offset="my-2" size="sm">
 		<h2>Form</h2>
-		<Form>
-			<Input>Input</Input>
-			<Input>Input</Input>
+		<Form horizontal>
+			<Input inline validity="success">Success</Input>
+			<Input inline validity="error">Error</Input>
 		</Form>
 	</Hero>
 	<Hero offset="my-2" size="sm">
@@ -135,8 +135,8 @@
 </Container>
 
 <script lang="ts">
-	import { Button, Divider, Form, IconButton, Icon, Input, Toast } from '$lib/components/';
-	import { Card, Container, Empty, Hero, Grid, Col } from '$lib/layouts/';
+	import { Button, Divider, IconButton, Icon, Input, Toast } from '$lib/components/';
+	import { Card, Container, Empty, Form, Hero, Grid, Col } from '$lib/layouts/';
 	// import { Button } from 'package';
 	import { toast, Pos } from '$lib/components/Toast/toast';
 	import icon from '/b-science.svg';

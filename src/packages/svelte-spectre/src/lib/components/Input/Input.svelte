@@ -29,7 +29,7 @@
 				{...$$restProps}
 				bind:value
 				class:is-success={validity === 'success'}
-				class:has-error={validity === 'error'}
+				class:is-error={validity === 'error'}
 				class="form-input input-{size}"
 				id="input-{fid}"
 				on:change
