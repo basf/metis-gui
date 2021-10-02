@@ -134,18 +134,26 @@
 	<Hero offset="my-2" bg="dark" />
 </Container>
 
-<script lang="ts">
-	import { Button, Divider, IconButton, Icon, Input, Toast } from '$lib/components/';
-	import { Card, Container, Empty, Form, Hero, Grid, Col } from '$lib/layouts/';
-	// import { Button } from 'package';
-	import { toast, Pos } from '$lib/components/Toast/toast';
-	import icon from '/b-science.svg';
-	// let icon = async () => {
-	// 	const res = await import('../../static/b-science.svg');
-	// 	return res;
-	// };
-	console.log(icon);
+<script context="module" lang="ts">
+	import {
+		Button,
+		Card,
+		Col,
+		Container,
+		Divider,
+		Empty,
+		Hero,
+		Grid,
+		Icon,
+		IconButton,
+		Input,
+		Toast,
+		toast,
+	} from 'svelte-spectre';
+	import type { Pos } from 'svelte-spectre';
+</script>
 
+<script lang="ts">
 	let loading = false,
 		positions: Pos[] = [
 			'top_center',
@@ -199,10 +207,4 @@
 	:global(.loading) {
 		pointer-events: auto !important;
 	}
-	// img {
-	// 	max-height: 200px;
-	// }
-	// div[class~='bg-'] {
-	// 	border-radius: 0.1rem;
-	// }
 </style>
