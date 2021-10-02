@@ -73,8 +73,56 @@
 	<Hero offset="my-2" size="sm">
 		<h2>Form</h2>
 		<Form horizontal>
-			<Input inline validity="success">Success</Input>
-			<Input inline validity="error">Error</Input>
+			<h4>Form horizontal</h4>
+			<FormGroup>
+				<Input validity="success">Success</Input>
+			</FormGroup>
+			<FormGroup>
+				<Input validity="error">Error</Input>
+			</FormGroup>
+		</Form>
+		<Form>
+			<h4>InputGroup</h4>
+			<FormGroup>
+				<InputGroup let:button>
+					<Switch />
+					<Input />
+					<Button slot="button" variant="primary" let:button input class={button}
+						>{button}</Button
+					>
+				</InputGroup>
+			</FormGroup>
+			<FormGroup>
+				<InputGroup let:button>
+					<Checkbox />
+					<Input />
+					<Button slot="button" variant="primary" let:button input class={button}
+						>{button}</Button
+					>
+				</InputGroup>
+			</FormGroup>
+		</Form>
+		<Form>
+			<h4>Select</h4>
+			<FormGroup>
+				<Select options={questions} bind:value={selected} let:option>
+					{option.text}
+				</Select>
+			</FormGroup>
+			<FormGroup>
+				<h4>Radio</h4>
+				<Radio label="Radios" radios={questions} bind:group={radios} let:radio>
+					{radio.text}
+				</Radio>
+			</FormGroup>
+			<FormGroup>
+				<h4>Checkbox</h4>
+				<Checkbox label="Checkbox" indeterminate />
+			</FormGroup>
+			<FormGroup>
+				<h4>Switch</h4>
+				<Switch label="Switch" />
+			</FormGroup>
 		</Form>
 	</Hero>
 	<Hero offset="my-2" size="sm">
@@ -140,13 +188,20 @@
 		Card,
 		Col,
 		Container,
+		Checkbox,
 		Divider,
 		Empty,
+		Form,
+		FormGroup,
 		Hero,
 		Grid,
 		Icon,
 		IconButton,
 		Input,
+		InputGroup,
+		Radio,
+		Select,
+		Switch,
 		Toast,
 		toast,
 	} from 'svelte-spectre';
@@ -154,6 +209,16 @@
 </script>
 
 <script lang="ts">
+	let questions = [
+			{ id: 1, text: `В какой школе ты учился?` },
+			{ id: 2, text: `Девичья фамилия твоей мамы?` },
+			{ id: 3, text: `Любая другая персональная информация?` },
+		],
+		selected = 1,
+		radios = 1;
+
+	$: console.log(selected, radios);
+
 	let loading = false,
 		positions: Pos[] = [
 			'top_center',

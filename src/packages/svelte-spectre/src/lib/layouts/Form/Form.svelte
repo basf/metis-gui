@@ -3,7 +3,7 @@
 </form>
 
 <script lang="ts">
-	export let horizontal: boolean = true;
+	export let horizontal: boolean;
 </script>
 
 <style lang="scss">

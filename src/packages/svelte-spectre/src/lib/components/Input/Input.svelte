@@ -1,59 +1,59 @@
-<div class:d-flex={inline} class="form-group">
-	{#if $$slots.default}
-		<div class="col-4 col-{mq}-12">
-			<label for="input-{fid}" class="form-label label-{size}">
-				<slot />
-			</label>
-		</div>
-	{/if}
-	<div
-		class:has-icon-left={$$slots.iconLeft}
-		class:has-icon-right={$$slots.iconRight}
-		class:col-8={$$slots.default}
-		class="col col-{mq}-12"
-	>
-		{#if rows > 1}
-			<textarea
-				{...$$restProps}
-				bind:value
-				class:is-success={validity === 'success'}
-				class:has-error={validity === 'error'}
-				class="form-input input-{size}"
-				id="input-{fid}"
-				{rows}
-				on:change
-				on:input
-			/>
-		{:else}
-			<input
-				{...$$restProps}
-				bind:value
-				class:is-success={validity === 'success'}
-				class:is-error={validity === 'error'}
-				class="form-input input-{size}"
-				id="input-{fid}"
-				on:change
-				on:input
-			/>
-		{/if}
-		{#if $$slots.iconLeft}
-			<span class="form-icon">
-				<slot name="iconLeft" />
-			</span>
-		{/if}
-		{#if $$slots.iconRight}
-			<span class="form-icon">
-				<slot name="iconRight" />
-			</span>
-		{/if}
+<!-- <div class:d-flex={inline} class="form-group"> -->
+{#if $$slots.default}
+	<div class="col-4 col-{mq}-12">
+		<label for="input-{fid}" class="form-label label-{size}">
+			<slot />
+		</label>
 	</div>
-	{#if $$slots.hint}
-		<div class="form-input-hint">
-			<slot name="hint" />
-		</div>
+{/if}
+<div
+	class:has-icon-left={$$slots.iconLeft}
+	class:has-icon-right={$$slots.iconRight}
+	class:col-8={$$slots.default}
+	class="col col-{mq}-12"
+>
+	{#if rows > 1}
+		<textarea
+			{...$$restProps}
+			bind:value
+			class:is-success={validity === 'success'}
+			class:is-error={validity === 'error'}
+			class="form-input input-{size}"
+			id="input-{fid}"
+			{rows}
+			on:change
+			on:input
+		/>
+	{:else}
+		<input
+			{...$$restProps}
+			bind:value
+			class:is-success={validity === 'success'}
+			class:is-error={validity === 'error'}
+			class="form-input input-{size}"
+			id="input-{fid}"
+			on:change
+			on:input
+		/>
+	{/if}
+	{#if $$slots.iconLeft}
+		<span class="form-icon">
+			<slot name="iconLeft" />
+		</span>
+	{/if}
+	{#if $$slots.iconRight}
+		<span class="form-icon">
+			<slot name="iconRight" />
+		</span>
 	{/if}
 </div>
+{#if $$slots.hint}
+	<div class="form-input-hint">
+		<slot name="hint" />
+	</div>
+{/if}
 
+<!-- </div> -->
 <script lang="ts" context="module">
 	import uuid from '../../helpers/uuid';
 	import type { Size } from '../../types/size';

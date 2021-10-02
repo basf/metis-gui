@@ -1,6 +1,6 @@
 <!-- <div class="form-group"> -->
-<label id="switch-{fid}" class="form-switch" class:form-inline={inline}>
-	<input bind:checked={value} type="checkbox" />
+<label id="checkbox-{fid}" class="form-checkbox is-{validity}" class:form-inline={inline}>
+	<input bind:checked={value} type="checkbox" {indeterminate} />
 	<i class="form-icon" />
 	{#if label}{label}{/if}
 </label>
@@ -17,6 +17,7 @@
 <script lang="ts">
 	export let label: string = '';
 	export let value: boolean = false;
+	export let indeterminate: boolean = false;
 	export let inline: boolean = false;
 	export let validity: Validity = false;
 

@@ -1,10 +1,14 @@
 <Grid>
 	<Col col="auto" offset="mx-auto">
 		<Form on:submit={submit} horizontal>
-			<Input bind:value={username} mq="xs" placeholder="Name" inline>Name</Input>
-			<Input bind:value={password} mq="xs" placeholder="Password" type="password" inline
-				>Password</Input
-			>
+			<FormGroup>
+				<Input bind:value={username} mq="xs" placeholder="Name">Name</Input>
+			</FormGroup>
+			<FormGroup>
+				<Input bind:value={password} mq="xs" placeholder="Password" type="password"
+					>Password</Input
+				>
+			</FormGroup>
 			<Button variant="primary" type="submit" block>Login</Button>
 			<Divider align="horizontal" text="OR" />
 			<Grid align="center">
@@ -30,6 +34,7 @@
 		Col,
 		Divider,
 		Form,
+		FormGroup,
 		Grid,
 		Input,
 		IconButton,

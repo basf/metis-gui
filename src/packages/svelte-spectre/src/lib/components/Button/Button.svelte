@@ -6,6 +6,7 @@
 		class:btn-block={block}
 		class:btn-action={!!shape}
 		class:circle={shape === 'circle'}
+		class:input-group-btn={input}
 		class:loading
 		class:active
 		on:click
@@ -20,6 +21,7 @@
 		class:btn-block={block}
 		class:btn-action={!!shape}
 		class:circle={shape === 'circle'}
+		class:input-group-btn={input}
 		class:loading
 		class:active
 		on:click
@@ -45,6 +47,7 @@
 	export let active: boolean = false;
 	export let loading: boolean = false;
 	export let block: boolean = false;
+	export let input: boolean = false;
 	export let href: string = '';
 </script>
 

@@ -1,9 +1,13 @@
 <!-- <div class="form-group"> -->
-<label id="switch-{fid}" class="form-switch" class:form-inline={inline}>
-	<input bind:checked={value} type="checkbox" />
-	<i class="form-icon" />
-	{#if label}{label}{/if}
-</label>
+{#if label}
+	<label class="form-label">{label}</label>
+{/if}
+{#each radios as radio, i}
+	<label id="radio-{fid}" class="form-radio is-{validity}" class:form-inline={inline}>
+		<input type="radio" name={radio.name} value={i} bind:group />
+		<i class="form-icon" /><slot {radio}>{radio.label}</slot>
+	</label>
+{/each}
 
 <!-- </div> -->
 <script lang="ts" context="module">
@@ -15,8 +19,9 @@
 </script>
 
 <script lang="ts">
-	export let label: string = '';
-	export let value: boolean = false;
+	export let label: string;
+	export let radios: any[] = [];
+	export let group: any[] = [];
 	export let inline: boolean = false;
 	export let validity: Validity = false;
 
