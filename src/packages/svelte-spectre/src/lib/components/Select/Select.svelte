@@ -8,7 +8,7 @@
 		bind:value
 	>
 		{#each options as option, i}
-			<option value={option}>
+			<option value={i}>
 				<slot {option}>{option}</slot>
 			</option>
 		{/each}
@@ -21,7 +21,7 @@
 		bind:value
 	>
 		{#each options as option, i}
-			<option value={option}>
+			<option value={i}>
 				<slot {option}>{option}</slot>
 			</option>
 		{/each}
