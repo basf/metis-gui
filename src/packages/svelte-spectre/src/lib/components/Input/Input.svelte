@@ -1,6 +1,6 @@
 <!-- <div class:d-flex={inline} class="form-group"> -->
 {#if $$slots.default}
-	<div class="col-4 col-{mq}-12">
+	<div class="col-4 col-{expand}-12">
 		<label for="input-{fid}" class="form-label label-{size}">
 			<slot />
 		</label>
@@ -10,7 +10,7 @@
 	class:has-icon-left={$$slots.iconLeft}
 	class:has-icon-right={$$slots.iconRight}
 	class:col-8={$$slots.default}
-	class="col col-{mq}-12"
+	class="col col-{expand}-12"
 >
 	{#if rows > 1}
 		<textarea
@@ -70,7 +70,7 @@
 	export let inline: boolean = false;
 	export let validity: Validity = false;
 	export let size: Size = 'md';
-	export let mq: Size = 'xs';
+	export let expand: Size = 'xs';
 
 	const fid: string = uuid();
 </script>

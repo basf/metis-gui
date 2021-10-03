@@ -2,10 +2,10 @@
 	<Col col="auto" offset="mx-auto">
 		<Form on:submit={submit} horizontal>
 			<FormGroup>
-				<Input bind:value={username} mq="xs" placeholder="Name">Name</Input>
+				<Input bind:value={username} expand="xs" placeholder="Name">Name</Input>
 			</FormGroup>
 			<FormGroup>
-				<Input bind:value={password} mq="xs" placeholder="Password" type="password"
+				<Input bind:value={password} expand="xs" placeholder="Password" type="password"
 					>Password</Input
 				>
 			</FormGroup>
