@@ -125,7 +125,7 @@
 			</FormGroup>
 			<FormGroup>
 				<h4>Range</h4>
-				<Range label="Range" />
+				<Range label="" />
 			</FormGroup>
 		</Form>
 	</Hero>

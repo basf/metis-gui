@@ -40,20 +40,22 @@
 				content: attr(data-range);
 				position: absolute;
 				left: var(--range);
-				transform: translate(-50%, -100%);
+				bottom: 150%;
 				color: $light-color;
 				background: rgba($dark-color, 0.95);
 				padding: $unit-1 $unit-2;
 				border-radius: $border-radius;
-				transition: opacity 250ms, transform 250ms;
+				transform: translateX(calc(0% - var(--range)));
+				transition: opacity 250ms, transform 250ms, bottom 250ms;
 				opacity: 0;
 			}
 		}
-		&:hover {
+		&:hover,
+		&:active {
 			&:not([data-tooltip]) {
 				&::after {
 					opacity: 1;
-					transform: translate(-50%, -200%);
+					bottom: 100%;
 				}
 			}
 		}
@@ -73,17 +75,18 @@
 				$primary-color var(--range, 0%),
 				$bg-color-dark var(--range, 0%)
 			);
-			border-radius: 5px;
 		}
 		&::-webkit-slider-thumb {
-			transform: translateX(calc(var(--range) - 50%));
+			transform: scale(1.25);
+			box-shadow: 0 0 0 0pt rgba($primary-color, 0.27);
+			transition: transform 250ms, box-shadow 250ms;
 		}
 		&:hover::-webkit-slider-thumb {
-			transform: translateX(calc(var(--range) - 50%)) scale(1.25) !important;
+			transform: scale(1.5);
 		}
 		&:active::-webkit-slider-thumb {
-			border: 3px solid rgba($primary-color, 0.27);
-			transform: inherit;
+			transform: scale(1.75);
+			box-shadow: 0 0 0 3pt rgba($primary-color, 0.27);
 		}
 
 		//moz
@@ -94,19 +97,18 @@
 				$primary-color var(--range, 0%),
 				$bg-color-dark var(--range, 0%)
 			);
-			border-radius: 5px;
 		}
 		&::-moz-range-thumb {
-			transform: translateX(calc(var(--range) - 50%));
-			outline: 3px;
-			transition: outline 250ms;
+			transform: scale(1.25);
+			box-shadow: 0 0 0 0pt rgba($primary-color, 0.27);
+			transition: transform 250ms, box-shadow 250ms;
 		}
 		&:hover::-moz-range-thumb {
-			transform: translateX(calc(var(--range) - 50%)) scale(1.25) !important;
+			transform: scale(1.5);
 		}
 		&:active::-moz-range-thumb {
-			outline: 3px solid transparentize($primary-color, 0.73);
-			transform: inherit;
+			transform: scale(1.75);
+			box-shadow: 0 0 0 3pt rgba($primary-color, 0.27);
 		}
 	}
 </style>
