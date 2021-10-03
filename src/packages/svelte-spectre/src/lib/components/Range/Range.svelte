@@ -1,7 +1,12 @@
-<label id="range-{fid}" class="is-{validity}" class:form-inline={inline} style="--range: {value}%;">
+<label
+	id="range-{fid}"
+	class="is-{validity}"
+	class:form-inline={inline}
+	style="--range: {range}%;"
+	data-range={range}
+>
 	{label}
-	<output>{value}</output>
-	<input class="slider tooltip" type="range" bind:value {min} {max} on:input on:change />
+	<input class="slider" type="range" bind:value={range} {min} {max} on:input on:change />
 </label>
 
 <script lang="ts" context="module">
@@ -14,7 +19,7 @@
 
 <script lang="ts">
 	export let label: string;
-	export let value: number = 50;
+	export let range: number = 50;
 	export let min: number = 0;
 	export let max: number = 100;
 	export let inline: boolean = false;
@@ -26,6 +31,7 @@
 <style lang="scss">
 	@import 'spectre.css/src/forms';
 	@import 'spectre.css/src/sliders';
+	@import 'spectre.css/src/tooltips';
 
 	label[id^='range-'] {
 		display: block;
@@ -35,6 +41,18 @@
 			position: absolute;
 			left: var(--range);
 			transform: translateX(-50%);
+		}
+		&:not([data-tooltip]) {
+			&::after {
+				content: attr(data-range);
+				position: absolute;
+				left: var(--range);
+				transform: translate(-50%, -200%);
+				color: $light-color;
+				background: rgba($dark-color, 0.95);
+				padding: $unit-1 $unit-2;
+				border-radius: $border-radius;
+			}
 		}
 	}
 	input[type='range'] {
@@ -61,7 +79,7 @@
 			transform: translateX(calc(var(--range) - 50%)) scale(1.25) !important;
 		}
 		&:active::-webkit-slider-thumb {
-			border: 3px solid transparentize($primary-color, 0.73);
+			border: 3px solid rgba($primary-color, 0.27);
 			transform: inherit;
 		}
 
