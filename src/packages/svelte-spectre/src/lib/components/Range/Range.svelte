@@ -29,9 +29,7 @@
 </script>
 
 <style lang="scss">
-	@import 'spectre.css/src/forms';
 	@import 'spectre.css/src/sliders';
-	@import 'spectre.css/src/tooltips';
 
 	label[id^='range-'] {
 		display: block;
@@ -105,6 +103,8 @@
 		}
 		&::-moz-range-thumb {
 			transform: translateX(calc(var(--range) - 50%));
+			outline: 3px;
+			transition: outline 250ms;
 		}
 		&:hover::-moz-range-thumb {
 			transform: translateX(calc(var(--range) - 50%)) scale(1.25) !important;
