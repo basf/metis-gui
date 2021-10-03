@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { ping } from '../../helpers/ping';
+	import { ping } from './ping';
 
 	export let url: string = 'http://localhost:3000';
 	export let on: boolean;
