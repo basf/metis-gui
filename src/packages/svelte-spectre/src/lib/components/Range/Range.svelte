@@ -47,11 +47,21 @@
 				content: attr(data-range);
 				position: absolute;
 				left: var(--range);
-				transform: translate(-50%, -200%);
+				transform: translate(-50%, -100%);
 				color: $light-color;
 				background: rgba($dark-color, 0.95);
 				padding: $unit-1 $unit-2;
 				border-radius: $border-radius;
+				transition: opacity 250ms, transform 250ms;
+				opacity: 0;
+			}
+		}
+		&:hover {
+			&:not([data-tooltip]) {
+				&::after {
+					opacity: 1;
+					transform: translate(-50%, -200%);
+				}
 			}
 		}
 	}
