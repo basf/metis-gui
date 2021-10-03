@@ -35,11 +35,6 @@
 		display: block;
 		position: relative;
 
-		output {
-			position: absolute;
-			left: var(--range);
-			transform: translateX(-50%);
-		}
 		&:not([data-tooltip]) {
 			&::after {
 				content: attr(data-range);
