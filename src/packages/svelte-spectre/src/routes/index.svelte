@@ -86,7 +86,7 @@
 			<FormGroup>
 				<InputGroup let:button>
 					<Switch />
-					<Input />
+					<Input expand="" />
 					<Button slot="button" variant="primary" let:button input class={button}
 						>{button}</Button
 					>
@@ -95,7 +95,7 @@
 			<FormGroup>
 				<InputGroup let:button>
 					<Checkbox />
-					<Input />
+					<Input expand="" />
 					<Button slot="button" variant="primary" let:button input class={button}
 						>{button}</Button
 					>
