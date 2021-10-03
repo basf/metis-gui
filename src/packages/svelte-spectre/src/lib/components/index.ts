@@ -6,6 +6,7 @@ export * from './Icon/';
 export * from './Input/';
 export * from './Progress/';
 export * from './Radio';
+export * from './Range';
 export * from './Select';
 export * from './Steps/';
 export * from './Switch/';

@@ -123,6 +123,10 @@
 				<h4>Switch</h4>
 				<Switch label="Switch" />
 			</FormGroup>
+			<FormGroup>
+				<h4>Range</h4>
+				<Range label="Range" />
+			</FormGroup>
 		</Form>
 	</Hero>
 	<Hero offset="my-2" size="sm">
@@ -200,6 +204,7 @@
 		Input,
 		InputGroup,
 		Radio,
+		Range,
 		Select,
 		Switch,
 		Toast,
