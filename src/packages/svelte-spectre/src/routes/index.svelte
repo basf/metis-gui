@@ -71,12 +71,18 @@
 		</svg>
 	</Icon>
 	<Hero offset="my-2" size="sm">
-		<h2>Toast</h2>
+		<h2>Accordion</h2>
+		<Accordion title="Accordion" opened>Accordion<br />Accordion<br />Accordion</Accordion>
+		<Accordion title="Accordion1">Accordion1<br />Accordion1<br />Accordion1</Accordion>
+		<Accordion title="Accordion2">Accordion2<br />Accordion2<br />Accordion2</Accordion>
+	</Hero>
+	<Hero offset="my-2" size="sm">
+		<h2>Form</h2>
 		<Input />
 		<Input />
 	</Hero>
 	<Hero offset="my-2" size="sm">
-		<h2>Form</h2>
+		<h2>Toast</h2>
 		<Toast
 			tost={{
 				id: 1,
@@ -133,11 +139,12 @@
 </Container>
 
 <script lang="ts">
-	import { Button, Divider, IconButton, Icon, Input, Toast } from '$lib/components/';
+	import { Accordion, Button, Divider, IconButton, Icon, Input, Toast } from '$lib/components/';
 	import { Card, Container, Empty, Hero, Grid, Col } from '$lib/layouts/';
 	// import { Button } from 'package';
 	import { toast, Pos } from '$lib/components/Toast/toast';
 	import icon from '/b-science.svg';
+	import { title } from 'process';
 	// let icon = async () => {
 	// 	const res = await import('../../static/b-science.svg');
 	// 	return res;
