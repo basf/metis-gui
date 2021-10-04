@@ -31,7 +31,7 @@
 <style lang="scss">
 	@import 'spectre.css/src/sliders';
 
-	label :is([type='range']) {
+	label {
 		display: block;
 		position: relative;
 
