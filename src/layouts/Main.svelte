@@ -16,7 +16,7 @@
 	</Panel>
 </Container>
 
-<script>
+<script lang="ts">
 	import { path } from 'svelte-pathfinder';
 	import { Container, Panel, Tabs, Toast } from 'svelte-spectre';
 

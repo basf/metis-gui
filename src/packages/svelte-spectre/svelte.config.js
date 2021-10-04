@@ -5,10 +5,6 @@ const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
 const options = {
 	sourceMap: dev,
-	defaults: {
-		script: 'typescript',
-		style: 'scss',
-	},
 	scss: {
 		prependData: `
 			@import './node_modules/spectre.css/src/variables';
