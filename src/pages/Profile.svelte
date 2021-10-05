@@ -27,7 +27,7 @@
 	</Col>
 </Grid>
 
-<script>
+<script lang="ts">
 	import { Button, Col, Grid, Panel, Tile } from 'svelte-spectre';
 
 	import user from '@/stores/user';
