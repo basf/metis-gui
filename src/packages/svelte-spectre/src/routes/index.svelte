@@ -223,17 +223,6 @@
 </script>
 
 <script lang="ts">
-	import { Accordion, Button, Divider, IconButton, Icon, Input, Toast } from '$lib/components/';
-	import { Card, Container, Empty, Hero, Grid, Col } from '$lib/layouts/';
-	// import { Button } from 'package';
-	import { toast, Pos } from '$lib/components/Toast/toast';
-	import icon from '/b-science.svg';
-	import { title } from 'process';
-	// let icon = async () => {
-	// 	const res = await import('../../static/b-science.svg');
-	// 	return res;
-	// };
-	console.log(icon);
 	let questions = [
 			{ id: 1, text: `Where did you go to school?` },
 			{ id: 2, text: `What is your mother's name?` },
