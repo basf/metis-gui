@@ -1,4 +1,3 @@
-<!-- <div class="form-group"> -->
 {#if label}
 	<label class="form-label">{label}</label>
 {/if}
@@ -9,7 +8,6 @@
 	</label>
 {/each}
 
-<!-- </div> -->
 <script lang="ts" context="module">
 	import uuid from '../../helpers/uuid';
 

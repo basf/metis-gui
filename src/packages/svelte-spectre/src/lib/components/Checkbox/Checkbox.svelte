@@ -1,11 +1,9 @@
-<!-- <div class="form-group"> -->
 <label id="checkbox-{fid}" class="form-checkbox is-{validity}" class:form-inline={inline}>
 	<input bind:checked={value} type="checkbox" {indeterminate} />
 	<i class="form-icon" />
 	{#if label}{label}{/if}
 </label>
 
-<!-- </div> -->
 <script lang="ts" context="module">
 	import uuid from '../../helpers/uuid';
 

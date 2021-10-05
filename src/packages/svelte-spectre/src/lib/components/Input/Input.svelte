@@ -1,4 +1,3 @@
-<!-- <div class:d-flex={inline} class="form-group"> -->
 {#if $$slots.default}
 	<div class="col-4 col-{expand}-12">
 		<label for="input-{fid}" class="form-label label-{size}">
@@ -53,7 +52,6 @@
 	</div>
 {/if}
 
-<!-- </div> -->
 <script lang="ts" context="module">
 	import uuid from '../../helpers/uuid';
 	import type { Size } from '../../types/size';
