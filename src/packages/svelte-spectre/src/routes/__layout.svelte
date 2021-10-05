@@ -22,7 +22,7 @@
 		</nav>
 	</Navbar>
 
-	<main class="text-center">
+	<main>
 		<slot />
 	</main>
 	<Toaster />

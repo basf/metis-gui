@@ -76,26 +76,75 @@
 	</Icon>
 	<Hero offset="my-2" size="sm">
 		<h2>Form</h2>
-		<Input />
-		<Input />
+		<Form horizontal>
+			<h4>Form horizontal</h4>
+			<FormGroup>
+				<Input validity="success">Success</Input>
+			</FormGroup>
+			<FormGroup>
+				<Input validity="error">Error</Input>
+			</FormGroup>
+		</Form>
+		<Form>
+			<h4>InputGroup</h4>
+			<FormGroup>
+				<InputGroup let:button>
+					<Switch />
+					<Input expand="" />
+					<Button slot="button" variant="primary" let:button input class={button}
+						>{button}</Button
+					>
+				</InputGroup>
+			</FormGroup>
+			<FormGroup>
+				<InputGroup let:button>
+					<Checkbox />
+					<Input expand="" />
+					<Button slot="button" variant="primary" let:button input class={button}
+						>{button}</Button
+					>
+				</InputGroup>
+			</FormGroup>
+		</Form>
+		<Form>
+			<h4>Select</h4>
+			<FormGroup>
+				<Select options={questions} bind:value={selected} let:option>
+					{option.text}
+				</Select>
+			</FormGroup>
+			<FormGroup>
+				<h4>Radio</h4>
+				<Radio label="Radios" radios={questions} bind:group={radios} let:radio>
+					{radio.text}
+				</Radio>
+			</FormGroup>
+			<FormGroup>
+				<h4>Checkbox</h4>
+				<Checkbox label="Checkbox" indeterminate />
+			</FormGroup>
+			<FormGroup>
+				<h4>Switch</h4>
+				<Switch label="Switch" />
+			</FormGroup>
+			<FormGroup>
+				<h4>Range</h4>
+				<Range label="" />
+			</FormGroup>
+		</Form>
 	</Hero>
 	<Hero offset="my-2" size="sm">
 		<h2>Toast</h2>
-		{#if tostVis}
-			<Toast
-				reverse
-				bind:visible={tostVis}
-				tost={{
-					id: 1,
-					timeout: 5000,
-					close: true,
-					icon: 'home',
-					type: 'warning',
-				}}>Toast</Toast
-			>
-		{/if}
-		<Button variant={tostVis ? 'error' : 'default'} on:click={(e) => (tostVis = !tostVis)}
-			>Toast {!tostVis ? 'open' : 'close'}</Button
+		<Toast
+			tost={{
+				id: 1,
+				init: 0,
+				next: 1,
+				timeout: 5000,
+				close: true,
+				icon: 'home',
+				type: 'primary',
+			}}>Toast</Toast
 		>
 	</Hero>
 	<Hero offset="my-2" size="sm">
@@ -141,17 +190,46 @@
 	<Hero offset="my-2" bg="dark" />
 </Container>
 
+<script context="module" lang="ts">
+	import {
+		Button,
+		Card,
+		Col,
+		Container,
+		Checkbox,
+		Divider,
+		Empty,
+		Form,
+		FormGroup,
+		Hero,
+		Grid,
+		Icon,
+		IconButton,
+		Input,
+		InputGroup,
+		Radio,
+		Range,
+		Select,
+		Switch,
+		Toast,
+		toast,
+	} from 'svelte-spectre';
+	import type { Pos } from 'svelte-spectre';
+</script>
+
 <script lang="ts">
-	import { Button, Divider, IconButton, Icon, Input, Toast } from '$lib/components/';
-	import { Card, Container, Empty, Hero, Grid, Col } from '$lib/layouts/';
-	// import { Button } from 'package';
-	import { toast, Pos } from '$lib/components/Toast/toast';
-	import icon from '/b-science.svg';
-	// let icon = async () => {
-	// 	const res = await import('../../static/b-science.svg');
-	// 	return res;
-	// };
-	console.log(icon);
+	let questions = [
+			{ id: 1, text: `Where did you go to school?` },
+			{ id: 2, text: `What is your mother's name?` },
+			{
+				id: 3,
+				text: `What is another personal fact that an attacker could easily find with Google?`,
+			},
+		],
+		selected = 1,
+		radios = 1;
+
+	$: console.log(selected, radios);
 
 	let loading = false,
 		positions: Pos[] = [
@@ -207,10 +285,4 @@
 	:global(.loading) {
 		pointer-events: auto !important;
 	}
-	// img {
-	// 	max-height: 200px;
-	// }
-	// div[class~='bg-'] {
-	// 	border-radius: 0.1rem;
-	// }
 </style>
