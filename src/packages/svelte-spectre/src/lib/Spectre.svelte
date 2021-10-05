@@ -3,7 +3,6 @@
 </div>
 
 <style lang="scss">
-	// @import './fix';
 	.spectre {
 		display: contents;
 		box-sizing: border-box;

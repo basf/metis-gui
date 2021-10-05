@@ -77,3 +77,138 @@ $icon-prefix: "icon";
         top: math.div($icon-border-width, 2);
     }
 }
+
+// forms.scss reversed `&` ----------------------------------------
+.has-success {
+    .form-input-hint {
+        color: $success-color;
+    }
+    .form-input,
+    .form-select {
+        background: lighten($success-color, 53%);
+        border-color: $success-color;
+        &:focus {
+            @include control-shadow($success-color);
+        }
+    }
+}
+.is-success + {
+    .form-input-hint {
+        color: $success-color;
+    }
+}
+.has-error {
+    .form-input-hint {
+        color: $error-color;
+    }
+    .form-input,
+    .form-select {
+        background: lighten($error-color, 53%);
+        border-color: $error-color;
+        &:focus {
+            @include control-shadow($error-color);
+        }
+    }
+    .form-checkbox,
+    .form-radio,
+    .form-switch {
+        .form-icon {
+            border-color: $error-color;
+        }
+
+        input {
+            &:checked + .form-icon {
+                background: $error-color;
+                border-color: $error-color;
+            }
+
+            &:focus + .form-icon {
+                @include control-shadow($error-color);
+                border-color: $error-color;
+            }
+        }
+    }
+    .form-checkbox {
+        input {
+            &:indeterminate + .form-icon {
+                background: $error-color;
+                border-color: $error-color;
+            }
+        }
+    }
+}
+.is-error + {
+    .form-input-hint {
+        color: $error-color;
+    }
+}
+
+.form-input,
+.form-select {
+    &.is-success {
+        background: lighten($success-color, 53%);
+        border-color: $success-color;
+        &:focus {
+            @include control-shadow($success-color);
+        }
+    }
+    &.is-error {
+        background: lighten($error-color, 53%);
+        border-color: $error-color;
+        &:focus {
+            @include control-shadow($error-color);
+        }
+    }
+}
+
+.form-checkbox,
+.form-radio,
+.form-switch {
+    &.is-error {
+        .form-icon {
+            border-color: $error-color;
+        }
+
+        input {
+            &:checked + .form-icon {
+                background: $error-color;
+                border-color: $error-color;
+            }
+
+            &:focus + .form-icon {
+                @include control-shadow($error-color);
+                border-color: $error-color;
+            }
+        }
+    }
+}
+
+.form-checkbox {
+    &.is-error {
+        input {
+            &:indeterminate + .form-icon {
+                background: $error-color;
+                border-color: $error-color;
+            }
+        }
+    }
+}
+textarea.form-input {
+    textarea.form-input,
+    &.input-lg,
+    &.input-sm {
+        height: auto;
+    }
+}
+
+// tables.scss reversed `&` -----------------------------
+.table,
+.table.table-striped {
+    tbody {
+        tr {
+            &.active {
+                background: $bg-color-dark;
+            }
+        }
+    }
+}
