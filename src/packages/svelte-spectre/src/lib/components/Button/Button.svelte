@@ -62,27 +62,24 @@
 		justify-content: center !important;
 	}
 	.btn.btn-xl {
-		@extend .btn;
-		height: $unit-12;
+		@extend .btn, .btn-lg;
+		height: $unit-12 !important;
 	}
 	.btn.btn-action.btn-xl {
-		width: $unit-12;
-		height: $unit-12;
+		width: $unit-12 !important;
 	}
 	.btn.btn-xxl {
-		@extend .btn;
-		height: $unit-16;
+		@extend .btn, .btn-lg;
+		height: $unit-16 !important;
 	}
 	.btn.btn-action.btn-xxl {
-		width: $unit-16;
-		height: $unit-16;
+		width: $unit-16 !important;
 	}
 	.btn.btn-xs {
-		@extend .btn;
-		height: $unit-6;
+		@extend .btn, .btn-sm;
+		height: $unit-6 !important;
 	}
 	.btn.btn-action.btn-xs {
-		width: $unit-6;
-		height: $unit-6;
+		width: $unit-6 !important;
 	}
 </style>
