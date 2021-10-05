@@ -1,4 +1,4 @@
-<header class="navbar {classes}">
+<div class="navbar {classes}">
 	<div class="navbar-section">
 		<slot name="left" />
 	</div>
@@ -8,7 +8,7 @@
 	<div class="navbar-section">
 		<slot name="right" />
 	</div>
-</header>
+</div>
 
 <script lang="ts">
 	export let classes: string;

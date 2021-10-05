@@ -1,15 +1,19 @@
 <Grid>
 	<Col col="auto" offset="mx-auto">
-		<form on:submit|preventDefault={submit}>
-			<Input bind:value={username} placeholder="Name" inline>Name</Input>
-			<Input bind:value={password} placeholder="Password" type="password" inline
-				>Password</Input
-			>
+		<Form on:submit={submit} horizontal>
+			<FormGroup>
+				<Input bind:value={username} expand="xs" placeholder="Name">Name</Input>
+			</FormGroup>
+			<FormGroup>
+				<Input bind:value={password} expand="xs" placeholder="Password" type="password"
+					>Password</Input
+				>
+			</FormGroup>
 			<Button variant="primary" type="submit" block>Login</Button>
 			<Divider align="horizontal" text="OR" />
 			<Grid align="center">
 				<Col col="auto">Login with</Col>
-				<Col col="8" offset="ml-auto">
+				<Col>
 					<ButtonGroup>
 						{#each oauth as icon}
 							<IconButton variant="link" iconSize="3x" size="lg">
@@ -19,7 +23,7 @@
 					</ButtonGroup>
 				</Col>
 			</Grid>
-		</form>
+		</Form>
 	</Col>
 </Grid>
 
@@ -29,6 +33,8 @@
 		ButtonGroup,
 		Col,
 		Divider,
+		Form,
+		FormGroup,
 		Grid,
 		Input,
 		IconButton,
