@@ -15,32 +15,26 @@ type Tost = {
 	timeout?: number,
 	init?: number,
 	next?: number,
-	pause?: boolean,
+	invert?: boolean,
+	reverse?: boolean,
 	pos?: Pos
 }
 
-const defaults: Tost = { close: true, timeout: 0, init: 1, next: 0, pos: 'top_center' }
+const defaults: Tost = { close: true, pos: 'top_center' }
 
 function createToast() {
 	const { subscribe, set, update } = writable([]);
 
 	let id = 0
 
-	const send = (toast: Tost) => {
+	const send = (toast: Tost = {}) => {
 		toast.id = id++
-		update((state) => {
-			state = state.filter((t) => t.timeout >= 0);
-			return [...state, { ...defaults, ...toast }];
-		});
+		update((state) => [...state, { ...defaults, ...toast }]);
 	}
 	const close = (id: number) => {
-		update((state) => {
-			return [...state.filter((t) => t.id !== id)];
-		});
+		update((state) => [...state.filter((t) => t.id !== id)]);
 	}
-	const clear = () => {
-		set([]);
-	}
+	const clear = () => set([]);
 
 	return {
 		subscribe,

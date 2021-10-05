@@ -3,8 +3,8 @@
 		{#each positions as pos}
 			<ul class="toast-list pos-{pos}">
 				{#each toasted(pos) as tost, i (tost.id)}
-					<li in:fly={flying(tost)} out:fade animate:flip={{ duration: 500 }}>
-						<Toast {tost} invert>
+					<li in:fly={flying(tost.pos)} animate:flip={{ duration: 250 }}>
+						<Toast {tost} invert reverse stack>
 							{#if tost.title}<h5>{tost.title}</h5>{/if}
 							<p>{tost.msg}</p>
 						</Toast>
@@ -17,25 +17,32 @@
 
 <script lang="ts" context="module">
 	import { flip } from 'svelte/animate';
-	import { fly, fade } from 'svelte/transition';
+	import { fly } from 'svelte/transition';
 
 	import { positions } from './positions';
 	import { toast } from './';
 	import Toast from './';
-
-	import type { Tost } from './';
 </script>
 
 <script lang="ts">
-	const flying = (t: Tost) => (t.pos.includes('top') ? { y: -48 } : { y: 48 });
-	$: toasted = (pos: string) => $toast.filter((t) => t.pos === pos);
+	const intros = {
+		left: { x: -256 },
+		right: { x: 256 },
+		top: { y: -56 },
+		bottom: { y: 56 },
+		center: {},
+	};
+
+	const flying = (p: string) => Object.entries(intros).find(([k, v]) => p.includes(k))[1];
+
+	$: toasted = (p: string) => $toast.filter((t) => t.pos === p);
 </script>
 
 <style lang="scss">
 	.toaster {
 		.toast-list {
 			position: fixed;
-			width: 300px;
+			max-width: 100vw;
 			list-style: none;
 			margin: 0;
 			& > li {

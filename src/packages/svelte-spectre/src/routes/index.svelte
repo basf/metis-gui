@@ -3,14 +3,18 @@
 	<p>
 		Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation
 	</p>
-	<Button variant="primary" {loading} on:click={(e) => (loading = !loading)}>
+	<Button
+		variant="primary"
+		{loading}
+		on:click={(e) => toast.primary({ msg: 'top_left', pos: 'top_left' })}
+	>
 		<Icon icon="emoji" offset="mr-2" />Button
 	</Button>
 	{#each positions as pos}
 		<IconButton
 			icon="message"
 			variant="default"
-			on:click={(e) => toast.success({ msg: pos, pos: pos, timeout: 5000, init: 1, next: 0 })}
+			on:click={(e) => toast.success({ msg: pos, pos: pos, timeout: 5000 })}
 		/>
 	{/each}
 	<IconButton
@@ -238,7 +242,8 @@
 			'center_left',
 			'top_left',
 			'center_center',
-		];
+		],
+		tostVis;
 
 	const CARDS = [
 		{
