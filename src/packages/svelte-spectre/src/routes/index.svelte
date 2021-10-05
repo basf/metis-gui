@@ -201,6 +201,7 @@
 
 <script context="module" lang="ts">
 	import {
+		Accordion,
 		Button,
 		Card,
 		Col,
