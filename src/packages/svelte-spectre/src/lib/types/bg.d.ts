@@ -4,6 +4,7 @@ export type Color =
     | 'secondary'
     | 'dark'
     | 'gray'
+    | 'light'
     | 'success'
     | 'warning'
     | 'error'

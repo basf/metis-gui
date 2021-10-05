@@ -1,4 +1,8 @@
-<div class="toast {tost.type && `toast-${tost.type}`}" use:pausable={$progress > 0}>
+<div
+	class="toast {tost.type && `toast-${tost.type}`}"
+	use:pausable={tost.timeout > 0}
+	transition:fade
+>
 	<Grid align="center">
 		{#if tost.icon}
 			<Col col="auto">
@@ -9,7 +13,9 @@
 			<slot>Default text</slot>
 		</Col>
 		{#if tost.close}
-			<IconButton icon="cross" on:click={close} />
+			<Col col="auto" inset="px-0">
+				<IconButton icon="cross" on:click={close} />
+			</Col>
 		{/if}
 	</Grid>
 	{#if tost.timeout}
@@ -18,6 +24,7 @@
 </div>
 
 <script context="module" lang="ts">
+	import { fade } from 'svelte/transition';
 	import { tweened } from 'svelte/motion';
 	import { linear } from 'svelte/easing';
 	import { IconButton } from '../Button';
@@ -28,62 +35,63 @@
 
 	import type { Tweened } from 'svelte/motion';
 	import type { Tost } from './toast';
-	import type { Options } from '../Progress';
 	import type { Color } from '../../types/bg';
 	import type { Icons } from '../../types/icons';
+
+	type Options = {
+		delay?: number;
+		duration?: number;
+		easing?: (t: number) => number;
+		interpolate?: (a: number, b: number) => (t: number) => number;
+	};
 
 	export type { Color, Icons, Tost };
 </script>
 
 <script lang="ts">
 	export let tost: Tost;
-	export let invert: boolean = false;
-	export let next: number = tost.init;
-	export let options: Options;
-	export let value: number;
+	export let invert: boolean = tost.invert;
+	export let reverse: boolean = tost.reverse;
+	export let stack: boolean;
+	export let visible: boolean = true;
 
-	const defaults: Options = { delay: 0, duration: 5000, easing: linear };
-	const progress: Tweened<number> = tweened(tost.init, { ...defaults });
+	let init: number = reverse ? 1 : 0,
+		next: number = reverse ? 0 : 1,
+		start: number = Date.now(),
+		remaining: number = tost.timeout,
+		options: Options = { duration: remaining };
 
-	const autoclose = () => ($progress === 1 || $progress === 0) && toast.close(tost.id);
+	const defaults: Options = { delay: 0, duration: 0, easing: linear };
+	const progress: Tweened<number> = tweened(init, { ...defaults });
+
+	const autoclose = () =>
+		($progress === 1 || $progress === 0) && stack ? toast.close(tost.id) : (visible = false);
+
+	progress.set(next, options).then(() => tost.timeout && visible && autoclose());
+
+	const pause = () => {
+		remaining -= Date.now() - start;
+		progress.set($progress, { duration: 0 });
+	};
+	const resume = () => {
+		start = Date.now();
+		progress.set(next, { duration: remaining }).then(autoclose);
+	};
+	const close = () => {
+		progress.set(0, { duration: 0 }).then(autoclose);
+	};
 
 	function pausable(node: HTMLElement, paused: boolean) {
+		if (paused) {
+			node.onmouseenter = pause;
+			node.onmouseleave = resume;
+		}
 		return {
-			update(paused: boolean) {
-				node.onmouseenter = pause;
-				node.onmouseleave = resume;
-			},
 			destroy() {
 				node.onmouseenter = null;
 				node.onmouseleave = null;
 			},
 		};
-	}
-
-	$: if (next !== tost.next) {
-		start = Date.now();
-		next = tost.next;
-		remaining = tost.timeout;
-		progress.set(next, { duration: remaining }).then(autoclose);
-	}
-
-	let start: number, remaining: number;
-
-	function pause() {
-		remaining -= Date.now() - start;
-		options = { duration: 0 };
-		progress.set($progress, { duration: 0 });
-	}
-	function resume() {
-		start = Date.now();
-		options = { duration: remaining };
-		next = tost.next;
-		progress.set(next, { duration: remaining }).then(autoclose);
-	}
-	function close() {
-		next = 1;
-		options = { duration: 0 };
-		progress.set(1, { duration: 0 }).then(autoclose);
 	}
 </script>
 
@@ -92,10 +100,10 @@
 		@import 'spectre.css/src/toasts';
 
 		.toast {
-			max-width: 300px;
 			position: relative;
 			padding-top: 0;
 			padding-bottom: 0;
+			word-wrap: break-word;
 			:global(.btn-link) {
 				color: currentColor;
 				opacity: 1;
@@ -108,7 +116,7 @@
 				}
 			}
 			:global {
-				* {
+				* > * {
 					margin: 0;
 				}
 				.progress {
