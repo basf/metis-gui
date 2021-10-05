@@ -1,18 +1,16 @@
-<footer class="container text-center bg-gray d-flex py-2 mt-2">
-	<copy class="py-2">
-		© {new Date().getFullYear()} <a href="https://basf.science">basf.science</a>
-	</copy>
+<footer class="bg-gray py-2 mt-2">
+	<Navbar classes={'container grid-md'}>
+		<copy slot="center">
+			© {new Date().getFullYear()} <a href="https://basf.science">basf.science</a>
+		</copy>
+	</Navbar>
 </footer>
 
 <script lang="ts">
+	import { Navbar } from 'svelte-spectre';
 </script>
 
 <style lang="scss">
-	footer {
-		align-items: center;
-		justify-content: center;
-	}
-
 	/* sticky footer --------------------------- */
 	:global(body),
 	:global(html) {
