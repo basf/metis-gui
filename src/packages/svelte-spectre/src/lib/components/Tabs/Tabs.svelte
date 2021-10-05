@@ -11,11 +11,9 @@
 </ul>
 
 <script lang="ts">
-	import { Icon, Icons } from '../Icon/'; // trouble with positioning
-	import { Button } from '../Button/'; // same trouble
-	// type Item = typeof items[number]; // dynamicly get type from array (exp)
+	import { Icon, Icons } from '../Icon/';
+	import { Button } from '../Button/';
 
-	// don't sure about place it here - need sync with received obj
 	type ItemProp = {
 		title: string;
 		path?: string;
