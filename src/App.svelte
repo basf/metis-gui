@@ -11,7 +11,7 @@
 	<Toaster />
 </Spectre>
 
-<script>
+<script lang="ts">
 	import { pattern, click, redirect } from 'svelte-pathfinder';
 	import Viewpoint from 'svelte-viewpoint';
 	import { Spectre, Toaster } from 'svelte-spectre';
