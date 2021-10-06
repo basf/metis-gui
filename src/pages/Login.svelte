@@ -1,15 +1,19 @@
 <Grid>
 	<Col col="auto" offset="mx-auto">
-		<form on:submit|preventDefault={submit}>
-			<Input bind:value={email} placeholder="Email" inline>Email</Input>
-			<Input bind:value={password} placeholder="Password" type="password" inline
-				>Password</Input
-			>
+		<Form on:submit={submit} horizontal>
+			<FormGroup>
+				<Input bind:value={email} expand="xs" placeholder="Email">Email</Input>
+			</FormGroup>
+			<FormGroup>
+				<Input bind:value={password} expand="xs" placeholder="Password" type="password"
+					>Password</Input
+				>
+			</FormGroup>
 			<Button variant="primary" type="submit" block>Login</Button>
 			<Divider align="horizontal" text="OR" />
 			<Grid align="center">
 				<Col col="auto">Login with</Col>
-				<Col col="8" offset="ml-auto">
+				<Col>
 					<ButtonGroup>
 						{#each Object.entries(oauth) as [provider, icon]}
 							<IconButton href="{API_BASEURL}/auth/{provider}" variant="link" iconSize="3x" size="lg">
@@ -19,16 +23,18 @@
 					</ButtonGroup>
 				</Col>
 			</Grid>
-		</form>
+		</Form>
 	</Col>
 </Grid>
 
-<script>
+<script lang="ts">
 	import {
 		Button,
 		ButtonGroup,
 		Col,
 		Divider,
+		Form,
+		FormGroup,
 		Grid,
 		Input,
 		IconButton,

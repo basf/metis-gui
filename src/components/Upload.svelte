@@ -7,7 +7,7 @@
 	{/each}
 </ol>
 
-<script>
+<script lang="ts">
 	import Dropzone from 'svelte-file-dropzone';
 
 	let files = [];
@@ -19,8 +19,8 @@
 	}
 </script>
 
-<style>
+<style lang="scss">
 	.upload > :global(.dropzone:focus) {
-		border-color: #5755d9;
+		border-color: $primary-color;
 	}
 </style>

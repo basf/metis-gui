@@ -46,7 +46,7 @@
 	</Button>
 </Main>
 
-<script>
+<script lang="ts">
 	import { onMount } from 'svelte';
 
 	import { Tile, Button, Divider, IconButton, Progress, Input, Grid, Col } from 'svelte-spectre';
