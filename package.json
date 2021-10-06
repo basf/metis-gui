@@ -13,12 +13,10 @@
 		"test": "jest src",
 		"test:watch": "npm run test -- --watch",
 		"size": "size-limit",
-		"clean": "rm -rf ./dist",
-		"spectre": "npm run package --workspaces"
+		"clean": "rm -rf ./dist"
 	},
 	"engines": {
-		"node": ">= 15",
-		"npm": ">= 7"
+		"node": ">= 14"
 	},
 	"browserslist": [
 		"extends browserslist-config-google"

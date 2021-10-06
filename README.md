@@ -1,15 +1,9 @@
-XRPD data management GUI
-==========
+# XRPD data management GUI
 
 # Installation
 
 ```sh
 npm install
-cd src/packages/svelte-spectre
-npm install
-npm run package
-cd -
-npm run spectre
 ```
 
 # Commands
