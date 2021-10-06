@@ -37,16 +37,16 @@ export async function delCalculation(uuid: string): Promise<void> {
     return delJSON('/calculations', { uuid });
 }
 
-export async function login(login: string, password: string): Promise<void> {
-    return postJSON('/users/login', { login, password });
+export async function login(email: string, password: string): Promise<void> {
+    return postJSON('/auth', { email, password });
 }
 
 export async function logout(): Promise<void> {
-    return delJSON('/users/login');
+    return delJSON('/auth');
 }
 
 export async function me(): Promise<UserDTO> {
-    return getJSON('/users/me');
+    return getJSON<UserDTO>('/auth');
 }
 
 export async function getJSON<T>(
@@ -57,9 +57,7 @@ export async function getJSON<T>(
     const url = new URL(API_BASEURL + path);
 
     if (params) {
-        Object.entries(params).forEach((param: [string, string]) =>
-            url.searchParams.append(...param)
-        );
+        Object.entries(params).forEach(([key, value]) => url.searchParams.append(key, value as string));
     }
 
     return fetchJSON(url.toString(), { headers });
@@ -95,14 +93,12 @@ export async function putJSON<T, U>(
 
 export async function delJSON<T, U>(
     path: string,
-    data: T,
     headers?: HttpHeaders
 ): Promise<U> {
     const url = new URL(API_BASEURL + path);
 
     return fetchJSON<U>(url.toString(), {
         method: 'delete',
-        body: JSON.stringify(data),
         headers,
     });
 }
@@ -128,7 +124,7 @@ export default async function fetchJSON<T>(
         if (res.status === 401) {
             goto('/login');
         }
-        const err: HttpError = new Error(res.status);
+        const err: HttpError = new Error(res.statusText);
         err.response = res;
         throw err;
     }
