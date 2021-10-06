@@ -75,6 +75,15 @@
 		</svg>
 	</Icon>
 	<Hero offset="my-2" size="sm">
+		<h2>Accordion</h2>
+		<Accordion title="Accordion" opened>Accordion<br />Accordion<br />Accordion</Accordion>
+		<Accordion title="Accordion1">Accordion1<br />Accordion1<br />Accordion1</Accordion>
+		<Accordion title="Accordion2">Accordion2<br />Accordion2<br />Accordion2</Accordion>
+	</Hero>
+	<Hero offset="my-2" size="sm">
+		<h2>Form</h2>
+		<Input />
+		<Input />
 		<h2>Form</h2>
 		<Form horizontal>
 			<h4>Form horizontal</h4>
@@ -193,6 +202,7 @@
 
 <script context="module" lang="ts">
 	import {
+		Accordion,
 		Button,
 		Card,
 		Col,
