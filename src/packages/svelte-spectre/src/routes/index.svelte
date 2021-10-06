@@ -188,6 +188,7 @@
 	</Empty>
 	<!-- <Empty icon="home" titleSize="h1" buttonVariant="primary" buttonHref="#_" /> -->
 	<Hero offset="my-2" bg="dark" />
+	<Pinger bind:on />
 </Container>
 
 <script context="module" lang="ts">
