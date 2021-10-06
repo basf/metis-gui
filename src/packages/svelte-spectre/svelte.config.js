@@ -7,6 +7,7 @@ const options = {
 	sourceMap: dev,
 	scss: {
 		prependData: `
+			// $primary-color: #336eaa;
 			@import './node_modules/spectre.css/src/variables';
 			@import './node_modules/spectre.css/src/mixins';
 		`,
