@@ -57,7 +57,9 @@ export async function getJSON<T>(
     const url = new URL(API_BASEURL + path);
 
     if (params) {
-        Object.entries(params).forEach(([key, value]) => url.searchParams.append(key, value as string));
+        Object.entries(params).forEach(([key, value]) =>
+            url.searchParams.append(key, value as string)
+        );
     }
 
     return fetchJSON(url.toString(), { headers });

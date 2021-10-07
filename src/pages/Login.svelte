@@ -16,7 +16,12 @@
 				<Col>
 					<ButtonGroup>
 						{#each Object.entries(oauth) as [provider, icon]}
-							<IconButton href="{API_BASEURL}/auth/{provider}" variant="link" iconSize="3x" size="lg">
+							<IconButton
+								href="{API_BASEURL}/auth/{provider}"
+								variant="link"
+								iconSize="3x"
+								size="lg"
+							>
 								{@html icon}
 							</IconButton>
 						{/each}
