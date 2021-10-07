@@ -12,7 +12,7 @@
 </Spectre>
 
 <script lang="ts">
-	import { pattern, click, redirect } from 'svelte-pathfinder';
+	import { pattern, click, redirect, state, url } from 'svelte-pathfinder';
 	import Viewpoint from 'svelte-viewpoint';
 	import { Spectre, Toaster } from 'svelte-spectre';
 
@@ -24,5 +24,13 @@
 	import routes from '@/routes';
 
 	$: page = routes.find((route) => $pattern(route.path)) || null;
-	$: $user ? redirect('/') : redirect('/login');
+	$: $user ? gotoInitialPage() : gotoLoginPage();
+
+	function gotoInitialPage() {
+		redirect($state.redirectURL || '/');
+	}
+
+	function gotoLoginPage() {
+		redirect('/login', { redirectURL: $url });
+	}
 </script>

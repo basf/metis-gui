@@ -2,7 +2,7 @@
 	<Col col="auto" offset="mx-auto">
 		<Form on:submit={submit} horizontal>
 			<FormGroup>
-				<Input bind:value={username} expand="xs" placeholder="Name">Name</Input>
+				<Input bind:value={email} expand="xs" placeholder="Email">Email</Input>
 			</FormGroup>
 			<FormGroup>
 				<Input bind:value={password} expand="xs" placeholder="Password" type="password"
@@ -15,8 +15,13 @@
 				<Col col="auto">Login with</Col>
 				<Col>
 					<ButtonGroup>
-						{#each oauth as icon}
-							<IconButton variant="link" iconSize="3x" size="lg">
+						{#each Object.entries(oauth) as [provider, icon]}
+							<IconButton
+								href="{API_BASEURL}/auth/{provider}"
+								variant="link"
+								iconSize="3x"
+								size="lg"
+							>
 								{@html icon}
 							</IconButton>
 						{/each}
@@ -45,20 +50,22 @@
 
 	import { login, me } from '@/services/api';
 
-	import githubIcon from '@/assets/img/github.svg';
-	import linkedinIcon from '@/assets/img/linkedin.svg';
-	import basfIcon from '@/assets/img/BASF-invert.svg';
-	import orcidIcon from '@/assets/img/ORCID-invert.svg';
+	import { API_BASEURL } from '@/config';
 
-	let username = '';
+	import github from '@/assets/img/github.svg';
+	import linkedin from '@/assets/img/linkedin.svg';
+	import basf from '@/assets/img/BASF-invert.svg';
+	import orcid from '@/assets/img/ORCID-invert.svg';
+
+	let email = '';
 	let password = '';
 	let errmsg;
 
-	const oauth: string[] = [githubIcon, linkedinIcon, basfIcon, orcidIcon];
+	const oauth = { github, linkedin, basf, orcid };
 
 	async function submit() {
 		try {
-			await login(username, password);
+			await login(email, password);
 			$user = await me();
 			toast.success({ msg: 'You are logged in 👍🏻', timeout: 5000 });
 		} catch (err) {
