@@ -6,9 +6,9 @@
 			{/if}
 		</nav>
 
-		<svelte:fragment slot="center">
-			<IconButton size="xxl" iconSize="4x" color="dark" href="/">{@html Xray}</IconButton>
-		</svelte:fragment>
+		<IconButton slot="center" size="xxl" iconSize="4x" color="dark" href="/"
+			>{@html Xray}</IconButton
+		>
 
 		<nav slot="right">
 			{#if $user}
