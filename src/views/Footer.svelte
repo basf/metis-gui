@@ -1,7 +1,7 @@
 <footer class="bg-gray py-2 mt-2">
 	<Navbar classes={'container grid-md'}>
 		<copy slot="center">
-			© {new Date().getFullYear()} <a href="https://basf.science">basf.science</a>
+			This is the <a href="https://basf.science">BASF.science</a>, an open-source XRPD online data management system.
 		</copy>
 	</Navbar>
 </footer>

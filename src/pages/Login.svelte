@@ -12,7 +12,7 @@
 			<Button variant="primary" type="submit" block>Login</Button>
 			<Divider align="horizontal" text="OR" />
 			<Grid align="center">
-				<Col col="auto">Login with</Col>
+				<Col col="auto">Log in with:</Col>
 				<Col>
 					<ButtonGroup>
 						{#each Object.entries(oauth) as [provider, icon]}
@@ -61,16 +61,16 @@
 	let password = '';
 	let errmsg;
 
-	const oauth = { github, linkedin, basf, orcid };
+	const oauth = { basf, github, linkedin, orcid };
 
 	async function submit() {
 		try {
 			await login(email, password);
 			$user = await me();
-			toast.success({ msg: 'You are logged in 👍🏻', timeout: 5000 });
+			toast.success({ msg: 'You are logged in', timeout: 4000 });
 		} catch (err) {
 			errmsg = err;
-			toast.error({ msg: errmsg.error || 'Login/Password incorrect', timeout: 5000 });
+			toast.error({ msg: errmsg.error || 'Login or password incorrect', timeout: 4000 });
 		}
 	}
 </script>

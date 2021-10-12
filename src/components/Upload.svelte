@@ -1,11 +1,11 @@
 <div class="upload">
 	<Dropzone on:drop={handleFilesSelect} />
 </div>
-<ol>
+<ul>
 	{#each files as item}
 		<li>{item.name}</li>
 	{/each}
-</ol>
+</ul>
 
 <script lang="ts">
 	import Dropzone from 'svelte-file-dropzone';
