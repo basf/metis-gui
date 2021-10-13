@@ -46,7 +46,7 @@
 		toast,
 	} from 'svelte-spectre';
 
-	import user from '@/stores/user';
+	import { userAsync } from '@/stores/user';
 
 	import { login, me } from '@/services/api';
 
@@ -66,7 +66,7 @@
 	async function submit() {
 		try {
 			await login(email, password);
-			$user = await me();
+			$userAsync = me();
 			toast.success({ msg: 'You are logged in', timeout: 4000 });
 		} catch (err) {
 			errmsg = err;

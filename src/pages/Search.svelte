@@ -1,8 +1,82 @@
-<iframe src="optimade.html" title="Search" />
+<Main>
+	<Grid offset="my-2" align="">
+		<Col col={8}>
+			<Input
+				bind:value={$query.params.q}
+				placeholder="start typing..."
+				name="q"
+				type="search"
+				size="lg"
+				inline
+				autofocus
+			>
+				<span slot="iconRight">
+					{#if $query.params.q}
+						<IconButton icon="cross" on:click={() => ($query.params.q = '')} />
+					{:else}
+						<Icon icon="search" />
+					{/if}
+				</span>
+			</Input>
+		</Col>
+		<Col col={4}>
+			{#await $providersAsync}
+				<Loaders.Control />
+			{:then providers}
+				<Select bind:value={selectedProviderIndex} options={providers} let:option>
+					{option.attributes.name}
+				</Select>
+			{/await}
+		</Col>
+	</Grid>
+	<div bind:clientWidth={width}>
+		{#await $results}
+			<Loaders.Tile count={5} w={width} h={68} height={350} {width} />
+		{:then results}
+			{#each results as [structures, provider], index}
+				{#each structures as structure}
+					<Tile>
+						<h5 class="mt-2" slot="title">{@html getStructureTitle(structure)}</h5>
+						<small slot="subtitle" class="tile-subtitle text-gray"
+							>ID · {structure.id} · Last modified · {structure.attributes
+								.last_modified}</small
+						>
+						<svelte:fragment slot="action">
+							<IconButton
+								icon="upload"
+								title="Upload this JSON to calculation"
+								on:click={() => setDataContent(structure)}
+							/>
+						</svelte:fragment>
+					</Tile>
+				{/each}
+			{/each}
+		{/await}
+	</div>
+</Main>
 
-<style lang="scss">
-	iframe {
-		width: 100%;
-		height: 100vh;
+<script lang="ts">
+	import { query, goto } from 'svelte-pathfinder';
+
+	import { Tile, IconButton, Input, Select, Icon, Grid, Col } from 'svelte-spectre';
+
+	import * as Loaders from '@/components/loaders';
+
+	import Main from '@/layouts/Main.svelte';
+
+	import { structuresAsync as results, providersAsync, providers } from '@/stores/optimade';
+
+	import { content } from '@/stores/data';
+
+	import { getStructureTitle } from '@/helpers/optimade';
+
+	let width;
+	let selectedProviderIndex = 0;
+
+	$: $query.params.provider = $providers[selectedProviderIndex]?.id;
+
+	function setDataContent(structure) {
+		$content = JSON.stringify(structure);
+		goto('/');
 	}
-</style>
+</script>

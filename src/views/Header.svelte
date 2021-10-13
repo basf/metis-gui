@@ -1,8 +1,8 @@
 <header>
 	<Navbar classes={'container grid-md'}>
 		<nav slot="left">
-			{#if $path.length > 1 && $path.toString() !== '/login'}
-				<IconButton icon="back" iconSize="1x" size="xl" on:click={back} />
+			{#if $user && $path.toString() === '/profile'}
+				<IconButton icon="back" iconSize="1x" size="xl" on:click={() => back()} />
 			{/if}
 		</nav>
 

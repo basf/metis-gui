@@ -33,7 +33,7 @@
 			<Input
 				rows={4}
 				placeholder="Paste POSCAR, CIF, or Optimade JSON"
-				bind:value={content}
+				bind:value={$content}
 			/>
 		</Col>
 		<Divider align="vertical" text="OR" />
@@ -62,7 +62,7 @@
 		delCalculation,
 	} from '@/services/api';
 
-	import data from '@/stores/data';
+	import data, { content } from '@/stores/data';
 	import errors from '@/stores/errors';
 
 	import calculations from '@/stores/calculations';
@@ -73,19 +73,8 @@
 		if (item.error) errors.append(new Error(item.error));
 		item.calculation = $calculations.find((calc) => calc.data === item.uuid);
 		item.inProgress = item.calculation && item.calculation.progress < 100;
-		console.log(item);
 		return item;
 	});
-
-	$: (async () => {
-		const copiedContent = await navigator.clipboard.readText();
-		if (copiedContent) {
-			content = copiedContent;
-			navigator.clipboard.writeText('');
-		}
-	})();
-
-	let content;
 
 	onMount(async () => {
 		setTimeout(() => {
@@ -95,7 +84,7 @@
 	});
 
 	function addDataItem() {
-		setData(content);
-		content = '';
+		setData($content);
+		$content = '';
 	}
 </script>
