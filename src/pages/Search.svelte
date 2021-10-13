@@ -1,34 +1,32 @@
 <Main>
-	<Grid offset="my-2" align="">
-		<Col col={8}>
-			<Input
-				bind:value={$query.params.q}
-				placeholder="start typing..."
-				name="q"
-				type="search"
-				size="lg"
-				inline
-				autofocus
-			>
-				<span slot="iconRight">
-					{#if $query.params.q}
-						<IconButton icon="cross" on:click={() => ($query.params.q = '')} />
-					{:else}
-						<Icon icon="search" />
-					{/if}
-				</span>
-			</Input>
-		</Col>
-		<Col col={4}>
-			{#await $providersAsync}
-				<Loaders.Control />
-			{:then providers}
-				<Select bind:value={selectedProviderIndex} options={providers} let:option>
-					{option.attributes.name}
-				</Select>
-			{/await}
-		</Col>
-	</Grid>
+	<InputGroup>
+		<Input
+			bind:value={$query.params.q}
+			placeholder="start typing..."
+			name="q"
+			type="search"
+			size="lg"
+			inline
+			autofocus
+			width="7"
+			expand
+		>
+			<span slot="iconRight">
+				{#if $query.params.q}
+					<IconButton icon="cross" on:click={() => ($query.params.q = '')} />
+				{:else}
+					<Icon icon="search" offset="mx-2" />
+				{/if}
+			</span>
+		</Input>
+		{#await $providersAsync}
+			<Loaders.Control />
+		{:then providers}
+			<Select bind:value={selectedProviderIndex} options={providers} let:option size="lg">
+				{option.attributes.name}
+			</Select>
+		{/await}
+	</InputGroup>
 	<div bind:clientWidth={width}>
 		{#await $results}
 			<Loaders.Tile count={5} w={width} h={68} height={350} {width} />
@@ -58,7 +56,7 @@
 <script lang="ts">
 	import { query, goto } from 'svelte-pathfinder';
 
-	import { Tile, IconButton, Input, Select, Icon, Grid, Col } from 'svelte-spectre';
+	import { Tile, IconButton, Input, InputGroup, Select, Icon, Grid, Col } from 'svelte-spectre';
 
 	import * as Loaders from '@/components/loaders';
 
