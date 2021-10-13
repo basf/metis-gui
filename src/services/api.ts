@@ -1,4 +1,4 @@
-import { goto } from 'svelte-pathfinder';
+import { userAsync } from '@/stores/user';
 
 import { API_BASEURL } from '@/config';
 import type { User as UserDTO } from '@/types/dto';
@@ -124,7 +124,8 @@ export default async function fetchJSON<T>(
 
     if (!res.ok) {
         if (res.status === 401) {
-            goto('/login');
+            userAsync.set(null);
+            return null;
         }
         const err: HttpError = new Error(res.statusText);
         err.response = res;

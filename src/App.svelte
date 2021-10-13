@@ -3,9 +3,19 @@
 <Spectre>
 	<Header />
 	<main>
-		<Viewpoint {...page}>
-			<svelte:fragment slot="loading">Loading...</svelte:fragment>
-		</Viewpoint>
+		{#await $userAsync then user}
+			{#if user}
+				<Viewpoint {...page}>
+					<svelte:fragment slot="loading">Loading...</svelte:fragment>
+				</Viewpoint>
+			{:else}
+				<Login />
+			{/if}
+		{:catch err}
+			{#if err.response.status === 401}
+				<Login />
+			{/if}
+		{/await}
 	</main>
 	<Footer />
 	<Toaster />
@@ -16,21 +26,14 @@
 	import Viewpoint from 'svelte-viewpoint';
 	import { Spectre, Toaster } from 'svelte-spectre';
 
+	import Login from '@/pages/Login.svelte';
+
 	import Header from '@/views/Header.svelte';
 	import Footer from '@/views/Footer.svelte';
 
-	import user from '@/stores/user';
+	import { userAsync } from '@/stores/user';
 
 	import routes from '@/routes';
 
 	$: page = routes.find((route) => $pattern(route.path)) || null;
-	$: $user ? gotoInitialPage() : gotoLoginPage();
-
-	function gotoInitialPage() {
-		redirect($state.redirectURL || '/');
-	}
-
-	function gotoLoginPage() {
-		redirect('/login', { redirectURL: $url });
-	}
 </script>

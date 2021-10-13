@@ -1,7 +1,8 @@
 <footer class="bg-gray py-2 mt-2">
 	<Navbar classes={'container grid-md'}>
 		<copy slot="center">
-			This is the <a href="https://basf.science">BASF.science</a>, an open-source XRPD online data management system.
+			This is the <a href="https://basf.science">BASF.science</a>, an open-source XRPD online
+			data management system.
 		</copy>
 	</Navbar>
 </footer>

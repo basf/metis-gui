@@ -30,13 +30,13 @@
 <script lang="ts">
 	import { Button, Col, Grid, Panel, Tile } from 'svelte-spectre';
 
-	import user from '@/stores/user';
+	import user, { userAsync } from '@/stores/user';
 
 	import { logout } from '@/services/api';
 
 	async function doLogout() {
 		await logout();
-		$user = null;
+		$userAsync = null;
 	}
 </script>
 

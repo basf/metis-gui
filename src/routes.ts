@@ -17,10 +17,6 @@ export interface Route {
 
 const routes: Route[] = [
     {
-        path: '/login',
-        component: () => import('@/pages/Login.svelte'),
-    },
-    {
         path: '/profile',
         component: () => import('@/pages/Profile.svelte'),
     },
