@@ -1,8 +1,9 @@
 <Main>
+	<div class="p-2"></div>
 	<InputGroup>
 		<Input
 			bind:value={$query.params.q}
-			placeholder="start typing..."
+			placeholder="Optimade filter="
 			name="q"
 			type="search"
 			size="lg"
@@ -27,17 +28,18 @@
 			</Select>
 		{/await}
 	</InputGroup>
+	<div class="p-2"></div>
+
 	<div bind:clientWidth={width}>
 		{#await $results}
-			<Loaders.Tile count={5} w={width} h={68} height={350} {width} />
+			<Loaders.Tile count={5} w={width} h={65} height={400} {width} />
 		{:then results}
 			{#each results as [structures, provider], index}
 				{#each structures as structure}
 					<Tile>
 						<h5 class="mt-2" slot="title">{@html getStructureTitle(structure)}</h5>
 						<small slot="subtitle" class="tile-subtitle text-gray"
-							>ID · {structure.id} · Last modified · {structure.attributes
-								.last_modified}</small
+							>ID &bull; {structure.id}</small
 						>
 						<svelte:fragment slot="action">
 							<IconButton
@@ -46,6 +48,10 @@
 								on:click={() => setDataContent(structure)}
 							/>
 						</svelte:fragment>
+					</Tile>
+				{:else}
+					<Tile>
+						<div class="text-center distant_msg">Nothing found. Try another provider?</div>
 					</Tile>
 				{/each}
 			{/each}

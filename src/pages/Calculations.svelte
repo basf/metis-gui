@@ -26,7 +26,7 @@
 			</Tile>
 		{/if}
 	{:else}
-		<div class="text-center m-2 p-2">Upload a structure to start...</div>
+		<div class="text-center distant_msg">Upload a structure to start...</div>
 	{/each}
 	<Grid offset="my-2" align="">
 		<Col>
