@@ -49,7 +49,17 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import { Tile, Button, Divider, IconButton, Progress, Input, Grid, Col } from 'svelte-spectre';
+	import {
+		Tile,
+		Button,
+		Divider,
+		IconButton,
+		Progress,
+		Input,
+		Grid,
+		Col,
+		toast,
+	} from 'svelte-spectre';
 
 	import Main from '@/layouts/Main.svelte';
 
@@ -63,14 +73,13 @@
 	} from '@/services/api';
 
 	import data, { content } from '@/stores/data';
-	import errors from '@/stores/errors';
 
 	import calculations from '@/stores/calculations';
 
 	import Upload from '@/components/Upload.svelte';
 
 	$: dataCalc = $data.map((item) => {
-		if (item.error) errors.append(new Error(item.error));
+		if (item.error) toast.error({ msg: new Error(item.error) });
 		item.calculation = $calculations.find((calc) => calc.data === item.uuid);
 		item.inProgress = item.calculation && item.calculation.progress < 100;
 		return item;
