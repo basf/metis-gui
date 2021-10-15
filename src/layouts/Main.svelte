@@ -11,6 +11,6 @@
 
 <script lang="ts">
 	import { path } from 'svelte-pathfinder';
-	import { Container, Panel, Tabs, Toast } from 'svelte-spectre';
+	import { Container, Panel, Tabs } from 'svelte-spectre';
 	import { menu } from '@/routes';
 </script>
