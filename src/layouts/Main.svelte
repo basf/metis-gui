@@ -1,7 +1,7 @@
 <Container offset="mt-2">
 	{#if $errors.length}
 		{#each $errors as error}
-			<Toast type="error">
+			<Toast offset="my-2" toastItem={{ type: 'error', close: true }}>
 				{error.message || error}
 			</Toast>
 		{/each}
