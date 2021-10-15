@@ -12,7 +12,7 @@
 				<Login />
 			{/if}
 		{:catch err}
-			{#if err.response.status === 401}
+			{#if err?.response?.status === 401}
 				<Login />
 			{/if}
 		{/await}
@@ -22,7 +22,7 @@
 </Spectre>
 
 <script lang="ts">
-	import { pattern, click, redirect, state, url } from 'svelte-pathfinder';
+	import { pattern, click } from 'svelte-pathfinder';
 	import Viewpoint from 'svelte-viewpoint';
 	import { Spectre, Toaster } from 'svelte-spectre';
 

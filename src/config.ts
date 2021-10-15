@@ -4,6 +4,8 @@ export const API_BASEURL =
         ? 'https://gate.basf.science/v0'
         : 'http://localhost:3000';
 
+export const STREAM_URL = API_BASEURL + '/stream';
+
 export const BASE_PATH = __env === 'production' ? '/gui' : '';
 
 export const SEARCH_DELAY = 1000;
