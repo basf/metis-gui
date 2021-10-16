@@ -19,6 +19,7 @@
 	</main>
 	<Footer />
 	<Toaster />
+	<Overlay />
 </Spectre>
 
 <script lang="ts">
@@ -30,6 +31,7 @@
 
 	import Header from '@/views/Header.svelte';
 	import Footer from '@/views/Footer.svelte';
+	import Overlay from '@/views/Overlay.svelte';
 
 	import { userAsync } from '@/stores/user';
 
