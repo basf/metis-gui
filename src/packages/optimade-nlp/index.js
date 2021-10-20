@@ -10,9 +10,12 @@
  */
 "use strict";
 
-String.prototype.matchAll = function(regexp){
+/*
+ * Own matchAll used for the chemical formulae
+ */
+function getMatchAll(inputstr, regexp){
     var matches = [];
-    this.replace(regexp, function(){
+    inputstr.replace(regexp, function(){
         var arr = ([]).slice.call(arguments, 0),
             extras = arr.splice(-2);
         arr.index = extras[0];
@@ -22,22 +25,27 @@ String.prototype.matchAll = function(regexp){
     return matches.length ? matches : null;
 }
 
-String.prototype.replaceAll = function(search, replacement){
-    return this.replace(new RegExp(search, 'g'), replacement);
+/*
+ * Shim
+ */
+if (typeof String.prototype.replaceAll === 'undefined'){
+    String.prototype.replaceAll = function(search, replacement){
+        return this.replace(new RegExp(search, 'g'), replacement);
+    }
 }
 
-String.prototype.endswith = function(searchString, position){
-    var subjectString = this.toString();
-    if (position === undefined || position > subjectString.length) position = subjectString.length;
-    position -= searchString.length;
-    var lastIndex = subjectString.indexOf(searchString, position);
-    return lastIndex !== -1 && lastIndex === position;
+/*
+ * Shim
+ */
+if (typeof String.prototype.endsWith === 'undefined'){
+    String.prototype.endsWith = function(searchString, position){
+        var subjectString = this.toString();
+        if (position === undefined || position > subjectString.length) position = subjectString.length;
+        position -= searchString.length;
+        var lastIndex = subjectString.indexOf(searchString, position);
+        return lastIndex !== -1 && lastIndex === position;
+    }
 }
-
-Array.prototype.extend = function(other_array){
-    other_array.forEach(function(v){ this.push(v) }, this);
-}
-
 
 var OptimadeNLP = function(){
 
@@ -60,7 +68,7 @@ var OptimadeNLP = function(){
 
     var mpds_classes = ["ab initio calculations", "ab initio literature", "actinoid", "adamantane", "aegirine", "alkali", "alkaline", "allargentum", "almandine", "alum", "alunogen", "amide", "analcime", "anatase", "anorpiment", "anorthoclase", "antiferroelectric", "antiferromagnet", "antiferromagnetic", "arsenate", "arsenide", "ashcroftine", "auricupride", "aurocupride", "azide", "baileychlore", "bariopyrochlore", "baryte", "beryl", "beta-alumina", "beta-boron", "biguanide", "binary", "birefringent", "borane", "borate", "borax", "boride", "borocarbide", "borohydride", "boronitride", "botryogen", "bromanilate", "bromide", "bromoimide", "calomel", "carbamate", "carbide", "carbonate", "carbonyl", "carboxylate", "celestine", "cell and atoms", "cell-only", "celsian", "cesiokenopyrochlore", "chalcogen", "charge-density wave state", "chevrel", "chimney-ladder", "chloranilate", "chlorate", "chloride", "chloritoid", "chlorosulfate", "chromate", "chrysoberyl", "chrysotile", "cinnabar", "clathrate", "clinochlore", "clinoclase", "clodronate", "close-packed", "cluster glass", "colossal magnetoresistance", "conductor", "corundum", "cosmochlor", "croconate violet", "croconate", "cryptomelane", "cuprate", "cuspidine", "cyamelurate", "cyanamide", "cyanamidonitrate", "cyananilate", "cyanide", "cyanotetrazolate", "cyanoureate", "cyanurate", "cyprine", "davyne", "deuteride", "deuterium", "devilline", "diamagnetic", "diamond", "diarsenate", "diaspore", "diazanide", "diazenide", "dichromate", "digermanate", "diiodobromide", "dinitramide", "diopside", "dioptase", "dioxobromate", "dioxoiodate", "dioxosulfate", "dioxothiosulfate", "diphosphate", "diphosphonate", "dipolyhedral", "diselenate", "disilicate", "disordered", "disulfate", "dithiocarbamate", "dithiocarbonate", "dithionate", "dithiooxalate", "dithiophosphate", "dithiosquarate", "divanadate", "epidote", "euchlorine", "euclase", "eudialyte", "eulytine", "fermi liquid", "feroxihyte", "feroxyhyte", "ferrielectric", "ferrimagnet", "ferroelastic", "ferroelectric", "ferromagnet", "ferromagnetic", "fluor-schorl", "fluoride", "fluoroborate", "frank-kasper", "friauf-laves", "fulleride", "fulminate", "galena", "gamma-brass", "garnet", "giant magnetocaloric effect", "gismondine", "glaucodot", "glaucophane", "grossular", "guanidinate", "gypsum", "hafnon", "half metal", "halogen", "hard magnet", "harmotome", "haueyne", "heavy fermion", "hedyphane", "helimagnet", "helvine", "hexasulfate", "hexathionate", "host-guest", "humboldtine", "hydrate", "hydride", "hydroxide", "hypercinnabar", "hypophosphate", "ice", "imide", "iminate", "intercalation", "intermediate valence", "intermetallic", "iodate", "iodide", "ionic conductor", "iridium", "isoferroplatinum", "isopolyhedral", "isothermal section", "kornerupine", "kosmochlor", "lanthanoid", "lavendulan", "levyne", "lime", "liquidus projection", "litharge", "lithiophosphate", "luminescent", "machine learning", "machine-learning", "magnesiochloritoid", "magnetoelastic", "magnetoelectric", "manganate", "massicot", "mellitate", "melonate", "metacinnabar", "metal", "metalloid", "metamagnet", "metavoltine", "mica", "microcline", "microline", "mictomagnet", "minium", "molybdate", "multiferroic", "multinary", "nasicon", "natron", "natrophosphate", "natroxalate", "negative thermal expansion", "nepheline", "nickeline", "niobocarbide", "niter", "nitranilate", "nitrate", "nitratine", "nitride", "nitroformate", "noble gas", "non disordered", "non-disordered", "non-linear optics", "nonaflate", "nonmetal", "nordenskioeldine", "nosean", "olivine", "optically isotropic", "organic", "orpiment", "orthoborate", "orthoclase", "orthogermanate", "orthonitrate", "orthophosphate", "orthosilicate", "oxalate", "oxamate", "oxide", "oxoiodate", "oxonitrate", "oxotetrazolate", "oxy-schorl", "ozonide", "palladogermanide", "paracelsian", "paramagnet", "pararealgar", "pauli paramagnet", "peer review", "peer reviewed", "peer-review", "peer-reviewed", "perchlorate", "perhydrate", "periclase", "periodate", "permanganate", "pernitride", "peroxide", "pertechnetate", "phosphate", "phosphide", "phosphinate", "phosphonate", "photocatalyst", "photovoltaic effect", "photovoltaic", "piezoelectric", "pnictogen", "polaron conductor", "polycrase", "potassic", "prussian blue", "pseudorutile", "pyrochlore", "pyroelectric", "pyrope", "quadridavyne", "quartz", "quasicrystal", "quaternary", "quinary", "radioactive", "rare earth", "realgar", "refractory", "relaxor", "retzian", "rhodarsenide", "rhodizonate", "rhomboclase", "rocksalt", "rubicline", "ruddlesden-popper", "rutheniridosmine", "rutherfordine", "rutile", "salammoniac", "sanidine", "sapphirine", "sarcopside", "schorl", "selenide", "selenidel", "semiconductor", "semimetal", "shape memory effect", "shape memory", "siderotil", "silanide", "silicate", "silicide", "sillen-aurivillius", "skyrmion", "solidus projection", "solvus projection", "spessartine", "spin glass", "spinel", "spodumene", "squarate", "steenstrupine", "stibarsen", "subsolidus relations", "sulfamate", "sulfamide", "sulfate", "sulfide", "sulfidel", "sulfinylamide", "superconductor", "superhard", "superionic conductor", "superoxide", "talc", "tantalcarbide", "tellurantimony", "telluride", "ternary", "thermoelectric", "thiocyanate", "thiocyanurate", "thiophosphate", "thiosulfate", "topaz", "topological insulator", "tourmaline", "transitional", "triflate", "tripolyhedral", "triteride", "trithionate", "tritide", "tritium", "trona", "tungstate", "turquoise", "ulvoespinel", "unary", "uranophane", "uranopolycrase", "urate", "urea", "ureate", "van vleck paramagnet", "vanadate", "vertical section", "violurate", "xenotime", "zincobotryogen", "zircon", "zircosulfate"];
 
-    var mpds_props = ["acceptor concentration", "acceptor to donor concentration", "activation energy", "adiabatic bulk modulus", "angle-resolved photoelectron spectra", "band gap", "birefringence", "bremsstrahlung isochromat spectra", "charge carrier concentration", "charge carrier mobility", "charge transfer", "charge-density wave", "charge-transfer energy", "coefficient of schottky term in heat capacity", "coercive electric field", "coercive field", "coherence length", "cohesive energy", "compressibility", "conductivity", "core-electron contribution to magnetic susceptibility", "critical current density", "critical magnetic field", "crystal electric field parameter", "crystal electric field parameters", "crystal electric field splitting", "crystal electric field", "crystal field level", "curie coefficient", "curie temperature", "curie-weiss paramagnetism", "debye temperature", "decomposition temperature", "decomposition", "diamagnetic contribution to magnetic susceptibility", "dielectric constant", "dielectric loss tangent", "diffusion", "donor concentration", "donor energy", "effective charge", "effective electron number", "effective mass of electrons to holes ratio", "effective mass of electrons", "effective mass", "einstein temperature", "elastic compliance", "elastic moduli", "elastic stiffness coefficient", "elasticity", "electric field gradient", "electric polarization", "electrical conductivity", "electrical properties", "electrical resistivity", "electrochemical impedance spectroscopy", "electron density maps", "electron density of states at fermi level", "electron density of states", "electron energy band structure", "electron energy loss spectra", "electron grueneisen coefficient", "electron mobility", "electron paramagnetic resonance spectra", "electron spin resonance spectra", "electron-phonon interaction parameter", "electronic contribution to heat capacity", "electronic contribution to thermal conductivity", "electronic energy gap", "electronic heat capacity coefficient", "electronic properties", "energy at fermi level", "energy band structure", "energy gap for direct transition", "energy gap for indirect transition", "energy level diagram", "energy of optical phonon", "energy product", "energy", "enthalpy change at melting point", "enthalpy change at phase transition", "enthalpy change at structural transition", "enthalpy change", "enthalpy of formation", "enthalpy of reaction", "enthalpy", "entropy change at melting point", "entropy change at phase transition", "entropy of formation", "entropy of reaction", "entropy", "eutectoid decomposition", "exchange field", "exchange interaction parameter", "exciton energy", "extended x-ray absorption fine structure", "extraordinary refractive index", "fermi energy", "fermi surface", "ferroelasticity", "ferroelectric curie temperature", "ferroelectric hysteresis", "ferroelectric neel temperature", "ferroelectric transitions", "field dependence of resistivity", "figure of merit", "freezing temperature for spin glass", "fusion", "gibbs energy change", "gibbs energy of formation", "gibbs energy of reaction", "ginzburg-landau parameter", "grueneisen coefficient", "gruneisen coefficient", "hall coefficient", "hall effect", "hall mobility", "hardness", "heat capacity at constant pressure", "heat capacity at constant volume", "heat capacity coefficient", "heat capacity discontinuity at structural transition", "heat capacity discontinuity at superconducting transition", "heat capacity discontinuity", "heat capacity", "high-frequency permittivity", "hole mobility", "hydrogen diffusion", "hyperfine magnetic field", "imaginary part of magnetic susceptibility", "imaginary part of permittivity", "inelastic neutron scattering", "inelastic x-ray scattering", "infrared spectra", "ionic conductivity", "irreversibility field", "isomer shift", "isothermal bulk modulus", "isothermal linear compressibility", "isothermal volume compressibility", "knoop hardness", "kondo behavior", "kondo temperature", "lattice", "linear magnetostriction", "linear thermal expansion coefficient", "longitudinal sound velocity", "longitudinal-mode elastic coefficient", "lorentz number", "lower critical magnetic field", "lowest temperature of investigation", "luminescence lifetime", "luminescence", "magnetic anisotropy field", "magnetic anisotropy", "magnetic circular x-ray dichroism", "magnetic dichroism", "magnetic direction", "magnetic entropy", "magnetic field for magnetic transition", "magnetic field for structural transition", "magnetic heat capacity", "magnetic hysteresis", "magnetic moment", "magnetic order", "magnetic penetration depth", "magnetic phase diagram", "magnetic properties", "magnetic resistivity", "magnetic structure", "magnetic susceptibility", "magnetic transitions", "magnetism", "magnetization", "magneto-optical effects", "magneto-optical kerr effect", "magnetostriction", "mechanical properties", "melting temperature", "microhardness", "moessbauer spectra", "mohs hardness", "molar volume", "molecular field parameter", "muon spin spectra", "neel temperature", "neutron energy loss spectra", "non-linear optical properties", "non-linear optics", "nuclear magnetic resonance spectra", "nuclear quadrupolar resonance spectra", "optical absorption coefficient", "optical absorption", "optical conductivity", "optical phonons", "optical properties", "optical spectra", "orbital magnetic moment", "ordinary refractive index", "paraelectric curie coefficient", "paraelectric curie temperature", "paraelectric state", "paramagnetic curie temperature", "paramagnetic moment", "pauli magnetic susceptibility", "peritectic formation", "peritectoid formation", "permittivity", "perturbed angular correlation", "phase diagram", "phase transitions", "phonon contribution to thermal conductivity", "phonon density of states", "phonon dispersion", "phonon grueneisen coefficient", "phonon heat capacity at constant pressure", "phonons", "photo-conductivity data", "photo-conductivity", "photoelectron emission spectra", "photoluminescence spectra", "piezoelectric coefficient", "piezoelectric coefficient", "piezoelectricity", "plasma edge", "poisson ratio", "power factor", "pressure derivative of adiabatic bulk modulus", "pressure derivative of curie temperature", "pressure derivative of elastic stiffness coefficient", "pressure derivative of energy gap", "pressure derivative of isothermal bulk modulus", "pressure derivative of neel temperature", "pressure derivative of superconducting transition temperature", "pressure derivative of transition temperature", "pressure for magnetic transition", "pressure for metal-nonmetal transition", "pressure for structural transition", "pyroelectric coefficient", "pyroelectricity", "quadrupole splitting", "raman spectra", "real part of magnetic permeability", "real part of magnetic susceptibility", "real part of optical conductivity", "real part of permittivity", "reflectivity", "refractive index", "relative cooling power", "remanent induction", "remanent magnetic field", "remanent magnetic moment", "remanent magnetization", "remanent polarization", "residual resistivity ratio", "residual resistivity", "resistivity anisotropy", "resistivity", "resonance spectra", "saturation magnetic moment", "saturation magnetization", "second-harmonic generation", "seebeck coefficient", "shear modulus", "soft-x-ray emission spectra", "sound velocity", "spin contribution to magnetic susceptibility", "spin magnetic moment", "spin-fluctuation temperature", "spin-fluctuation", "spin-orbit splitting of valence band", "spin-resolved electron density of states at fermi level", "spontaneous elastic strain", "spontaneous magnetic moment", "spontaneous magnetization", "spontaneous polarization", "static permittivity", "stoner enhancement factor", "stoner parameter", "stoner product", "structural transition", "structural transitions", "superconducting transition temperature", "superconductivity energy gap", "superconductivity phenomena", "superconductivity", "temperature dependence of resistivity", "temperature dependence of static permittivity", "temperature derivative of elastic stiffness coefficient", "temperature derivative of energy gap", "temperature derivative of resistivity", "temperature derivative of upper critical magnetic field", "temperature for congruent melting", "temperature for eutectoid decomposition", "temperature for ferroelectric reordering", "temperature for magnetic transition", "temperature for metal-nonmetal transition", "temperature for peritectic formation", "temperature for peritectoid formation", "temperature for structural transition", "temperature-independent part of magnetic susceptibility", "thermal cell parameters change", "thermal conductivity", "thermal energy gap", "thermal expansion", "thermal properties", "thermal strain", "thermodynamic properties", "thermodynamics", "thermoelectric figure of merit", "thermoelectric power", "total energy calculation data", "transmittance", "transverse sound velocity", "type of magnetism", "upper critical magnetic field", "vacuum ultraviolet photoemission spectra", "valence", "van vleck contribution to magnetic susceptibility", "vibrational spectra", "vickers hardness number", "volume change at phase transition", "volume change at structural transition", "volume change", "volume magnetostriction", "volume thermal expansion coefficient", "wavelength for luminescence", "wavenumber of longitudinal optical phonon", "wavenumber of optical phonon", "wavenumber of transverse optical phonon", "work function", "x-ray absorption near-edge spectra", "x-ray absorption spectra", "x-ray photoemission spectra", "young modulus"];
+    var mpds_props = ["acceptor concentration", "acceptor to donor concentration", "activation energy", "adiabatic bulk modulus", "angle-resolved photoelectron spectra", "atomic structure", "band gap", "birefringence", "bremsstrahlung isochromat spectra", "charge carrier concentration", "charge carrier mobility", "charge transfer", "charge-density wave", "charge-transfer energy", "coefficient of schottky term in heat capacity", "coercive electric field", "coercive field", "coherence length", "cohesive energy", "compressibility", "conductivity", "core-electron contribution to magnetic susceptibility", "critical current density", "critical magnetic field", "crystal electric field parameter", "crystal electric field parameters", "crystal electric field splitting", "crystal electric field", "crystal field level", "crystalline structure", "crystal cell", "crystal structure", "curie coefficient", "curie temperature", "curie-weiss paramagnetism", "debye temperature", "decomposition temperature", "decomposition", "diamagnetic contribution to magnetic susceptibility", "dielectric constant", "dielectric loss tangent", "diffusion", "donor concentration", "donor energy", "effective charge", "effective electron number", "effective mass of electrons to holes ratio", "effective mass of electrons", "effective mass", "einstein temperature", "elastic compliance", "elastic moduli", "elastic stiffness coefficient", "elasticity", "electric field gradient", "electric polarization", "electrical conductivity", "electric properties", "electrical properties", "electrical resistivity", "electrochemical impedance spectroscopy", "electron density maps", "electron density of states at fermi level", "electron density of states", "electron energy band structure", "electron energy loss spectra", "electron grueneisen coefficient", "electron mobility", "electron paramagnetic resonance spectra", "electron spin resonance spectra", "electron-phonon interaction parameter", "electronic contribution to heat capacity", "electronic contribution to thermal conductivity", "electronic energy gap", "electronic heat capacity coefficient", "electronic properties", "energy at fermi level", "energy band structure", "energy gap for direct transition", "energy gap for indirect transition", "energy level diagram", "energy of optical phonon", "energy product", "energy", "enthalpy change at melting point", "enthalpy change at phase transition", "enthalpy change at structural transition", "enthalpy change", "enthalpy of formation", "enthalpy of reaction", "enthalpy", "entropy change at melting point", "entropy change at phase transition", "entropy of formation", "entropy of reaction", "entropy", "eutectoid decomposition", "exchange field", "exchange interaction parameter", "exciton energy", "extended x-ray absorption fine structure", "extraordinary refractive index", "fermi energy", "fermi surface", "ferroelasticity", "ferroelectric curie temperature", "ferroelectric hysteresis", "ferroelectric neel temperature", "ferroelectric transitions", "field dependence of resistivity", "figure of merit", "freezing temperature for spin glass", "fusion", "gibbs energy change", "gibbs energy of formation", "gibbs energy of reaction", "ginzburg-landau parameter", "grueneisen coefficient", "gruneisen coefficient", "hall coefficient", "hall effect", "hall mobility", "hardness", "heat capacity at constant pressure", "heat capacity at constant volume", "heat capacity coefficient", "heat capacity discontinuity at structural transition", "heat capacity discontinuity at superconducting transition", "heat capacity discontinuity", "heat capacity", "high-frequency permittivity", "hole mobility", "hydrogen diffusion", "hyperfine magnetic field", "imaginary part of magnetic susceptibility", "imaginary part of permittivity", "inelastic neutron scattering", "inelastic x-ray scattering", "infrared spectra", "ionic conductivity", "irreversibility field", "isomer shift", "isothermal bulk modulus", "isothermal linear compressibility", "isothermal volume compressibility", "knoop hardness", "kondo behavior", "kondo temperature", "lattice", "linear magnetostriction", "linear thermal expansion coefficient", "longitudinal sound velocity", "longitudinal-mode elastic coefficient", "lorentz number", "lower critical magnetic field", "lowest temperature of investigation", "luminescence lifetime", "luminescence", "magnetic anisotropy field", "magnetic anisotropy", "magnetic circular x-ray dichroism", "magnetic dichroism", "magnetic direction", "magnetic entropy", "magnetic field for magnetic transition", "magnetic field for structural transition", "magnetic heat capacity", "magnetic hysteresis", "magnetic moment", "magnetic order", "magnetic penetration depth", "magnetic phase diagram", "magnetic properties", "magnetic resistivity", "magnetic structure", "magnetic susceptibility", "magnetic transitions", "magnetism", "magnetization", "magneto-optical effects", "magneto-optical kerr effect", "magnetostriction", "mechanical properties", "melting temperature", "microhardness", "moessbauer spectra", "mohs hardness", "molar volume", "molecular field parameter", "muon spin spectra", "neel temperature", "neutron energy loss spectra", "non-linear optical properties", "non-linear optics", "nuclear magnetic resonance spectra", "nuclear quadrupolar resonance spectra", "optical absorption coefficient", "optical absorption", "optical conductivity", "optical phonons", "optical properties", "optical spectra", "orbital magnetic moment", "ordinary refractive index", "paraelectric curie coefficient", "paraelectric curie temperature", "paraelectric state", "paramagnetic curie temperature", "paramagnetic moment", "pauli magnetic susceptibility", "peritectic formation", "peritectoid formation", "permittivity", "perturbed angular correlation", "phase diagram", "phase transitions", "phonon contribution to thermal conductivity", "phonon density of states", "phonon dispersion", "phonon grueneisen coefficient", "phonon heat capacity at constant pressure", "phonons", "photo-conductivity data", "photo-conductivity", "photoelectron emission spectra", "photoluminescence spectra", "physical properties", "piezoelectric coefficient", "piezoelectric coefficient", "piezoelectricity", "plasma edge", "poisson ratio", "power factor", "pressure derivative of adiabatic bulk modulus", "pressure derivative of curie temperature", "pressure derivative of elastic stiffness coefficient", "pressure derivative of energy gap", "pressure derivative of isothermal bulk modulus", "pressure derivative of neel temperature", "pressure derivative of superconducting transition temperature", "pressure derivative of transition temperature", "pressure for magnetic transition", "pressure for metal-nonmetal transition", "pressure for structural transition", "pyroelectric coefficient", "pyroelectricity", "quadrupole splitting", "raman spectra", "real part of magnetic permeability", "real part of magnetic susceptibility", "real part of optical conductivity", "real part of permittivity", "reflectivity", "refractive index", "relative cooling power", "remanent induction", "remanent magnetic field", "remanent magnetic moment", "remanent magnetization", "remanent polarization", "residual resistivity ratio", "residual resistivity", "resistivity anisotropy", "resistivity", "resonance spectra", "saturation magnetic moment", "saturation magnetization", "second-harmonic generation", "seebeck coefficient", "shear modulus", "soft-x-ray emission spectra", "sound velocity", "spin contribution to magnetic susceptibility", "spin magnetic moment", "spin-fluctuation temperature", "spin-fluctuation", "spin-orbit splitting of valence band", "spin-resolved electron density of states at fermi level", "spontaneous elastic strain", "spontaneous magnetic moment", "spontaneous magnetization", "spontaneous polarization", "static permittivity", "stoner enhancement factor", "stoner parameter", "stoner product", "structural transition", "structural transitions", "superconducting transition temperature", "superconductivity energy gap", "superconductivity phenomena", "superconductivity", "temperature dependence of resistivity", "temperature dependence of static permittivity", "temperature derivative of elastic stiffness coefficient", "temperature derivative of energy gap", "temperature derivative of resistivity", "temperature derivative of upper critical magnetic field", "temperature for congruent melting", "temperature for eutectoid decomposition", "temperature for ferroelectric reordering", "temperature for magnetic transition", "temperature for metal-nonmetal transition", "temperature for peritectic formation", "temperature for peritectoid formation", "temperature for structural transition", "temperature-independent part of magnetic susceptibility", "thermal cell parameters change", "thermal conductivity", "thermal energy gap", "thermal expansion", "thermal properties", "thermal strain", "thermodynamic properties", "thermodynamics", "thermoelectric figure of merit", "thermoelectric power", "total energy calculation data", "transmittance", "transverse sound velocity", "type of magnetism", "upper critical magnetic field", "vacuum ultraviolet photoemission spectra", "valence", "van vleck contribution to magnetic susceptibility", "vibrational spectra", "vickers hardness number", "volume change at phase transition", "volume change at structural transition", "volume change", "volume magnetostriction", "volume thermal expansion coefficient", "wavelength for luminescence", "wavenumber of longitudinal optical phonon", "wavenumber of optical phonon", "wavenumber of transverse optical phonon", "work function", "x-ray absorption near-edge spectra", "x-ray absorption spectra", "x-ray photoemission spectra", "young modulus"];
 
     /*
      * Methods
@@ -76,13 +84,13 @@ var OptimadeNLP = function(){
         if (input.indexOf('&#') > -1) charred = true;
         var re = charred ? /&#x208(\d);/g : /%u208(\d)/g;
         input = charred ? input : escape(input);
-        var matches = input.matchAll(re);
+        var matches = getMatchAll(input, re);
         if (matches){
             for (var i = 0; i < matches.length; i++){
                 input = input.replace(matches[i][0], matches[i][1]);
             }
         }
-        return unescape(input).replace(/^\(|\)$/g, ""); //.replaceAll("\\[", "").replaceAll("\\]", "");
+        return unescape(input).replace(/^\(|\)$/g, "");
     }
 
     /*
@@ -156,11 +164,11 @@ var OptimadeNLP = function(){
 
         var maybe_formula = !is_numeric(term.charAt(0));
 
-        var dmatches = term.matchAll(/(\d)/g);
+        var dmatches = getMatchAll(term, /(\d)/g);
         if (dmatches && dmatches.length > 1 && maybe_formula)
             return ['formulae']; // no props with more than one digit
 
-        var imatches = escape(term).matchAll(/%u208(\d)/g);
+        var imatches = getMatchAll(escape(term), /%u208(\d)/g);
         if (imatches && imatches.length && maybe_formula)
             return ['formulae']; // no props with subscripts
 
@@ -180,7 +188,7 @@ var OptimadeNLP = function(){
         else if (term == 'quinternary' || term == 'quinternaries' || term == 'quinaries' || term == 'pentanary' || term == 'pentanaries') return ['classes', 'quinary'];
         else if (term == 'actinide' || term == 'actinides') return ['classes', 'actinoid'];
         else if (term == 'lantanide' || term == 'lantanides' || term == 'lanthanide' || term == 'lanthanides' || term == 'lantanoid' || term == 'lantanoids') return ['classes', 'lanthanoid'];
-        else if (term.endswith('ite') && term.length > 4) return ['classes'];
+        else if (term.endsWith('ite') && term.length > 4) return ['classes'];
 
         var chk = term.replace(' structure', '').replace(' lattice', '').replace(' crystalline', '').replace(' crystal', '');
         if (lat_fgrs.indexOf(chk) !== -1) return ['lattices', lat_i2p[ lat_p2i[chk] ]];
@@ -222,10 +230,10 @@ var OptimadeNLP = function(){
         }
 
         var single_chk;
-        if (term.endswith('s')){ // plural-singular fixups
+        if (term.endsWith('s')){ // plural-singular fixups
             single_chk = term.substr(0, term.length-1);
 
-            if (!combined && single_chk.endswith('ite')) return {'facet': 'classes', 'input': single_chk, 'ready': 1};
+            if (!combined && single_chk.endsWith('ite')) return {'facet': 'classes', 'input': single_chk, 'ready': 1};
 
             candidate = check_category(single_chk, 'classes');
             if (candidate){
@@ -233,7 +241,7 @@ var OptimadeNLP = function(){
                 return candidate;
             }
         }
-        if (term.endswith('es')){ // plural-singular fixups
+        if (term.endsWith('es')){ // plural-singular fixups
             single_chk = term.substr(0, term.length-2);
 
             if (single_chk == 'binari') single_chk = 'binary';
@@ -293,7 +301,12 @@ var OptimadeNLP = function(){
             if (inputstr.indexOf('b/c ') > -1) inputstr = inputstr.replace('b\/c ', 'b--c ');
         }
 
-        var tokens = inputstr.replaceAll('\\+|\\!|\\?', '').replaceAll(',|/', ' ').replaceAll('\<', ' < ').replaceAll('\>', ' > ').replaceAll('=', ' = ').split(/\s+/),
+        var tokens = inputstr
+                .replace(new RegExp('\\+|\\!|\\?', 'g'), '')
+                .replace(new RegExp(',|/', 'g'), ' ')
+                .replace(new RegExp('\<', 'g'), ' < ')
+                .replace(new RegExp('\>', 'g'), ' > ')
+                .replace(new RegExp('=', 'g'), ' = ').split(/\s+/),
             result = {},
             n_terms = 0,
             n_toks = 1,
@@ -341,13 +354,17 @@ var OptimadeNLP = function(){
             if (simple){
                 facet = simple[0];
                 if (simple[1]) input = simple[1];
-                if (queue.length && !queue[queue.length - 1].ready) ignored.extend( queue.map(function(obj){ return obj.input }) );
+                if (queue.length && !queue[queue.length - 1].ready) ignored.push( ...queue.map(function(obj){ return obj.input }) );
                 queue = [];
                 //console.log(input + ": found simple facet " + simple[0]);
 
             } else {
                 if (stop_words.indexOf(input) == -1){
-                    input = input.replaceAll("\\(", "").replaceAll("\\)", "").replaceAll("\\[", "").replaceAll("\\]", "");
+                    input = input
+                        .replace(new RegExp("\\(", 'g'), "")
+                        .replace(new RegExp("\\)", 'g'), "")
+                        .replace(new RegExp("\\[", 'g'), "")
+                        .replace(new RegExp("\\]", 'g'), "");
 
                     var candidate = try_multiword_facet(input, queue);
                     //console.log(candidate);
@@ -360,11 +377,11 @@ var OptimadeNLP = function(){
                         queue = [ candidate ];
 
                     } else if (candidate.anew){ // token anew
-                        if (queue.length && !queue[queue.length-1].ready) ignored.extend( queue.map(function(obj){ return obj.input }) );
+                        if (queue.length && !queue[queue.length-1].ready) ignored.push( ...queue.map(function(obj){ return obj.input }) );
                         queue = [ candidate ];
 
                     } else if (!candidate){ // token unknown
-                        if (queue.length && !queue[queue.length-1].ready) ignored.extend( queue.map(function(obj){ return obj.input }) );
+                        if (queue.length && !queue[queue.length-1].ready) ignored.push( ...queue.map(function(obj){ return obj.input }) );
                         queue = [];
                         if (is_like_chem_formula(input)){
                             facet = 'formulae';
@@ -377,7 +394,7 @@ var OptimadeNLP = function(){
             }
 
             if (n_toks == tokens.length){ // token at the end, terminating
-                if (queue.length && !queue[queue.length-1].ready) ignored.extend( queue.map(function(obj){ return obj.input }) );
+                if (queue.length && !queue[queue.length-1].ready) ignored.push( ...queue.map(function(obj){ return obj.input }) );
                 queue = [];
             }
 
