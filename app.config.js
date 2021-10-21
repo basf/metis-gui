@@ -5,9 +5,9 @@ const assets = 'src/assets';
 module.exports = {
     name: 'app',
     input: 'src/main.ts',
-    files: [
-        { src: `${assets}/*`, dest, },
-    ],
+    template: 'src/index.html',
+    files: [],
+    externals: [],
     replace: {
         __env: JSON.stringify(dev ? 'development' : 'production'),
     },
@@ -26,7 +26,7 @@ module.exports = {
         'module',
         'main'
     ],
-    sourceMap: !dev,
+    sourceMap: dev,
     legacy: false,
     assets,
     dest,

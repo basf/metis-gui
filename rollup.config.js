@@ -14,6 +14,7 @@ import svg from 'rollup-plugin-inline-svg';
 import json from '@rollup/plugin-json';
 import livereload from 'rollup-plugin-livereload';
 import visualizer from 'rollup-plugin-visualizer';
+import html from 'rollup-plugin-bundle-html-plus';
 import zip from 'zip-dir';
 
 const {
@@ -25,6 +26,8 @@ const {
 	files,
 	assets,
 	legacy,
+	template,
+	externals,
 	sourceMap,
 	extensions,
 	mainFields,
@@ -32,14 +35,16 @@ const {
 } = require('./app.config.js');
 
 const svelteConfig = require('./svelte.config.js');
+const dir = `${dest}/build`;
 
 export default {
 	input,
 	output: {
-		dir: `${dest}/build`,
+		inlineDynamicImports: !dev,
 		sourcemap: sourceMap,
-		format: 'esm',
+		format: dev ? 'esm' : 'iife',
 		name,
+		dir,
 	},
 	plugins: [
 		copy({
@@ -98,6 +103,17 @@ export default {
 		}),
 		!dev && terser(),
 		dev && visualizer({ filename: `${dest}/stats.html`, }),
+		html({
+			filename: 'index.html',
+			ignore: dev ? new RegExp(`${dir}/(?!main.js|${name}.css)`) : null,
+			minifyCss: !dev,
+			scriptType: dev ? 'module' : 'text/javascript',
+			inline: !dev,
+			clean: !dev,
+			externals,
+			template,
+			dest,
+		}),
 		dev && serve(),
 		dev && livereload(dest),
 		!dev && zipdir({ dest, name })
