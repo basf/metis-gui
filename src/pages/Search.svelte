@@ -62,7 +62,7 @@
 <script lang="ts">
 	import { query, goto } from 'svelte-pathfinder';
 
-	import { Tile, IconButton, Input, InputGroup, Select, Icon, Grid, Col } from 'svelte-spectre';
+	import { Tile, IconButton, Input, InputGroup, Select, Icon } from 'svelte-spectre';
 
 	import * as Loaders from '@/components/loaders';
 
