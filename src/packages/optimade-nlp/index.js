@@ -53,7 +53,7 @@ const OptimadeNLP = function(){
      */
     const stop_words = ["a", "about", "above", "after", "again", "against", "all", "am", "an", "and", "any", "are", "aren't", "as", "at", "be", "because", "been", "before", "being", "below", "between", "both", "but", "by", "can't", "cannot", "could", "couldn't", "did", "didn't", "do", "does", "doesn't", "doing", "don't", "down", "during", "each", "few", "for", "from", "further", "had", "hadn't", "has", "hasn't", "have", "haven't", "having", "he", "he'd", "he'll", "he's", "her", "here", "here's", "hers", "herself", "him", "himself", "his", "how", "how's", "i", "i'd", "i'll", "i'm", "i've", "if", "in", "into", "is", "isn't", "it", "it's", "its", "itself", "let's", "me", "more", "most", "mustn't", "my", "myself", "no", "nor", "not", "of", "off", "on", "once", "only", "or", "other", "ought", "our", "ours", "ourselves", "out", "over", "own", "same", "shan't", "she", "she'd", "she'll", "she's", "should", "shouldn't", "so", "some", "such", "than", "that", "that's", "the", "their", "theirs", "them", "themselves", "then", "there", "there's", "these", "they", "they'd", "they'll", "they're", "they've", "this", "those", "through", "to", "too", "u", "under", "until", "up", "very", "was", "wasn't", "we", "we'd", "we'll", "we're", "we've", "were", "weren't", "what", "what's", "when", "when's", "where", "where's", "which", "while", "who", "who's", "whom", "why", "why's", "with", "won't", "would", "wouldn't", "you", "you'd", "you'll", "you're", "you've", "your", "yours", "yourself", "yourselves"]; /* exact */
 
-    const arity_keys = [null, 'unary', 'binary', 'ternary', 'quaternary', 'quinary', 'multinary', 'multinary', 'multinary', 'multinary', 'multinary']; // NB null is for "0-ary"
+    const arity_keys = [null, "unary", "binary", "ternary", "quaternary", "quinary", "multinary", "multinary", "multinary", "multinary", "multinary"]; // NB null is for "0-ary"
 
     const periodic_elements = ["h", "he", "li", "be", "b", "c", "n", "o", "f", "ne", "na", "mg", "al", "si", "p", "s", "cl", "ar", "k", "ca", "sc", "ti", "v", "cr", "mn", "fe", "co", "ni", "cu", "zn", "ga", "ge", "as", "se", "br", "kr", "rb", "sr", "y", "zr", "nb", "mo", "tc", "ru", "rh", "pd", "ag", "cd", "in", "sn", "sb", "te", "i", "xe", "cs", "ba", "la", "ce", "pr", "nd", "pm", "sm", "eu", "gd", "tb", "dy", "ho", "er", "tm", "yb", "lu", "hf", "ta", "w", "re", "os", "ir", "pt", "au", "hg", "tl", "pb", "bi", "po", "at", "rn", "fr", "ra", "ac", "th", "pa", "u", "np", "pu", "am", "cm", "bk", "cf", "es", "fm", "md", "no", "lr", "rg"]; /* exact */
 
@@ -61,9 +61,9 @@ const OptimadeNLP = function(){
 
     const periodic_element_names = ["hydrogen", "helium", "lithium", "beryllium", "boron", "carbon", "nitrogen", "oxygen", "fluorine", "neon", "sodium", "magnesium", "aluminium", "silicon", "phosphorus", "sulfur", "chlorine", "argon", "potassium", "calcium", "scandium", "titanium", "vanadium", "chromium", "manganese", "iron", "cobalt", "nickel", "copper", "zinc", "gallium", "germanium", "arsenic", "selenium", "bromine", "krypton", "rubidium", "strontium", "yttrium", "zirconium", "niobium", "molybdenum", "technetium", "ruthenium", "rhodium", "palladium", "silver", "cadmium", "indium", "tin", "antimony", "tellurium", "iodine", "xenon", "caesium", "barium", "lanthanum", "cerium", "praseodymium", "neodymium", "promethium", "samarium", "europium", "gadolinium", "terbium", "dysprosium", "holmium", "erbium", "thulium", "ytterbium", "lutetium", "hafnium", "tantalum", "tungsten", "rhenium", "osmium", "iridium", "platinum", "gold", "mercury", "thallium", "lead", "bismuth", "polonium", "astatine", "radon", "francium", "radium", "actinium", "thorium", "protactinium", "uranium", "neptunium", "plutonium", "americium", "curium", "berkelium", "californium", "einsteinium", "fermium", "mendelevium", "nobelium", "lawrencium", "roentgenium"]; /* fuzzy */
 
-    const lat_p2i = {'cubic': 1, 'hexagonal': 2, 'trigonal': 3, 'tetragonal': 4, 'orthorhombic': 5, 'monoclinic': 6, 'triclinic': 7, 'rhombohedral': 3, 'cub': 1, 'hex': 2, 'hexag': 2, 'trig': 3, 'tet': 4, 'tetr': 4, 'tetrag': 4, 'orth': 5, 'ortho': 5, 'monocl': 6, 'tric': 7, 'tricl': 7, 'rhom': 3, 'rhomb': 3};
+    const lat_p2i = {"cubic": 1, "hexagonal": 2, "trigonal": 3, "tetragonal": 4, "orthorhombic": 5, "monoclinic": 6, "triclinic": 7, "rhombohedral": 3, "cub": 1, "hex": 2, "hexag": 2, "trig": 3, "tet": 4, "tetr": 4, "tetrag": 4, "orth": 5, "ortho": 5, "monocl": 6, "tric": 7, "tricl": 7, "rhom": 3, "rhomb": 3};
     const lat_fgrs = Object.keys(lat_p2i);
-    const lat_i2p = {1:'cubic', 2:'hexagonal', 3:'trigonal', 4:'tetragonal', 5:'orthorhombic', 6:'monoclinic', 7:'triclinic'};
+    const lat_i2p = {1:"cubic", 2:"hexagonal", 3:"trigonal", 4:"tetragonal", 5:"orthorhombic", 6:"monoclinic", 7:"triclinic"};
 
     const mpds_classes = ["ab initio calculations", "ab initio literature", "actinoid", "adamantane", "aegirine", "alkali", "alkaline", "allargentum", "almandine", "alum", "alunogen", "amide", "analcime", "anatase", "anorpiment", "anorthoclase", "antiferroelectric", "antiferromagnet", "antiferromagnetic", "arsenate", "arsenide", "ashcroftine", "auricupride", "aurocupride", "azide", "baileychlore", "bariopyrochlore", "baryte", "beryl", "beta-alumina", "beta-boron", "biguanide", "binary", "birefringent", "borane", "borate", "borax", "boride", "borocarbide", "borohydride", "boronitride", "botryogen", "bromanilate", "bromide", "bromoimide", "calomel", "carbamate", "carbide", "carbonate", "carbonyl", "carboxylate", "celestine", "cell and atoms", "cell-only", "celsian", "cesiokenopyrochlore", "chalcogen", "charge-density wave state", "chevrel", "chimney-ladder", "chloranilate", "chlorate", "chloride", "chloritoid", "chlorosulfate", "chromate", "chrysoberyl", "chrysotile", "cinnabar", "clathrate", "clinochlore", "clinoclase", "clodronate", "close-packed", "cluster glass", "colossal magnetoresistance", "conductor", "corundum", "cosmochlor", "croconate violet", "croconate", "cryptomelane", "cuprate", "cuspidine", "cyamelurate", "cyanamide", "cyanamidonitrate", "cyananilate", "cyanide", "cyanotetrazolate", "cyanoureate", "cyanurate", "cyprine", "davyne", "deuteride", "deuterium", "devilline", "diamagnetic", "diamond", "diarsenate", "diaspore", "diazanide", "diazenide", "dichromate", "digermanate", "diiodobromide", "dinitramide", "diopside", "dioptase", "dioxobromate", "dioxoiodate", "dioxosulfate", "dioxothiosulfate", "diphosphate", "diphosphonate", "dipolyhedral", "diselenate", "disilicate", "disordered", "disulfate", "dithiocarbamate", "dithiocarbonate", "dithionate", "dithiooxalate", "dithiophosphate", "dithiosquarate", "divanadate", "epidote", "euchlorine", "euclase", "eudialyte", "eulytine", "fermi liquid", "feroxihyte", "feroxyhyte", "ferrielectric", "ferrimagnet", "ferroelastic", "ferroelectric", "ferromagnet", "ferromagnetic", "fluor-schorl", "fluoride", "fluoroborate", "frank-kasper", "friauf-laves", "fulleride", "fulminate", "galena", "gamma-brass", "garnet", "giant magnetocaloric effect", "gismondine", "glaucodot", "glaucophane", "grossular", "guanidinate", "gypsum", "hafnon", "half metal", "halogen", "hard magnet", "harmotome", "haueyne", "heavy fermion", "hedyphane", "helimagnet", "helvine", "hexasulfate", "hexathionate", "host-guest", "humboldtine", "hydrate", "hydride", "hydroxide", "hypercinnabar", "hypophosphate", "ice", "imide", "iminate", "intercalation", "intermediate valence", "intermetallic", "iodate", "iodide", "ionic conductor", "iridium", "isoferroplatinum", "isopolyhedral", "isothermal section", "kornerupine", "kosmochlor", "lanthanoid", "lavendulan", "levyne", "lime", "liquidus projection", "litharge", "lithiophosphate", "luminescent", "machine learning", "machine-learning", "magnesiochloritoid", "magnetoelastic", "magnetoelectric", "manganate", "massicot", "mellitate", "melonate", "metacinnabar", "metal", "metalloid", "metamagnet", "metavoltine", "mica", "microcline", "microline", "mictomagnet", "minium", "molybdate", "multiferroic", "multinary", "nasicon", "natron", "natrophosphate", "natroxalate", "negative thermal expansion", "nepheline", "nickeline", "niobocarbide", "niter", "nitranilate", "nitrate", "nitratine", "nitride", "nitroformate", "noble gas", "non disordered", "non-disordered", "non-linear optics", "nonaflate", "nonmetal", "nordenskioeldine", "nosean", "olivine", "optically isotropic", "organic", "orpiment", "orthoborate", "orthoclase", "orthogermanate", "orthonitrate", "orthophosphate", "orthosilicate", "oxalate", "oxamate", "oxide", "oxoiodate", "oxonitrate", "oxotetrazolate", "oxy-schorl", "ozonide", "palladogermanide", "paracelsian", "paramagnet", "pararealgar", "pauli paramagnet", "peer review", "peer reviewed", "peer-review", "peer-reviewed", "perchlorate", "perhydrate", "periclase", "periodate", "permanganate", "pernitride", "peroxide", "pertechnetate", "phosphate", "phosphide", "phosphinate", "phosphonate", "photocatalyst", "photovoltaic effect", "photovoltaic", "piezoelectric", "pnictogen", "polaron conductor", "polycrase", "potassic", "prussian blue", "pseudorutile", "pyrochlore", "pyroelectric", "pyrope", "quadridavyne", "quartz", "quasicrystal", "quaternary", "quinary", "radioactive", "rare earth", "realgar", "refractory", "relaxor", "retzian", "rhodarsenide", "rhodizonate", "rhomboclase", "rocksalt", "rubicline", "ruddlesden-popper", "rutheniridosmine", "rutherfordine", "rutile", "salammoniac", "sanidine", "sapphirine", "sarcopside", "schorl", "selenide", "selenidel", "semiconductor", "semimetal", "shape memory effect", "shape memory", "siderotil", "silanide", "silicate", "silicide", "sillen-aurivillius", "skyrmion", "solidus projection", "solvus projection", "spessartine", "spin glass", "spinel", "spodumene", "squarate", "steenstrupine", "stibarsen", "subsolidus relations", "sulfamate", "sulfamide", "sulfate", "sulfide", "sulfidel", "sulfinylamide", "superconductor", "superhard", "superionic conductor", "superoxide", "talc", "tantalcarbide", "tellurantimony", "telluride", "ternary", "thermoelectric", "thiocyanate", "thiocyanurate", "thiophosphate", "thiosulfate", "topaz", "topological insulator", "tourmaline", "transitional", "triflate", "tripolyhedral", "triteride", "trithionate", "tritide", "tritium", "trona", "tungstate", "turquoise", "ulvoespinel", "unary", "uranophane", "uranopolycrase", "urate", "urea", "ureate", "van vleck paramagnet", "vanadate", "vertical section", "violurate", "xenotime", "zincobotryogen", "zircon", "zircosulfate"];
 
@@ -157,7 +157,7 @@ const OptimadeNLP = function(){
      */
     function try_uniword_facet(term){
 
-        if (term == 'AB' || term == 'ABC' || term == 'ABCD')
+        if (term === 'AB' || term === 'ABC' || term === 'ABCD')
             return ['formulae']; // special case-sensitive anonymous cases
 
         term = term.toLowerCase();
@@ -175,19 +175,14 @@ const OptimadeNLP = function(){
         if (periodic_elements.includes(term)) return ['elements'];
         else if (periodic_element_names.includes(term)) return ['elements', periodic_elements[ periodic_element_names.indexOf(term) ]];
 
-        if (term.includes('-')){
-            const parts = term.split('-');
-            let excl = false;
-            parts.forEach(function(part){
-                if (!periodic_elements.includes(part)) excl = true;
-            });
-            if (!excl) return ['elements'];
+        if (term.includes('-') && ! term.split('-').some((part) => !periodic_elements.includes(part))){
+            return ['elements'];
         }
 
         if (['element', 'elements', 'elementary'].includes(term)) return ['classes', 'unary'];
-        else if (term == 'quinternary' || term == 'quinternaries' || term == 'quinaries' || term == 'pentanary' || term == 'pentanaries') return ['classes', 'quinary'];
-        else if (term == 'actinide' || term == 'actinides') return ['classes', 'actinoid'];
-        else if (term == 'lantanide' || term == 'lantanides' || term == 'lanthanide' || term == 'lanthanides' || term == 'lantanoid' || term == 'lantanoids') return ['classes', 'lanthanoid'];
+        else if (term === 'quinternary' || term === 'quinternaries' || term === 'quinaries' || term === 'pentanary' || term === 'pentanaries') return ['classes', 'quinary'];
+        else if (term === 'actinide' || term === 'actinides') return ['classes', 'actinoid'];
+        else if (term === 'lantanide' || term === 'lantanides' || term === 'lanthanide' || term === 'lanthanides' || term === 'lantanoid' || term === 'lantanoids') return ['classes', 'lanthanoid'];
         else if (term.endsWith('ite') && term.length > 4) return ['classes'];
 
         const chk = term.replace(' structure', '').replace(' lattice', '').replace(' crystalline', '').replace(' crystal', '');
@@ -229,7 +224,7 @@ const OptimadeNLP = function(){
 
         let single_chk;
         if (term.endsWith('s')){ // plural-singular fixups
-            single_chk = term.substr(0, term.length-1);
+            single_chk = term.substr(0, term.length - 1);
 
             if (!combined && single_chk.endsWith('ite')) return {'facet': 'classes', 'input': single_chk, 'ready': 1};
 
@@ -240,11 +235,11 @@ const OptimadeNLP = function(){
             }
         }
         if (term.endsWith('es')){ // plural-singular fixups
-            single_chk = term.substr(0, term.length-2);
+            single_chk = term.substr(0, term.length - 2);
 
-            if (single_chk == 'binari') single_chk = 'binary';
-            else if (single_chk == 'ternari') single_chk = 'ternary';
-            else if (single_chk == 'quaternari') single_chk = 'quaternary';
+            if (single_chk === 'binari') single_chk = 'binary';
+            else if (single_chk === 'ternari') single_chk = 'ternary';
+            else if (single_chk === 'quaternari') single_chk = 'quaternary';
 
             candidate = check_category(single_chk, 'classes');
             if (candidate){
@@ -261,15 +256,14 @@ const OptimadeNLP = function(){
      * Utility algo
      */
     function check_category(term, category){
-        const host = (category == 'classes') ? mpds_classes : mpds_props;
+        const host = (category === 'classes') ? mpds_classes : mpds_props;
 
         if (host.includes(term)) return {'facet': category, 'input': term, 'ready': 1};
 
-        let i = 0;
         const len = host.length;
         const re = new RegExp(`(?:^|\\s)(${term})(?=\\s|$)`);
         let idx;
-        for (i; i < len; i++){
+        for (let i = 0; i < len; i++){
             idx = host[i].search(re);
             if (idx === 0){
                 //console.log("Found unstrict match in "+category+" with <"+host[i]+">");
@@ -351,17 +345,17 @@ const OptimadeNLP = function(){
             if (simple){
                 facet = simple[0];
                 if (simple[1]) input = simple[1];
-                if (queue.length && !queue[queue.length - 1].ready) ignored.push( ...queue.map(function(obj){ return obj.input }) );
+                if (queue.length && !queue[queue.length - 1].ready) ignored.push( ...queue.map(obj => obj.input));
                 queue = [];
                 //console.log(input + ": found simple facet " + simple[0]);
 
             } else {
                 if (!stop_words.includes(input)){
                     input = input
-                        .replace(new RegExp("\\(", 'g'), "")
-                        .replace(new RegExp("\\)", 'g'), "")
-                        .replace(new RegExp("\\[", 'g'), "")
-                        .replace(new RegExp("\\]", 'g'), "");
+                        .replace(new RegExp('\\(', 'g'), '')
+                        .replace(new RegExp('\\)', 'g'), '')
+                        .replace(new RegExp('\\[', 'g'), '')
+                        .replace(new RegExp('\\]', 'g'), '');
 
                     const candidate = try_multiword_facet(input, queue);
                     //console.log(candidate);
@@ -374,11 +368,11 @@ const OptimadeNLP = function(){
                         queue = [ candidate ];
 
                     } else if (candidate.anew){ // token anew
-                        if (queue.length && !queue[queue.length-1].ready) ignored.push( ...queue.map(function(obj){ return obj.input }) );
+                        if (queue.length && !queue[queue.length - 1].ready) ignored.push( ...queue.map(obj => obj.input));
                         queue = [ candidate ];
 
                     } else if (!candidate){ // token unknown
-                        if (queue.length && !queue[queue.length-1].ready) ignored.push( ...queue.map(function(obj){ return obj.input }) );
+                        if (queue.length && !queue[queue.length - 1].ready) ignored.push( ...queue.map(obj => obj.input));
                         queue = [];
                         if (is_like_chem_formula(input)){
                             facet = 'formulae';
@@ -391,27 +385,27 @@ const OptimadeNLP = function(){
             }
 
             if (n_toks == tokens.length){ // token at the end, terminating
-                if (queue.length && !queue[queue.length-1].ready) ignored.push( ...queue.map(function(obj){ return obj.input }) );
+                if (queue.length && !queue[queue.length - 1].ready) ignored.push( ...queue.map(obj => obj.input));
                 queue = [];
             }
 
             if (facet){
-                if (facet == "formulae")
+                if (facet === "formulae")
                     input = termify_formulae(input);
 
                 if (result[facet]){ // What to do with the found term of the same category?
                     //console.log('Compare: '+result[facet]+' vs. '+input);
 
-                    if (facet == "formulae"){
+                    if (facet === "formulae"){
                         ignored.push(input);
 
-                    } else if (facet == "elements"){
+                    } else if (facet === "elements"){
                         result[facet] += `-${input}`;
 
-                    } else if (facet == "classes"){
+                    } else if (facet === "classes"){
                         result[facet] += `, ${input}`; //escape(input);
 
-                    } else if (facet == "props"){
+                    } else if (facet === "props"){
                         if (input.includes(result[facet])){
                             //console.log('Smaller match '+result[facet]+' was thrown away');
                             result[facet] = input;
@@ -441,22 +435,22 @@ const OptimadeNLP = function(){
         ['formulae', 'elements', 'props', 'classes'].forEach(function(categ){
             if (!parsed[categ]) return;
 
-            else if (categ == 'formulae'){
+            else if (categ === 'formulae'){
                 if (is_formula_anonymous(parsed[categ]))
                     filter.push(`chemical_formula_anonymous="${parsed[categ]}"`);
                 else
                     filter.push(`chemical_formula_reduced="${parsed[categ]}"`);
             }
 
-            else if (categ == 'elements'){
+            else if (categ === 'elements'){
                 filter.push(`elements HAS ALL "${parsed[categ].split('-').join('","')}"`);
             }
 
-            else if (categ == 'props'){
+            else if (categ === 'props'){
                 filter.push(`_mpds_${parsed[categ].replaceAll(' ', '_')} IS KNOWN`);
             }
 
-            else if (categ == 'classes'){
+            else if (categ === 'classes'){
                 parsed[categ].split(", ").forEach(function(item){
                     const arity = arity_keys.indexOf(item);
                     if (arity > 0)
