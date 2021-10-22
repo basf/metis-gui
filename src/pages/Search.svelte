@@ -23,9 +23,7 @@
 		{#await $providersAsync}
 			<Loaders.Control />
 		{:then providers}
-			<Select bind:value={selectedProviderIndex} options={providers} let:option size="lg">
-				{option.attributes.name}
-			</Select>
+			<Select bind:value={$query.params.provider} options={providersOptions} let:option size="lg" />
 		{/await}
 	</InputGroup>
 	<div class="p-2"></div>
@@ -75,9 +73,8 @@
 	import { getStructureTitle } from '@/helpers/optimade';
 
 	let width;
-	let selectedProviderIndex = 0;
 
-	$: $query.params.provider = $providers[selectedProviderIndex]?.id;
+	$: providersOptions = $providers.map(p => ({ value: p.id, label: p.attributes.name }));
 
 	function setDataContent(structure) {
 		$content = JSON.stringify(structure);
