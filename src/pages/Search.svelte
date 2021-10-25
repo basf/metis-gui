@@ -20,19 +20,19 @@
 				{/if}
 			</span>
 		</Input>
-		{#await $providersAsync}
+		{#await $providers}
 			<Loaders.Control />
 		{:then providers}
 			<Select
 				on:select={providerSelected}
 				bind:value={provider}
-				options={providersOptions}
+				options={providersOptions(providers)}
 				let:option
 				size="lg"
 			/>
 		{/await}
 	</InputGroup>
-	<Pagination bind:total bind:limit bind:page rest={9} />
+	<Pagination bind:total bind:limit bind:page bind:limits rest={9} />
 	<div class="p-2" />
 
 	<div bind:clientWidth={width}>
@@ -70,12 +70,14 @@
 
 	import Main from '@/layouts/Main.svelte';
 
-	import { structuresAsync as results, providersAsync, providers } from '@/stores/optimade';
+	import { structuresAsync as results, providersAsync as providers } from '@/stores/optimade';
+	import { Types } from '@/services/optimade';
 
 	let width,
 		page = 1,
 		total = 0,
 		limit = 10,
+		limits = [10],
 		provider,
 		meta,
 		data;
@@ -84,16 +86,28 @@
 		$query.params.page = 0;
 		$query.params.returned = 0;
 		page = 1;
+		limit = 10;
 		total = 0;
+		limits = [];
 	}
 
-	$: $query.params.page = !page ? 0 : page - 1; // fix page index for query request from not ZERO START INDEX in Pagination
+	function makeLimits() {
+		if (meta?.limits[0] > 10) {
+			console.log(meta.pages);
+			const length = Math.ceil(meta?.data_returned / 10);
+			return Array.from({ length }, (_, i) => (i + 1) * 10);
+		} else {
+			return meta?.limits;
+		}
+	}
+
+	$: $query.params.page = page - 1; // fix page index for query request from not ZERO START INDEX in Pagination
 	$: $query.params.limit = limit;
 	$: $query.params.returned = total;
 	$: $query.params.provider = provider;
-	$: page = !page ? 1 : page; // same fix for Pagination page index from if page > length && (page = length);
 	$: total =
 		provider === 'mp' && meta?.data_returned < total && page > 1 ? total : meta?.data_returned; // fix for provider MP from reduce data_returned per page
-
-	$: providersOptions = $providers.map((p) => ({ value: p.id, label: p.attributes.name }));
+	$: limits = meta?.limits.length === 1 ? makeLimits() : meta?.limits;
+	$: providersOptions = (providers: Types.Provider[]) =>
+		providers.map((p) => ({ value: p.id, label: p.attributes.name }));
 </script>

@@ -5,9 +5,9 @@
 				<h5 class="mt-2" slot="title">
 					{@html getStructureTitle(structure)}
 				</h5>
-				<small slot="subtitle" class="tile-subtitle text-gray"
-					>ID &bull; {structure.id}</small
-				>
+				<small slot="subtitle" class="tile-subtitle text-gray">
+					ID &bull; {structure.id}
+				</small>
 				<svelte:fragment slot="action">
 					<IconButton
 						icon="upload"
