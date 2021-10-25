@@ -92,7 +92,8 @@
 	$: $query.params.returned = total;
 	$: $query.params.provider = provider;
 	$: page = !page ? 1 : page; // same fix for Pagination page index from if page > length && (page = length);
-	$: total = meta?.data_returned < total && page > 1 ? total : meta?.data_returned; // fix for provider MP from reduce data_returned per page
+	$: total =
+		provider === 'mp' && meta?.data_returned < total && page > 1 ? total : meta?.data_returned; // fix for provider MP from reduce data_returned per page
 
 	$: providersOptions = $providers.map((p) => ({ value: p.id, label: p.attributes.name }));
 </script>
