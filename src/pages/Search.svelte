@@ -14,7 +14,7 @@
 		>
 			<span slot="iconRight">
 				{#if $query.params.q}
-					<IconButton icon="cross" on:click={() => ($query.params.q = '')} />
+					<IconButton icon="cross" on:click={clearSearch} />
 				{:else}
 					<Icon icon="search" offset="mx-2" />
 				{/if}
@@ -101,6 +101,14 @@
 		}
 	}
 
+	function clearSearch() {
+		$query.params.q = '';
+		page = 1;
+		limit = 10;
+		limits = [];
+		total = 0;
+	}
+
 	$: $query.params.page = page - 1; // fix page index for query request from not ZERO START INDEX in Pagination
 	$: $query.params.limit = limit;
 	$: $query.params.returned = total;
@@ -108,6 +116,7 @@
 	$: total =
 		provider === 'mp' && meta?.data_returned < total && page > 1 ? total : meta?.data_returned; // fix for provider MP from reduce data_returned per page
 	$: limits = meta?.limits.length === 1 ? makeLimits() : meta?.limits;
+
 	$: providersOptions = (providers: Types.Provider[]) =>
 		providers.map((p) => ({ value: p.id, label: p.attributes.name }));
 </script>
