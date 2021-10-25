@@ -109,7 +109,7 @@
 		total = 0;
 	}
 
-	$: $query.params.page = page - 1; // fix page index for query request from not ZERO START INDEX in Pagination
+	$: $query.params.page = page; // fix page index for query request from not ZERO START INDEX in Pagination
 	$: $query.params.limit = limit;
 	$: $query.params.returned = total;
 	$: $query.params.provider = provider;
