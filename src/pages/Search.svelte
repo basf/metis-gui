@@ -25,14 +25,20 @@
 		{:then providers}
 			<Select
 				on:select={providerSelected}
-				bind:value={provider}
+				bind:value={$query.params.provider}
 				options={providersOptions(providers)}
 				let:option
 				size="lg"
 			/>
 		{/await}
 	</InputGroup>
-	<Pagination bind:total bind:limit bind:page bind:limits rest={9} />
+	<Pagination
+		{total}
+		bind:limit={$query.params.limit}
+		bind:page={$query.params.page}
+		bind:limits
+		rest={9}
+	/>
 	<div class="p-2" />
 
 	<div bind:clientWidth={width}>
@@ -74,45 +80,39 @@
 	import { Types } from '@/services/optimade';
 
 	let width,
-		page = 1,
 		total = 0,
-		limit = 10,
 		limits = [10],
-		provider,
 		meta,
 		data;
 
 	function providerSelected() {
 		$query.params.page = 1;
-		page = 1;
-		limit = 10;
-		total = 0;
+		$query.params.page = 1;
+		$query.params.limit = 10;
 		limits = [];
+		total = 0;
+	}
+
+	function clearSearch() {
+		$query.params.q = '';
+		$query.params.page = 1;
+		$query.params.limit = 10;
+		limits = [];
+		total = 0;
 	}
 
 	function makeLimits() {
 		if (meta?.limits[0] > 10) {
-			console.log(meta.pages);
-			const length = Math.ceil(meta?.data_returned / 10);
-			return Array.from({ length }, (_, i) => (i + 1) * 10);
+			return Array.from({ length: 10 }, (_, i) => (i + 1) * 10);
 		} else {
 			return meta?.limits;
 		}
 	}
 
-	function clearSearch() {
-		$query.params.q = '';
-		page = 1;
-		limit = 10;
-		limits = [];
-		total = 0;
-	}
-
-	$: $query.params.page = page; // fix page index for query request from not ZERO START INDEX in Pagination
-	$: $query.params.limit = limit;
-	$: $query.params.provider = provider;
 	$: total =
-		provider === 'mp' && meta?.data_returned < total && page > 1 ? total : meta?.data_returned; // fix for provider MP from reduce data_returned per page
+		$query.params.provider === 'mp' && meta?.data_returned < total && $query.params.page > 1
+			? total
+			: meta?.data_returned; // fix for provider MP from reduce data_returned per page
 	$: limits = meta?.limits.length === 1 ? makeLimits() : meta?.limits;
 
 	$: providersOptions = (providers: Types.Provider[]) =>
