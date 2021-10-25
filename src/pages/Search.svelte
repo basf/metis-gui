@@ -83,8 +83,7 @@
 		data;
 
 	function providerSelected() {
-		$query.params.page = 0;
-		$query.params.returned = 0;
+		$query.params.page = 1;
 		page = 1;
 		limit = 10;
 		total = 0;
