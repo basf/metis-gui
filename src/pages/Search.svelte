@@ -47,7 +47,7 @@
 						</div>
 					</Tile>
 				{:else}
-					<Apis {apis} bind:meta bind:data />
+					<Apis {apis} bind:meta bind:data /> <!-- get data from apis not sure -->
 				{/if}
 			{/each}
 		{:catch error}
@@ -87,11 +87,12 @@
 		total = 0;
 	}
 
-	$: $query.params.page = !page ? 0 : page - 1;
+	$: $query.params.page = !page ? 0 : page - 1; // fix page index for query request from not ZERO START INDEX in Pagination
 	$: $query.params.limit = limit;
 	$: $query.params.returned = total;
 	$: $query.params.provider = provider;
-	$: page = !page ? 1 : page;
-	$: total = meta?.data_returned < total && page > 1 ? total : meta?.data_returned;
+	$: page = !page ? 1 : page; // same fix for Pagination page index from if page > length && (page = length);
+	$: total = meta?.data_returned < total && page > 1 ? total : meta?.data_returned; // fix for provider MP from reduce data_returned per page
+
 	$: providersOptions = $providers.map((p) => ({ value: p.id, label: p.attributes.name }));
 </script>
