@@ -20,11 +20,11 @@
 				{/if}
 			</span>
 		</Input>
-		{#await $providers}
+		{#await $providersAsync}
 			<Loaders.Control />
 		{:then providers}
 			<Select
-				on:select={providerSelected}
+				on:select={clearPagination}
 				bind:value={$query.params.provider}
 				options={providersOptions(providers)}
 				let:option
@@ -33,7 +33,7 @@
 		{/await}
 	</InputGroup>
 	<Pagination
-		{total}
+		bind:total
 		bind:limit={$query.params.limit}
 		bind:page={$query.params.page}
 		bind:limits
@@ -53,7 +53,7 @@
 						</div>
 					</Tile>
 				{:else}
-					<Apis {apis} bind:meta bind:data /> <!-- get data from apis not sure -->
+					<OptimadeApis {apis} bind:meta bind:data /> <!-- get data from apis not sure -->
 				{/if}
 			{/each}
 		{:catch error}
@@ -72,11 +72,11 @@
 	import { Icon, IconButton, Input, InputGroup, Pagination, Select, Tile } from 'svelte-spectre';
 
 	import * as Loaders from '@/components/loaders';
-	import Apis from '@/components/Apis.svelte';
+	import OptimadeApis from '@/views/optimade/OptimadeApis.svelte';
 
 	import Main from '@/layouts/Main.svelte';
 
-	import { structuresAsync as results, providersAsync as providers } from '@/stores/optimade';
+	import { structuresAsync as results, providersAsync } from '@/stores/optimade';
 	import { Types } from '@/services/optimade';
 
 	let width,
@@ -85,20 +85,16 @@
 		meta,
 		data;
 
-	function providerSelected() {
-		$query.params.page = 1;
+	function clearPagination() {
 		$query.params.page = 1;
 		$query.params.limit = 10;
-		limits = [];
+		limits = [10];
 		total = 0;
 	}
 
 	function clearSearch() {
 		$query.params.q = '';
-		$query.params.page = 1;
-		$query.params.limit = 10;
-		limits = [];
-		total = 0;
+		clearPagination();
 	}
 
 	function makeLimits() {
@@ -110,11 +106,15 @@
 	}
 
 	$: total =
-		$query.params.provider === 'mp' && meta?.data_returned < total && $query.params.page > 1
+		$query.params.provider === 'mp' &&
+		meta?.data_returned < total &&
+		$query.params.page &&
+		$query.params.page > 1
 			? total
 			: meta?.data_returned; // fix for provider MP from reduce data_returned per page
 	$: limits = meta?.limits.length === 1 ? makeLimits() : meta?.limits;
 
-	$: providersOptions = (providers: Types.Provider[]) =>
-		providers.map((p) => ({ value: p.id, label: p.attributes.name }));
+	function providersOptions(providers: Types.Provider[]) {
+		return providers.map((p) => ({ value: p.id, label: p.attributes.name }));
+	}
 </script>
