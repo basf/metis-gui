@@ -82,7 +82,7 @@
 
 	export async function preload({ query }) {
 		if (!query.params.q || !query.params.provider) {
-			const query = storage.getItem<string>('optimade_query');
+			const query = storage.getItem<string>('optimade_query', sessionStorage);
 			if (query) {
 				redirect(`${location.pathname}${query}`);
 			}
