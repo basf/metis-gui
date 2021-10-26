@@ -21,7 +21,7 @@
 			</span>
 		</Input>
 		{#await $providersAsync}
-			<Loaders.Control />
+			<Loaders.Control height="40px" />
 		{:then providers}
 			<Select
 				on:select={clearPagination}
@@ -42,7 +42,7 @@
 	<div class="p-2" />
 
 	<div bind:clientWidth={width}>
-		{#await $results}
+		{#await $resultsAsync}
 			<Loaders.Tile count={5} w={width} h={65} height={400} {width} />
 		{:then results}
 			{#each results as [apis, provider], index}
@@ -66,8 +66,9 @@
 	</div>
 </Main>
 
-<script lang="ts">
-	import { query } from 'svelte-pathfinder';
+<script lang="ts" context="module">
+	import { query, redirect } from 'svelte-pathfinder';
+	import * as storage from '@/helpers/storage';
 
 	import { Icon, IconButton, Input, InputGroup, Pagination, Select, Tile } from 'svelte-spectre';
 
@@ -76,9 +77,20 @@
 
 	import Main from '@/layouts/Main.svelte';
 
-	import { structuresAsync as results, providersAsync } from '@/stores/optimade';
+	import { structuresAsync as resultsAsync, providersAsync } from '@/stores/optimade';
 	import { Types } from '@/services/optimade';
 
+	export async function preload({ query }) {
+		if (!query.params.q || !query.params.provider) {
+			const query = storage.getItem<string>('optimade_query');
+			if (query) {
+				redirect(`${location.pathname}${query}`);
+			}
+		}
+	}
+</script>
+
+<script lang="ts">
 	let width,
 		total = 0,
 		limits = [10],

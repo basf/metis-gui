@@ -5,7 +5,7 @@
 	<main>
 		{#await $userAsync then user}
 			{#if user}
-				<Viewpoint {...page}>
+				<Viewpoint {...page} query={$query}>
 					<svelte:fragment slot="loading">Loading...</svelte:fragment>
 				</Viewpoint>
 			{:else}
@@ -28,7 +28,7 @@
 </Spectre>
 
 <script lang="ts">
-	import { pattern, click } from 'svelte-pathfinder';
+	import { pattern, query, click } from 'svelte-pathfinder';
 	import Viewpoint from 'svelte-viewpoint';
 	import { IconButton, Spectre, Toaster } from 'svelte-spectre';
 
