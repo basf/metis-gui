@@ -99,7 +99,8 @@
 
 	function makeLimits() {
 		if (meta?.limits[0] > 10) {
-			return Array.from({ length: 10 }, (_, i) => (i + 1) * 10);
+			const length = meta?.data_returned <= 100 ? Math.ceil(meta?.data_returned / 10) : 10;
+			return Array.from({ length }, (_, i) => (i + 1) * 10);
 		} else {
 			return meta?.limits;
 		}
