@@ -38,8 +38,8 @@ export const providersAsync: Asyncable<Types.Provider[]> = asyncable(
         const providers = optimade.providers || (await optimade.getProviders());
         return providers
             ? Object.values(providers).filter((provider) =>
-                OPTIMADE_PROVIDERS.includes(provider.id)
-            )
+                  OPTIMADE_PROVIDERS.includes(provider.id)
+              )
             : [];
     },
     null
@@ -57,8 +57,10 @@ export const structuresAsync = asyncable<
     async ($query: StringParams) => {
         if (!$query.params.q || !$query.params.provider) return [];
 
-        const queryString = storage.getItem<string>('optimade_query',
-            sessionStorage);
+        const queryString = storage.getItem<string>(
+            'optimade_query',
+            sessionStorage
+        );
         const cachedStructures = storage.getItem<StructuresByProviders>(
             'optimade_structures',
             sessionStorage
