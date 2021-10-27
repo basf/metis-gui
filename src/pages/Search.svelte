@@ -111,23 +111,25 @@
 		clearPagination();
 	}
 
-	function makeLimits() {
-		if (meta?.limits[0] > 10) {
-			const length = meta?.data_returned <= 100 ? Math.ceil(meta?.data_returned / 10) : 10;
+	function makeLimits(limits: number[], data: number) {
+		if (limits[0] > 10) {
+			const length = data <= 100 ? Math.ceil(data / 10) : 10;
 			return Array.from({ length }, (_, i) => (i + 1) * 10);
 		} else {
-			return meta?.limits;
+			return limits;
 		}
 	}
 
-	$: total =
-		$query.params.provider === 'mp' &&
-		meta?.data_returned < total &&
-		$query.params.page &&
-		$query.params.page > 1
-			? total
-			: meta?.data_returned; // fix for provider MP from reduce data_returned per page
-	$: limits = meta?.limits.length === 1 ? makeLimits() : meta?.limits;
+	// fix for provider MP from reduce data_returned per page
+	function setTotal(provider: string, data: number, page: number) {
+		return provider === 'mp' && data < total && page && page > 1 ? total : data;
+	}
+	function setLimits(limits: number[], data: number) {
+		return limits?.length === 1 ? makeLimits(limits, data) : limits;
+	}
+
+	$: total = setTotal($query.params.provider, meta?.data_returned, $query.params.page);
+	$: limits = setLimits(meta?.limits, meta?.data_returned);
 
 	function providersOptions(providers: Types.Provider[]) {
 		return providers.map((p) => ({ value: p.id, label: p.attributes.name }));
