@@ -70,7 +70,7 @@
 
 <script lang="ts" context="module">
 	import { get } from 'svelte/store';
-	import { query, redirect } from 'svelte-pathfinder';
+	import { Param, query, redirect } from 'svelte-pathfinder';
 	import * as storage from '@/helpers/storage';
 
 	import { Icon, IconButton, Input, InputGroup, Pagination, Select, Tile } from 'svelte-spectre';
@@ -95,11 +95,11 @@
 </script>
 
 <script lang="ts">
-	let width,
+	let width: number,
 		limits = [10],
-		meta,
-		data,
-		total;
+		meta: Types.Meta,
+		data: Types.Structure[],
+		total: number;
 
 	function clearPagination() {
 		$query.params.limit = 10;
@@ -116,26 +116,30 @@
 		clearPagination();
 	}
 
-	function makeLimits(limits: number[], data: number) {
-		if (limits[0] > 10) {
-			const length = data <= 100 ? Math.ceil(data / 10) : 10;
-			return Array.from({ length }, (_, i) => (i + 1) * 10);
-		} else {
-			return limits;
-		}
+	function setLimits(limits: number[] | undefined, data: number) {
+		const makeLimits = (limits: number[], data: number) => {
+			if (limits[0] > 10) {
+				const length = data <= 100 ? Math.ceil(data / 10) : 10;
+				return Array.from({ length }, (_, i) => (i + 1) * 10);
+			} else {
+				return limits;
+			}
+		};
+		limits = limits?.length === 1 ? makeLimits(limits, data) : limits;
 	}
 
 	// fix for provider MP from reduce data_returned per page
-	function setTotal(provider: string, data: number, page: number) {
+	function setTotal(provider: Param, data: number, page: Param) {
 		total = provider === 'mp' && data < total && page && page > 1 ? total : data;
 	}
-	function setLimits(limits: number[], data: number) {
-		limits = limits?.length === 1 ? makeLimits(limits, data) : limits;
+
+	function setPage(page: Param) {
+		page = page === 0 ? 1 : page;
 	}
 
 	$: setTotal($query.params.provider, meta?.data_returned, $query.params.page);
 	$: setLimits(meta?.limits, meta?.data_returned);
-	$: $query.params.page = $query.params.page === 0 ? 1 : $query.params.page;
+	$: setPage($query.params.page);
 
 	function providersOptions(providers: Types.Provider[]) {
 		return providers.map((p) => ({ value: p.id, label: p.attributes.name }));
