@@ -9,13 +9,26 @@ import type { StringParams } from 'svelte-pathfinder';
 
 import optimade from '@/services/optimade';
 
+import * as storage from '@/helpers/storage';
+
 import { OPTIMADE_PROVIDERS, SEARCH_DELAY } from '@/config';
 
-type StructuresByProviders = Array<[Types.StructuresResponse[], Types.Provider]>;
+type StructuresByProviders = Array<
+    [Types.StructuresResponse[], Types.Provider]
+>;
 
 const getStructuresAll = debounce(
-    (providers: string[], filter: string, page: number, limit: number, batch: boolean) => {
-        return optimade.getStructuresAll(providers, filter, page, limit, batch) || [];
+    (
+        providers: string[],
+        filter: string,
+        page: number,
+        limit: number,
+        batch: boolean
+    ) => {
+        return (
+            optimade.getStructuresAll(providers, filter, page, limit, batch) ||
+            []
+        );
     },
     SEARCH_DELAY
 );
@@ -44,9 +57,40 @@ export const structuresAsync = asyncable<
     async ($query: StringParams) => {
         if (!$query.params.q || !$query.params.provider) return [];
 
+        const queryString = storage.getItem<string>(
+            'optimade_query',
+            sessionStorage
+        );
+        const cachedStructures = storage.getItem<StructuresByProviders>(
+            'optimade_structures',
+            sessionStorage
+        );
+
+        if (cachedStructures && queryString === $query.toString()) {
+            return cachedStructures;
+        }
+
         await providersAsync.get();
 
-        return getStructuresAll([$query.params.provider], $query.params.q, $query.params.page, $query.params.limit);
+        const structures = await getStructuresAll(
+            [$query.params.provider],
+            $query.params.q,
+            $query.params.page,
+            $query.params.limit
+        );
+
+        storage.setItem<string>(
+            'optimade_query',
+            $query.toString(),
+            sessionStorage
+        );
+        storage.setItem<StructuresByProviders>(
+            'optimade_structures',
+            structures,
+            sessionStorage
+        );
+
+        return structures;
     },
     null,
     [query]

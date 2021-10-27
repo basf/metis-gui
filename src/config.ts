@@ -1,4 +1,3 @@
-
 export const API_BASEURL =
     __env === 'production'
         ? 'https://gate.basf.science/v0'

@@ -21,7 +21,7 @@
 			</span>
 		</Input>
 		{#await $providersAsync}
-			<Loaders.Control />
+			<Loaders.Control height="40px" />
 		{:then providers}
 			<Select
 				on:select={clearPagination}
@@ -32,17 +32,19 @@
 			/>
 		{/await}
 	</InputGroup>
-	<Pagination
-		bind:total
-		bind:limit={$query.params.limit}
-		bind:page={$query.params.page}
-		bind:limits
-		rest={9}
-	/>
+	{#if total}
+		<Pagination
+			bind:total
+			bind:limits
+			bind:limit={$query.params.limit}
+			bind:page={$query.params.page}
+			rest={9}
+		/>
+	{/if}
 	<div class="p-2" />
 
 	<div bind:clientWidth={width}>
-		{#await $results}
+		{#await $resultsAsync}
 			<Loaders.Tile count={5} w={width} h={65} height={400} {width} />
 		{:then results}
 			{#each results as [apis, provider], index}
@@ -66,8 +68,10 @@
 	</div>
 </Main>
 
-<script lang="ts">
-	import { query } from 'svelte-pathfinder';
+<script lang="ts" context="module">
+	import { get } from 'svelte/store';
+	import { Param, query, redirect } from 'svelte-pathfinder';
+	import * as storage from '@/helpers/storage';
 
 	import { Icon, IconButton, Input, InputGroup, Pagination, Select, Tile } from 'svelte-spectre';
 
@@ -76,46 +80,66 @@
 
 	import Main from '@/layouts/Main.svelte';
 
-	import { structuresAsync as results, providersAsync } from '@/stores/optimade';
+	import { structuresAsync as resultsAsync, providersAsync } from '@/stores/optimade';
 	import { Types } from '@/services/optimade';
 
-	let width,
-		total = 0,
+	export async function preload() {
+		const $query = get(query);
+		if (!$query.params.q || !$query.params.provider) {
+			const query = storage.getItem<string>('optimade_query', sessionStorage);
+			if (query) {
+				redirect(`${location.pathname}${query}`);
+			}
+		}
+	}
+</script>
+
+<script lang="ts">
+	let width: number,
 		limits = [10],
-		meta,
-		data;
+		total: number,
+		meta: Types.Meta,
+		data: Types.Structure[];
 
 	function clearPagination() {
-		$query.params.page = 1;
 		$query.params.limit = 10;
-		limits = [10];
+		$query.params.page = 1;
+		meta.data_returned = 0;
+		limits = [];
 		total = 0;
 	}
 
 	function clearSearch() {
 		$query.params.q = '';
+		storage.setItem<string>('optimade_query', '', sessionStorage);
+		storage.setItem<string>('optimade_structures', '', sessionStorage);
 		clearPagination();
 	}
 
-	function makeLimits(limits: number[], data: number) {
-		if (limits[0] > 10) {
-			const length = data <= 100 ? Math.ceil(data / 10) : 10;
-			return Array.from({ length }, (_, i) => (i + 1) * 10);
-		} else {
-			return limits;
-		}
+	function setLimits(limits: number[] | undefined, data: number) {
+		const makeLimits = (limits: number[], data: number) => {
+			if (limits[0] > 10) {
+				const length = data <= 100 ? Math.ceil(data / 10) : 10;
+				return Array.from({ length }, (_, i) => (i + 1) * 10);
+			} else {
+				return limits;
+			}
+		};
+		limits = limits?.length === 1 ? makeLimits(limits, data) : limits;
 	}
 
 	// fix for provider MP from reduce data_returned per page
-	function setTotal(provider: string, data: number, page: number) {
-		return provider === 'mp' && data < total && page && page > 1 ? total : data;
-	}
-	function setLimits(limits: number[], data: number) {
-		return limits?.length === 1 ? makeLimits(limits, data) : limits;
+	function setTotal(provider: Param, data: number, page: Param) {
+		total = provider === 'mp' && data < total && page && page > 1 ? total : data;
 	}
 
-	$: total = setTotal($query.params.provider, meta?.data_returned, $query.params.page);
-	$: limits = setLimits(meta?.limits, meta?.data_returned);
+	function setPage(page: Param) {
+		page = page === 0 ? 1 : page;
+	}
+
+	$: setTotal($query.params.provider, meta?.data_returned, $query.params.page);
+	$: setLimits(meta?.limits, meta?.data_returned);
+	$: setPage($query.params.page);
 
 	function providersOptions(providers: Types.Provider[]) {
 		return providers.map((p) => ({ value: p.id, label: p.attributes.name }));
