@@ -38,8 +38,8 @@ export const providersAsync: Asyncable<Types.Provider[]> = asyncable(
         const providers = optimade.providers || (await optimade.getProviders());
         return providers
             ? Object.values(providers).filter((provider) =>
-                  OPTIMADE_PROVIDERS.includes(provider.id)
-              )
+                OPTIMADE_PROVIDERS.includes(provider.id)
+            )
             : [];
     },
     null

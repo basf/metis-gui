@@ -132,7 +132,7 @@
 
 	$: total = setTotal($query.params.provider, meta?.data_returned, $query.params.page);
 	$: limits = setLimits(meta?.limits, meta?.data_returned);
-
+	$: $query.params.page = $query.params.page === 0 ? 1 : $query.params.page;
 	function providersOptions(providers: Types.Provider[]) {
 		return providers.map((p) => ({ value: p.id, label: p.attributes.name }));
 	}
