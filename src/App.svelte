@@ -28,7 +28,7 @@
 </Spectre>
 
 <script lang="ts">
-	import { pattern, query, click } from 'svelte-pathfinder';
+	import { pattern, click } from 'svelte-pathfinder';
 	import Viewpoint from 'svelte-viewpoint';
 	import { IconButton, Spectre, Toaster } from 'svelte-spectre';
 

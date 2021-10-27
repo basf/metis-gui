@@ -60,7 +60,7 @@ export const structuresAsync = asyncable<
         const queryString = storage.getItem<string>('optimade_query');
         const cachedStructures = storage.getItem<StructuresByProviders>(
             'optimade_structures',
-            sessionStorage,
+            sessionStorage
         );
 
         if (cachedStructures && queryString === $query.toString()) {
@@ -76,11 +76,15 @@ export const structuresAsync = asyncable<
             $query.params.limit
         );
 
-        storage.setItem<string>('optimade_query', $query.toString(), sessionStorage);
+        storage.setItem<string>(
+            'optimade_query',
+            $query.toString(),
+            sessionStorage
+        );
         storage.setItem<StructuresByProviders>(
             'optimade_structures',
             structures,
-            sessionStorage,
+            sessionStorage
         );
 
         return structures;
