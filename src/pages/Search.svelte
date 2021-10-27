@@ -124,7 +124,7 @@
 
 	// fix for provider MP from reduce data_returned per page
 	function setTotal(provider: string, data: number, page: number) {
-		return provider === 'mp' && data < total && page && page > 1 ? total : data;
+		return provider === 'mp' && data < total && page && page >= 1 ? total : data;
 	}
 	function setLimits(limits: number[], data: number) {
 		return limits?.length === 1 ? makeLimits(limits, data) : limits;

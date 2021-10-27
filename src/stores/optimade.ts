@@ -63,7 +63,7 @@ export const structuresAsync = asyncable<
             'optimade_structures',
             sessionStorage
         );
-        console.log(cachedStructures, queryString, $query.toString());
+
         if (cachedStructures && queryString === $query.toString()) {
             return cachedStructures;
         }
