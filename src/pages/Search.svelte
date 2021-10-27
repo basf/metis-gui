@@ -97,9 +97,9 @@
 <script lang="ts">
 	let width: number,
 		limits = [10],
+		total: number,
 		meta: Types.Meta,
-		data: Types.Structure[],
-		total: number;
+		data: Types.Structure[];
 
 	function clearPagination() {
 		$query.params.limit = 10;
