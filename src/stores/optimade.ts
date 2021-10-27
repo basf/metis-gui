@@ -57,12 +57,13 @@ export const structuresAsync = asyncable<
     async ($query: StringParams) => {
         if (!$query.params.q || !$query.params.provider) return [];
 
-        const queryString = storage.getItem<string>('optimade_query');
+        const queryString = storage.getItem<string>('optimade_query',
+            sessionStorage);
         const cachedStructures = storage.getItem<StructuresByProviders>(
             'optimade_structures',
             sessionStorage
         );
-
+        console.log(cachedStructures, queryString, $query.toString());
         if (cachedStructures && queryString === $query.toString()) {
             return cachedStructures;
         }
