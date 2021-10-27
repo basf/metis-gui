@@ -5,7 +5,7 @@
 	<main>
 		{#await $userAsync then user}
 			{#if user}
-				<Viewpoint {...page} query={$query}>
+				<Viewpoint {...page}>
 					<svelte:fragment slot="loading">Loading...</svelte:fragment>
 				</Viewpoint>
 			{:else}

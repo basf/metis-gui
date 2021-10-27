@@ -67,6 +67,7 @@
 </Main>
 
 <script lang="ts" context="module">
+	import { get } from 'svelte/store';
 	import { query, redirect } from 'svelte-pathfinder';
 	import * as storage from '@/helpers/storage';
 
@@ -80,8 +81,9 @@
 	import { structuresAsync as resultsAsync, providersAsync } from '@/stores/optimade';
 	import { Types } from '@/services/optimade';
 
-	export async function preload({ query }) {
-		if (!query.params.q || !query.params.provider) {
+	export async function preload() {
+		const $query = get(query);
+		if (!$query.params.q || !$query.params.provider) {
 			const query = storage.getItem<string>('optimade_query', sessionStorage);
 			if (query) {
 				redirect(`${location.pathname}${query}`);
