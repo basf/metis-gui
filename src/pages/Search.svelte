@@ -32,13 +32,15 @@
 			/>
 		{/await}
 	</InputGroup>
-	<Pagination
-		bind:total
-		bind:limits
-		bind:limit={$query.params.limit}
-		bind:page={$query.params.page}
-		rest={9}
-	/>
+	{#if total}
+		<Pagination
+			bind:total
+			bind:limits
+			bind:limit={$query.params.limit}
+			bind:page={$query.params.page}
+			rest={9}
+		/>
+	{/if}
 	<div class="p-2" />
 
 	<div bind:clientWidth={width}>
