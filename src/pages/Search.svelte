@@ -102,8 +102,9 @@
 		total;
 
 	function clearPagination() {
-		$query.params.page = 1;
 		$query.params.limit = 10;
+		$query.params.page = 1;
+		meta.data_returned = 0;
 		limits = [];
 		total = 0;
 	}
@@ -126,15 +127,16 @@
 
 	// fix for provider MP from reduce data_returned per page
 	function setTotal(provider: string, data: number, page: number) {
-		return provider === 'mp' && data < total && page && page > 1 ? total : data;
+		total = provider === 'mp' && data < total && page && page > 1 ? total : data;
 	}
 	function setLimits(limits: number[], data: number) {
-		return limits?.length === 1 ? makeLimits(limits, data) : limits;
+		limits = limits?.length === 1 ? makeLimits(limits, data) : limits;
 	}
 
-	$: total = setTotal($query.params.provider, meta?.data_returned, $query.params.page);
-	$: limits = setLimits(meta?.limits, meta?.data_returned);
+	$: setTotal($query.params.provider, meta?.data_returned, $query.params.page);
+	$: setLimits(meta?.limits, meta?.data_returned);
 	$: $query.params.page = $query.params.page === 0 ? 1 : $query.params.page;
+
 	function providersOptions(providers: Types.Provider[]) {
 		return providers.map((p) => ({ value: p.id, label: p.attributes.name }));
 	}
