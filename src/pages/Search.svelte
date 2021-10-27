@@ -34,9 +34,9 @@
 	</InputGroup>
 	<Pagination
 		bind:total
+		bind:limits
 		bind:limit={$query.params.limit}
 		bind:page={$query.params.page}
-		bind:limits
 		rest={9}
 	/>
 	<div class="p-2" />
@@ -94,20 +94,22 @@
 
 <script lang="ts">
 	let width,
-		total = 0,
 		limits = [10],
 		meta,
-		data;
+		data,
+		total;
 
 	function clearPagination() {
 		$query.params.page = 1;
 		$query.params.limit = 10;
-		limits = [10];
+		setLimits([], 0);
 		total = 0;
 	}
 
 	function clearSearch() {
 		$query.params.q = '';
+		storage.setItem<string>('optimade_query', '', sessionStorage);
+		storage.setItem<string>('optimade_structures', '', sessionStorage);
 		clearPagination();
 	}
 
