@@ -113,7 +113,7 @@
 	},
 	"dependencies": {
 		"debounce-promise": "^3.1.2",
-		"optimade": "github:tilde-lab/optimade-client#getMaxLimit-proposal",
+		"optimade": "^2.0.0",
 		"sirv-cli": "^1.0.12",
 		"svelte-file-dropzone": "^0.0.15"
 	}
