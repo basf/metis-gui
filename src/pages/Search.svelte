@@ -96,7 +96,7 @@
 
 <script lang="ts">
 	let width: number,
-		limits = [10],
+		limits: number[] | undefined = [10],
 		total: number,
 		meta: Types.Meta,
 		data: Types.Structure[];
@@ -117,28 +117,29 @@
 	}
 
 	function setLimits(limits: number[] | undefined, data: number) {
-		const makeLimits = (limits: number[], data: number) => {
+		return limits?.length === 1 ? makeLimits(limits, data) : limits;
+
+		function makeLimits(limits: number[], data: number) {
 			if (limits[0] > 10) {
 				const length = data <= 100 ? Math.ceil(data / 10) : 10;
 				return Array.from({ length }, (_, i) => (i + 1) * 10);
 			} else {
 				return limits;
 			}
-		};
-		limits = limits?.length === 1 ? makeLimits(limits, data) : limits;
+		}
 	}
 
 	// fix for provider MP from reduce data_returned per page
 	function setTotal(provider: Param, data: number, page: Param) {
-		total = provider === 'mp' && data < total && page && page > 1 ? total : data;
+		return provider === 'mp' && data < total && page && page > 1 ? total : data;
 	}
 
 	function setPage(page: Param) {
 		page = page === 0 ? 1 : page;
 	}
 
-	$: setTotal($query.params.provider, meta?.data_returned, $query.params.page);
-	$: setLimits(meta?.limits, meta?.data_returned);
+	$: total = setTotal($query.params.provider, meta?.data_returned, $query.params.page);
+	$: limits = setLimits(meta?.limits, meta?.data_returned);
 	$: setPage($query.params.page);
 
 	function providersOptions(providers: Types.Provider[]) {
