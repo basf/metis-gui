@@ -32,6 +32,8 @@
 			/>
 		{/await}
 	</InputGroup>
+	<div class="p-2" />
+
 	{#if total}
 		<Pagination
 			bind:total
@@ -40,8 +42,8 @@
 			bind:page={$query.params.page}
 			rest={9}
 		/>
+		<div class="p-2" />
 	{/if}
-	<div class="p-2" />
 
 	<div bind:clientWidth={width}>
 		{#await $resultsAsync}
