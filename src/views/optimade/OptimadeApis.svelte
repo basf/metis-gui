@@ -3,21 +3,23 @@
 		<Grid stack offset="mb-2">
 			{#each data as structure, i}
 				<Col col={!auto ? col : 'auto'} xs="12">
-					<Tile>
-						<h5 class="mt-2" slot="title" bind:this={h5[i]}>
-							{@html getStructureTitle(structure)}
-						</h5>
-						<small slot="subtitle" class="tile-subtitle text-gray">
-							ID &bull; {structure.id}
-						</small>
-						<svelte:fragment slot="action">
-							<IconButton
-								icon="upload"
-								title="Upload this JSON to calculation"
-								on:click={() => setDataContent(structure)}
-							/>
-						</svelte:fragment>
-					</Tile>
+					<div class="tile-structure">
+						<Tile>
+							<h5 class="mt-2" slot="title" bind:this={h5[i]}>
+								{@html getStructureTitle(structure)}
+							</h5>
+							<small slot="subtitle" class="tile-subtitle text-gray">
+								ID &bull; {structure.id}
+							</small>
+							<svelte:fragment slot="action">
+								<IconButton
+									icon="upload"
+									title="Upload this JSON to calculation"
+									on:click={() => setDataContent(structure)}
+								/>
+							</svelte:fragment>
+						</Tile>
+					</div>
 				</Col>
 			{:else}
 				<Tile>
@@ -73,18 +75,20 @@
 </script>
 
 <style lang="scss">
-	:global(.spectre .tile) {
-		position: relative;
-		transition-duration: 150ms;
-		transition-property: box-shadow, background-color;
-		&:hover {
-			box-shadow: 0 0 0 1px $gray-color;
-			background-color: $bg-color;
-		}
-		:global(.tile-action) {
-			position: absolute;
-			right: 0;
-			top: 0;
+	.tile-structure {
+		:global(.tile) {
+			position: relative;
+			transition-duration: 150ms;
+			transition-property: box-shadow, background-color;
+			&:hover {
+				box-shadow: 0 0 0 1px $gray-color;
+				background-color: $bg-color;
+			}
+			:global(.tile-action) {
+				position: absolute;
+				right: 0;
+				top: 0;
+			}
 		}
 	}
 </style>
