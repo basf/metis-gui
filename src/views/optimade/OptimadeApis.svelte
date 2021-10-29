@@ -1,6 +1,6 @@
 {#each apis as { data, meta }}
 	{#if data}
-		<Grid stack>
+		<Grid stack offset="mb-2">
 			{#each data as structure, i}
 				<Col col={!auto ? col : 'auto'} xs="12">
 					<Tile>
@@ -45,14 +45,14 @@
 	export let data: Types.Structure[] | undefined;
 	export let meta: Types.Meta | undefined;
 	export let col: number = 1;
-	export let width: number = 4;
+	export let width: number = 0;
 	export let auto: boolean = false;
 
 	let h5: Element[] = [];
 
 	function setCol(h5: Element[]) {
 		const maxColWidth = h5.reduce((a, h) => {
-			const width = h.scrollWidth + 32;
+			const width = h.scrollWidth + 70;
 			return a < width ? width : a;
 		}, 0);
 		const count = Math.trunc(width / maxColWidth);
@@ -75,15 +75,16 @@
 <style lang="scss">
 	:global(.spectre .tile) {
 		position: relative;
-		transition: transform 250ms;
+		transition-duration: 150ms;
+		transition-property: box-shadow, background-color;
+		&:hover {
+			box-shadow: 0 0 0 1px $gray-color;
+			background-color: $bg-color;
+		}
 		:global(.tile-action) {
 			position: absolute;
 			right: 0;
-			bottom: 0;
-		}
-		&:hover {
-			transform: scale(1.05);
-			box-shadow: 0 0 0 1px $gray-color;
+			top: 0;
 		}
 	}
 </style>
