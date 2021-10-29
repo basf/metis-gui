@@ -59,7 +59,6 @@
 					</Tile>
 				{:else}
 					<OptimadeApis {apis} bind:meta bind:data {width} />
-					<!-- get data from apis not sure -->
 				{/if}
 			{/each}
 		{:catch error}
