@@ -11,6 +11,7 @@
 			autofocus
 			width="7"
 			expand
+			on:input={clearPagination}
 		>
 			<span slot="iconRight">
 				{#if $query.params.q}
@@ -57,7 +58,8 @@
 						</div>
 					</Tile>
 				{:else}
-					<OptimadeApis {apis} bind:meta bind:data /> <!-- get data from apis not sure -->
+					<OptimadeApis {apis} bind:meta bind:data />
+					<!-- get data from apis not sure -->
 				{/if}
 			{/each}
 		{:catch error}
@@ -75,7 +77,17 @@
 	import { Param, query, redirect } from 'svelte-pathfinder';
 	import * as storage from '@/helpers/storage';
 
-	import { Icon, IconButton, Input, InputGroup, Pagination, Select, Tile } from 'svelte-spectre';
+	import {
+		Col,
+		Grid,
+		Icon,
+		IconButton,
+		Input,
+		InputGroup,
+		Pagination,
+		Select,
+		Tile,
+	} from 'svelte-spectre';
 
 	import * as Loaders from '@/components/loaders';
 	import OptimadeApis from '@/views/optimade/OptimadeApis.svelte';
