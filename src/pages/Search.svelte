@@ -41,7 +41,7 @@
 			bind:limits
 			bind:limit={$query.params.limit}
 			bind:page={$query.params.page}
-			rest={9}
+			rest={7}
 		/>
 		<div class="p-2" />
 	{/if}
@@ -58,7 +58,7 @@
 						</div>
 					</Tile>
 				{:else}
-					<OptimadeApis {apis} bind:meta bind:data />
+					<OptimadeApis {apis} bind:meta bind:data {width} />
 					<!-- get data from apis not sure -->
 				{/if}
 			{/each}
@@ -121,13 +121,17 @@
 		meta.data_returned = 0;
 		limits = [];
 		total = 0;
+		clearCache();
 	}
 
 	function clearSearch() {
 		$query.params.q = '';
+		clearPagination();
+	}
+
+	function clearCache() {
 		storage.setItem<string>('optimade_query', '', sessionStorage);
 		storage.setItem<string>('optimade_structures', '', sessionStorage);
-		clearPagination();
 	}
 
 	function setLimits(limits: number[] | undefined, data: number) {

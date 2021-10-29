@@ -14,3 +14,9 @@
 	import { Container, Panel, Tabs } from 'svelte-spectre';
 	import { menu } from '@/routes';
 </script>
+
+<style lang="scss">
+	nav {
+		overflow-x: auto;
+	}
+</style>

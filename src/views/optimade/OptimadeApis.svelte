@@ -1,10 +1,10 @@
 {#each apis as { data, meta }}
 	{#if data}
 		<Grid stack>
-			{#each data as structure}
-				<Col {col}>
+			{#each data as structure, i}
+				<Col col={!auto ? col : 'auto'} xs="12">
 					<Tile>
-						<h5 class="mt-2" slot="title" bind:this={h5}>
+						<h5 class="mt-2" slot="title" bind:this={h5[i]}>
 							{@html getStructureTitle(structure)}
 						</h5>
 						<small slot="subtitle" class="tile-subtitle text-gray">
@@ -44,10 +44,22 @@
 	export let apis: Types.StructuresResponse[] = [];
 	export let data: Types.Structure[] | undefined;
 	export let meta: Types.Meta | undefined;
-	export let col: number;
+	export let col: number = 1;
+	export let width: number = 4;
+	export let auto: boolean = false;
 
-	let h5;
-	$: col = h5?.scrollWidth > h5?.clientWidth + 36 ? col + 2 : 4;
+	let h5: Element[] = [];
+
+	function setCol(h5: Element[]) {
+		const maxColWidth = h5.reduce((a, h) => {
+			const width = h.scrollWidth + 32;
+			return a < width ? width : a;
+		}, 0);
+		const count = Math.trunc(width / maxColWidth);
+		col = Math.ceil(12 / count);
+	}
+
+	$: h5?.length === data?.length && setCol(h5);
 
 	onMount(() => {
 		data = apis.find((a) => a.meta?.data_returned)?.data;
@@ -62,14 +74,16 @@
 
 <style lang="scss">
 	:global(.spectre .tile) {
-		border: 1px solid $gray-color;
+		position: relative;
 		transition: transform 250ms;
+		:global(.tile-action) {
+			position: absolute;
+			right: 0;
+			bottom: 0;
+		}
 		&:hover {
 			transform: scale(1.05);
-		}
-		h5 {
-			// word-wrap: break-word;
-			// white-space: normal;
+			box-shadow: 0 0 0 1px $gray-color;
 		}
 	}
 </style>
