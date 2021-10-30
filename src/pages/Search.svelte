@@ -63,7 +63,9 @@
 				{/if}
 			{:else}
 				<Tile>
-					<div class="text-center text-error distant_msg">error</div>
+					<div class="text-center text-error distant_msg">
+						Nothing found. Try another provider?
+					</div>
 				</Tile>
 			{/each}
 		{:catch error}
