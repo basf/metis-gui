@@ -50,16 +50,21 @@
 		{#await $resultsAsync}
 			<Loaders.Tile count={5} w={width} h={65} height={400} {width} />
 		{:then results}
+			<!-- {@debug results} -->
 			{#each results as [apis, provider], index}
-				{#if apis.some((a) => a instanceof Error)}
+				{#if !apis || apis.some((a) => a instanceof Error)}
 					<Tile>
 						<div class="text-center text-error distant_msg">
-							{apis}
+							{apis || 'Nothing found. Try another provider?'}
 						</div>
 					</Tile>
 				{:else}
 					<OptimadeApis {apis} bind:meta bind:data {width} />
 				{/if}
+			{:else}
+				<Tile>
+					<div class="text-center text-error distant_msg">error</div>
+				</Tile>
 			{/each}
 		{:catch error}
 			<Tile>
@@ -115,12 +120,14 @@
 		data: Types.Structure[];
 
 	function clearPagination() {
-		$query.params.limit = 10;
-		$query.params.page = 1;
-		meta.data_returned = 0;
-		limits = [];
-		total = 0;
-		clearCache();
+		if (meta) {
+			$query.params.limit = 10;
+			$query.params.page = 1;
+			meta.data_returned = 0;
+			limits = [];
+			total = 0;
+			clearCache();
+		}
 	}
 
 	function clearSearch() {
