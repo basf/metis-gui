@@ -168,6 +168,7 @@
 	$: limits = setLimits(meta?.limits, meta?.data_returned);
 	$: setPage($query.params.page);
 	$: rest = Math.ceil(total / $query.params.limit) > 17 ? 7 : 0;
+
 	function providersOptions(providers: Types.Provider[]) {
 		return providers.map((p) => ({ value: p.id, label: p.attributes.name }));
 	}

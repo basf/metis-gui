@@ -79,8 +79,7 @@
 	import Upload from '@/components/Upload.svelte';
 
 	$: dataCalc = $data.map((item) => {
-		if (item.error)
-			toast.error({ msg: new Error(item.error), timeout: 4000 });
+		if (item.error) toast.error({ msg: new Error(item.error), timeout: 4000 });
 
 		item.calculation = $calculations.find((calc) => calc.data === item.uuid);
 		item.inProgress = item.calculation && item.calculation.progress < 100;
