@@ -8,7 +8,7 @@
 							<h5 class="mt-2" slot="title" bind:this={h5[i]}>
 								{@html getStructureTitle(structure)}
 							</h5>
-							<small slot="subtitle" class="tile-subtitle text-gray">
+							<small slot="subtitle" class="text-gray">
 								ID &bull; {structure.id}
 							</small>
 							<svelte:fragment slot="action">
@@ -76,6 +76,11 @@
 
 <style lang="scss">
 	.tile-structure {
+		&:hover {
+			:global(.tile .tile-action) {
+				visibility: visible;
+			}
+		}
 		:global(.tile) {
 			position: relative;
 			transition-duration: 150ms;
@@ -88,6 +93,7 @@
 				position: absolute;
 				right: 0;
 				top: 0;
+				visibility: hidden;
 			}
 		}
 	}
