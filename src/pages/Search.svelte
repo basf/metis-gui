@@ -41,7 +41,7 @@
 			bind:limits
 			bind:limit={$query.params.limit}
 			bind:page={$query.params.page}
-			rest={7}
+			{rest}
 		/>
 		<div class="p-2" />
 	{/if}
@@ -167,7 +167,7 @@
 	$: total = setTotal($query.params.provider, meta?.data_returned, $query.params.page);
 	$: limits = setLimits(meta?.limits, meta?.data_returned);
 	$: setPage($query.params.page);
-
+	$: rest = Math.ceil(total / $query.params.limit) > 17 ? 7 : 0;
 	function providersOptions(providers: Types.Provider[]) {
 		return providers.map((p) => ({ value: p.id, label: p.attributes.name }));
 	}
