@@ -54,7 +54,7 @@
 
 	function setCol(h5: Element[]) {
 		const maxColWidth = h5.reduce((a, h) => {
-			const width = h.scrollWidth + 70;
+			const width = h.scrollWidth + 36;
 			return a < width ? width : a;
 		}, 0);
 		const count = Math.trunc(width / maxColWidth);
