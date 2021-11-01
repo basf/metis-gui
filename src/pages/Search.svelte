@@ -47,24 +47,17 @@
 	{/if}
 
 	<div bind:clientWidth={width}>
-		<Grid stack>
-			{#each { length: 15 } as _}
-				<Col col="auto">
-					<Loaders.Tile
-						count={1}
-						w={width / 5 - 13}
-						h={65}
-						height={65}
-						width={width / 5 - 13}
-					/>
-				</Col>
-			{/each}
-		</Grid>
-		<!-- {#await $resultsAsync}
+		{#await $resultsAsync}
 			<Grid stack>
-				{#each { length: 5 } as _}
-					<Col>
-						<Loaders.Tile count={1} w={width} h={65} height={65} width={width / 5} />
+				{#each { length: 25 } as _}
+					<Col col="auto">
+						<Loaders.Tile
+							count={1}
+							w={width / 5 - 15}
+							h={65}
+							height={65}
+							width={width / 5 - 15}
+						/>
 					</Col>
 				{/each}
 			</Grid>
@@ -92,7 +85,7 @@
 					{error}
 				</div>
 			</Tile>
-		{/await} -->
+		{/await}
 	</div>
 </Main>
 
