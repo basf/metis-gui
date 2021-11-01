@@ -47,10 +47,28 @@
 	{/if}
 
 	<div bind:clientWidth={width}>
-		{#await $resultsAsync}
-			<Loaders.Tile count={5} w={width} h={65} height={400} {width} />
+		<Grid stack>
+			{#each { length: 15 } as _}
+				<Col col="auto">
+					<Loaders.Tile
+						count={1}
+						w={width / 5 - 13}
+						h={65}
+						height={65}
+						width={width / 5 - 13}
+					/>
+				</Col>
+			{/each}
+		</Grid>
+		<!-- {#await $resultsAsync}
+			<Grid stack>
+				{#each { length: 5 } as _}
+					<Col>
+						<Loaders.Tile count={1} w={width} h={65} height={65} width={width / 5} />
+					</Col>
+				{/each}
+			</Grid>
 		{:then results}
-			<!-- {@debug results} -->
 			{#each results as [apis, provider], index}
 				{#if !apis || apis.some((a) => a instanceof Error)}
 					<Tile>
@@ -74,7 +92,7 @@
 					{error}
 				</div>
 			</Tile>
-		{/await}
+		{/await} -->
 	</div>
 </Main>
 
