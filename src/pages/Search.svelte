@@ -49,14 +49,14 @@
 	<div bind:clientWidth={width}>
 		{#await $resultsAsync}
 			<Grid stack>
-				{#each { length: 25 } as _}
+				{#each { length: 20 } as _}
 					<Col col="auto">
 						<Loaders.Tile
 							count={1}
-							w={width / 5 - 15}
-							h={65}
-							height={65}
-							width={width / 5 - 15}
+							w={width / 4 - 15}
+							h={69}
+							height={69}
+							width={width / 4 - 15}
 						/>
 					</Col>
 				{/each}

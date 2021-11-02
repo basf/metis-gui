@@ -1,6 +1,6 @@
 <ContentLoader {width} {height} {...$$restProps}>
 	{#each { length: count } as _, i}
-		<rect y={i * (h + y)} rx="8" ry="8" width={w} height={h} />
+		<rect y={i * (h + y)} rx="2" ry="2" width={w} height={h} />
 	{/each}
 </ContentLoader>
 

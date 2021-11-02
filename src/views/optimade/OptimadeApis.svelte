@@ -5,7 +5,7 @@
 				<Col col={!auto ? col : 'auto'} xs="12">
 					<div class="tile-structure">
 						<Tile>
-							<h5 class="mt-2" slot="title" bind:this={h5[i]}>
+							<h5 class="mt-2" slot="title">
 								{@html getStructureTitle(structure)}
 							</h5>
 							<small slot="subtitle" class="text-gray">
@@ -14,6 +14,8 @@
 							<svelte:fragment slot="action">
 								<IconButton
 									icon="upload"
+									size="sm"
+									variant="primary"
 									title="Upload this JSON to calculation"
 									on:click={() => setDataContent(structure)}
 								/>
@@ -46,22 +48,9 @@
 	export let apis: Types.StructuresResponse[] = [];
 	export let data: Types.Structure[] | undefined;
 	export let meta: Types.Meta | undefined;
-	export let col: number = 1;
+	export let col: number = 3;
 	export let width: number = 0;
 	export let auto: boolean = false;
-
-	let h5: Element[] = [];
-
-	function setCol(h5: Element[]) {
-		const maxColWidth = h5.reduce((a, h) => {
-			const width = h.scrollWidth + 36;
-			return a < width ? width : a;
-		}, 0);
-		const count = Math.trunc(width / maxColWidth);
-		col = Math.ceil(12 / count);
-	}
-
-	$: h5?.length === data?.length && setCol(h5);
 
 	onMount(() => {
 		data = apis.find((a) => a.meta?.data_returned)?.data;
@@ -85,14 +74,21 @@
 			position: relative;
 			transition-duration: 150ms;
 			transition-property: box-shadow, background-color;
+			border-radius: 0.1rem;
 			&:hover {
-				box-shadow: 0 0 0 1px $gray-color;
-				background-color: $bg-color;
+				box-shadow: 0 0 0 0.05rem $gray-color;
+				background-color: $secondary-color;
+			}
+			:global(.tile-title h5) {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				letter-spacing: -0.025rem;
+				// font-size: 0.9rem;
 			}
 			:global(.tile-action) {
 				position: absolute;
-				right: 0;
-				top: 0;
+				right: -0.05rem;
+				bottom: -0.05rem;
 				visibility: hidden;
 			}
 		}
