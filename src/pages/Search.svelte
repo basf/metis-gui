@@ -53,10 +53,10 @@
 					<Col col="auto">
 						<Loaders.Tile
 							count={1}
-							w={width / 4 - 15}
+							w={width / 4 - 12}
 							h={69}
 							height={69}
-							width={width / 4 - 15}
+							width={width / 4 - 12}
 						/>
 					</Col>
 				{/each}
