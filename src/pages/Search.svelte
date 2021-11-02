@@ -11,6 +11,7 @@
 			autofocus
 			width="7"
 			expand
+			on:input={clearPagination}
 		>
 			<span slot="iconRight">
 				{#if $query.params.q}
@@ -40,25 +41,43 @@
 			bind:limits
 			bind:limit={$query.params.limit}
 			bind:page={$query.params.page}
-			rest={9}
+			{rest}
 		/>
 		<div class="p-2" />
 	{/if}
 
 	<div bind:clientWidth={width}>
 		{#await $resultsAsync}
-			<Loaders.Tile count={5} w={width} h={65} height={400} {width} />
+			<Grid stack>
+				{#each { length: 20 } as _}
+					<Col col="auto">
+						<Loaders.Tile
+							count={1}
+							w={width / 4 - 12}
+							h={69}
+							height={69}
+							width={width / 4 - 12}
+						/>
+					</Col>
+				{/each}
+			</Grid>
 		{:then results}
 			{#each results as [apis, provider], index}
-				{#if apis.some((a) => a instanceof Error)}
+				{#if !apis || apis.some((a) => a instanceof Error)}
 					<Tile>
 						<div class="text-center text-error distant_msg">
-							{apis}
+							{apis || 'Nothing found. Try another provider?'}
 						</div>
 					</Tile>
 				{:else}
-					<OptimadeApis {apis} bind:meta bind:data /> <!-- get data from apis not sure -->
+					<OptimadeApis {apis} bind:meta bind:data {width} />
 				{/if}
+			{:else}
+				<Tile>
+					<div class="text-center text-error distant_msg">
+						Nothing found. Try another provider?
+					</div>
+				</Tile>
 			{/each}
 		{:catch error}
 			<Tile>
@@ -75,7 +94,17 @@
 	import { Param, query, redirect } from 'svelte-pathfinder';
 	import * as storage from '@/helpers/storage';
 
-	import { Icon, IconButton, Input, InputGroup, Pagination, Select, Tile } from 'svelte-spectre';
+	import {
+		Col,
+		Grid,
+		Icon,
+		IconButton,
+		Input,
+		InputGroup,
+		Pagination,
+		Select,
+		Tile,
+	} from 'svelte-spectre';
 
 	import * as Loaders from '@/components/loaders';
 	import OptimadeApis from '@/views/optimade/OptimadeApis.svelte';
@@ -104,18 +133,24 @@
 		data: Types.Structure[];
 
 	function clearPagination() {
-		$query.params.limit = 10;
-		$query.params.page = 1;
-		meta.data_returned = 0;
-		limits = [];
-		total = 0;
+		if (meta) {
+			$query.params.limit = 10;
+			$query.params.page = 1;
+			meta.data_returned = 0;
+			limits = [];
+			total = 0;
+			clearCache();
+		}
 	}
 
 	function clearSearch() {
 		$query.params.q = '';
+		clearPagination();
+	}
+
+	function clearCache() {
 		storage.setItem<string>('optimade_query', '', sessionStorage);
 		storage.setItem<string>('optimade_structures', '', sessionStorage);
-		clearPagination();
 	}
 
 	function setLimits(limits: number[] | undefined, data: number) {
@@ -143,6 +178,7 @@
 	$: total = setTotal($query.params.provider, meta?.data_returned, $query.params.page);
 	$: limits = setLimits(meta?.limits, meta?.data_returned);
 	$: setPage($query.params.page);
+	$: rest = Math.ceil(total / $query.params.limit) > 17 ? 7 : 0;
 
 	function providersOptions(providers: Types.Provider[]) {
 		return providers.map((p) => ({ value: p.id, label: p.attributes.name }));
