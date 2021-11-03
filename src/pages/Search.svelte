@@ -1,39 +1,26 @@
 <Main>
-	<div class="p-2" />
+	<form method="GET" on:submit={submit} on:submit|preventDefault={clearPagination} class="py-2">
 	<InputGroup>
-		<Input
-			bind:value={$query.params.q}
-			placeholder="Optimade filter="
-			name="q"
-			type="search"
-			size="lg"
-			inline
-			autofocus
-			width="7"
-			expand
-			on:input={clearPagination}
-		>
+		<Input bind:value={search} placeholder="Optimade filter=" type="search" width="6" name="q" autofocus inline expand {size}>
 			<span slot="iconRight">
 				{#if $query.params.q}
 					<IconButton icon="cross" on:click={clearSearch} />
-				{:else}
-					<Icon icon="search" offset="mx-2" />
 				{/if}
 			</span>
 		</Input>
 		{#await $providersAsync}
-			<Loaders.Control height="40px" />
+			<Loaders.Control height="{SIZE[size]}px" />
 		{:then providers}
-			<Select
-				on:select={clearPagination}
-				bind:value={$query.params.provider}
-				options={providersOptions(providers)}
-				let:option
-				size="lg"
-			/>
+			<Select options={providersOptions(providers)} name="provider" {size} />
+			<Button variant="primary" {size}>
+				<Icon icon="search"/>&nbsp;Search
+			</Button>
 		{/await}
 	</InputGroup>
-	<div class="p-2" />
+	{#if guessSearch}
+		<Badge>{guessSearch}</Badge>
+	{/if}
+	</form>
 
 	{#if total}
 		<Pagination
@@ -91,20 +78,24 @@
 
 <script lang="ts" context="module">
 	import { get } from 'svelte/store';
-	import { Param, query, redirect } from 'svelte-pathfinder';
+	import { Param, query, redirect, submit } from 'svelte-pathfinder';
 	import * as storage from '@/helpers/storage';
 
 	import {
 		Col,
 		Grid,
 		Icon,
-		IconButton,
 		Input,
+		Button,
+		IconButton,
 		InputGroup,
 		Pagination,
 		Select,
+		Badge,
 		Tile,
 	} from 'svelte-spectre';
+
+	import { SIZE } from 'svelte-spectre/package/types/const';
 
 	import * as Loaders from '@/components/loaders';
 	import OptimadeApis from '@/views/optimade/OptimadeApis.svelte';
@@ -112,7 +103,11 @@
 	import Main from '@/layouts/Main.svelte';
 
 	import { structuresAsync as resultsAsync, providersAsync } from '@/stores/optimade';
-	import { Types } from '@/services/optimade';
+	import { guess } from '@/services/optimade';
+
+	import type { Types } from '@/services/optimade';
+
+	const size = 'lg';
 
 	export async function preload() {
 		const $query = get(query);
@@ -130,7 +125,8 @@
 		limits: number[] | undefined = [10],
 		total: number,
 		meta: Types.Meta,
-		data: Types.Structure[];
+		data: Types.Structure[],
+		search = $query.params.q;
 
 	function clearPagination() {
 		if (meta) {
@@ -139,18 +135,12 @@
 			meta.data_returned = 0;
 			limits = [];
 			total = 0;
-			clearCache();
 		}
 	}
 
 	function clearSearch() {
-		$query.params.q = '';
+		$query.params.q = search = '';
 		clearPagination();
-	}
-
-	function clearCache() {
-		storage.setItem<string>('optimade_query', '', sessionStorage);
-		storage.setItem<string>('optimade_structures', '', sessionStorage);
 	}
 
 	function setLimits(limits: number[] | undefined, data: number) {
@@ -179,6 +169,8 @@
 	$: limits = setLimits(meta?.limits, meta?.data_returned);
 	$: setPage($query.params.page);
 	$: rest = Math.ceil(total / $query.params.limit) > 17 ? 7 : 0;
+
+	$: guessSearch = guess(search) || search;
 
 	function providersOptions(providers: Types.Provider[]) {
 		return providers.map((p) => ({ value: p.id, label: p.attributes.name }));

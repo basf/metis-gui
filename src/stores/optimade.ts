@@ -7,7 +7,7 @@ import type { Types } from 'optimade';
 import type { Asyncable } from 'svelte-asyncable';
 import type { StringParams } from 'svelte-pathfinder';
 
-import optimade from '@/services/optimade';
+import optimade, { guess } from '@/services/optimade';
 
 import * as storage from '@/helpers/storage';
 
@@ -74,7 +74,7 @@ export const structuresAsync = asyncable<
 
         const structures = await getStructuresAll(
             [$query.params.provider],
-            $query.params.q,
+            guess($query.params.q) || $query.params.q,
             $query.params.page,
             $query.params.limit
         );
