@@ -139,18 +139,12 @@
 			meta.data_returned = 0;
 			limits = [];
 			total = 0;
-			clearCache();
 		}
 	}
 
 	function clearSearch() {
 		$query.params.q = '';
 		clearPagination();
-	}
-
-	function clearCache() {
-		storage.setItem<string>('optimade_query', '', sessionStorage);
-		storage.setItem<string>('optimade_structures', '', sessionStorage);
 	}
 
 	function setLimits(limits: number[] | undefined, data: number) {
