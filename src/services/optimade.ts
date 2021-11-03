@@ -13,8 +13,10 @@ export type { Types } from 'optimade';
 const guesser = nlp();
 
 export function guess(search) {
-    const result = guesser.guess(search);
-    return guesser.to_optimade(result);
+    if (search) {
+        const result = guesser.guess(search);
+        return guesser.to_optimade(result);
+    }
 }
 
 const optimade = new Optimade({ providersUrl, corsProxyUrl });
