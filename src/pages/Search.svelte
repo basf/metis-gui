@@ -11,7 +11,7 @@
 		{#await $providersAsync}
 			<Loaders.Control height="{SIZE[size]}px" />
 		{:then providers}
-			<Select options={providersOptions(providers)} name="provider" {size} />
+			<Select options={providersOptions(providers)} value={$query.params.provider} name="provider" {size} />
 			<Button variant="primary" {size}>
 				<Icon icon="search"/>&nbsp;Search
 			</Button>
