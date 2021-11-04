@@ -1,6 +1,6 @@
 <svelte:options namespace="svg" />
 
-<ContentLoader {...$$props} {height}>
+<ContentLoader {...$$restProps} {height}>
 	<rect x="0" y="0" rx="5" ry="5" width="100%" {height} />
 </ContentLoader>
 
