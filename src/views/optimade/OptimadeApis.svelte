@@ -1,5 +1,5 @@
 {#each apis as { data, meta }}
-	{#if data.length}
+	{#if data?.length}
 		<Grid stack offset="mb-2">
 			{#each data as structure, i}
 				<Col col={!auto ? col : 'auto'} xs="12">
