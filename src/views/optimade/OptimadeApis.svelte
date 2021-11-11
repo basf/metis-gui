@@ -56,7 +56,6 @@
 		data = apis.find((a) => a.meta?.data_returned)?.data;
 		meta = apis.find((a) => a.meta?.data_returned)?.meta;
 	});
-	$: console.log(data);
 
 	function setDataContent(structure: Types.Structure) {
 		$content = JSON.stringify(structure);
