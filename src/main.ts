@@ -7,7 +7,6 @@ import { BASE_PATH } from '@/config';
 
 import App from '@/App.svelte';
 
-prefs.array.format = 'separator';
 prefs.basePath = BASE_PATH;
 
 const app = new App({
