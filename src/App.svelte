@@ -21,7 +21,7 @@
 	<Toaster />
 	{#if !$status.online || !$status.heartbeat}
 		<div class="overlay">
-			<slot>BFF is unreachable</slot>
+			<slot>Meh. We are offline.</slot>
 			<IconButton icon="refresh" on:click={() => location.reload()} />
 		</div>
 	{/if}

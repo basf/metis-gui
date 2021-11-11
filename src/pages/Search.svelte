@@ -3,7 +3,7 @@
 		<InputGroup>
 			<Input
 				bind:value={search}
-				placeholder="Optimade filter="
+				placeholder="Chemical formula, elements, etc."
 				type="search"
 				width="5"
 				name="q"
@@ -34,7 +34,9 @@
 			{/await}
 		</InputGroup>
 		{#if guessSearch}
-			<Badge>{guessSearch}</Badge>
+			<Badge>
+				Optimade filter={guessSearch}
+			</Badge>
 		{/if}
 	</form>
 
@@ -78,7 +80,7 @@
 			{:else}
 				<Tile>
 					<div class="text-center distant_msg">
-						Enter search query, select provider & press search button
+						Type your search query, select provider, and press the search button.
 					</div>
 				</Tile>
 			{/each}
@@ -119,9 +121,7 @@
 	import Main from '@/layouts/Main.svelte';
 
 	import { structuresAsync as resultsAsync, providersAsync } from '@/stores/optimade';
-	import { guess } from '@/services/optimade';
-
-	import type { Types } from '@/services/optimade';
+	import { guess }, type { Types } from '@/services/optimade';
 
 	const size = 'lg';
 
