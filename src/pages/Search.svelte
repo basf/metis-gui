@@ -1,25 +1,41 @@
 <Main>
 	<form method="GET" on:submit={submit} on:submit|preventDefault={clearPagination} class="py-2">
-	<InputGroup>
-		<Input bind:value={search} placeholder="Optimade filter=" type="search" width="6" name="q" autofocus inline expand {size}>
-			<span slot="iconRight">
-				{#if $query.params.q}
-					<IconButton icon="cross" on:click={clearSearch} />
-				{/if}
-			</span>
-		</Input>
-		{#await $providersAsync}
-			<Loaders.Control height="{SIZE[size]}px" />
-		{:then providers}
-			<Select options={providersOptions(providers)} value={$query.params.provider} name="provider" {size} />
-			<Button variant="primary" {size}>
-				<Icon icon="search"/>&nbsp;Search
-			</Button>
-		{/await}
-	</InputGroup>
-	{#if guessSearch}
-		<Badge>{guessSearch}</Badge>
-	{/if}
+		<InputGroup>
+			<Input
+				bind:value={search}
+				placeholder="Optimade filter="
+				type="search"
+				width="5"
+				name="q"
+				autofocus
+				inline
+				expand
+				{size}
+			>
+				<span slot="iconRight">
+					{#if $query.params.q}
+						<IconButton icon="cross" on:click={clearSearch} />
+					{/if}
+				</span>
+			</Input>
+			{#await $providersAsync}
+				<Loaders.Control height="{SIZE[size]}px" />
+			{:then providers}
+				<Select
+					options={providersOptions(providers)}
+					value={$query.params.provider}
+					name="provider"
+					{size}
+				/>
+				<!-- <IconButton icon="search" slot="button" input variant="primary" {size} /> -->
+				<Button slot="button" input variant="primary" {size}>
+					<Icon icon="search" />&nbsp;Search
+				</Button>
+			{/await}
+		</InputGroup>
+		{#if guessSearch}
+			<Badge>{guessSearch}</Badge>
+		{/if}
 	</form>
 
 	{#if total}
@@ -61,8 +77,8 @@
 				{/if}
 			{:else}
 				<Tile>
-					<div class="text-center text-error distant_msg">
-						Nothing found. Try another provider?
+					<div class="text-center distant_msg">
+						Enter search query, select provider & press search button
 					</div>
 				</Tile>
 			{/each}
@@ -140,6 +156,8 @@
 
 	function clearSearch() {
 		$query.params.q = search = '';
+		storage.setItem<string>('optimade_query', '', sessionStorage);
+		storage.setItem<string>('optimade_structures', '', sessionStorage);
 		clearPagination();
 	}
 
