@@ -121,7 +121,8 @@
 	import Main from '@/layouts/Main.svelte';
 
 	import { structuresAsync as resultsAsync, providersAsync } from '@/stores/optimade';
-	import { guess }, type { Types } from '@/services/optimade';
+	import { guess } from '@/services/optimade';
+	import type { Types } from '@/services/optimade';
 
 	const size = 'lg';
 
