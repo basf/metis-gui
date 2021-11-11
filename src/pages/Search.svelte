@@ -3,7 +3,7 @@
 		<InputGroup>
 			<Input
 				bind:value={search}
-				placeholder="Chemical formula, elements, etc."
+				placeholder="Formula, elements, arity, etc."
 				type="search"
 				width="5"
 				name="q"
@@ -33,7 +33,7 @@
 			{/await}
 		</InputGroup>
 		{#if guessSearch}
-			<Badge>
+			<Badge offset="my-2">
 				Optimade filter={guessSearch}
 			</Badge>
 		{/if}

@@ -5,9 +5,11 @@
 	<main>
 		{#await $userAsync then user}
 			{#if user}
+				<div class="text-center mt-2 pt-2">
 				<Viewpoint {...page}>
 					<svelte:fragment slot="loading">Loading...</svelte:fragment>
 				</Viewpoint>
+				</div>
 			{:else}
 				<Login />
 			{/if}
