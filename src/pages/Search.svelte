@@ -1,5 +1,5 @@
 <Main>
-	<form method="GET" on:submit={submit} on:submit|preventDefault={clearPagination} class="py-2">
+	<form method="GET" on:submit={submit} on:submit|preventDefault class="py-2">
 		<InputGroup>
 			<Input
 				bind:value={search}
@@ -14,7 +14,7 @@
 			>
 				<span slot="iconRight">
 					{#if $query.params.q}
-						<IconButton icon="cross" on:click={clearSearch} />
+						<IconButton type="button" icon="cross" on:click={clearSearch} />
 					{/if}
 				</span>
 			</Input>
@@ -27,8 +27,7 @@
 					name="provider"
 					{size}
 				/>
-				<!-- <IconButton icon="search" slot="button" input variant="primary" {size} /> -->
-				<Button slot="button" input variant="primary" {size}>
+				<Button type="submit" slot="button" input variant="primary" {size}>
 					<Icon icon="search" />&nbsp;Search
 				</Button>
 			{/await}
