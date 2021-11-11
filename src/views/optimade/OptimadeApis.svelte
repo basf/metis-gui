@@ -1,5 +1,5 @@
 {#each apis as { data, meta }}
-	{#if data}
+	{#if data.length}
 		<Grid stack offset="mb-2">
 			{#each data as structure, i}
 				<Col col={!auto ? col : 'auto'} xs="12">
@@ -23,14 +23,14 @@
 						</Tile>
 					</div>
 				</Col>
-			{:else}
-				<Tile>
-					<div class="text-center text-error distant_msg">
-						Nothing found. Try another provider?
-					</div>
-				</Tile>
 			{/each}
 		</Grid>
+	{:else}
+		<Tile>
+			<div class="text-center text-error distant_msg">
+				Nothing found. Try another provider?
+			</div>
+		</Tile>
 	{/if}
 {/each}
 
@@ -56,6 +56,7 @@
 		data = apis.find((a) => a.meta?.data_returned)?.data;
 		meta = apis.find((a) => a.meta?.data_returned)?.meta;
 	});
+	$: console.log(data);
 
 	function setDataContent(structure: Types.Structure) {
 		$content = JSON.stringify(structure);
