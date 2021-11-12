@@ -156,8 +156,6 @@
 
 	function clearSearch() {
 		$query.params.q = search = '';
-		storage.setItem<string>('optimade_query', '', sessionStorage);
-		storage.setItem<string>('optimade_structures', '', sessionStorage);
 		clearPagination();
 	}
 
