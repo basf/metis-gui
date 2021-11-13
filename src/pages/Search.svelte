@@ -39,7 +39,7 @@
 		{/if}
 	</form>
 
-	{#if total}
+	{#if total > 10}
 		<Pagination
 			bind:total
 			bind:limits
