@@ -28,7 +28,7 @@
 	{:else}
 		<div class="text-center distant_msg">Upload a structure to start...</div>
 	{/each}
-	<Grid offset="my-2" align="">
+	<Grid>
 		<Col>
 			<Input
 				rows={4}

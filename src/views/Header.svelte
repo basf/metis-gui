@@ -1,4 +1,4 @@
-<header>
+<header class="mb-2">
 	<Navbar classes={'container grid-md'}>
 		<nav slot="left">
 			{#if $user && $path.toString() === '/profile'}

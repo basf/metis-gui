@@ -1,5 +1,5 @@
 <Grid>
-	<Col col="auto" offset="mx-auto">
+	<Col col="auto mx-auto">
 		<Form on:submit={submit} horizontal>
 			<FormGroup>
 				<Input bind:value={email} expand="xs" placeholder="Email">Email</Input>
@@ -10,7 +10,7 @@
 				>
 			</FormGroup>
 			<Button variant="primary" type="submit" block>Login</Button>
-			<Divider align="horizontal" text="OR" />
+			<Divider align="horizontal center" text="OR" />
 			<Grid align="center">
 				<Col col="auto">Log in with:</Col>
 				<Col>
@@ -35,7 +35,6 @@
 <script lang="ts">
 	import {
 		Button,
-		ButtonGroup,
 		Col,
 		Divider,
 		Form,

@@ -1,6 +1,6 @@
 {#each apis as { data, meta }}
 	{#if data?.length}
-		<Grid stack offset="mb-2">
+		<Grid stack>
 			{#each data as structure, i}
 				<Col col={!auto ? col : 'auto'} xs="12">
 					<div class="tile-structure">

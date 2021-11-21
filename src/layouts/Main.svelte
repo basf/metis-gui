@@ -1,4 +1,4 @@
-<Container offset="mt-2">
+<Container>
 	<Panel>
 		<nav slot="nav">
 			<Tabs {items} active={$url} block />
