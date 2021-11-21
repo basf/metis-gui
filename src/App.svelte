@@ -3,21 +3,23 @@
 <Spectre>
 	<Header />
 	<main>
-		{#await $userAsync then user}
-			{#if user}
-				<div class="text-center mt-2 pt-2">
-				<Viewpoint {...page}>
-					<svelte:fragment slot="loading">Loading...</svelte:fragment>
-				</Viewpoint>
-				</div>
-			{:else}
-				<Login />
-			{/if}
-		{:catch err}
-			{#if err?.response?.status === 401}
-				<Login />
-			{/if}
-		{/await}
+		<Container>
+			{#await $userAsync then user}
+				{#if user}
+					<div class="text-center mt-2 pt-2">
+						<Viewpoint {...page}>
+							<svelte:fragment slot="loading">Loading...</svelte:fragment>
+						</Viewpoint>
+					</div>
+				{:else}
+					<Login />
+				{/if}
+			{:catch err}
+				{#if err?.response?.status === 401}
+					<Login />
+				{/if}
+			{/await}
+		</Container>
 	</main>
 	<Footer />
 	<Toaster />
@@ -32,7 +34,7 @@
 <script lang="ts">
 	import { pattern, click } from 'svelte-pathfinder';
 	import Viewpoint from 'svelte-viewpoint';
-	import { IconButton, Spectre, Toaster } from 'svelte-spectre';
+	import { Container, IconButton, Spectre, Toaster } from 'svelte-spectre';
 
 	import Login from '@/pages/Login.svelte';
 
