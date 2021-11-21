@@ -14,7 +14,7 @@
 			<Grid align="center">
 				<Col col="auto">Log in with:</Col>
 				<Col>
-					<ButtonGroup>
+					<div class="oauth-buttons">
 						{#each Object.entries(oauth) as [provider, icon]}
 							<IconButton
 								href="{API_BASEURL}/auth/{provider}"
@@ -25,7 +25,7 @@
 								{@html icon}
 							</IconButton>
 						{/each}
-					</ButtonGroup>
+					</div>
 				</Col>
 			</Grid>
 		</Form>
@@ -74,3 +74,10 @@
 		}
 	}
 </script>
+
+<style lang="scss">
+	.oauth-buttons {
+		display: flex;
+		justify-content: space-between;
+	}
+</style>
