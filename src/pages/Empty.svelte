@@ -1,5 +1,5 @@
 <Main>
-	<Empty offset="my-2">
+	<Empty>
 		<Icon slot="icon" icon="refresh" size="3x" />
 		<h1 slot="title">Coming soon...</h1>
 		<p slot="subtitle">This section is under development</p>

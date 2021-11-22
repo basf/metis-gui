@@ -1,14 +1,16 @@
 <footer class="bg-gray py-2 mt-2">
-	<Navbar classes={'container grid-md'}>
-		<copy slot="center">
-			This is the <a href="https://basf.science">BASF.science</a>, an open-source XRPD online
-			data management system.
-		</copy>
-	</Navbar>
+	<Container>
+		<Navbar>
+			<copy slot="center">
+				This is the <a href="https://basf.science">BASF.science</a>, an open-source XRPD
+				online data management system.
+			</copy>
+		</Navbar>
+	</Container>
 </footer>
 
 <script lang="ts">
-	import { Navbar } from 'svelte-spectre';
+	import { Container, Navbar } from 'svelte-spectre';
 </script>
 
 <style lang="scss">
@@ -17,12 +19,18 @@
 	:global(html) {
 		height: 100%;
 
-		/* modern ------------------------------ */
-		:global(.spectre) {
-			min-height: 100%;
-			display: grid !important;
-			grid-template-rows: auto 1fr auto;
+		/* Newest ------------------------------ */
+		footer {
+			position: sticky;
+			top: 100vh;
 		}
+
+		/* modern ------------------------------ */
+		// :global(.spectre) {
+		// 	min-height: 100%;
+		// 	display: grid !important;
+		// 	grid-template-rows: auto 1fr auto;
+		// }
 
 		/* legacy ------------------------------- */
 		// display: flex;

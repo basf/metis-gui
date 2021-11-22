@@ -33,9 +33,11 @@
 			{/await}
 		</InputGroup>
 		{#if guessSearch}
-			<Badge offset="my-2">
-				Optimade filter={guessSearch}
-			</Badge>
+			<div class="mt-2">
+				<Badge>
+					Optimade filter={guessSearch}
+				</Badge>
+			</div>
 		{/if}
 	</form>
 

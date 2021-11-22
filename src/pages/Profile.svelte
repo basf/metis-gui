@@ -1,5 +1,5 @@
 <Grid>
-	<Col col="6" offset="mx-auto">
+	<Col col="6 mx-auto">
 		{#if $user}
 			<Panel>
 				<div slot="header" class="text-center">
