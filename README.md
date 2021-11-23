@@ -50,4 +50,4 @@ npm run build
 
 # License
 
-to be open-sourced
+BSD 3-Clause
