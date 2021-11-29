@@ -20,17 +20,17 @@
 		height: 100%;
 
 		/* Newest ------------------------------ */
-		footer {
-			position: sticky;
-			top: 100vh;
-		}
+		// footer {
+		// 	position: sticky;
+		// 	top: 100vh;
+		// }
 
 		/* modern ------------------------------ */
-		// :global(.spectre) {
-		// 	min-height: 100%;
-		// 	display: grid !important;
-		// 	grid-template-rows: auto 1fr auto;
-		// }
+		:global(.spectre) {
+			min-height: 100%;
+			display: grid !important;
+			grid-template-rows: auto 1fr auto;
+		}
 
 		/* legacy ------------------------------- */
 		// display: flex;
