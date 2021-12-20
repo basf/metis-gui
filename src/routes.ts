@@ -30,17 +30,17 @@ const routes: Route[] = [
     },
     {
         path: '/',
-        component: () => import('@/pages/Calculations.svelte'),
+        component: () => import('@/pages/DataSources.svelte'),
         menu: {
-            title: 'Calculations',
+            title: 'Data',
             pos: 1,
         },
     },
     {
-        path: '/data',
-        component: () => import('@/pages/Empty.svelte'),
+        path: '/calculations',
+        component: () => import('@/pages/Calculations.svelte'),
         menu: {
-            title: 'Data',
+            title: 'Calculations',
             pos: 2,
         },
     },

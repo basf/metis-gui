@@ -34,7 +34,7 @@
 <script lang="ts">
 	import { pattern, click } from 'svelte-pathfinder';
 	import Viewpoint from 'svelte-viewpoint';
-	import { Container, IconButton, Spectre, Toaster } from 'svelte-spectre';
+	import { Container, IconButton, Spectre, Toaster, toast } from 'svelte-spectre';
 
 	import Login from '@/pages/Login.svelte';
 
@@ -43,8 +43,13 @@
 
 	import { userAsync } from '@/stores/user';
 	import status from '@/stores/status';
+	import errors from '@/stores/errors';
 
 	import routes from '@/routes';
 
 	$: page = routes.find((route) => $pattern(route.path)) || null;
+	$: $errors.forEach(({ error }) => {
+		const msg = error.message || error;
+		toast.error({ msg, timeout: 4000 })
+	});
 </script>
