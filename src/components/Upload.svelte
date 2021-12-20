@@ -1,21 +1,40 @@
 <div class="upload">
-	<Dropzone on:drop={handleFilesSelect} />
+	<Dropzone on:drop={select} />
 </div>
 <ul>
-	{#each files as item}
-		<li>{item.name}</li>
+	{#each files as file, i (file)}
+		<li>
+			{file.name}
+			<IconButton variant="link" icon="cross" on:click={() => remove(i)} />
+		</li>
 	{/each}
 </ul>
 
 <script lang="ts">
+	import { createEventDispatcher } from 'svelte';
 	import Dropzone from 'svelte-file-dropzone';
+	import { IconButton } from 'svelte-spectre';
 
-	let files = [];
+	const dispatch = createEventDispatcher();
 
-	function handleFilesSelect(e) {
+	let files: File[] = [];
+
+	function select(e) {
 		const { acceptedFiles } = e.detail;
 
 		files = [...files, ...acceptedFiles];
+
+		dispatch('files', { files });
+	}
+
+	function remove(i) {
+		files = files.filter((_, index) => index != i);
+		dispatch('files', { files });
+	}
+
+	export function clearFiles() {
+		files = [];
+		dispatch('files', { files });
 	}
 </script>
 

@@ -1,15 +1,20 @@
-export interface Calculation {
-    uuid: string;
-    progress: number;
-    data: string;
+export interface Timestamps {
+    created_at: string;
+    updated_at: string;
 }
 
-export interface Data {
-    uuid: string;
-    type?: number;
-    name?: string;
-    content?: string;
-    [key: string]: any;
+export interface Calculation extends Timestamps {
+    id: number;
+    userId: number;
+    status: number;
+}
+
+export interface DataSource extends Timestamps  {
+    id: number;
+    userId: number;
+    name: string;
+    content: string;
+    type: number;
 }
 
 export interface User {
@@ -18,4 +23,9 @@ export interface User {
     email: string;
     firstname: string;
     lastname: string;
+}
+
+export interface Error {
+    status: number;
+    error: { message: string; } | string;
 }

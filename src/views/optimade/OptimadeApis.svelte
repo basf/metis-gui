@@ -36,12 +36,12 @@
 
 <script lang="ts" context="module">
 	import { onMount } from 'svelte';
-	import { goto } from 'svelte-pathfinder';
-	import { content } from '@/stores/data';
 	import { getStructureTitle } from '@/helpers/optimade';
 	import { Col, Grid, IconButton, Tile } from 'svelte-spectre';
 
 	import type { Types } from 'optimade';
+
+	import { setData } from '@/services/api';
 </script>
 
 <script lang="ts">
@@ -58,8 +58,7 @@
 	});
 
 	function setDataContent(structure: Types.Structure) {
-		$content = JSON.stringify(structure);
-		goto('/');
+		setData(JSON.stringify(structure));
 	}
 </script>
 

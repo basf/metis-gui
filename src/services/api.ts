@@ -1,40 +1,41 @@
 import { userAsync } from '@/stores/user';
 
 import { API_BASEURL } from '@/config';
-import type { User as UserDTO } from '@/types/dto';
+import type { 
+    User as UserDTO,
+    Calculation as CalculationDTO,
+    DataSource as DataSourceDTO
+} from '@/types/dto';
 
 export interface HttpError extends Error {
     response?: Response;
 }
+
 export type HttpHeaders = Record<string, string>;
 export type QueryParams = Record<string, unknown>;
 
-export async function getData(): Promise<void> {
+export async function getData(): Promise<DataSourceDTO[]> {
     return getJSON('/data');
 }
 
-export async function setData(content: string): Promise<void> {
+export async function setData(content: string | string[]): Promise<void> {
     return postJSON('/data', { content });
 }
 
-export async function delData(uuid: string): Promise<void> {
-    return delJSON('/data', { uuid });
+export async function delData(id: number): Promise<void> {
+    return delJSON(`/data/${id}`);
 }
 
-export async function getCalculations(): Promise<void> {
+export async function getCalculations(): Promise<CalculationDTO[]> {
     return getJSON('/calculations');
 }
 
-export async function getCalculation(uuid: string): Promise<void> {
-    return getJSON(`/calculations/${uuid}`);
+export async function setCalculation(dataId: number): Promise<void> {
+    return postJSON('/calculations', { dataId });
 }
 
-export async function setCalculation(uuid: string): Promise<void> {
-    return postJSON('/calculations', { uuid });
-}
-
-export async function delCalculation(uuid: string): Promise<void> {
-    return delJSON('/calculations', { uuid });
+export async function delCalculation(id: number): Promise<void> {
+    return delJSON(`/calculations/${id}`);
 }
 
 export async function login(email: string, password: string): Promise<void> {
