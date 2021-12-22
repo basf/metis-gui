@@ -16,7 +16,7 @@
 									icon="upload"
 									size="sm"
 									variant="primary"
-									title="Upload this JSON to calculation"
+									title="Use this structure"
 									on:click={() => setDataContent(structure)}
 								/>
 							</svelte:fragment>

@@ -9,7 +9,7 @@
 			>
 			</svelte:fragment>
 			<svelte:fragment slot="action">
-				<IconButton icon="refresh" on:click={() => setCalculation(datasource.id)} />
+				<IconButton icon="forward" on:click={() => setCalculation(datasource.id)} />
 				<IconButton icon="cross" on:click={() => delData(datasource.id)} />
 			</svelte:fragment>
 		</Tile>
