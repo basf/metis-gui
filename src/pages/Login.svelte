@@ -2,11 +2,15 @@
 	<Col col="auto mx-auto">
 		<Form on:submit={submit} horizontal>
 			<FormGroup>
-				<Input bind:value={email} expand="xs" placeholder="Email">Email</Input>
+				<Input bind:value={email} expand="xs" placeholder="Email" width="8">Email</Input>
 			</FormGroup>
 			<FormGroup>
-				<Input bind:value={password} expand="xs" placeholder="Password" type="password"
-					>Password</Input
+				<Input
+					bind:value={password}
+					expand="xs"
+					placeholder="Password"
+					type="password"
+					width="8">Password</Input
 				>
 			</FormGroup>
 			<Button variant="primary" type="submit" block>Login</Button>
