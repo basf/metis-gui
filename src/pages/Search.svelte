@@ -188,8 +188,6 @@
 	$: setPage($query.params.page);
 	$: rest = Math.ceil(total / $query.params.limit) > 17 ? 7 : 0;
 
-	$: console.log('meta', meta, data);
-
 	$: guessSearch = guess(search) || search;
 
 	function providersOptions(providers: Types.Provider[]) {

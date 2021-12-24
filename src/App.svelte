@@ -6,7 +6,7 @@
 		<Container>
 			{#await $userAsync then user}
 				{#if user}
-					<div class="text-center mt-2 pt-2">
+					<div class="mt-2 pt-2">
 						<Viewpoint {...page}>
 							<svelte:fragment slot="loading">Loading...</svelte:fragment>
 						</Viewpoint>
@@ -22,34 +22,23 @@
 		</Container>
 	</main>
 	<Footer />
-	<Toaster />
-	{#if !$status.online || !$status.heartbeat}
-		<div class="overlay">
-			<slot>We are offline</slot>
-			<IconButton icon="refresh" on:click={() => location.reload()} />
-		</div>
-	{/if}
+	<Msgbar />
 </Spectre>
 
 <script lang="ts">
 	import { pattern, click } from 'svelte-pathfinder';
 	import Viewpoint from 'svelte-viewpoint';
-	import { Container, IconButton, Spectre, Toaster, toast } from 'svelte-spectre';
+	import { Container, Spectre } from 'svelte-spectre';
 
 	import Login from '@/pages/Login.svelte';
 
 	import Header from '@/views/Header.svelte';
 	import Footer from '@/views/Footer.svelte';
+	import Msgbar from '@/views/Msgbar.svelte';
 
 	import { userAsync } from '@/stores/user';
-	import status from '@/stores/status';
-	import errors from '@/stores/errors';
 
 	import routes from '@/routes';
 
 	$: page = routes.find((route) => $pattern(route.path)) || null;
-	$: $errors.forEach(({ error }) => {
-		const msg = error.message || error;
-		toast.error({ msg, timeout: 4000 })
-	});
 </script>

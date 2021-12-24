@@ -16,22 +16,24 @@
 	{:else}
 		<div class="text-center distant_msg">Upload a structure to start...</div>
 	{/each}
-	<Grid>
-		<Col>
-			<Input
-				rows={4}
-				placeholder="Paste POSCAR, CIF, or Optimade JSON"
-				bind:value={content}
-			/>
-		</Col>
-		<Divider align="vertical" text="OR" />
-		<Col>
-			<Upload on:files={handleFiles} bind:clearFiles />
-		</Col>
-	</Grid>
-	<Button variant="primary" block on:click={addDataItem}>
-		{contents.length ? 'Add data' : 'Add structure'}
-	</Button>
+	<div class="mt-4">
+		<Grid>
+			<Col>
+				<Input
+					rows={4}
+					placeholder="Paste POSCAR, CIF, or Optimade JSON"
+					bind:value={content}
+				/>
+			</Col>
+			<Divider align="vertical" text="OR" />
+			<Col>
+				<Upload on:files={handleFiles} bind:clearFiles />
+			</Col>
+		</Grid>
+		<Button variant="primary" block on:click={addDataItem}>
+			{contents.length ? 'Add data' : 'Add structure'}
+		</Button>
+	</div>
 </Main>
 
 <script lang="ts" context="module">
