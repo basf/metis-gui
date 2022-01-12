@@ -70,10 +70,10 @@
 		try {
 			await login(email, password);
 			$userAsync = me();
-			toast.success({ msg: 'You are logged in', timeout: 4000 });
+			toast.success({ msg: 'You are logged in', timeout: 4000, pos: 'top_right' });
 		} catch (err) {
 			errmsg = err;
-			toast.error({ msg: errmsg.error || 'Login or password incorrect', timeout: 4000 });
+			toast.error({ msg: errmsg.error || 'Login or password incorrect', timeout: 4000, pos: 'top_right' });
 		}
 	}
 </script>

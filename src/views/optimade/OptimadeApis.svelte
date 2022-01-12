@@ -13,7 +13,7 @@
 							</small>
 							<svelte:fragment slot="action">
 								<IconButton
-									icon="upload"
+									icon="download"
 									size="sm"
 									variant="primary"
 									title="Use this structure"
