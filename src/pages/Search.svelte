@@ -1,5 +1,5 @@
 <Main>
-	<form method="GET" on:submit={submit} on:submit|preventDefault class="py-2">
+	<form method="GET" on:submit={submit} on:submit|preventDefault={clearPagination} class="py-2">
 		<InputGroup>
 			<Input
 				bind:value={search}
