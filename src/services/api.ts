@@ -1,10 +1,10 @@
 import { userAsync } from '@/stores/user';
 
 import { API_BASEURL } from '@/config';
-import type { 
+import type {
     User as UserDTO,
     Calculation as CalculationDTO,
-    DataSource as DataSourceDTO
+    DataSource as DataSourceDTO,
 } from '@/types/dto';
 
 export interface HttpError extends Error {

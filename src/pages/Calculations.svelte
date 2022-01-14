@@ -5,8 +5,7 @@
 			<svelte:fragment slot="subtitle">
 				<small class="tile-subtitle text-gray">
 					{showTimestamp(calculation)}
-				</small
-			>
+				</small>
 			</svelte:fragment>
 			<svelte:fragment slot="action">
 				<IconButton icon="cross" on:click={() => delCalculation(calculation.id)} />
@@ -27,7 +26,7 @@
 	import { getCalculations, delCalculation } from '@/services/api';
 
 	import calculations from '@/stores/calculations';
-    import { showTimestamp } from '@/helpers/date';
+	import { showTimestamp } from '@/helpers/date';
 </script>
 
 <script lang="ts">
