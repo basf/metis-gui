@@ -1,9 +1,9 @@
-export const API_BASEURL =
-    __env === 'production'
-        ? 'https://gate.basf.science/v0'
-        : 'http://localhost:3000';
+export const API_VERSION = 'v0';
 
-export const STREAM_URL = API_BASEURL + '/stream';
+export const API_HOST = __env === 'production' ? 'https://gate.basf.science' : 'http://localhost:3000'
+export const API_BASEURL = `${API_HOST}/${API_VERSION}`;
+
+export const STREAM_URL = API_HOST + '/stream';
 
 export const BASE_PATH = __env === 'production' ? '/gui' : '';
 

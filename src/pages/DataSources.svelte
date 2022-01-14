@@ -5,8 +5,7 @@
 			<svelte:fragment slot="subtitle">
 				<small class="tile-subtitle text-gray">
 					Type &bull; {datasource.type} &bull; {showTimestamp(datasource)}
-				</small
-			>
+				</small>
 			</svelte:fragment>
 			<svelte:fragment slot="action">
 				<IconButton icon="forward" on:click={() => setCalculation(datasource.id)} />
@@ -39,25 +38,12 @@
 <script lang="ts" context="module">
 	import { onMount } from 'svelte';
 
-	import {
-		Tile,
-		Button,
-		Divider,
-		IconButton,
-		Input,
-		Grid,
-		Col,
-	} from 'svelte-spectre';
+	import { Tile, Button, Divider, IconButton, Input, Grid, Col } from 'svelte-spectre';
 
 	import Main from '@/layouts/Main.svelte';
 	import Upload from '@/components/Upload.svelte';
 
-	import {
-		getData,
-		setData,
-		delData,
-		setCalculation,
-	} from '@/services/api';
+	import { getData, setData, delData, setCalculation } from '@/services/api';
 
 	import datasources from '@/stores/datasources';
 	import { showTimestamp } from '@/helpers/date';
@@ -80,13 +66,13 @@
 
 	async function handleFiles(e) {
 		const { files } = e.detail;
-		
+
 		if (files.length) {
-			for(const file of files) {
+			for (const file of files) {
 				const content = await file.text();
 				contents.push(content);
 			}
-			contents = [ ...contents ];
+			contents = [...contents];
 		} else {
 			contents = [];
 		}

@@ -9,7 +9,7 @@ export interface Calculation extends Timestamps {
     status: number;
 }
 
-export interface DataSource extends Timestamps  {
+export interface DataSource extends Timestamps {
     id: number;
     userId: number;
     name: string;
@@ -27,5 +27,5 @@ export interface User {
 
 export interface Error {
     status: number;
-    error: { message: string; } | string;
+    error: { message: string } | string;
 }
