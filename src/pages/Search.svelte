@@ -177,8 +177,12 @@
 	}
 
 	// fix for provider MP from reduce data_returned per page
-	function setTotal(provider: Param, data: number, page: Param) {
-		return provider === 'mp' && data < total && page && page > 1 ? total : data;
+	function setTotal(provider: Param, data: number, page: Param, limit: number = 10000) {
+		const minMax = (min: number, max: number, val: number) => Math.min(max, Math.max(min, val));
+
+		return provider === 'mp' && data < total && page && page > 1
+			? minMax(1, limit, total)
+			: minMax(1, limit, data);
 	}
 
 	function setPage(page: Param) {
