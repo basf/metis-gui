@@ -26,6 +26,7 @@
 					value={$query.params.provider}
 					name="provider"
 					{size}
+					on:change={submitOnChange}
 				/>
 				<Button type="submit" slot="button" input variant="primary" {size}>
 					<Icon icon="search" />&nbsp;Search
@@ -96,10 +97,10 @@
 </Main>
 
 <script lang="ts" context="module">
+	import type { Types } from '@/services/optimade';
+
 	import { get } from 'svelte/store';
 	import { Param, query, redirect, submit } from 'svelte-pathfinder';
-	import * as storage from '@/helpers/storage';
-
 	import {
 		Col,
 		Grid,
@@ -114,16 +115,17 @@
 		Tile,
 	} from 'svelte-spectre';
 
-	import { SIZE } from 'svelte-spectre/package/types/const';
-
-	import * as Loaders from '@/components/loaders';
-	import OptimadeApis from '@/views/optimade/OptimadeApis.svelte';
-
-	import Main from '@/layouts/Main.svelte';
+	import * as storage from '@/helpers/storage';
+	import { submitOnChange } from '@/helpers/form';
 
 	import { structuresAsync as resultsAsync, providersAsync } from '@/stores/optimade';
 	import { guess } from '@/services/optimade';
-	import type { Types } from '@/services/optimade';
+
+	import * as Loaders from '@/components/loaders';
+	import OptimadeApis from '@/views/optimade/OptimadeApis.svelte';
+	import Main from '@/layouts/Main.svelte';
+
+	import { SIZE } from 'svelte-spectre/package/types/const';
 
 	const size = 'lg';
 
