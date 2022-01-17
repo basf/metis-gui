@@ -10,7 +10,7 @@ module.exports = {
 		dev
 	},
 	preprocess: [
-		componentBudget({ budget: 250 }),
+		componentBudget({ budget: 250, exclude: ['node_modules'] }),
 		preprocess({
 			replace: Object.entries(replace),
 			scss: {
