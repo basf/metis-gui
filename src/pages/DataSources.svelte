@@ -1,7 +1,7 @@
 <Main>
 	{#each $datasources as datasource (datasource.id)}
 		<Tile>
-			<h5 class="mt-2" slot="title">{datasource.name}</h5>
+			<h5 class="mt-2" slot="title">{@html datasource.name}</h5>
 			<svelte:fragment slot="subtitle">
 				<small class="tile-subtitle text-gray">
 					Type &bull; {datasource.type} &bull; {showTimestamp(datasource)}

@@ -1,7 +1,7 @@
 <Main>
 	{#each $calculations as calculation (calculation.id)}
 		<Tile>
-			<h5 class="mt-2" slot="title">{calculation.id}</h5>
+			<h5 class="mt-2" slot="title">{@html calculation.name}</h5>
 			<svelte:fragment slot="subtitle">
 				<small class="tile-subtitle text-gray">
 					{showTimestamp(calculation)}

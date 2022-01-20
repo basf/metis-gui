@@ -5,7 +5,7 @@ export const API_BASEURL = `${API_HOST}/${API_VERSION}`;
 
 export const STREAM_URL = API_HOST + '/stream';
 
-export const BASE_PATH = __env === 'production' ? '/gui' : '';
+export const BASE_PATH = '';
 
 export const SEARCH_DELAY = 1000;
 
