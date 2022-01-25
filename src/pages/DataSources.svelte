@@ -8,6 +8,7 @@
 				</small>
 			</svelte:fragment>
 			<svelte:fragment slot="action">
+				<IconButton slot="icon" icon="edit" on:click={() => (open = !open)} />
 				<IconButton icon="forward" on:click={() => setCalculation(datasource.id)} />
 				<IconButton icon="cross" on:click={() => delData(datasource.id)} />
 			</svelte:fragment>
@@ -35,10 +36,16 @@
 	</div>
 </Main>
 
+<Modal bind:open size="fs">
+	<h3 slot="header">Modal header</h3>
+	<div class="content">Modal content</div>
+	<p slot="footer">Modal footer</p>
+</Modal>
+
 <script lang="ts" context="module">
 	import { onMount } from 'svelte';
 
-	import { Tile, Button, Divider, IconButton, Input, Grid, Col } from 'svelte-spectre';
+	import { Tile, Button, Divider, IconButton, Input, Grid, Col, Modal } from 'svelte-spectre';
 
 	import Main from '@/layouts/Main.svelte';
 	import Upload from '@/components/Upload.svelte';
@@ -53,6 +60,7 @@
 	let content = '';
 	let contents: string[] = [];
 	let clearFiles;
+	let open = false; // temp variable for example
 
 	onMount(async () => {
 		setTimeout(getData);
