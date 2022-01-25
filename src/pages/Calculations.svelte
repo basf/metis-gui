@@ -1,12 +1,10 @@
 <Main>
 	{#each $calculations as calculation (calculation.id)}
 		<Tile>
-			<h5 class="mt-2" slot="title">{@html calculation.name}</h5>
-			<svelte:fragment slot="subtitle">
-				<small class="tile-subtitle text-gray">
-					{showTimestamp(calculation)}
-				</small>
-			</svelte:fragment>
+			<h5 slot="title" class="mt-2">{@html calculation.name}</h5>
+			<small slot="subtitle" class="tile-subtitle text-gray">
+				{showTimestamp(calculation)}
+			</small>
 			<svelte:fragment slot="action">
 				<IconButton icon="cross" on:click={() => delCalculation(calculation.id)} />
 			</svelte:fragment>
@@ -19,7 +17,7 @@
 <script lang="ts" context="module">
 	import { onMount } from 'svelte';
 
-	import { Tile, IconButton } from 'svelte-spectre';
+	import { IconButton, Tile } from 'svelte-spectre';
 
 	import Main from '@/layouts/Main.svelte';
 

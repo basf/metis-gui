@@ -18,10 +18,12 @@ module.exports = {
                     @import './node_modules/spectre.css/src/variables';
                     @import './node_modules/spectre.css/src/mixins';
                 `,
-            },
-            typescript: true,
-            postcss: true,
-            sourceMap,
-        }),
-    ]
+				quietDeps: true, // dismiss version 2.0 warning
+				renderSync: true // improve perfomance
+			},
+			typescript: true,
+			postcss: true,
+			sourceMap,
+		}),
+	]
 };
