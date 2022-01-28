@@ -8,7 +8,7 @@
 				</small>
 			</svelte:fragment>
 			<svelte:fragment slot="action">
-				<IconButton slot="icon" icon="edit" on:click={() => (open = !open)} />
+				<IconButton slot="icon" icon="edit" on:click={() => openModal(datasource)} />
 				<IconButton icon="forward" on:click={() => setCalculation(datasource.id)} />
 				<IconButton icon="cross" on:click={() => delData(datasource.id)} />
 			</svelte:fragment>
@@ -37,15 +37,32 @@
 </Main>
 
 <Modal bind:open size="fs">
-	<h3 slot="header">Modal header</h3>
-	<div class="content">Modal content</div>
-	<p slot="footer">Modal footer</p>
+	<h3 slot="header">{@html modalHeader}</h3>
+	<div class="content">
+		<!-- <Code>Modal content</Code> -->
+		<Editor {code} {schema} />
+	</div>
+	<svelte:fragment slot="footer">
+		<Button variant="primary">Submit</Button>
+	</svelte:fragment>
 </Modal>
 
 <script lang="ts" context="module">
 	import { onMount } from 'svelte';
 
-	import { Tile, Button, Divider, IconButton, Input, Grid, Col, Modal } from 'svelte-spectre';
+	import {
+		Button,
+		Col,
+		Code,
+		Divider,
+		Grid,
+		IconButton,
+		Input,
+		Modal,
+		Tile,
+	} from 'svelte-spectre';
+
+	import Editor from '@/components/Editor/Editor.svelte';
 
 	import Main from '@/layouts/Main.svelte';
 	import Upload from '@/components/Upload.svelte';
@@ -54,6 +71,8 @@
 
 	import datasources from '@/stores/datasources';
 	import { showTimestamp } from '@/helpers/date';
+
+	import type { DataSource } from '@/types/dto';
 </script>
 
 <script lang="ts">
@@ -61,6 +80,12 @@
 	let contents: string[] = [];
 	let clearFiles;
 	let open = false; // temp variable for example
+	let modalHeader = '';
+
+	import code from '@/pages/tmp/d3';
+	import schema from '@/pages/tmp/schema_d3.json';
+
+	console.log(schema);
 
 	onMount(async () => {
 		setTimeout(getData);
@@ -84,5 +109,10 @@
 		} else {
 			contents = [];
 		}
+	}
+
+	function openModal(datasource: DataSource) {
+		open = !open;
+		modalHeader = `Edit and submit calculation for <mark> ${datasource.name} </mark>`;
 	}
 </script>

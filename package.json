@@ -65,6 +65,7 @@
 		"autoprefixer": "^10.2.6",
 		"babel-jest": "^27.0.5",
 		"browserslist-config-google": "latest",
+		"codejar": "^3.5.0",
 		"core-js": "^3.15.1",
 		"eslint": "^7.29.0",
 		"eslint-config-prettier": "^8.3.0",
