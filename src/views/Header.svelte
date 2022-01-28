@@ -13,7 +13,9 @@
 
 			<nav slot="right">
 				{#if $user}
-					<a href="/profile">{$user.firstname}</a><IconButton icon="people" size="xl" href="/profile" />
+					<Button variant="link" size="xl" href="/profile">
+						{$user.firstname} &nbsp;<Icon icon="people" />
+					</Button>
 				{/if}
 			</nav>
 		</Navbar>
@@ -22,7 +24,7 @@
 
 <script lang="ts">
 	import { back, path } from 'svelte-pathfinder';
-	import { Container, IconButton, Navbar } from 'svelte-spectre';
+	import { Button, Container, Icon, IconButton, Navbar } from 'svelte-spectre';
 	import user from '@/stores/user';
 	import Xray from '@/assets/img/b-science.svg';
 </script>
