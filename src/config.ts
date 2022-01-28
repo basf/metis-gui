@@ -14,4 +14,4 @@ export const OPTIMADE_PROVIDERS_URL =
 
 export const CORS_PROXY_URL = 'https://cors.optimade.science';
 
-export const OPTIMADE_PROVIDERS = ['mp', 'cod', 'nmd', 'threedd'];
+export const OPTIMADE_PROVIDERS = ['mp', 'nmd', 'threedd', 'icdd-pdf-4-plus', 'ccdc'];

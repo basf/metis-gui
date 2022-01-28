@@ -13,7 +13,7 @@
 
 			<nav slot="right">
 				{#if $user}
-					<IconButton icon="people" size="xl" href="/profile" />
+					<a href="/profile">{$user.firstname}</a><IconButton icon="people" size="xl" href="/profile" />
 				{/if}
 			</nav>
 		</Navbar>

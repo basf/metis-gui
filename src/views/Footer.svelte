@@ -1,4 +1,4 @@
-<footer class="bg-gray py-2 mt-2">
+<footer class="bg-secondary py-2 mt-2">
 	<Container>
 		<Navbar>
 			<copy slot="center">
