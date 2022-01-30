@@ -3,8 +3,7 @@ import { withLineNumbers } from 'codejar/linenumbers';
 
 export default function editor(node: HTMLElement, { code, schema, autofocus = false, loc = false, ...options }) {
     const highlight = (node: HTMLElement) => {
-        const content = node.textContent || code
-        const strings = content.split('\n')
+        const strings = code.split('\n')
         const defaults = ['end']
         const keys = [...getKeys(schema), ...defaults]
 

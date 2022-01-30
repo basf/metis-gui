@@ -57,14 +57,7 @@
 	import Main from '@/layouts/Main.svelte';
 	import Upload from '@/components/Upload.svelte';
 
-	import {
-		getData,
-		setData,
-		delData,
-		setCalculation,
-		getCalculations,
-		getTemplate,
-	} from '@/services/api';
+	import { getData, setData, delData, setCalculation, getTemplate } from '@/services/api';
 
 	import datasources from '@/stores/datasources';
 	import { showTimestamp } from '@/helpers/date';
@@ -76,17 +69,12 @@
 	let content = '';
 	let contents: string[] = [];
 	let clearFiles: Function;
-	let open = false; // temp variable for example
+	let open = false;
 	let modalHeader = '';
 	let template = '';
 	let input = '';
 	let schema = {};
 	let id = 0;
-
-	// import code from '@/pages/tmp/d3';
-	// import schema from '@/pages/tmp/schema_d3.json';
-
-	$: console.log(input);
 
 	onMount(async () => {
 		setTimeout(getData);
