@@ -28,3 +28,8 @@ export interface Error {
     status: number;
     error: { message: string } | string;
 }
+
+export interface Template {
+    template: string
+    schema: any
+}

@@ -5,6 +5,7 @@ import type {
     User as UserDTO,
     Calculation as CalculationDTO,
     DataSource as DataSourceDTO,
+    Template
 } from '@/types/dto';
 
 export interface HttpError extends Error {
@@ -26,8 +27,8 @@ export async function delData(id: number): Promise<void> {
     return delJSON(`/data/${id}`);
 }
 
-export async function getTemplate(engine: string = 'dummy'): Promise<DataSourceDTO[]> {
-    return fetchJSON(API_HOST + `/v0/calculations/template?engine=${engine}`);
+export async function getTemplate(engine: string = 'dummy'): Promise<Template> {
+    return fetchJSON(`${API_HOST}/v0/calculations/template?engine=${engine}`, { credentials: 'omit' });
 }
 
 export async function getCalculations(): Promise<CalculationDTO[]> {
@@ -116,13 +117,13 @@ export default async function fetchJSON<T>(
     { headers, ...options }: RequestInit = {}
 ): Promise<T> {
     const req = new Request(url, {
-        ...options,
         headers: {
             'Content-Type': 'application/json',
             ...headers,
         },
         credentials: 'include',
         mode: 'cors',
+        ...options
     });
 
     const res = await fetch(req);

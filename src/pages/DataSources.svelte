@@ -115,27 +115,9 @@
 	async function openModal(datasource: DataSource) {
 		open = !open;
 		modalHeader = `Edit and submit calculation for <mark> ${datasource.name} </mark>`;
-		const code = await getCode(
-			'http://localhost:3000/v0/calculations/template?engine=dummy',
-			datasource.id
-		);
+		const code = await getTemplate('dummy');
 		template = code.template;
 		schema = code.schema;
-		id = code.id;
-	}
-
-	async function getCode(path: string, id: number) {
-		// const json = await getJSON('/calculations/template?engine=dummy');
-		const code = await fetch(path).then((res) => res.json());
-		// const temp = await getTemplate('/calculations/template?engine=dummy');
-		// const {template, schema} = code
-		console.info(
-			code,
-			await fetch('https://peer.basf.science/v0/calculations/template?engine=dummy').then(
-				(res) => res.json()
-			)
-			// await getTemplate('dummy')
-		);
-		return { ...code, id };
+		id = datasource.id;
 	}
 </script>
