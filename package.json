@@ -65,7 +65,6 @@
 		"autoprefixer": "^10.2.6",
 		"babel-jest": "^27.0.5",
 		"browserslist-config-google": "latest",
-		"codejar": "^3.5.0",
 		"core-js": "^3.15.1",
 		"eslint": "^7.29.0",
 		"eslint-config-prettier": "^8.3.0",
@@ -103,7 +102,7 @@
 		"svelte-pathfinder": "^3.2.3",
 		"svelte-preprocess": "^4.7.3",
 		"svelte-preprocess-cssmodules": "^2.0.2",
-		"svelte-spectre": "github:valexr/svelte-spectre",
+		"svelte-spectre": "github:basf/svelte-spectre",
 		"svelte-statusable": "^1.0.1",
 		"svelte-streamable": "^1.1.0",
 		"svelte-viewpoint": "^1.4.3",
@@ -113,6 +112,7 @@
 		"zip-dir": "^2.0.0"
 	},
 	"dependencies": {
+		"codejar": "^3.5.0",
 		"debounce-promise": "^3.1.2",
 		"optimade": "^2.0.3",
 		"sirv-cli": "^1.0.12",
