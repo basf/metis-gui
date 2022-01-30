@@ -38,36 +38,33 @@
 
 <Modal bind:open size="fs">
 	<h3 slot="header">{@html modalHeader}</h3>
-	<div class="content">
-		<!-- <Code>Modal content</Code> -->
-		<Editor {code} {schema} />
-	</div>
+	{#if template}
+		<Editor code={template} {schema} on:change={(e) => (input = e.detail)} />
+	{/if}
 	<svelte:fragment slot="footer">
-		<Button variant="primary">Submit</Button>
+		<Button variant="primary" on:click={() => setCalculation(id, 'dummy', input)}>Submit</Button
+		>
 	</svelte:fragment>
 </Modal>
 
 <script lang="ts" context="module">
 	import { onMount } from 'svelte';
 
-	import {
-		Button,
-		Col,
-		Code,
-		Divider,
-		Grid,
-		IconButton,
-		Input,
-		Modal,
-		Tile,
-	} from 'svelte-spectre';
+	import { Button, Col, Divider, Grid, IconButton, Input, Modal, Tile } from 'svelte-spectre';
 
 	import Editor from '@/components/Editor/Editor.svelte';
 
 	import Main from '@/layouts/Main.svelte';
 	import Upload from '@/components/Upload.svelte';
 
-	import { getData, setData, delData, setCalculation } from '@/services/api';
+	import {
+		getData,
+		setData,
+		delData,
+		setCalculation,
+		getCalculations,
+		getTemplate,
+	} from '@/services/api';
 
 	import datasources from '@/stores/datasources';
 	import { showTimestamp } from '@/helpers/date';
@@ -78,14 +75,18 @@
 <script lang="ts">
 	let content = '';
 	let contents: string[] = [];
-	let clearFiles;
+	let clearFiles: Function;
 	let open = false; // temp variable for example
 	let modalHeader = '';
+	let template = '';
+	let input = '';
+	let schema = {};
+	let id = 0;
 
-	import code from '@/pages/tmp/d3';
-	import schema from '@/pages/tmp/schema_d3.json';
+	// import code from '@/pages/tmp/d3';
+	// import schema from '@/pages/tmp/schema_d3.json';
 
-	console.log(schema);
+	$: console.log(input);
 
 	onMount(async () => {
 		setTimeout(getData);
@@ -111,8 +112,30 @@
 		}
 	}
 
-	function openModal(datasource: DataSource) {
+	async function openModal(datasource: DataSource) {
 		open = !open;
 		modalHeader = `Edit and submit calculation for <mark> ${datasource.name} </mark>`;
+		const code = await getCode(
+			'http://localhost:3000/v0/calculations/template?engine=dummy',
+			datasource.id
+		);
+		template = code.template;
+		schema = code.schema;
+		id = code.id;
+	}
+
+	async function getCode(path: string, id: number) {
+		// const json = await getJSON('/calculations/template?engine=dummy');
+		const code = await fetch(path).then((res) => res.json());
+		// const temp = await getTemplate('/calculations/template?engine=dummy');
+		// const {template, schema} = code
+		console.info(
+			code,
+			await fetch('https://peer.basf.science/v0/calculations/template?engine=dummy').then(
+				(res) => res.json()
+			)
+			// await getTemplate('dummy')
+		);
+		return { ...code, id };
 	}
 </script>

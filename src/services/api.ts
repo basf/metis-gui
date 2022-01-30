@@ -1,6 +1,6 @@
 import { userAsync } from '@/stores/user';
 
-import { API_BASEURL } from '@/config';
+import { API_HOST, API_BASEURL } from '@/config';
 import type {
     User as UserDTO,
     Calculation as CalculationDTO,
@@ -26,12 +26,16 @@ export async function delData(id: number): Promise<void> {
     return delJSON(`/data/${id}`);
 }
 
+export async function getTemplate(engine: string = 'dummy'): Promise<DataSourceDTO[]> {
+    return fetchJSON(API_HOST + `/v0/calculations/template?engine=${engine}`);
+}
+
 export async function getCalculations(): Promise<CalculationDTO[]> {
     return getJSON('/calculations');
 }
 
-export async function setCalculation(dataId: number): Promise<void> {
-    return postJSON('/calculations', { dataId });
+export async function setCalculation(dataId: number, engine: string = 'dummy', input?: string): Promise<void> {
+    return postJSON('/calculations', { dataId, engine, input });
 }
 
 export async function delCalculation(id: number): Promise<void> {

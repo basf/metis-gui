@@ -1,4 +1,4 @@
-<Code action={editor} {options} />
+<Code action={editor} {options} on:change />
 
 <script context="module" lang="ts">
 	import { Code } from 'svelte-spectre';
@@ -8,6 +8,7 @@
 <script lang="ts">
 	export let code = '';
 	export let schema = {};
+
 	let options = {
 		code,
 		schema,
