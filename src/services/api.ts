@@ -1,10 +1,11 @@
 import { userAsync } from '@/stores/user';
 
-import { API_BASEURL } from '@/config';
+import { API_HOST, API_BASEURL } from '@/config';
 import type {
     User as UserDTO,
     Calculation as CalculationDTO,
     DataSource as DataSourceDTO,
+    Template
 } from '@/types/dto';
 
 export interface HttpError extends Error {
@@ -26,12 +27,16 @@ export async function delData(id: number): Promise<void> {
     return delJSON(`/data/${id}`);
 }
 
+export async function getTemplate(engine: string = 'dummy'): Promise<Template> {
+    return fetchJSON(`${API_HOST}/v0/calculations/template?engine=${engine}`, { credentials: 'omit' });
+}
+
 export async function getCalculations(): Promise<CalculationDTO[]> {
     return getJSON('/calculations');
 }
 
-export async function setCalculation(dataId: number): Promise<void> {
-    return postJSON('/calculations', { dataId });
+export async function setCalculation(dataId: number, engine: string = 'dummy', input?: string): Promise<void> {
+    return postJSON('/calculations', { dataId, engine, input });
 }
 
 export async function delCalculation(id: number): Promise<void> {
@@ -112,13 +117,13 @@ export default async function fetchJSON<T>(
     { headers, ...options }: RequestInit = {}
 ): Promise<T> {
     const req = new Request(url, {
-        ...options,
         headers: {
             'Content-Type': 'application/json',
             ...headers,
         },
         credentials: 'include',
         mode: 'cors',
+        ...options
     });
 
     const res = await fetch(req);

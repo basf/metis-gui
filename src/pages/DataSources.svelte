@@ -8,7 +8,7 @@
 				</small>
 			</svelte:fragment>
 			<svelte:fragment slot="action">
-				<IconButton slot="icon" icon="edit" on:click={() => (open = !open)} />
+				<IconButton slot="icon" icon="edit" on:click={() => openModal(datasource)} />
 				<IconButton icon="forward" on:click={() => setCalculation(datasource.id)} />
 				<IconButton icon="cross" on:click={() => delData(datasource.id)} />
 			</svelte:fragment>
@@ -37,30 +37,44 @@
 </Main>
 
 <Modal bind:open size="fs">
-	<h3 slot="header">Modal header</h3>
-	<div class="content">Modal content</div>
-	<p slot="footer">Modal footer</p>
+	<h3 slot="header">{@html modalHeader}</h3>
+	{#if template}
+		<Editor code={template} {schema} on:change={(e) => (input = e.detail)} />
+	{/if}
+	<svelte:fragment slot="footer">
+		<Button variant="primary" on:click={() => setCalculation(id, 'dummy', input)}>Submit</Button
+		>
+	</svelte:fragment>
 </Modal>
 
 <script lang="ts" context="module">
 	import { onMount } from 'svelte';
 
-	import { Tile, Button, Divider, IconButton, Input, Grid, Col, Modal } from 'svelte-spectre';
+	import { Button, Col, Divider, Grid, IconButton, Input, Modal, Tile } from 'svelte-spectre';
+
+	import Editor from '@/components/Editor/Editor.svelte';
 
 	import Main from '@/layouts/Main.svelte';
 	import Upload from '@/components/Upload.svelte';
 
-	import { getData, setData, delData, setCalculation } from '@/services/api';
+	import { getData, setData, delData, setCalculation, getTemplate } from '@/services/api';
 
 	import datasources from '@/stores/datasources';
 	import { showTimestamp } from '@/helpers/date';
+
+	import type { DataSource } from '@/types/dto';
 </script>
 
 <script lang="ts">
 	let content = '';
 	let contents: string[] = [];
-	let clearFiles;
-	let open = false; // temp variable for example
+	let clearFiles: Function;
+	let open = false;
+	let modalHeader = '';
+	let template = '';
+	let input = '';
+	let schema = {};
+	let id = 0;
 
 	onMount(async () => {
 		setTimeout(getData);
@@ -84,5 +98,14 @@
 		} else {
 			contents = [];
 		}
+	}
+
+	async function openModal(datasource: DataSource) {
+		open = !open;
+		modalHeader = `Edit and submit calculation for <mark> ${datasource.name} </mark>`;
+		const code = await getTemplate('dummy');
+		template = code.template;
+		schema = code.schema;
+		id = datasource.id;
 	}
 </script>

@@ -112,6 +112,7 @@
 		"zip-dir": "^2.0.0"
 	},
 	"dependencies": {
+		"codejar": "^3.5.0",
 		"debounce-promise": "^3.1.2",
 		"optimade": "^2.0.3",
 		"sirv-cli": "^1.0.12",
