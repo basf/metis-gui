@@ -28,7 +28,7 @@ export async function delData(id: number): Promise<void> {
 }
 
 export async function getTemplate(engine: string = 'dummy'): Promise<TemplateDTO> {
-    return fetchJSON(`${API_HOST}/v0/calculations/template?engine=${engine}`, { credentials: 'omit' });
+    return fetchJSON(`${API_HOST}/calculations/template?engine=${engine}`, { credentials: 'omit' });
 }
 
 export async function getCalculations(): Promise<CalculationDTO[]> {
