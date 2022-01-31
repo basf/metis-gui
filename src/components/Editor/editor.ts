@@ -2,15 +2,14 @@ import { CodeJar } from 'codejar';
 import { withLineNumbers } from 'codejar/linenumbers';
 
 export default function editor(node: HTMLElement, { code, schema, autofocus = false, loc = false, ...options }) {
-    const highlight = (node: HTMLElement) => {
-        const editor = node.children[0]
-        const content = editor.textContent || code
-        const strings = content.split('\n')
+    const highlight = (editor: HTMLElement) => {
+        const content = editor.textContent
+        const strings = content?.split('\n')
         const defaults = ['end']
         const keys = [...getKeys(schema), ...defaults]
 
         editor.innerHTML = `${strings
-            .map((string: string) => string.split(' ').map((word: string) => mark(keys, word)).join(' '))
+            ?.map((string: string) => string.split(' ').map((word: string) => mark(keys, word)).join(' '))
             .join('\n')}`
     }
 

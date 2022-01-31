@@ -8,6 +8,7 @@ import type {
     Template as TemplateDTO
 } from '@/types/dto';
 
+
 export interface HttpError extends Error {
     response?: Response;
 }
@@ -28,7 +29,7 @@ export async function delData(id: number): Promise<void> {
 }
 
 export async function getTemplate(engine: string = 'dummy'): Promise<TemplateDTO> {
-    return fetchJSON(`${API_HOST}/calculations/template?engine=${engine}`, { credentials: 'omit' });
+    return fetchJSON(`${__env === 'production' ? API_HOST : API_BASEURL}/calculations/template?engine=${engine}`, { credentials: 'omit' });
 }
 
 export async function getCalculations(): Promise<CalculationDTO[]> {

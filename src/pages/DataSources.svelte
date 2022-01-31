@@ -39,7 +39,7 @@
 <Modal bind:open size="fs">
 	<h3 slot="header">{@html modalHeader}</h3>
 	{#if template}
-		<Editor code={template} {schema} on:change={(e) => (input = e.detail)} />
+		<Editor code={template} {schema} on:change={setInput} />
 	{:else}
 		<span style="height: 100%" class="loading loading-lg p-centered d-block" />
 	{/if}
@@ -123,5 +123,10 @@
 
 	function submitCalculation() {
 		setCalculation(id, 'dummy', input).then(() => (open = !open));
+	}
+
+	function setInput(e) {
+		e.preventDefault();
+		input = e.detail;
 	}
 </script>
