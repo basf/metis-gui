@@ -8,7 +8,7 @@
 				</small>
 			</svelte:fragment>
 			<svelte:fragment slot="action">
-				<IconButton slot="icon" icon="edit" on:click={() => openModal(datasource)} />
+				<IconButton slot="icon" icon="edit" on:click={() => editCalculation(datasource)} />
 				<IconButton icon="forward" on:click={() => setCalculation(datasource.id)} />
 				<IconButton icon="cross" on:click={() => delData(datasource.id)} />
 			</svelte:fragment>
@@ -40,17 +40,28 @@
 	<h3 slot="header">{@html modalHeader}</h3>
 	{#if template}
 		<Editor code={template} {schema} on:change={(e) => (input = e.detail)} />
+	{:else}
+		<span style="height: 100%" class="loading loading-lg p-centered d-block" />
 	{/if}
 	<svelte:fragment slot="footer">
-		<Button variant="primary" on:click={() => setCalculation(id, 'dummy', input)}>Submit</Button
-		>
+		<Button variant="primary" on:click={submitCalculation}>Submit</Button>
 	</svelte:fragment>
 </Modal>
 
 <script lang="ts" context="module">
 	import { onMount } from 'svelte';
 
-	import { Button, Col, Divider, Grid, IconButton, Input, Modal, Tile } from 'svelte-spectre';
+	import {
+		Button,
+		Col,
+		Divider,
+		Grid,
+		Hero,
+		IconButton,
+		Input,
+		Modal,
+		Tile,
+	} from 'svelte-spectre';
 
 	import Editor from '@/components/Editor/Editor.svelte';
 
@@ -100,12 +111,17 @@
 		}
 	}
 
-	async function openModal(datasource: DataSource) {
+	async function editCalculation(datasource: DataSource) {
 		open = !open;
 		modalHeader = `Edit and submit calculation for <mark> ${datasource.name} </mark>`;
-		const code = await getTemplate('dummy');
-		template = code.template;
-		schema = code.schema;
-		id = datasource.id;
+		getTemplate('dummy').then((code) => {
+			template = code.template;
+			schema = code.schema;
+			id = datasource.id;
+		});
+	}
+
+	function submitCalculation() {
+		setCalculation(id, 'dummy', input).then(() => (open = !open));
 	}
 </script>
