@@ -17,7 +17,7 @@
 </script>
 
 <style lang="scss">
-	:global(pre::selection, code::selection, code::-moz-selection, code *::selection) {
+	:global(pre::selection, code::selection, code *::selection) {
 		text-shadow: none;
 		background: #ffe9b3;
 	}
