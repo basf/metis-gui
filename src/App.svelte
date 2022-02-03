@@ -23,6 +23,7 @@
 	</main>
 	<Footer />
 	<Msgbar />
+	<Confirmator />
 </Spectre>
 
 <script lang="ts">
@@ -35,6 +36,7 @@
 	import Header from '@/views/Header.svelte';
 	import Footer from '@/views/Footer.svelte';
 	import Msgbar from '@/views/Msgbar.svelte';
+	import Confirmator from '@/views/Confirmator.svelte';
 
 	import { userAsync } from '@/stores/user';
 

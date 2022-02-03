@@ -10,7 +10,18 @@
 			<svelte:fragment slot="action">
 				<IconButton slot="icon" icon="edit" on:click={() => editCalculation(datasource)} />
 				<IconButton icon="forward" on:click={() => setCalculation(datasource.id)} />
-				<IconButton icon="cross" on:click={() => delData(datasource.id)} />
+				<IconButton
+					variant="link"
+					icon="cross"
+					class="text-error"
+					on:click={() =>
+						withConfirm(
+							delData,
+							datasource.id,
+							'Are you sure?',
+							false
+						)?.(datasource.id)}
+				/>
 			</svelte:fragment>
 		</Tile>
 	{:else}
@@ -74,6 +85,8 @@
 	import { showTimestamp } from '@/helpers/date';
 
 	import type { DataSource } from '@/types/dto';
+
+	import { withConfirm } from '@/stores/confirmator';
 </script>
 
 <script lang="ts">

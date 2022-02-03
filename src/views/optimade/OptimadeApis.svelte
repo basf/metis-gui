@@ -70,19 +70,10 @@
 			}
 		}
 		:global(.tile) {
-			position: relative;
-			transition-duration: 150ms;
-			transition-property: box-shadow, background-color;
-			border-radius: 0.1rem;
-			&:hover {
-				box-shadow: 0 0 0 0.05rem $gray-color;
-				background-color: $secondary-color;
-			}
 			:global(.tile-title h5) {
 				overflow: hidden;
 				text-overflow: ellipsis;
 				letter-spacing: -0.025rem;
-				// font-size: 0.9rem;
 			}
 			:global(.tile-action) {
 				position: absolute;
@@ -90,6 +81,17 @@
 				bottom: -0.05rem;
 				visibility: hidden;
 			}
+		}
+	}
+	:global(.tile) {
+		position: relative;
+		transition-duration: 150ms;
+		transition-property: box-shadow, background-color;
+		border-radius: 0.1rem;
+		padding-left: 0.5em;
+		&:hover {
+			box-shadow: 0 0 0 0.05rem $gray-color;
+			background-color: $secondary-color;
 		}
 	}
 </style>
