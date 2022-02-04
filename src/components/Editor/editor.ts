@@ -1,21 +1,33 @@
 import { CodeJar } from 'codejar';
 import { withLineNumbers } from 'codejar/linenumbers';
 
-export default function editor(node: HTMLElement, { code, schema, autofocus = false, loc = false, ...options }) {
+export default function editor(
+    node: HTMLElement,
+    { code, schema, autofocus = false, loc = false, ...options }
+) {
     const highlight = (editor: HTMLElement) => {
-        const content = editor.textContent
-        const strings = content?.split('\n')
-        const defaults = ['end']
-        const keys = [...getKeys(schema), ...defaults]
+        const content = editor?.textContent;
+        const strings = content?.split('\n').filter(Boolean);
+        const defaults = ['end'];
+        const keys = [...getKeys(schema), ...defaults];
 
         editor.innerHTML = `${strings
-            ?.map((string: string) => string.split(' ').map((word: string) => mark(keys, word)).join(' '))
-            .join('\n')}`
-    }
+            ?.map((string: string) =>
+                string
+                    .split(' ')
+                    .map((word: string) => mark(keys, word))
+                    .join(' ')
+            )
+            .join('\n')}`;
+    };
 
-    const editor = CodeJar(node, loc ? withLineNumbers(highlight) : highlight, options);
+    const editor = CodeJar(
+        node,
+        loc ? withLineNumbers(highlight) : highlight,
+        options
+    );
 
-    editor.onUpdate(code => {
+    editor.onUpdate((code) => {
         const e = new CustomEvent('change', { detail: code });
         node.dispatchEvent(e);
     });
@@ -34,7 +46,7 @@ export default function editor(node: HTMLElement, { code, schema, autofocus = fa
         update,
         destroy() {
             editor.destroy();
-        }
+        },
     };
 }
 function isNum(number: string) {
@@ -43,23 +55,29 @@ function isNum(number: string) {
 
 function getKeys(object = {}, keys = []) {
     for (let key in object) {
-        if (key === 'properties')
-            keys.push(Object.keys(object[key]));
-        if (typeof object[key] === "object") {
+        if (key === 'properties') keys.push(Object.keys(object[key]));
+        if (typeof object[key] === 'object') {
             let subkeys: string[] = getKeys(object[key]);
             keys = keys.concat(subkeys.map((subkey: string) => subkey));
         }
     }
-    // console.log(keys)
     return keys.flat().map((key: string) => key.toLowerCase());
 }
 
-function color(keys: [], string: string) {
-    if (isNum(string)) return '#d73e48'
-    else if (keys.includes(string.toLowerCase())) return '#5755d9'
-    else return '#505c6e'
+function color(keys: string[], string: string) {
+    if (isNum(string)) return '#d73e48';
+    else if (keys.includes(string.toLowerCase())) return '#5755d9';
+    else return '#505c6e';
 }
 
-function mark(keys: [], string: string) {
-    return `<font color=${color(keys, string)}>${string}</font>`
+function mark(keys: string[], string: string) {
+    const nums = '([+-]?\\d+(\\.\\d+)*)';
+    const regex = [...keys.map((k) => `^${k}$`), nums].join('|');
+    const matched = string?.match(regex);
+    return matched
+        ? string.replace(
+              matched[0],
+              `<font color=${color(keys, matched[0])}>${matched[0]}</font>`
+          )
+        : string;
 }

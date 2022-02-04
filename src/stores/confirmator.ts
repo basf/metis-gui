@@ -4,8 +4,8 @@ export const confirmator = writable({
     open: false,
     args: undefined,
     message: 'Are you sure?',
-    function: undefined
-})
+    function: undefined,
+});
 
 export function withConfirm(fn, args, message = '', native) {
     if (!native) {
