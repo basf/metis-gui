@@ -6,8 +6,8 @@ export default function editor(
     { code, schema, autofocus = false, loc = false, ...options }
 ) {
     const highlight = (editor: HTMLElement) => {
-        const content = editor?.textContent;
-        const strings = content?.split('\n').filter(Boolean);
+        const content = editor.textContent;
+        const strings = content?.split('\n')
         const defaults = ['end'];
         const keys = [...getKeys(schema), ...defaults];
 
@@ -53,7 +53,7 @@ function isNum(number: string) {
     return !isNaN(parseFloat(number)) && isFinite(+number);
 }
 
-function getKeys(object = {}, keys = []) {
+function getKeys(object: { [key: string]: string } | string, keys: string[] = []) {
     for (let key in object) {
         if (key === 'properties') keys.push(Object.keys(object[key]));
         if (typeof object[key] === 'object') {
@@ -76,8 +76,8 @@ function mark(keys: string[], string: string) {
     const matched = string?.match(regex);
     return matched
         ? string.replace(
-              matched[0],
-              `<font color=${color(keys, matched[0])}>${matched[0]}</font>`
-          )
+            matched[0],
+            `<font color=${color(keys, matched[0])}>${matched[0]}</font>`
+        )
         : string;
 }
