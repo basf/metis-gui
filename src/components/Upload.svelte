@@ -39,7 +39,21 @@
 </script>
 
 <style lang="scss">
-	.upload > :global(.dropzone:focus) {
-		border-color: $primary-color;
+	.upload > :global(.dropzone) {
+		&:focus {
+			border-color: $primary-color;
+		}
+	}
+	@media (prefers-color-scheme: dark) {
+		.upload > :global(.dropzone) {
+			border-color: $dark-secondary;
+			background-color: $dark-color;
+		}
+	}
+	[color-scheme='dark'] {
+		.upload > :global(.dropzone) {
+			border-color: $dark-secondary;
+			background-color: $dark-secondary;
+		}
 	}
 </style>

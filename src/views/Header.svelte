@@ -7,8 +7,12 @@
 				{/if}
 			</nav>
 
-			<IconButton slot="center" size="xxl" iconSize="4x" color="dark" href="/"
-				>{@html Xray}</IconButton
+			<IconButton
+				slot="center"
+				size="xxl"
+				iconSize="4x"
+				color={$media.dark ? 'gray' : 'dark'}
+				href="/">{@html Xray}</IconButton
 			>
 
 			<nav slot="right">
@@ -27,4 +31,5 @@
 	import { Button, Container, Icon, IconButton, Navbar } from 'svelte-spectre';
 	import user from '@/stores/user';
 	import Xray from '@/assets/img/b-science.svg';
+	import { media } from '@/helpers/media';
 </script>

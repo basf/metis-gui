@@ -1,4 +1,4 @@
-<footer class="bg-secondary py-2 mt-2">
+<footer class="bg-secondary{$media.dark ? '-darked' : ''} py-2 mt-2">
 	<Container>
 		<Navbar>
 			<copy slot="center">
@@ -11,6 +11,7 @@
 
 <script lang="ts">
 	import { Container, Navbar } from 'svelte-spectre';
+	import { media } from '@/helpers/media';
 </script>
 
 <style lang="scss">
