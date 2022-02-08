@@ -6,7 +6,7 @@ export default function editor(
     { code, schema, autofocus = false, loc = false, ...options }
 ) {
     const highlight = (editor: HTMLElement) => {
-        const content = editor.textContent;
+        const content = editor.innerText;
         const strings = content?.split('\n')
         const defaults = ['end'];
         const keys = [...getKeys(schema), ...defaults];
@@ -77,7 +77,7 @@ function mark(keys: string[], string: string) {
     return matched
         ? string.replace(
             matched[0],
-            `<font color=${color(keys, matched[0])}>${matched[0]}</font>`
+            `\<font color\=${color(keys, matched[0])}\>${matched[0]}\</font\>`
         )
         : string;
 }
