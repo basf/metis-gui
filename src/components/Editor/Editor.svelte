@@ -17,19 +17,21 @@
 </script>
 
 <style lang="scss">
-	:global(pre::selection, code::selection, code ::selection) {
+	:global(pre::selection, code::selection, code *::selection) {
 		text-shadow: none;
 		background: #ffe9b3;
 	}
 	:global(.codejar-linenumbers) {
 		position: absolute !important;
 		padding: 1rem !important;
-		// background-color: transparent !important;
+		background-color: transparent !important;
 		mix-blend-mode: normal !important;
 		font-size: 0.85em !important;
 		font-family: inherit !important;
 		line-height: 1.5 !important;
 		opacity: 0.3;
 		color: #505c6e !important;
+		z-index: 1;
+		width: auto !important;
 	}
 </style>
