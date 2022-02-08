@@ -90,8 +90,15 @@
 		border-radius: 0.1rem;
 		padding-left: 0.5em;
 		&:hover {
-			box-shadow: 0 0 0 0.05rem $gray-color;
+			box-shadow: 0 0 0 0.05rem $primary-color;
 			background-color: $secondary-color;
+
+			@media (prefers-color-scheme: dark) {
+				background-color: $dark-secondary;
+			}
+			[color-scheme='dark'] {
+				background-color: $dark-secondary;
+			}
 		}
 	}
 </style>
