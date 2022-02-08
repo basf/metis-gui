@@ -6,7 +6,7 @@ export default function editor(
     { code, schema, autofocus = false, loc = false, ...options }
 ) {
     const highlight = (editor: HTMLElement) => {
-        const content = editor.innerText;
+        const content = editor.textContent;
         const strings = content?.split('\n')
         const defaults = ['end'];
         const keys = [...getKeys(schema), ...defaults];
