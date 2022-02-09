@@ -7,12 +7,8 @@
 				{/if}
 			</nav>
 
-			<IconButton
-				slot="center"
-				size="xxl"
-				iconSize="4x"
-				color={$media.dark ? 'gray' : 'dark'}
-				href="/">{@html Xray}</IconButton
+			<IconButton id="xray" slot="center" size="xxl" iconSize="4x" href="/"
+				>{@html Xray}</IconButton
 			>
 
 			<nav slot="right">
@@ -33,3 +29,21 @@
 	import Xray from '@/assets/img/b-science.svg';
 	import { media } from '@/helpers/media';
 </script>
+
+<style lang="scss">
+	@media (prefers-color-scheme: dark) {
+		:global(#xray) {
+			color: $gray-color;
+		}
+	}
+	:global([color-scheme='dark']) {
+		:global(#xray) {
+			color: $gray-color;
+		}
+	}
+	:global([color-scheme='light']) {
+		:global(#xray) {
+			color: $dark-color;
+		}
+	}
+</style>

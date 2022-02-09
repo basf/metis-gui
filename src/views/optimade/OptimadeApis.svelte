@@ -96,9 +96,16 @@
 			@media (prefers-color-scheme: dark) {
 				background-color: $dark-secondary;
 			}
-			[color-scheme='dark'] {
-				background-color: $dark-secondary;
-			}
+		}
+	}
+	:global([color-scheme='dark']) {
+		:global(.tile:hover) {
+			background-color: $dark-secondary;
+		}
+	}
+	:global([color-scheme='light']) {
+		:global(.tile:hover) {
+			background-color: $secondary-color;
 		}
 	}
 </style>
