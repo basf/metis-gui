@@ -1,4 +1,4 @@
-<footer class="bg-secondary{$media.dark ? '-darked' : ''} py-2 mt-2">
+<footer class="py-2 mt-2">
 	<Container>
 		<Navbar>
 			<copy slot="center">
@@ -43,5 +43,20 @@
 		// :global(main) {
 		// 	flex-grow: 1;
 		// }
+	}
+	@media (prefers-color-scheme: dark) {
+		footer {
+			background-color: $dark-secondary;
+		}
+	}
+	:global([color-scheme='dark']) {
+		footer {
+			background-color: $dark-secondary;
+		}
+	}
+	:global([color-scheme='light']) {
+		footer {
+			background-color: $secondary-color;
+		}
 	}
 </style>

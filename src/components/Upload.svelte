@@ -40,6 +40,7 @@
 
 <style lang="scss">
 	.upload > :global(.dropzone) {
+		border-width: 1px;
 		&:focus {
 			border-color: $primary-color;
 		}
@@ -50,10 +51,16 @@
 			background-color: $dark-color;
 		}
 	}
-	[color-scheme='dark'] {
+	:global([color-scheme='dark']) {
 		.upload > :global(.dropzone) {
 			border-color: $dark-secondary;
 			background-color: $dark-secondary;
+		}
+	}
+	:global([color-scheme='light']) {
+		.upload > :global(.dropzone) {
+			border-color: $gray-color;
+			background-color: $gray-color-light;
 		}
 	}
 </style>
