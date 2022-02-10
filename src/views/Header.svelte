@@ -27,7 +27,6 @@
 	import { Button, Container, Icon, IconButton, Navbar } from 'svelte-spectre';
 	import user from '@/stores/user';
 	import Xray from '@/assets/img/b-science.svg';
-	import { media } from '@/helpers/media';
 </script>
 
 <style lang="scss">

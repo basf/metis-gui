@@ -11,7 +11,6 @@
 
 <script lang="ts">
 	import { Container, Navbar } from 'svelte-spectre';
-	import { media } from '@/helpers/media';
 </script>
 
 <style lang="scss">
