@@ -7,7 +7,7 @@ export const confirmator = writable({
     function: undefined,
 });
 
-export function withConfirm(fn, args, message = '', native) {
+export function withConfirm(fn: Function, args, message = '', native) {
     if (!native) {
         confirmator.set({
             open: true,

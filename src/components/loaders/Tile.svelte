@@ -6,7 +6,7 @@
 
 <script lang="ts" context="module">
 	import ContentLoader from 'svelte-content-loader';
-	import { media } from '@/helpers/media';
+	import { darkTheme } from '@/stores/profile';
 </script>
 
 <script lang="ts">
@@ -16,5 +16,5 @@
 	export let w = 220;
 	export let h = 220;
 	$: y = (height - count * h) / count + count / 2;
-	$: colors = $media.dark ? { primaryColor: '#303742', secondaryColor: '#252b33' } : {};
+	$: colors = $darkTheme ? { primaryColor: '#303742', secondaryColor: '#252b33' } : {};
 </script>
