@@ -16,12 +16,14 @@
 	};
 </script>
 
-<style lang="scss">
-	:global(pre::selection, code::selection, code *::selection) {
+<style lang="scss" global>
+	pre::selection,
+	code::selection,
+	code *::selection {
 		text-shadow: none;
 		background: #ffe9b3;
 	}
-	:global(.codejar-linenumbers) {
+	.codejar-linenumbers {
 		position: absolute !important;
 		padding: 1rem !important;
 		background-color: transparent !important;
@@ -30,8 +32,41 @@
 		font-family: inherit !important;
 		line-height: 1.5 !important;
 		opacity: 0.3;
-		color: #505c6e !important;
+		color: #bcc3ce !important;
 		z-index: 1;
 		width: auto !important;
+	}
+	@media (prefers-color-scheme: dark) {
+		pre::selection,
+		code::selection,
+		code *::selection {
+			background: rgba(179, 127, 0, 0.2) !important;
+		}
+		mark {
+			background: rgba(179, 127, 0, 0.2) !important;
+			color: #bcc3ce !important;
+		}
+	}
+	[color-scheme='dark'] {
+		pre::selection,
+		code::selection,
+		code *::selection {
+			background: rgba(179, 127, 0, 0.2) !important;
+		}
+		mark {
+			background: rgba(179, 127, 0, 0.2) !important;
+			color: #bcc3ce !important;
+		}
+	}
+	[color-scheme='light'] {
+		pre::selection,
+		code::selection,
+		code *::selection {
+			background: #ffe9b3;
+		}
+		mark {
+			background: #ffe9b3;
+			color: #bcc3ce !important;
+		}
 	}
 </style>
