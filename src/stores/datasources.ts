@@ -7,6 +7,7 @@ export default streamable<DataDTO[]>(
     {
         url: STREAM_URL,
         event: 'datasources',
+        withCredentials: true,
     },
     undefined,
     []

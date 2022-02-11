@@ -7,6 +7,7 @@ export default streamable<ErrorDTO[]>(
     {
         url: STREAM_URL,
         event: 'errors',
+        withCredentials: true,
     },
     undefined,
     []
