@@ -6,6 +6,7 @@ export default streamable<CalculationDTO[]>(
     {
         url: STREAM_URL,
         event: 'calculations',
+        withCredentials: true,
     },
     undefined,
     []
