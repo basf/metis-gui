@@ -1,6 +1,6 @@
 {
 	"name": "bscience-gui",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"private": true,
 	"scripts": {
 		"build": "npm run clean && env BROWSERSLIST_CONFIG=./package.json rollup -c",
@@ -115,6 +115,7 @@
 		"codejar": "^3.5.0",
 		"debounce-promise": "^3.1.2",
 		"optimade": "^2.0.3",
+		"optimade-mpds-nlp": "^0.1.1",
 		"sirv-cli": "^1.0.12",
 		"svelte-file-dropzone": "^0.0.15",
 		"svelte-media": "^0.1.5",

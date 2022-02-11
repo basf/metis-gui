@@ -1,5 +1,5 @@
 import { Optimade } from 'optimade';
-import nlp from '@/packages/optimade-nlp';
+import nlp from 'optimade-mpds-nlp';
 
 import prefetched from 'optimade/dist/prefetched.json';
 
