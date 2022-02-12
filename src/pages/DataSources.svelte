@@ -13,6 +13,7 @@
 				<IconButton
 					variant="link"
 					icon="cross"
+					color="error"
 					class="text-error"
 					on:click={() =>
 						withConfirm(

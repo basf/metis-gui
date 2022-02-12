@@ -15,10 +15,7 @@
 				</nav>
 				<div slot="body" class="my-2">
 					<Tile>
-						<b slot="title">E-mail: {$user.email}</b>
-					</Tile>
-					<Tile>
-						<Switch bind:value={$darkTheme}>Dark theme</Switch>
+						<span slot="title">E-mail: <a href="mailto:{$user.email}">{$user.email}</a></span>
 					</Tile>
 				</div>
 
@@ -31,12 +28,9 @@
 </Grid>
 
 <script lang="ts">
-	import { Button, Col, Grid, Panel, Switch, Tile } from 'svelte-spectre';
+	import { Button, Col, Grid, Panel, Tile } from 'svelte-spectre';
 
 	import user, { userAsync } from '@/stores/user';
-	import { darkTheme } from '@/stores/profile';
-
-	import { nodeAttribute } from '@/helpers/dom';
 
 	import { logout } from '@/services/api';
 
@@ -44,8 +38,6 @@
 		await logout();
 		$userAsync = null;
 	}
-
-	$: nodeAttribute(document.documentElement, 'color-scheme', $darkTheme ? 'dark' : 'light');
 </script>
 
 <style lang="scss">

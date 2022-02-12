@@ -1,16 +1,22 @@
 <footer class="py-2 mt-2">
 	<Container>
 		<Navbar>
-			<copy slot="center">
-				This is the <a href="https://basf.science">BASF.science</a>, an open-source XRPD
-				online data management system.
-			</copy>
+			<nav slot="left">
+				This is the <a href="https://basf.science">BASF.science</a> &mdash; <br />an open-source XRPD online data management system.
+			</nav>
+			<nav slot="right"><Switch bind:value={$darkTheme}>Dark theme</Switch></nav>
 		</Navbar>
 	</Container>
 </footer>
 
 <script lang="ts">
-	import { Container, Navbar } from 'svelte-spectre';
+	import { Container, Navbar, Switch } from 'svelte-spectre';
+
+	import { nodeAttribute } from '@/helpers/dom';
+
+	import { darkTheme } from '@/stores/profile';
+
+	$: nodeAttribute(document.documentElement, 'color-scheme', $darkTheme ? 'dark' : 'light');
 </script>
 
 <style lang="scss">

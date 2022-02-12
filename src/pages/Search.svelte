@@ -36,7 +36,7 @@
 		{#if guessSearch}
 			<div class="mt-2">
 				<Badge>
-					Optimade filter={guessSearch}
+					filter={guessSearch}
 				</Badge>
 			</div>
 		{/if}

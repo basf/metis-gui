@@ -4,6 +4,7 @@ export const API_HOST =
     __env === 'production'
         ? 'https://gate.basf.science'
         : 'http://localhost:3000';
+
 export const API_BASEURL = `${API_HOST}/${API_VERSION}`;
 
 export const STREAM_URL = API_HOST + '/stream';
