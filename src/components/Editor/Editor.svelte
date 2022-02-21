@@ -62,11 +62,11 @@
 		pre::selection,
 		code::selection,
 		code *::selection {
-			background: #ffe9b3;
+			background: #ffe9b3 !important;
 		}
 		mark {
-			background: #ffe9b3;
-			color: #bcc3ce !important;
+			background: #ffe9b3 !important;
+			color: inherit !important;
 		}
 	}
 </style>

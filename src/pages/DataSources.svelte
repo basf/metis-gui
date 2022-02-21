@@ -8,10 +8,10 @@
 				</small>
 			</svelte:fragment>
 			<svelte:fragment slot="action">
-				<IconButton slot="icon" icon="edit" on:click={() => editCalculation(datasource)} />
+				<IconButton icon="edit" on:click={(e) => editCalculation(datasource, e)} />
+				<IconButton icon="tag" on:click={(e) => editTags(datasource, e)} />
 				<IconButton icon="forward" on:click={() => setCalculation(datasource.id)} />
 				<IconButton
-					variant="link"
 					icon="cross"
 					color="error"
 					class="text-error"
@@ -48,7 +48,7 @@
 	</div>
 </Main>
 
-<Modal bind:open size="fs">
+<Modal bind:open={modalOpen} size="fs">
 	<h3 slot="header">{@html modalHeader}</h3>
 	{#if template}
 		<Editor code={template} {schema} on:change={setInput} />
@@ -56,7 +56,9 @@
 		<span style="height: 100%" class="loading loading-lg p-centered d-block" />
 	{/if}
 	<svelte:fragment slot="footer">
-		<Button variant="primary" on:click={submitCalculation}>Submit</Button>
+		<Button variant="primary" on:click={template ? submitCalculation : submitTags}
+			>Submit</Button
+		>
 	</svelte:fragment>
 </Modal>
 
@@ -94,7 +96,7 @@
 	let content = '';
 	let contents: string[] = [];
 	let clearFiles: Function;
-	let open = false;
+	let modalOpen = false;
 	let modalHeader = '';
 	let template = '';
 	let input = '';
@@ -125,22 +127,81 @@
 		}
 	}
 
-	async function editCalculation(datasource: DataSource) {
-		open = !open;
+	async function editCalculation(datasource: DataSource, e: Event) {
+		e.target.nodeName === 'BUTTON' ? e.target.blur() : e.target.offsetParent.blur();
+		modalOpen = !modalOpen;
 		modalHeader = `Edit and submit calculation for <mark> ${datasource.name} </mark>`;
 		getTemplate('dummy').then((code) => {
 			template = code.template;
 			schema = code.schema;
 			id = datasource.id;
+			input = template;
 		});
 	}
 
 	function submitCalculation() {
-		setCalculation(id, 'dummy', input).then(() => (open = !open));
+		setCalculation(id, 'dummy', input).then(() => (modalOpen = !modalOpen));
 	}
 
 	function setInput(e) {
 		e.preventDefault();
 		input = e.detail;
 	}
+
+	function editTags(datasource: DataSource, e: Event) {
+		template = schema = input = '';
+		modalOpen = !modalOpen;
+		modalHeader = `Edit and submit Tags for <mark> ${datasource.name} </mark>`;
+	}
+
+	function submitTags() {
+		modalOpen = !modalOpen;
+	}
 </script>
+
+<style lang="scss" global>
+	.icon-edit::after {
+		left: 9% !important;
+		top: 96% !important;
+	}
+	// icon-tag
+	.icon-tag {
+		display: block;
+		border: 2px solid;
+		border-right: 0;
+		border-top-left-radius: 3px;
+		border-bottom-left-radius: 3px;
+		box-sizing: border-box;
+		transform: scale(var(--ggs, 0.8)) rotate(-45deg);
+		position: relative;
+		width: 19px !important;
+		height: 14px !important;
+
+		&::before {
+			content: '';
+			display: block;
+			border: 2px solid;
+			position: absolute;
+			width: 2px;
+			height: 2px;
+			box-sizing: content-box !important;
+			border-radius: 100px;
+			left: 85% !important;
+			top: 2px;
+		}
+		&::after {
+			content: '';
+			display: block;
+			box-sizing: border-box;
+			position: absolute;
+			width: 10px;
+			height: 10px;
+			border-bottom: 2px solid;
+			border-right: 2px solid;
+			border-bottom-right-radius: 4px;
+			transform: rotate(-45deg) !important;
+			top: 0 !important;
+			left: 70% !important;
+		}
+	}
+</style>
