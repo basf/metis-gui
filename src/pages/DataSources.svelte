@@ -128,7 +128,6 @@
 	}
 
 	async function editCalculation(datasource: DataSource, e: Event) {
-		console.log(e);
 		e.target.nodeName === 'BUTTON' ? e.target.blur() : e.target.offsetParent.blur();
 		modalOpen = !modalOpen;
 		modalHeader = `Edit and submit calculation for <mark> ${datasource.name} </mark>`;
@@ -141,7 +140,6 @@
 	}
 
 	function submitCalculation() {
-		console.log(input);
 		setCalculation(id, 'dummy', input).then(() => (modalOpen = !modalOpen));
 	}
 
