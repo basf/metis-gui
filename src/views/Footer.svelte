@@ -15,16 +15,9 @@
 
 	import { nodeAttribute } from '@/helpers/dom';
 
-	import { writable, get } from 'svelte/store';
-	import { getItem, setItem } from '@/helpers/storage';
-	import { media } from '@/stores/media';
+	import { darkTheme } from '@/stores/theme';
 
 	$: nodeAttribute(document.documentElement, 'color-scheme', $darkTheme ? 'dark' : 'light');
-
-	const darkTheme = writable(
-		JSON.parse(getItem('xray_darkTheme', sessionStorage)) ?? get(media).dark
-	);
-	darkTheme.subscribe((val) => setItem('xray_darkTheme', val, sessionStorage));
 </script>
 
 <style lang="scss">
