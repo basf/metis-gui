@@ -8,13 +8,35 @@
 				</small>
 			</svelte:fragment>
 			<svelte:fragment slot="action">
-				<IconButton icon="edit" on:click={(e) => editCalculation(datasource, e)} />
-				<IconButton icon="tag" on:click={(e) => editTags(datasource, e)} />
-				<IconButton icon="forward" on:click={() => setCalculation(datasource.id)} />
+				<IconButton
+					icon="edit"
+					color="gray"
+					tooltip="edit"
+					on:click={(e) => editCalculation(datasource, e)}
+				/>
+				<IconButton
+					icon="tag"
+					color="primary"
+					tooltip="tags"
+					on:click={(e) => editTags(datasource, e)}
+				/>
+				<IconButton
+					color="warning"
+					tooltip="graphic"
+					on:click={(e) => editTags(datasource, e)}
+				>
+					{@html Sinus}
+				</IconButton>
+				<IconButton
+					icon="forward"
+					color="success"
+					tooltip="calculate"
+					on:click={() => setCalculation(datasource.id)}
+				/>
 				<IconButton
 					icon="cross"
 					color="error"
-					class="text-error"
+					tooltip="delete"
 					on:click={() =>
 						withConfirm(
 							delData,
@@ -90,6 +112,8 @@
 	import type { DataSource } from '@/types/dto';
 
 	import { withConfirm } from '@/stores/confirmator';
+
+	import Sinus from '@/assets/img/sinus.svg';
 </script>
 
 <script lang="ts">
@@ -160,48 +184,88 @@
 </script>
 
 <style lang="scss" global>
-	.icon-edit::after {
-		left: 9% !important;
-		top: 96% !important;
-	}
+	// .icon-edit::after {
+	// 	left: 9% !important;
+	// 	top: 96% !important;
+	// }
 	// icon-tag
-	.icon-tag {
-		display: block;
-		border: 2px solid;
-		border-right: 0;
-		border-top-left-radius: 3px;
-		border-bottom-left-radius: 3px;
-		box-sizing: border-box;
-		transform: scale(var(--ggs, 0.8)) rotate(-45deg);
-		position: relative;
-		width: 19px !important;
-		height: 14px !important;
+	// .icon-tag {
+	// 	display: block;
+	// 	border: 2px solid;
+	// 	border-right: 0;
+	// 	border-top-left-radius: 3px;
+	// 	border-bottom-left-radius: 3px;
+	// 	box-sizing: border-box;
+	// 	transform: scale(var(--ggs, 0.8)) rotate(-45deg);
+	// 	position: relative;
+	// 	width: 19px !important;
+	// 	height: 14px !important;
 
-		&::before {
-			content: '';
-			display: block;
-			border: 2px solid;
-			position: absolute;
-			width: 2px;
-			height: 2px;
-			box-sizing: content-box !important;
-			border-radius: 100px;
-			left: 85% !important;
-			top: 2px;
-		}
-		&::after {
-			content: '';
-			display: block;
-			box-sizing: border-box;
-			position: absolute;
-			width: 10px;
-			height: 10px;
-			border-bottom: 2px solid;
-			border-right: 2px solid;
-			border-bottom-right-radius: 4px;
-			transform: rotate(-45deg) !important;
-			top: 0 !important;
-			left: 70% !important;
-		}
-	}
+	// 	&::before {
+	// 		content: '';
+	// 		display: block;
+	// 		border: 2px solid;
+	// 		position: absolute;
+	// 		width: 2px;
+	// 		height: 2px;
+	// 		box-sizing: content-box !important;
+	// 		border-radius: 100px;
+	// 		left: 85% !important;
+	// 	}
+	// 	&::after {
+	// 		content: '';
+	// 		display: block;
+	// 		box-sizing: border-box;
+	// 		position: absolute;
+	// 		width: 10px;
+	// 		height: 10px;
+	// 		border-bottom: 2px solid;
+	// 		border-right: 2px solid;
+	// 		border-bottom-right-radius: 4px;
+	// 		transform: rotate(-45deg) !important;
+	// 		top: 0 !important;
+	// 		left: 70% !important;
+	// 	}
+	// }
+
+	// // icon-trend
+	// .icon-trend {
+	// 	box-sizing: border-box;
+	// 	position: relative;
+	// 	display: block;
+	// 	transform: rotate(-45deg) scale(var(--ggs, 1));
+	// 	width: 10px !important;
+	// 	height: 8px !important;
+	// 	border-top: 2px solid;
+	// 	border-right: 2px solid;
+	// 	right: 5px;
+	// 	top: 3px;
+	// 	&::after,
+	// 	&::before {
+	// 		content: '';
+	// 		display: block;
+	// 		box-sizing: border-box;
+	// 		position: absolute;
+	// 		transform: none !important;
+	// 		top: auto !important;
+	// 	}
+	// 	&:before {
+	// 		background: currentColor;
+	// 		left: 8px !important;
+	// 		width: 10px !important;
+	// 		height: 2px !important;
+	// 		bottom: 0 !important;
+	// 		right: auto !important;
+	// 	}
+	// 	&::after {
+	// 		width: 0 !important;
+	// 		height: 0 !important;
+	// 		border-top: 4px solid transparent;
+	// 		border-bottom: 4px solid transparent;
+	// 		border-left: 6px solid;
+	// 		bottom: -3px !important;
+	// 		right: -14px !important;
+	// 		left: auto !important;
+	// 	}
+	// }
 </style>
