@@ -9,7 +9,6 @@
 				name="q"
 				autofocus
 				inline
-				expand
 				{size}
 			>
 				<span slot="iconRight">
@@ -200,3 +199,11 @@
 		return providers.map((p) => ({ value: p.id, label: p.attributes.name }));
 	}
 </script>
+
+<style>
+	@media (max-width: 480px) {
+		:global(.spectre .input-group) {
+			flex-flow: row wrap;
+		}
+	}
+</style>

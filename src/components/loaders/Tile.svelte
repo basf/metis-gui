@@ -6,7 +6,7 @@
 
 <script lang="ts" context="module">
 	import ContentLoader from 'svelte-content-loader';
-	import { darkTheme } from '@/stores/profile';
+	import { darkTheme } from '@/stores/theme';
 </script>
 
 <script lang="ts">
