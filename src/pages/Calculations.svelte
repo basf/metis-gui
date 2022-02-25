@@ -35,5 +35,4 @@
 	onMount(async () => {
 		setTimeout(getCalculations);
 	});
-	$: console.info($calculations);
 </script>

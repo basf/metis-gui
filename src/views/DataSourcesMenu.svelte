@@ -93,11 +93,6 @@
 	function openMenu(id: number) {
 		data = data.map((d) => ({ ...d, menu: d.id === id ? true : false }));
 	}
-
-	// function dispatch(e: Event, name: string, detail?: { [key: string]: any }) {
-	// 	console.log(e);
-	// 	e.target.dispatchEvent(new CustomEvent(name, { ...detail }));
-	// }
 </script>
 
 <style lang="scss">

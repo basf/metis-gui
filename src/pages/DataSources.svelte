@@ -99,7 +99,6 @@
 	import { withConfirm } from '@/stores/confirmator';
 
 	import type { DataSource } from '@/types/dto';
-	import type { ChangeEvent } from '@/types/event';
 </script>
 
 <script lang="ts">
