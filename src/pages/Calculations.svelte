@@ -6,7 +6,11 @@
 				{showTimestamp(calculation)}
 			</small>
 			<svelte:fragment slot="action">
-				<IconButton icon="cross" color="error" on:click={() => delCalculation(calculation.id)} />
+				<IconButton
+					icon="cross"
+					color="error"
+					on:click={() => delCalculation(calculation.id)}
+				/>
 			</svelte:fragment>
 		</Tile>
 	{:else}
@@ -31,4 +35,5 @@
 	onMount(async () => {
 		setTimeout(getCalculations);
 	});
+	$: console.info($calculations);
 </script>
