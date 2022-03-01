@@ -67,22 +67,15 @@
 </Modal>
 
 <script lang="ts" context="module">
-	import { onMount } from 'svelte';
-
 	import {
-		Badge,
 		Button,
 		Col,
 		Divider,
-		Dropdown,
 		Grid,
-		Hero,
-		Icon,
-		IconButton,
 		Input,
-		Menu,
 		Modal,
 		Tile,
+		toast
 	} from 'svelte-spectre';
 
 	import Editor from '@/components/Editor/Editor.svelte';
@@ -95,6 +88,7 @@
 	import { getData, setData, delData, setCalculation, getTemplate } from '@/services/api';
 
 	import datasources from '@/stores/datasources';
+	import user from '@/stores/user';
 	import { showTimestamp } from '@/helpers/date';
 	import { withConfirm } from '@/stores/confirmator';
 
@@ -119,10 +113,8 @@
 		datasourceID = 0,
 		data: DataSource[];
 
-	onMount(async () => {
-		setTimeout(getData);
-	});
-
+	$: $user && getData();
+	$: $datasources.length && toast.primary({ msg: 'Structures synced', timeout: 2000, pos: 'top_right' });
 	$: data = $datasources;
 
 	function addDataItem() {

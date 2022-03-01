@@ -19,20 +19,18 @@
 </Main>
 
 <script lang="ts" context="module">
-	import { onMount } from 'svelte';
-
-	import { IconButton, Tile } from 'svelte-spectre';
+	import { IconButton, Tile, toast } from 'svelte-spectre';
 
 	import Main from '@/layouts/Main.svelte';
 
 	import { getCalculations, delCalculation } from '@/services/api';
 
 	import calculations from '@/stores/calculations';
+	import user from '@/stores/user';
 	import { showTimestamp } from '@/helpers/date';
 </script>
 
 <script lang="ts">
-	onMount(async () => {
-		setTimeout(getCalculations);
-	});
+	$: $user && getCalculations();
+	$: $calculations.length && toast.primary({ msg: 'Calculations synced', timeout: 2000, pos: 'top_right' });
 </script>
