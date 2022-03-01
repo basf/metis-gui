@@ -4,38 +4,46 @@
 		<Menu slot="content" nav>
 			<h6 slot="header">Tile menu</h6>
 			<li>
-				<a
-					href="#"
+				<Button
+					href="#_"
+					variant="link"
 					on:click={() => dispatch('editCalculation', { datasource })}
-					class="text-gray"><Icon icon="edit" />&nbsp; Edit Calculation</a
+					><Icon icon="edit" />&nbsp; Edit Calculation</Button
 				>
 			</li>
 			<li>
-				<a
-					href="#"
-					on:click|preventDefault={() => dispatch('editTags', { datasource })}
-					class="text-primary"><Icon icon="tag" />&nbsp; Edit Tags</a
+				<Button
+					href="#_"
+					variant="link"
+					on:click={() => dispatch('editTags', { datasource })}
+					><Icon icon="tag" />&nbsp; Edit Tags</Button
 				>
 			</li>
 			<li>
-				<a
-					href="#"
-					on:click|preventDefault={() => dispatch('editGraphic', { datasource })}
-					class="text-warning"><Icon>{@html Sinus}</Icon>&nbsp; Edit Graphic</a
+				<Button
+					href="#_"
+					variant="link"
+					on:click={() => dispatch('editGraphic', { datasource })}
+					><Icon>{@html Sinus}</Icon>&nbsp; Edit Graphic</Button
 				>
 			</li>
 			<li>
-				<a
-					href="#"
-					on:click|preventDefault={() => dispatch('setCalculation', { datasource })}
-					class="text-success"><Icon icon="forward" />&nbsp; Calculate</a
+				<Button
+					href="#_"
+					variant="link"
+					on:click={() => dispatch('setCalculation', { datasource })}
+					><Icon color="success" icon="forward" /><span class="text-success"
+						>&nbsp; Calculate</span
+					></Button
 				>
 			</li>
 			<li>
-				<a
-					href="#"
-					on:click|preventDefault={() => dispatch('delCalculation', { datasource })}
-					class="text-error"><Icon icon="cross" />&nbsp; Delete</a
+				<Button
+					href="#_"
+					variant="link"
+					on:click={() => dispatch('delCalculation', { datasource })}
+					><Icon color="error" icon="cross" /><span class="text-error">&nbsp; Delete</span
+					></Button
 				>
 			</li>
 		</Menu>
@@ -43,21 +51,11 @@
 {:else}
 	<IconButton
 		icon="edit"
-		color="gray"
-		tooltip="edit"
+		tooltip="calculation"
 		on:click={() => dispatch('editCalculation', { datasource })}
 	/>
-	<IconButton
-		icon="tag"
-		color="primary"
-		tooltip="tags"
-		on:click={() => dispatch('editTags', { datasource })}
-	/>
-	<IconButton
-		color="warning"
-		tooltip="graphic"
-		on:click={() => dispatch('editGraphic', { datasource })}
-	>
+	<IconButton icon="tag" tooltip="tags" on:click={() => dispatch('editTags', { datasource })} />
+	<IconButton tooltip="graphic" on:click={() => dispatch('editGraphic', { datasource })}>
 		{@html Sinus}
 	</IconButton>
 	<IconButton
@@ -75,7 +73,7 @@
 {/if}
 
 <script lang="ts" context="module">
-	import { Dropdown, Icon, IconButton, Menu } from 'svelte-spectre';
+	import { Button, Dropdown, Icon, IconButton, Menu } from 'svelte-spectre';
 	import Sinus from '@/assets/img/sinus.svg';
 	import { media } from '@/stores/media';
 
@@ -94,10 +92,3 @@
 		data = data.map((d) => ({ ...d, menu: d.id === id ? true : false }));
 	}
 </script>
-
-<style lang="scss">
-	// fix from svelte-spectre
-	:global(.spectre .icon-tag) {
-		display: inline-block;
-	}
-</style>

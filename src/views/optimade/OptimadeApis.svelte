@@ -58,7 +58,6 @@
 	});
 
 	function setDataContent(structure: Types.Structure) {
-		console.log(structure);
 		setData(JSON.stringify(structure));
 	}
 </script>

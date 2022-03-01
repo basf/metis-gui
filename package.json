@@ -58,6 +58,7 @@
 		"@testing-library/jest-dom": "^5.14.1",
 		"@testing-library/svelte": "^3.0.3",
 		"@tsconfig/svelte": "^2.0.1",
+		"@types/d3-scale": "^4.0.2",
 		"@types/jest": "^27.0.0",
 		"@types/node": "^15.12.4",
 		"@typescript-eslint/eslint-plugin": "^4.28.0",
@@ -113,6 +114,7 @@
 	},
 	"dependencies": {
 		"codejar": "^3.5.0",
+		"d3-scale": "^4.0.2",
 		"debounce-promise": "^3.1.2",
 		"optimade": "^2.0.3",
 		"optimade-mpds-nlp": "^0.1.1",

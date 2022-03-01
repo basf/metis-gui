@@ -56,6 +56,8 @@
 	<h3 slot="header">{@html modal.header}</h3>
 	{#if editor.template}
 		<Editor bind:code={editor.template} schema={editor.schema} on:change={setInput} />
+	{:else if points.length}
+		<Graphic {points} source={pointsSource} />
 	{:else}
 		<span style="height: 100%" class="loading loading-lg p-centered d-block" />
 	{/if}
@@ -89,6 +91,8 @@
 
 	import Main from '@/layouts/Main.svelte';
 	import Upload from '@/components/Upload.svelte';
+	import Graphic from '@/components/Graphic/Graphic.svelte';
+	import pointsSource from '@/components/Graphic/points';
 	import DataSourcesMenu from '@/views/DataSourcesMenu.svelte';
 	import DataSourcesTags from '@/views/DataSourcesTags.svelte';
 
@@ -105,6 +109,7 @@
 	let content = '';
 	let contents: string[] = [];
 	let clearFiles: Function;
+	let points = [];
 
 	let modal: { open: boolean; header: string } | {} = { open: false, header: '' },
 		editor: {
@@ -168,6 +173,7 @@
 
 	function editTags(datasource: DataSource, e: Event) {
 		editor = {};
+		points = [];
 		modal = {
 			open: true,
 			header: `Edit and submit Tags for <mark> ${datasource.name} </mark>`,
@@ -180,6 +186,7 @@
 
 	function editGraphic(datasource: DataSource, e: Event) {
 		editor = {};
+		points = pointsSource;
 		modal = {
 			open: true,
 			header: `Edit and submit Graphic for <mark> ${datasource.name} </mark>`,
@@ -195,6 +202,9 @@
 	:global(.spectre .tile) {
 		padding: 0.75em;
 		margin: 0.5em 0;
+		:global(.tile-action) {
+			display: flex;
+		}
 	}
 	h5 {
 		display: inline;
