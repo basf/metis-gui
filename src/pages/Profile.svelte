@@ -15,7 +15,9 @@
 				</nav>
 				<div slot="body" class="my-2">
 					<Tile>
-						<span slot="title">E-mail: <a href="mailto:{$user.email}">{$user.email}</a></span>
+						<span slot="title"
+							>E-mail: <a href="mailto:{$user.email}">{$user.email}</a></span
+						>
 					</Tile>
 				</div>
 
@@ -28,7 +30,7 @@
 </Grid>
 
 <script lang="ts">
-	import { Button, Col, Grid, Panel, Tile } from 'svelte-spectre';
+	import { Button, Col, Grid, Panel, Tile, toast } from 'svelte-spectre';
 
 	import user, { userAsync } from '@/stores/user';
 
@@ -37,6 +39,7 @@
 	async function doLogout() {
 		await logout();
 		$userAsync = null;
+		toast.warning({ msg: 'You are logged out', timeout: 4000, pos: 'top_right' });
 	}
 </script>
 
