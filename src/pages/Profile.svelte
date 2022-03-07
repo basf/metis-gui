@@ -7,15 +7,13 @@
 					<div class="panel-title h5 mt-10">{$user.firstname} {$user.lastname}</div>
 				</div>
 				<nav slot="nav">
-					<!-- TODO: split to separate component -->
-					<ul class="tab tab-block">
-						<li class="tab-item active">Profile</li>
-					</ul>
-					<!-- / TODO: split to separate component -->
+					<Tabs items={profile} bind:active block />
 				</nav>
-				<div slot="body" class="my-2">
+				<div slot="body" class="mt-2">
 					<Tile>
-						<span slot="title">E-mail: <a href="mailto:{$user.email}">{$user.email}</a></span>
+						<span slot="title"
+							>E-mail: <a href="mailto:{$user.email}">{$user.email}</a></span
+						>
 					</Tile>
 				</div>
 
@@ -27,19 +25,20 @@
 	</Col>
 </Grid>
 
-<script lang="ts">
-	import { Button, Col, Grid, Panel, Tile } from 'svelte-spectre';
+<script lang="ts" context="module">
+	import { Button, Col, Grid, Panel, Tabs, Tile } from 'svelte-spectre';
 
 	import user, { userAsync } from '@/stores/user';
 
 	import { logout } from '@/services/api';
+</script>
+
+<script lang="ts">
+	let profile = [{ title: 'Profile' }],
+		active = 1;
 
 	async function doLogout() {
 		await logout();
 		$userAsync = null;
 	}
 </script>
-
-<style lang="scss">
-	@import 'spectre.css/src/tabs';
-</style>

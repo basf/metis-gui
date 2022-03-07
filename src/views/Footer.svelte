@@ -55,6 +55,11 @@
 			background-color: $dark-secondary;
 		}
 	}
+	@media (prefers-color-scheme: light) {
+		footer {
+			background-color: $secondary-color;
+		}
+	}
 	:global([color-scheme='dark']) {
 		footer {
 			background-color: $dark-secondary;
