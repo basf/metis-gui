@@ -1,32 +1,23 @@
-<Grid>
-	<Col col="6 mx-auto">
-		{#if $user}
-			<Panel>
-				<div slot="header" class="text-center">
-					<figure class="avatar avatar-lg" data-initial="AE" />
-					<div class="panel-title h5 mt-10">{$user.firstname} {$user.lastname}</div>
-				</div>
-				<nav slot="nav">
-					<Tabs items={profile} bind:active block />
-				</nav>
-				<div slot="body" class="mt-2">
-					<Tile>
-						<span slot="title"
-							>E-mail: <a href="mailto:{$user.email}">{$user.email}</a></span
-						>
-					</Tile>
-				</div>
+{#if $user}
+	<Panel>
+		<div slot="header" class="text-center">
+			<Avatar size="lg" name={$user.firstname + $user.lastname} caption />
+		</div>
+		<Tabs slot="nav" items={profile} bind:active block />
+		<div slot="body" class="mt-2">
+			<Tile>
+				<span slot="title">E-mail: <a href="mailto:{$user.email}">{$user.email}</a></span>
+			</Tile>
+		</div>
 
-				<svelte:fragment slot="footer">
-					<Button on:click={doLogout} variant="primary" block>Logout</Button>
-				</svelte:fragment>
-			</Panel>
-		{/if}
-	</Col>
-</Grid>
+		<svelte:fragment slot="footer">
+			<Button on:click={doLogout} variant="primary" block>Logout</Button>
+		</svelte:fragment>
+	</Panel>
+{/if}
 
 <script lang="ts" context="module">
-	import { Button, Col, Grid, Panel, Tabs, Tile } from 'svelte-spectre';
+	import { Avatar, Button, Panel, Tabs, Tile } from 'svelte-spectre';
 
 	import user, { userAsync } from '@/stores/user';
 
@@ -42,3 +33,23 @@
 		$userAsync = null;
 	}
 </script>
+
+<style>
+	/* tmp theme fix */
+	@media (prefers-color-scheme: dark) {
+		:global(.spectre .avatar figcaption) {
+			color: #f2f2f2 !important;
+		}
+	}
+	@media (prefers-color-scheme: light) {
+		:global(.spectre .avatar figcaption) {
+			color: #3b4351 !important;
+		}
+	}
+	:global([color-scheme='dark'] .spectre .avatar figcaption) {
+		color: #f2f2f2 !important;
+	}
+	:global([color-scheme='light'] .spectre .avatar figcaption) {
+		color: #3b4351 !important;
+	}
+</style>
