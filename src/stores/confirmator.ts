@@ -1,13 +1,20 @@
 import { writable } from 'svelte/store';
+import type { Writable } from 'svelte/store';
 
-export const confirmator = writable({
+interface Confirm {
+    open: boolean,
+    args: any,
+    message: string,
+    function?: (args: any) => any,
+}
+export const confirmator: Writable<Confirm> = writable<Confirm>({
     open: false,
-    args: undefined,
+    args: {},
     message: 'Are you sure?',
     function: undefined,
 });
 
-export function withConfirm(fn: Function, args, message = '', native) {
+export function withConfirm(fn: (args: any) => any, args: any, message = '', native: boolean) {
     if (!native) {
         confirmator.set({
             open: true,
@@ -16,9 +23,9 @@ export function withConfirm(fn: Function, args, message = '', native) {
             function: fn,
         });
     } else {
-        return (...args) => {
+        return (...args: any) => {
             if (confirm(message)) {
-                fn(...args);
+                fn(args);
             }
         };
     }

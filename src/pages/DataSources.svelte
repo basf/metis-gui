@@ -18,7 +18,7 @@
 					on:editCalculation={(e) => editCalculation(datasource, e)}
 					on:editTags={(e) => editTags(datasource, e)}
 					on:editGraphic={(e) => editGraphic(datasource, e)}
-					on:setCalculation={() => setCalculation(datasource.id)}
+					on:setCalculation={() => calculate(datasource.id)}
 					on:delCalculation={() =>
 						withConfirm(
 							delData,
@@ -69,16 +69,7 @@
 </Modal>
 
 <script lang="ts" context="module">
-	import {
-		Button,
-		Col,
-		Divider,
-		Grid,
-		Input,
-		Modal,
-		Tile,
-		toast
-	} from 'svelte-spectre';
+	import { Button, Col, Divider, Grid, Input, Modal, Tile, toast } from 'svelte-spectre';
 
 	import Editor from '@/components/Editor/Editor.svelte';
 
@@ -119,8 +110,21 @@
 		data: DataSource[];
 
 	$: $user && getData();
-	$: $datasources.length && toast.primary({ msg: 'Structures synced', timeout: 2000, pos: 'top_right' });
+	$: $datasources.length &&
+		toast.primary({ msg: 'Structures synced', timeout: 2000, pos: 'top_right' });
 	$: data = $datasources;
+
+	$: (async () => console.log(await getData()))();
+
+	function calculate(id: number) {
+		setCalculation(id);
+		toast.success({
+			msg: 'Calculation in progress',
+			timeout: 2000,
+			pos: 'top_right',
+			icon: 'forward',
+		});
+	}
 
 	function addDataItem() {
 		setData(contents.length ? contents : content);
