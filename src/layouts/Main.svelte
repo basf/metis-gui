@@ -1,7 +1,5 @@
 <Panel>
-	<nav slot="nav">
-		<Tabs items={menu} bind:active block />
-	</nav>
+	<Tabs slot="nav" items={menu} bind:active block />
 	<div slot="body" class="mt-2">
 		<slot />
 	</div>

@@ -1,40 +1,32 @@
-<Grid>
-	<Col col="6 mx-auto">
-		{#if $user}
-			<Panel>
-				<div slot="header" class="text-center">
-					<figure class="avatar avatar-lg" data-initial="AE" />
-					<div class="panel-title h5 mt-10">{$user.firstname} {$user.lastname}</div>
-				</div>
-				<nav slot="nav">
-					<!-- TODO: split to separate component -->
-					<ul class="tab tab-block">
-						<li class="tab-item active">Profile</li>
-					</ul>
-					<!-- / TODO: split to separate component -->
-				</nav>
-				<div slot="body" class="my-2">
-					<Tile>
-						<span slot="title"
-							>E-mail: <a href="mailto:{$user.email}">{$user.email}</a></span
-						>
-					</Tile>
-				</div>
+{#if $user}
+	<Panel>
+		<div slot="header" class="text-center">
+			<Avatar size="lg" name={$user.firstname + $user.lastname} caption />
+		</div>
+		<Tabs slot="nav" items={profile} bind:active block />
+		<div slot="body" class="mt-2">
+			<Tile>
+				<span slot="title">E-mail: <a href="mailto:{$user.email}">{$user.email}</a></span>
+			</Tile>
+		</div>
 
-				<svelte:fragment slot="footer">
-					<Button on:click={doLogout} variant="primary" block>Logout</Button>
-				</svelte:fragment>
-			</Panel>
-		{/if}
-	</Col>
-</Grid>
+		<svelte:fragment slot="footer">
+			<Button on:click={doLogout} variant="primary" block>Logout</Button>
+		</svelte:fragment>
+	</Panel>
+{/if}
 
-<script lang="ts">
-	import { Button, Col, Grid, Panel, Tile, toast } from 'svelte-spectre';
+<script lang="ts" context="module">
+	import { Avatar, Button, Panel, Tabs, Tile } from 'svelte-spectre';
 
 	import user, { userAsync } from '@/stores/user';
 
 	import { logout } from '@/services/api';
+</script>
+
+<script lang="ts">
+	let profile = [{ title: 'Profile' }],
+		active = 1;
 
 	async function doLogout() {
 		await logout();
@@ -43,6 +35,22 @@
 	}
 </script>
 
-<style lang="scss">
-	@import 'spectre.css/src/tabs';
+<style>
+	/* tmp theme fix */
+	@media (prefers-color-scheme: dark) {
+		:global(.spectre .avatar figcaption) {
+			color: #f2f2f2 !important;
+		}
+	}
+	@media (prefers-color-scheme: light) {
+		:global(.spectre .avatar figcaption) {
+			color: #3b4351 !important;
+		}
+	}
+	:global([color-scheme='dark'] .spectre .avatar figcaption) {
+		color: #f2f2f2 !important;
+	}
+	:global([color-scheme='light'] .spectre .avatar figcaption) {
+		color: #3b4351 !important;
+	}
 </style>
