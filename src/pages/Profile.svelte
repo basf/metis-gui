@@ -31,6 +31,7 @@
 	async function doLogout() {
 		await logout();
 		$userAsync = null;
+		toast.warning({ msg: 'You are logged out', timeout: 4000, pos: 'top_right' });
 	}
 </script>
 
