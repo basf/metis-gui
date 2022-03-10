@@ -45,6 +45,4 @@
 	$: $user && getCalculations();
 	$: $calculations.length &&
 		toast.primary({ msg: 'Calculations synced', timeout: 2000, pos: 'top_right' });
-
-	$: (async () => console.log(await getCalculations()))();
 </script>
