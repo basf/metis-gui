@@ -5,6 +5,7 @@ export interface Timestamps {
 
 export interface Calculation extends Timestamps {
     id: number;
+    name: string;
     userId: number;
     status: number;
 }
