@@ -15,9 +15,14 @@ module.exports = {
 			replace: Object.entries(replace),
 			scss: {
 				prependData: `
-                    @import './node_modules/spectre.css/src/variables';
-                    @import './node_modules/spectre.css/src/mixins';
-					@import './node_modules/svelte-spectre/package/dark';
+					$primary-color: #5755d9 !default;
+					$secondary-color: lighten($primary-color, 37.5%) !default;
+					$dark-color: #303742 !default;
+					$gray-color: lighten($dark-color, 55%) !default;
+					$gray-color-dark: darken($gray-color, 30%) !default;
+					$gray-color-light: lighten($gray-color, 20%) !default;
+					$highlight-color: #ffe9b3 !default;
+					$dark-secondary: #343a51;
                 `,
 				quietDeps: true, // dismiss version 2.0 warning
 				renderSync: true // improve perfomance

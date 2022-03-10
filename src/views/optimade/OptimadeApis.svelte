@@ -49,7 +49,6 @@
 	export let data: Types.Structure[] | undefined;
 	export let meta: Types.Meta | undefined;
 	export let col: number = 3;
-	export let width: number = 0;
 	export let auto: boolean = false;
 
 	onMount(() => {
@@ -58,7 +57,6 @@
 	});
 
 	function setDataContent(structure: Types.Structure) {
-		console.log(structure);
 		setData(JSON.stringify(structure));
 	}
 </script>

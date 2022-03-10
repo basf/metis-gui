@@ -35,6 +35,11 @@
 			color: $gray-color;
 		}
 	}
+	@media (prefers-color-scheme: light) {
+		:global(#xray) {
+			color: $dark-color;
+		}
+	}
 	:global([color-scheme='dark']) {
 		:global(#xray) {
 			color: $gray-color;

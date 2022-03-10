@@ -58,6 +58,7 @@
 		"@testing-library/jest-dom": "^5.14.1",
 		"@testing-library/svelte": "^3.0.3",
 		"@tsconfig/svelte": "^2.0.1",
+		"@types/d3-scale": "^4.0.2",
 		"@types/jest": "^27.0.0",
 		"@types/node": "^15.12.4",
 		"@typescript-eslint/eslint-plugin": "^4.28.0",
@@ -92,7 +93,6 @@
 		"rollup-plugin-visualizer": "^5.5.0",
 		"sass": "^1.43.3",
 		"size-limit": "^4.12.0",
-		"spectre.css": "^0.5.9",
 		"svelte": "^3.38.3",
 		"svelte-asyncable": "^2.0.4",
 		"svelte-check": "^2.2.0",
@@ -113,6 +113,7 @@
 	},
 	"dependencies": {
 		"codejar": "^3.5.0",
+		"d3-scale": "^4.0.2",
 		"debounce-promise": "^3.1.2",
 		"optimade": "^2.0.3",
 		"optimade-mpds-nlp": "^0.1.1",

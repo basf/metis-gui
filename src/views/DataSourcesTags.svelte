@@ -8,21 +8,7 @@
 </ul>
 
 <script lang="ts" context="module">
-	import {
-		Badge,
-		Button,
-		Col,
-		Divider,
-		Dropdown,
-		Grid,
-		Hero,
-		Icon,
-		IconButton,
-		Input,
-		Menu,
-		Modal,
-		Tile,
-	} from 'svelte-spectre';
+	import { Badge } from 'svelte-spectre';
 </script>
 
 <script lang="ts"></script>
