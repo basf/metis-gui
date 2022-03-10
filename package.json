@@ -93,7 +93,6 @@
 		"rollup-plugin-visualizer": "^5.5.0",
 		"sass": "^1.43.3",
 		"size-limit": "^4.12.0",
-		"spectre.css": "^0.5.9",
 		"svelte": "^3.38.3",
 		"svelte-asyncable": "^2.0.4",
 		"svelte-check": "^2.2.0",

@@ -101,6 +101,9 @@
 					@media (prefers-color-scheme: dark) {
 						stroke: $gray-color-dark;
 					}
+					@media (prefers-color-scheme: light) {
+						stroke: $gray-color;
+					}
 					:global([color-scheme='dark']) & {
 						stroke: $gray-color-dark;
 					}
