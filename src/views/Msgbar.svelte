@@ -21,7 +21,7 @@
 		setTimeout(() => (offline = !$status.online || !$status.heartbeat), 500);
 
 		if (offline && $user)
-			toast.warning({ msg: 'You are logged out', timeout: 0, pos: 'top_right' });
+			toast.warning({ msg: 'You are logged out', timeout: 1000, pos: 'top_right' });
 
 		$errors.forEach(({ error }) => {
 			const msg = error.message || error;

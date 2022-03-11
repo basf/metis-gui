@@ -23,7 +23,7 @@
 		<Tile centered={false}>
 			<svelte:fragment slot="title">
 				<h5 class="mt-2">{@html datasource.name}</h5>
-				<DataSourcesTags />
+				<TileTags />
 			</svelte:fragment>
 			<svelte:fragment slot="subtitle">
 				<small class="text-gray">
@@ -31,15 +31,15 @@
 				</small>
 			</svelte:fragment>
 			<svelte:fragment slot="action">
-				<DataSourcesMenu
-					bind:active={data[i].menu}
-					{datasource}
-					bind:data
+				<TileMenu
+					data={$datasources}
+					items={tileMenuItems}
+					dataId={datasource.id}
 					on:editCalculation={(e) => editCalculation(datasource, e)}
 					on:editTags={(e) => editTags(datasource, e)}
 					on:editGraphic={(e) => editGraphic(datasource, e)}
 					on:setCalculation={() => calculate(datasource.id)}
-					on:delCalculation={() =>
+					on:delDatasource={() =>
 						withConfirm(
 							delData,
 							datasource.id,
@@ -97,8 +97,7 @@
 	import Upload from '@/components/Upload.svelte';
 	import Graphic from '@/components/Graphic/Graphic.svelte';
 	import pointsSource from '@/components/Graphic/points';
-	import DataSourcesMenu from '@/views/DataSourcesMenu.svelte';
-	import DataSourcesTags from '@/views/DataSourcesTags.svelte';
+	import { TileMenu, TileTags } from '@/components/Tile';
 
 	import { getData, setData, delData, setCalculation, getTemplate } from '@/services/api';
 
@@ -108,6 +107,8 @@
 	import { withConfirm } from '@/stores/confirmator';
 
 	import type { DataSource } from '@/types/dto';
+
+	import Sinus from '@/assets/img/sinus.svg';
 </script>
 
 <script lang="ts">
@@ -130,6 +131,32 @@
 
 	const cleanup = (string: string): string => string.replace(/(<([^>]+)>)/gi, '') || '';
 
+	let tileMenuItems = [
+		{
+			icon: 'edit',
+			label: 'Edit Calculation',
+			event: { name: 'editCalculation' },
+		},
+		{ icon: 'tag', label: 'Edit Tags', event: { name: 'editTags' } },
+		{
+			icon: Sinus,
+			label: 'Edit Graphic',
+			event: { name: 'editGraphic' },
+		},
+		{
+			icon: 'forward',
+			color: 'success',
+			label: 'Calculate',
+			event: { name: 'setCalculation' },
+		},
+		{
+			icon: 'cross',
+			color: 'error',
+			label: 'Delete',
+			event: { name: 'delDatasource' },
+		},
+	];
+
 	let modal: { open: boolean; header: string } | {} = { open: false, header: '' },
 		editor: {
 			schema: { [key: string]: any };
@@ -140,15 +167,11 @@
 			template: '',
 			input: '',
 		},
-		datasourceID = 0,
-		data: DataSource[];
+		datasourceID = 0;
 
 	$: $user && getData();
 	$: $datasources.length &&
 		toast.primary({ msg: 'Structures synced', timeout: 2000, pos: 'top_right' });
-	$: data = $datasources;
-
-	$: (async () => console.log(await getData()))();
 
 	function calculate(id: number) {
 		setCalculation(id);
@@ -180,7 +203,7 @@
 		}
 	}
 
-	async function editCalculation(datasource: DataSource, e: Event) {
+	async function editCalculation(datasource: DataSource, e: CustomEvent) {
 		modal = {
 			open: true,
 			header: `Edit and submit calculation for <mark> ${datasource.name} </mark>`,
