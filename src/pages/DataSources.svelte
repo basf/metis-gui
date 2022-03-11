@@ -1,5 +1,25 @@
 <Main>
-	{#each $datasources.sort((a, b) => b.id - a.id) as datasource, i (datasource.id)}
+	<form method="GET" on:submit on:submit|preventDefault class="py-2">
+		<Input
+			bind:value={search}
+			options={suggested}
+			placeholder=" Datasource name"
+			autocomplete="on"
+			type="search"
+			name="q"
+			autofocus
+			inline
+			size="lg"
+		>
+			<span slot="iconRight">
+				{#if search}
+					<IconButton type="button" icon="cross" on:click={() => (search = '')} />
+				{/if}
+			</span>
+		</Input>
+	</form>
+
+	{#each makeDataList($datasources, search) as datasource, i (datasource)}
 		<Tile centered={false}>
 			<svelte:fragment slot="title">
 				<h5 class="mt-2">{@html datasource.name}</h5>
@@ -96,6 +116,21 @@
 	let contents: string[] = [];
 	let clearFiles: Function;
 	let points = [];
+	let search = '';
+
+	$: suggested = search ? makeSuggested($datasources) : [];
+
+	function makeDataList(items: DataSource[], search: string) {
+		return search ? items.filter((item) => math(item)) : items.sort((a, b) => b.id - a.id);
+	}
+	function makeSuggested(items: DataSource[]): Option[] {
+		return items.map((item) => math(item) && cleanup(item.name)).filter(Boolean);
+	}
+	const math = (item: DataSource) =>
+		cleanup(item.name).toLowerCase().includes(search.toLowerCase());
+
+	const cleanup = (string: string): string => string.replace(/(<([^>]+)>)/gi, '') || '';
+
 	let tileMenuItems = [
 		{
 			icon: 'edit',
