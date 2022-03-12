@@ -44,7 +44,6 @@
 	let points: { x: number; y: number }[];
 
 	$: points = parseSource(source);
-	$: console.log(points);
 
 	$: xScale = scaleLinear()
 		.domain([minX, maxX])

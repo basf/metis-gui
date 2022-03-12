@@ -55,6 +55,7 @@
 		<span style="height: 100%" class="loading loading-lg p-centered d-block" />
 	{/if}
 	<svelte:fragment slot="footer">
+		<Button on:click={() => (modal = {})}>Cancel</Button>
 		<Button variant="primary" on:click={editor.template ? submitCalculation : submitTags}
 			>Submit</Button
 		>
