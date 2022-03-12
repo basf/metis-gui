@@ -1,22 +1,20 @@
-<form method="GET" on:submit on:submit|preventDefault class="py-2">
-	<Input
-		bind:value
-		options={suggested}
-		placeholder=" Datasource name"
-		autocomplete="on"
-		type="search"
-		name="q"
-		autofocus
-		inline
-		size="lg"
-	>
-		<span slot="iconRight">
-			{#if value}
-				<IconButton type="button" icon="cross" on:click={() => (value = '')} />
-			{/if}
-		</span>
-	</Input>
-</form>
+<Input
+	bind:value
+	options={suggested}
+	placeholder=" Datasource name"
+	autocomplete="on"
+	type="search"
+	name="dataSearch"
+	autofocus
+	size="lg"
+>
+	<IconButton
+		slot="iconRight"
+		type="button"
+		icon={value ? 'cross' : 'search'}
+		on:click={() => (value = '')}
+	/>
+</Input>
 
 <script lang="ts" context="module">
 	import { IconButton, Input } from 'svelte-spectre';

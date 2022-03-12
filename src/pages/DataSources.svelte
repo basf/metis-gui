@@ -1,6 +1,31 @@
 <Main>
-	<TabSearch bind:value={search} data={$datasources} />
+	<div class="py-2">
+		<Grid>
+			<Col col="auto">
+				<IconButton
+					size="lg"
+					icon={dataAdd ? 'minus' : 'plus'}
+					variant="default"
+					tooltip="Add structure"
+					on:click={() => (dataAdd = !dataAdd)}
+				/>
+			</Col>
+			<Col>
+				<TabSearch bind:value={search} data={$datasources} />
+			</Col>
+		</Grid>
+	</div>
 
+	{#if dataAdd}
+		<Divider />
+		<DataSourceAdd
+			{contents}
+			bind:clearFiles
+			bind:value={content}
+			on:files={handleFiles}
+			on:click={addDataItem}
+		/>
+	{/if}
 	{#each makeDataList($datasources, search) as datasource, i (datasource)}
 		<Tile centered={false}>
 			<svelte:fragment slot="title">
@@ -34,23 +59,17 @@
 	{:else}
 		<div class="text-center distant_msg">Upload a structure to start...</div>
 	{/each}
-	<div class="mt-4">
-		<DataSourceAdd
-			{contents}
-			bind:clearFiles
-			bind:value={content}
-			on:files={handleFiles}
-			on:click={addDataItem}
-		/>
-	</div>
 </Main>
 
 <Modal bind:open={modal.open} size="fs">
 	<h3 slot="header">{@html modal.header}</h3>
-	{#if editor.template}
-		<Editor bind:code={editor.template} schema={editor.schema} on:change={setInput} />
-	{:else if points.length}
-		<Graphic source={pointsSource} />
+	{#if modalComponent}
+		<svelte:component
+			this={modalComponent}
+			source={pointsSource}
+			bind:code={editor.template}
+			on:change={setInput}
+		/>
 	{:else}
 		<span style="height: 100%" class="loading loading-lg p-centered d-block" />
 	{/if}
@@ -63,7 +82,7 @@
 </Modal>
 
 <script lang="ts" context="module">
-	import { Button, Modal, Tile, toast } from 'svelte-spectre';
+	import { Button, Col, Divider, Grid, IconButton, Modal, Tile, toast } from 'svelte-spectre';
 
 	import Main from '@/layouts/Main.svelte';
 	import { Editor } from '@/components/Editor/';
@@ -91,6 +110,7 @@
 	let clearFiles: () => void;
 	let points = [];
 	let search = '';
+	let dataAdd = false;
 	let tileMenuItems = [
 		{
 			icon: 'edit',
@@ -131,6 +151,7 @@
 	$: $user && getData();
 	$: $datasources.length &&
 		toast.primary({ msg: 'Structures synced', timeout: 2000, pos: 'top_right' });
+	$: modalComponent = editor.template ? Editor : points.length ? Graphic : undefined;
 
 	function makeDataList(items: DataSource[], search: string) {
 		return search
@@ -169,6 +190,7 @@
 	}
 
 	async function editCalculation(datasource: DataSource) {
+		points = [];
 		modal = {
 			open: true,
 			header: `Edit and submit calculation for <mark> ${datasource.name} </mark>`,
