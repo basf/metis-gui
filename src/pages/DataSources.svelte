@@ -1,31 +1,18 @@
 <Main>
-	<div class="py-2">
-		<Grid>
-			<Col col="auto">
-				<IconButton
-					size="lg"
-					icon={dataAdd ? 'minus' : 'plus'}
-					variant="default"
-					tooltip="Add structure"
-					on:click={() => (dataAdd = !dataAdd)}
-				/>
-			</Col>
-			<Col>
-				<TabSearch bind:value={search} data={$datasources} />
-			</Col>
-		</Grid>
-	</div>
+	<TabSearch add bind:value={search} bind:addOpen data={$datasources} />
 
-	{#if dataAdd}
-		<Divider />
-		<DataSourceAdd
-			{contents}
-			bind:clearFiles
-			bind:value={content}
-			on:files={handleFiles}
-			on:click={addDataItem}
-		/>
+	{#if addOpen}
+		<div class="py-2">
+			<DataSourceAdd
+				{contents}
+				bind:clearFiles
+				bind:value={content}
+				on:files={handleFiles}
+				on:click={addDataItem}
+			/>
+		</div>
 	{/if}
+
 	{#each makeDataList($datasources, search) as datasource, i (datasource)}
 		<Tile centered={false}>
 			<svelte:fragment slot="title">
@@ -82,7 +69,7 @@
 </Modal>
 
 <script lang="ts" context="module">
-	import { Button, Col, Divider, Grid, IconButton, Modal, Tile, toast } from 'svelte-spectre';
+	import { Button, Modal, Tile, toast } from 'svelte-spectre';
 
 	import Main from '@/layouts/Main.svelte';
 	import { Editor } from '@/components/Editor/';
@@ -110,7 +97,7 @@
 	let clearFiles: () => void;
 	let points = [];
 	let search = '';
-	let dataAdd = false;
+	let addOpen = false;
 	let tileMenuItems = [
 		{
 			icon: 'edit',
