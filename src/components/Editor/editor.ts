@@ -54,8 +54,8 @@ function isNum(number: string) {
 }
 
 function getKeys(object: { [key: string]: string } | string, keys: string[] = []) {
-    for (let key in object) {
-        if (key === 'properties') keys.push(Object.keys(object[key]));
+    for (let key in object as { [key: string]: string }) {
+        if (key === 'properties') keys.push(Object.keys(object[key]) as unknown as string);
         if (typeof object[key] === 'object') {
             let subkeys: string[] = getKeys(object[key]);
             keys = keys.concat(subkeys.map((subkey: string) => subkey));
