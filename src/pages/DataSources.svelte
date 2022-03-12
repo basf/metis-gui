@@ -89,7 +89,17 @@
 </Modal>
 
 <script lang="ts" context="module">
-	import { Button, Col, Divider, Grid, Input, Modal, Tile, toast } from 'svelte-spectre';
+	import {
+		Button,
+		Col,
+		Divider,
+		IconButton,
+		Grid,
+		Input,
+		Modal,
+		Tile,
+		toast,
+	} from 'svelte-spectre';
 
 	import Editor from '@/components/Editor/Editor.svelte';
 
