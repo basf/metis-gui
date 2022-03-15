@@ -2,8 +2,8 @@
 	<Container>
 		<Navbar>
 			<nav slot="left">
-				This is the <a href="https://basf.science">BASF.science</a> &mdash; <br />an
-				open-source XRPD online data management system.
+				This is the <a href="https://metis.science">Metis</a> &mdash; <br />
+				an open-source XRPD online data management system.
 			</nav>
 			<nav slot="right"><Switch bind:value={$darkTheme}>Dark theme</Switch></nav>
 		</Navbar>
