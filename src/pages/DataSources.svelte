@@ -2,6 +2,9 @@
 	<TabSearch add bind:value={search} bind:addOpen data={$datasources} />
 
 	{#if addOpen}
+		{#if !$datasources.length}
+			<div class="text-center distant_msg">Upload a structure to start...</div>
+		{/if}
 		<div class="py-2">
 			<DataSourceAdd
 				{contents}
@@ -43,8 +46,8 @@
 				/>
 			</svelte:fragment>
 		</Tile>
-	{:else}
-		<div class="text-center distant_msg">Upload a structure to start...</div>
+		<!-- {:else}
+		<div class="text-center distant_msg">Upload a structure to start...</div> -->
 	{/each}
 </Main>
 
@@ -98,6 +101,7 @@
 	let points = [];
 	let search = '';
 	let addOpen = false;
+	$: addOpen = !$datasources.length;
 	let tileMenuItems = [
 		{
 			icon: 'edit',
