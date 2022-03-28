@@ -16,5 +16,7 @@
 	export let w = 220;
 	export let h = 220;
 	$: y = (height - count * h) / count + count / 2;
-	$: colors = $darkTheme ? { primaryColor: '#303742', secondaryColor: '#252b33' } : {};
+	$: colors = $darkTheme
+		? { primaryColor: '#303742', secondaryColor: '#252b33' }
+		: { primaryColor: '#f9f9f9', secondaryColor: '#ecebeb' };
 </script>
