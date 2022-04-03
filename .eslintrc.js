@@ -34,5 +34,6 @@ module.exports = {
     },
     globals: {
         __env: true,
+        __ver: true,
     }
 };

@@ -1,9 +1,15 @@
+export const IS_PROD = __env === 'production';
+export const IS_FILE = location.protocol === 'file:';
+
+export const GUI_HOST = IS_FILE ? (
+    IS_PROD ? 'https://basf.science' : 'http://localhost:5000'
+) : location.origin;
+
 export const API_VERSION = 'v0';
 
-export const API_HOST =
-    __env === 'production'
-        ? 'https://gate.basf.science'
-        : 'http://localhost:3000';
+export const API_HOST = IS_PROD
+                        ? 'https://gate.basf.science'
+                        : 'http://localhost:3000';
 
 export const API_BASEURL = `${API_HOST}/${API_VERSION}`;
 
@@ -12,6 +18,7 @@ export const STREAM_URL = API_HOST + '/stream';
 export const BASE_PATH = '';
 
 export const SEARCH_DELAY = 1000;
+export const NEW_VERSION_CHECK_DELAY = 60000;
 
 export const OPTIMADE_PROVIDERS_URL =
     'https://providers.optimade.org/providers.json';
@@ -25,3 +32,5 @@ export const OPTIMADE_PROVIDERS = [
     'icdd-pdf-4-plus',
     'ccdc',
 ];
+
+export const DOWNLOADABLE_APP_FILENAME = 'index.html';

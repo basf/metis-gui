@@ -15,9 +15,11 @@ import json from '@rollup/plugin-json';
 import livereload from 'rollup-plugin-livereload';
 import visualizer from 'rollup-plugin-visualizer';
 import html from 'rollup-plugin-bundle-html-plus';
+import manifestJson from 'rollup-plugin-manifest-json';
 import zip from 'zip-dir';
 
 const {
+	src,
 	dev,
 	name,
 	dest,
@@ -27,6 +29,7 @@ const {
 	assets,
 	legacy,
 	template,
+	manifest,
 	externals,
 	sourceMap,
 	extensions,
@@ -108,12 +111,18 @@ export default {
 			ignore: dev ? new RegExp(`${dir}/(?!main.js|${name}.css)`) : null,
 			minifyCss: !dev,
 			scriptType: dev ? 'module' : 'text/javascript',
+			absolute: dev,
 			inline: !dev,
 			clean: !dev,
 			externals,
 			template,
 			dest,
 		}),
+		manifestJson({
+			input: `${src}/manifest.json`,
+            minify: true,
+            manifest,
+        }),
 		dev && serve(),
 		dev && livereload(dest),
 		!dev && zipdir({ dest, name })

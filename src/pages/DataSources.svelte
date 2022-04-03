@@ -16,11 +16,20 @@
 		</div>
 	{/if}
 
-	{#each makeDataList($datasources, search) as datasource, i (datasource)}
+	{#each makeDataList($datasources, search) as datasource (datasource.id)}
 		<Tile centered={false}>
 			<svelte:fragment slot="title">
 				<h5 class="mt-2">{@html datasource.name}</h5>
-				<TileTags />
+				<ul class="collections">
+					{#each getCollectionsList(datasource.id) as collection (collection.id)}
+					{@const href = $user?.id === collection.userId ? `/collections#${collection.id}` : undefined}
+					<li>
+						<a {href}>
+							<Badge style="background: {collection.typeColor}">{collection.title.substring(0, 10)}</Badge>
+						</a>
+					</li>
+				{/each}
+				</ul>
 			</svelte:fragment>
 			<svelte:fragment slot="subtitle">
 				<small class="text-gray">
@@ -28,6 +37,7 @@
 				</small>
 			</svelte:fragment>
 			<svelte:fragment slot="action">
+				{#if $user.id === datasource.userId}
 				<TileMenu
 					data={$datasources}
 					items={tileMenuItems}
@@ -44,6 +54,7 @@
 							false
 						)?.(datasource.id)}
 				/>
+				{/if}
 			</svelte:fragment>
 		</Tile>
 		<!-- {:else}
@@ -72,17 +83,18 @@
 </Modal>
 
 <script lang="ts" context="module">
-	import { Button, Modal, Tile, toast } from 'svelte-spectre';
+	import { Button, Modal, Tile, Badge, toast } from 'svelte-spectre';
 
 	import Main from '@/layouts/Main.svelte';
 	import { Editor } from '@/components/Editor/';
 	import { Graphic } from '@/components/Graphic/';
 	import pointsSource from '@/components/Graphic/points';
-	import { TileMenu, TileTags } from '@/components/Tile/';
+	import { TileMenu } from '@/components/Tile/';
 	import { TabSearch, match } from '@/components/Search/';
 
-	import { getData, setData, delData, setCalculation, getTemplate } from '@/services/api';
+	import { getData, setData, delData, setCalculation, getTemplate, getCollections } from '@/services/api';
 
+	import { collections } from '@/stores/collections';
 	import datasources from '@/stores/datasources';
 	import user from '@/stores/user';
 	import { withConfirm } from '@/stores/confirmator';
@@ -139,10 +151,13 @@
 	};
 	let datasourceID = 0;
 
+	$: $user && getCollections();
 	$: $user && getData();
 	$: $datasources.length &&
 		toast.primary({ msg: 'Structures synced', timeout: 2000, pos: 'top_right' });
 	$: modalComponent = editor.template ? Editor : points.length ? Graphic : undefined;
+
+	$: getCollectionsList = dataSourceId => $collections.filter(({ dataSources }) => dataSources && dataSources.includes(dataSourceId));
 
 	function makeDataList(items: DataSource[], search: string) {
 		return search
@@ -239,5 +254,18 @@
 	}
 	h5 {
 		display: inline;
+	}
+	.collections {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: inline-flex;
+		flex-flow: row wrap;
+		gap: 0.25em;
+		float: right;
+		li {
+			margin: 0;
+			padding: 0;
+		}
 	}
 </style>

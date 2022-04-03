@@ -3,9 +3,9 @@ import { userAsync } from '@/stores/user';
 import { API_HOST, API_BASEURL } from '@/config';
 import type {
     User as UserDTO,
-    Calculation as CalculationDTO,
-    DataSource as DataSourceDTO,
     Template as TemplateDTO,
+    Collection as CollectionDTO,
+    CollectionType as CollectionTypeDTO,
 } from '@/types/dto';
 
 export interface HttpError extends Error {
@@ -15,7 +15,7 @@ export interface HttpError extends Error {
 export type HttpHeaders = Record<string, string>;
 export type QueryParams = Record<string, unknown>;
 
-export async function getData(): Promise<DataSourceDTO[]> {
+export async function getData(): Promise<void> {
     return getJSON('/data');
 }
 
@@ -38,7 +38,7 @@ export async function getTemplate(
     );
 }
 
-export async function getCalculations(): Promise<CalculationDTO[]> {
+export async function getCalculations(): Promise<void> {
     return getJSON('/calculations');
 }
 
@@ -64,6 +64,36 @@ export async function logout(): Promise<void> {
 
 export async function me(): Promise<UserDTO> {
     return getJSON<UserDTO>('/auth');
+}
+
+export async function setMe(data: UserDTO): Promise<UserDTO> {
+    return putJSON<UserDTO, UserDTO>('/auth', data);
+}
+
+export async function getCollectionTypes(): Promise<CollectionTypeDTO[]> {
+    return getJSON('/collections/types');
+}
+
+export async function getCollections(): Promise<void> {
+    return getJSON('/collections');
+}
+
+export async function setCollection(collection: CollectionDTO): Promise<void> {
+    return putJSON('/collections', collection);
+}
+
+export async function delCollection(collectionId: number): Promise<void> {
+    return delJSON(`/collections/${collectionId}`);
+}
+
+export async function searchUsers(search: string, limit = 10): Promise<UserDTO[]> {
+    if (! search) return [];
+    return getJSON('/users', { search, limit });
+}
+
+export async function getUsers(ids: number[] = []): Promise<UserDTO[]> {
+    if (! ids.length) return [];
+    return getJSON('/users', { ids: ids.join(',') });
 }
 
 export async function getJSON<T>(
@@ -105,6 +135,20 @@ export async function putJSON<T, U>(
 
     return fetchJSON<U>(url.toString(), {
         method: 'put',
+        body: JSON.stringify(data),
+        headers,
+    });
+}
+
+export async function patchJSON<T, U>(
+    path: string,
+    data: T,
+    headers?: HttpHeaders
+): Promise<U> {
+    const url = new URL(API_BASEURL + path);
+
+    return fetchJSON<U>(url.toString(), {
+        method: 'patch',
         body: JSON.stringify(data),
         headers,
     });
