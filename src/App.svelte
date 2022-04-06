@@ -6,11 +6,15 @@
 		<Container>
 			{#await $userAsync then user}
 				{#if user}
+					{#if user.email}
 					<div class="mt-2 pt-2">
 						<Viewpoint {...page}>
 							<svelte:fragment slot="loading">Loading...</svelte:fragment>
 						</Viewpoint>
 					</div>
+					{:else}
+						<AskEmail />
+					{/if}
 				{:else}
 					<Login />
 				{/if}
@@ -27,11 +31,12 @@
 </Spectre>
 
 <script lang="ts">
-	import { pattern, click } from 'svelte-pathfinder';
+	import { pattern, click, path } from 'svelte-pathfinder';
 	import Viewpoint from 'svelte-viewpoint';
 	import { Container, Spectre } from 'svelte-spectre';
 
 	import Login from '@/pages/Login.svelte';
+	import AskEmail from '@/pages/AskEmail.svelte';
 
 	import Header from '@/views/Header.svelte';
 	import Footer from '@/views/Footer.svelte';

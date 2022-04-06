@@ -1,7 +1,7 @@
 {#if $user}
 	<Panel>
 		<div slot="header" class="text-center">
-			<Avatar size="lg" name={$user.firstname + $user.lastname} caption />
+			<Avatar size="lg" name={$user.firstName + $user.lastName} caption />
 		</div>
 		<Tabs slot="nav" items={profile} bind:active block />
 		<div slot="body" class="mt-2">

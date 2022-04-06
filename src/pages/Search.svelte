@@ -17,20 +17,17 @@
 					{/if}
 				</span>
 			</Input>
-			{#await $providersAsync}
-				<Loaders.Control height="{SIZE[size]}px" />
-			{:then providers}
-				<Select
-					options={providersOptions(providers)}
-					value={$query.params.provider}
-					name="provider"
-					{size}
-					on:change={submitOnChange}
-				/>
-				<Button type="submit" slot="button" input variant="primary" {size}>
-					<Icon icon="search" />&nbsp;Search
-				</Button>
-			{/await}
+			<AsyncSelect 
+				data={$providersAsync}
+				getOptions={providersOptions}
+				value={$query.params.provider}
+				name="provider"
+				{size}
+				on:change={submitOnChange}
+			/>
+			<Button type="submit" slot="button" input variant="primary" {size}>
+				<Icon icon="search" />&nbsp;Search
+			</Button>
 		</InputGroup>
 		{#if guessSearch}
 			<div class="mt-2">
@@ -109,7 +106,6 @@
 		IconButton,
 		InputGroup,
 		Pagination,
-		Select,
 		Badge,
 		Tile,
 	} from 'svelte-spectre';
@@ -121,10 +117,9 @@
 	import { guess } from '@/services/optimade';
 
 	import * as Loaders from '@/components/loaders';
+	import AsyncSelect from '@/components/AsyncSelect.svelte';
 	import OptimadeApis from '@/views/optimade/OptimadeApis.svelte';
 	import Main from '@/layouts/Main.svelte';
-
-	import { SIZE } from 'svelte-spectre/package/types/const';
 
 	const size = 'lg';
 

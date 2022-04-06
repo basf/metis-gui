@@ -12,7 +12,7 @@
 </Button>
 
 <script lang="ts" context="module">
-	import { Button, Col, Divider, Grid, Input, Modal, Tile, toast } from 'svelte-spectre';
+	import { Button, Col, Divider, Grid, Input } from 'svelte-spectre';
 	import { Upload } from '@/components/Upload/';
 
 	import { media } from '@/stores/media';

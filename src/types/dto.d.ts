@@ -1,6 +1,8 @@
+import { COLORSET, VISIBILITY } from './const';
+
 export interface Timestamps {
-    created_at: string;
-    updated_at: string;
+    createdAt?: string;
+    updatedAt?: string;
 }
 
 export interface Calculation extends Timestamps {
@@ -18,11 +20,16 @@ export interface DataSource extends Timestamps {
     type: number;
 }
 
-export interface User {
+export interface User extends Timestamps { 
     id: number;
     email: string;
-    firstname: string;
-    lastname: string;
+    firstName: string;
+    lastName: string;
+    emailVerified?: boolean;
+    roleLabel?: string;
+    roleSlug?: string;
+    permissions?: unknown;
+    provider?: string;
 }
 
 export interface Error {
@@ -33,4 +40,32 @@ export interface Error {
 export interface Template {
     template: string;
     schema: any;
+}
+
+export type CollectionColor = typeof COLORSET[number];
+export type CollectionVisibility = typeof VISIBILITY[number];
+
+export interface CollectionType extends Timestamps {
+    id: number;
+    slug: string;
+    label: string;
+    color: CollectionColor;
+}
+
+export interface Collection extends Timestamps {
+    id: number;
+    title: string;
+    description: string;
+    visibility: CollectionVisibility;
+
+    userId: number;
+    userFirstName?: string;
+    userLastName?: string;
+    typeId: number;
+    typeSlug?: string;
+    typeLabel?: string;
+    typeColor?: CollectionColor;
+
+    dataSources?: number[];
+    users?: number[];
 }
