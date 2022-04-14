@@ -1,1 +1,1 @@
-export { default as Graphic } from './Graphic.svelte'
+export { default as Graphic } from './Graphic.svelte';

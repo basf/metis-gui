@@ -1,65 +1,77 @@
 <Main>
 	<TabSearch add bind:value={search} bind:addOpen data={$datasources} />
 
-	{#if addOpen}
-		{#if !$datasources.length}
-			<div class="text-center distant_msg">Upload a structure to start...</div>
-		{/if}
-		<div class="py-2">
-			<DataSourceAdd
-				{contents}
-				bind:clearFiles
-				bind:value={content}
-				on:files={handleFiles}
-				on:click={addDataItem}
-			/>
-		</div>
-	{/if}
-
-	{#each makeDataList($datasources, search) as datasource (datasource.id)}
-		<Tile centered={false}>
-			<svelte:fragment slot="title">
-				<h5 class="mt-2">{@html datasource.name}</h5>
-				<ul class="collections">
-					{#each getCollectionsList(datasource.id) as collection (collection.id)}
-					{@const href = $user?.id === collection.userId ? `/collections#${collection.id}` : undefined}
-					<li>
-						<a {href}>
-							<Badge style="background: {collection.typeColor}">{collection.title.substring(0, 10)}</Badge>
-						</a>
-					</li>
-				{/each}
-				</ul>
-			</svelte:fragment>
-			<svelte:fragment slot="subtitle">
-				<small class="text-gray">
-					Type &bull; {datasource.type} &bull; {showTimestamp(datasource)}
-				</small>
-			</svelte:fragment>
-			<svelte:fragment slot="action">
-				{#if $user.id === datasource.userId}
-				<TileMenu
-					data={$datasources}
-					items={tileMenuItems}
-					dataId={datasource.id}
-					on:editCalculation={(e) => editCalculation(datasource, e)}
-					on:editTags={(e) => editTags(datasource, e)}
-					on:editGraphic={(e) => editGraphic(datasource, e)}
-					on:setCalculation={() => calculate(datasource.id)}
-					on:delDatasource={() =>
-						withConfirm(
-							delData,
-							datasource.id,
-							'Are you sure?',
-							false
-						)?.(datasource.id)}
-				/>
+	<div bind:clientWidth={width}>
+		{#await $datasourcesAsync}
+			{#each { length: 4 } as _}
+				<Loaders.Tile count={1} w={width} h={74} height={74} {width} />
+			{/each}
+		{:then datasources}
+			{#if addOpen || !datasources.length}
+				{#if !datasources.length}
+					<div class="text-center distant_msg">Upload a structure to start...</div>
 				{/if}
-			</svelte:fragment>
-		</Tile>
-		<!-- {:else}
-		<div class="text-center distant_msg">Upload a structure to start...</div> -->
-	{/each}
+				<div class="py-2">
+					<DataSourceAdd
+						{contents}
+						bind:clearFiles
+						bind:value={content}
+						on:files={handleFiles}
+						on:click={addDataItem}
+					/>
+				</div>
+			{/if}
+			{#each makeDataList(datasources, search) as datasource (datasource.id)}
+				<Tile centered={false}>
+					<svelte:fragment slot="title">
+						<h5 class="mt-2">{@html datasource.name}</h5>
+						<ul class="collections">
+							{#each getCollectionsList(datasource.id) as collection (collection.id)}
+								{@const href =
+									$user?.id === collection.userId
+										? `/collections#${collection.id}`
+										: undefined}
+								<li>
+									<a {href}>
+										<Badge style="background: {collection.typeColor}"
+											>{collection.title.substring(0, 10)}</Badge
+										>
+									</a>
+								</li>
+							{/each}
+						</ul>
+					</svelte:fragment>
+					<svelte:fragment slot="subtitle">
+						<small class="text-gray">
+							Type &bull; {datasource.type} &bull; {showTimestamp(datasource)}
+						</small>
+					</svelte:fragment>
+					<svelte:fragment slot="action">
+						{#if $user.id === datasource.userId}
+							<TileMenu
+								data={datasources}
+								items={tileMenuItems}
+								dataId={datasource.id}
+								on:editCalculation={(e) => editCalculation(datasource, e)}
+								on:editTags={(e) => editTags(datasource, e)}
+								on:editGraphic={(e) => editGraphic(datasource, e)}
+								on:setCalculation={() => calculate(datasource.id)}
+								on:delDatasource={() =>
+									withConfirm(
+										delData,
+										datasource.id,
+										'Are you sure?',
+										false
+									)?.(datasource.id)}
+							/>
+						{/if}
+					</svelte:fragment>
+				</Tile>
+				<!-- {:else}
+				<div class="text-center distant_msg">Upload a structure to start...</div> -->
+			{/each}
+		{/await}
+	</div>
 </Main>
 
 <Modal bind:open={modal.open} size="fs">
@@ -92,28 +104,29 @@
 	import { TileMenu } from '@/components/Tile/';
 	import { TabSearch, match } from '@/components/Search/';
 
-	import { getData, setData, delData, setCalculation, getTemplate, getCollections } from '@/services/api';
+	import { setData, delData, setCalculation, getTemplate } from '@/services/api';
 
-	import { collections } from '@/stores/collections';
-	import datasources from '@/stores/datasources';
+	import collections from '@/stores/collections';
+	import datasources, { datasourcesAsync } from '@/stores/datasources';
 	import user from '@/stores/user';
 	import { withConfirm } from '@/stores/confirmator';
 	import { showTimestamp } from '@/helpers/date';
 
 	import DataSourceAdd from '@/views/DataSource/DataSourceAdd.svelte';
+	import * as Loaders from '@/components/loaders';
 	import type { DataSource } from '@/types/dto';
 
 	import Sinus from '@/assets/img/sinus.svg';
 </script>
 
 <script lang="ts">
+	let width;
 	let content = '';
 	let contents: string[] = [];
 	let clearFiles: () => void;
 	let points = [];
 	let search = '';
 	let addOpen = false;
-	$: addOpen = !$datasources.length;
 	let tileMenuItems = [
 		{
 			icon: 'edit',
@@ -151,13 +164,10 @@
 	};
 	let datasourceID = 0;
 
-	$: $user && getCollections();
-	$: $user && getData();
-	$: $datasources.length &&
-		toast.primary({ msg: 'Structures synced', timeout: 2000, pos: 'top_right' });
 	$: modalComponent = editor.template ? Editor : points.length ? Graphic : undefined;
 
-	$: getCollectionsList = dataSourceId => $collections.filter(({ dataSources }) => dataSources && dataSources.includes(dataSourceId));
+	$: getCollectionsList = (dataSourceId) =>
+		$collections.filter(({ dataSources }) => dataSources && dataSources.includes(dataSourceId));
 
 	function makeDataList(items: DataSource[], search: string) {
 		return search

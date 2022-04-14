@@ -10,7 +10,7 @@ import App from '@/App.svelte';
 prefs.basePath = BASE_PATH;
 
 const app = new App({
-    target: document.body,
+	target: document.body,
 });
 
 export default app;

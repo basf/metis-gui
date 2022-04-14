@@ -2,13 +2,7 @@
 export type Float = 'none' | 'left' | 'right';
 
 /* class should be prefixed with `p-{type}` */
-export type Position =
-    | 'static'
-    | 'relative'
-    | 'absolute'
-    | 'fixed'
-    | 'sticky'
-    | 'centered';
+export type Position = 'static' | 'relative' | 'absolute' | 'fixed' | 'sticky' | 'centered';
 
 /* class should be postfixed with `{type}-1` or `{type}-2` */
 export type Margin = 'm' | 'mt' | 'mx' | 'my' | false;
