@@ -8,6 +8,11 @@
 				<small class="text-gray">
 					{showTimestamp(calculation)}
 				</small>
+				<Meter
+					value={calculation.progress}
+					striped={calculation.progress < 100}
+					animated={calculation.progress < 100}
+				/>
 			</svelte:fragment>
 			<svelte:fragment slot="action">
 				<IconButton
@@ -29,7 +34,7 @@
 </Main>
 
 <script lang="ts" context="module">
-	import { IconButton, Tile, toast } from 'svelte-spectre';
+	import { IconButton, Meter, Tile, toast } from 'svelte-spectre';
 
 	import Main from '@/layouts/Main.svelte';
 
@@ -45,4 +50,6 @@
 	$: $user && getCalculations();
 	$: $calculations.length &&
 		toast.primary({ msg: 'Calculations synced', timeout: 2000, pos: 'top_right' });
+
+	$: console.log($calculations);
 </script>
