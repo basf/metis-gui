@@ -15,7 +15,11 @@
 							{showTimestamp(calculation)}
 						</small>
 					</svelte:fragment>
-					<Meter value={calculation.status} min={0} max={100} low={25} high={50} />
+					<Meter
+						value={calculation.status}
+						striped={calculation.status < 100}
+						animated={calculation.status < 100}
+					/>
 					<svelte:fragment slot="action">
 						<IconButton
 							icon="cross"
