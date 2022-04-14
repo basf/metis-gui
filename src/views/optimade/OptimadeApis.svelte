@@ -48,8 +48,8 @@
 	export let apis: Types.StructuresResponse[] = [];
 	export let data: Types.Structure[] | undefined;
 	export let meta: Types.Meta | undefined;
-	export let col: number = 3;
-	export let auto: boolean = false;
+	export let col = 3;
+	export let auto = false;
 
 	onMount(() => {
 		data = apis.find((a) => a.meta?.data_returned)?.data;

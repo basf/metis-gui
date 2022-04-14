@@ -1,23 +1,24 @@
 <div class="tile-collection">
-    <Tile>
-        <svelte:fragment slot="icon">
-            <div class="tooltip" data-tooltip="{userDisplayName}">
-				<Avatar size="lg" name="{userDisplayName}">
+	<Tile>
+		<svelte:fragment slot="icon">
+			<div class="tooltip" data-tooltip={userDisplayName}>
+				<Avatar size="lg" name={userDisplayName}>
 					<svelte:fragment slot="sub">
 						{#if !owner && $user}
-							<Avatar size="sm" name="{$user.firstName} {$user.lastName}"/>
+							<Avatar size="sm" name="{$user.firstName} {$user.lastName}" />
 						{/if}
 					</svelte:fragment>
 				</Avatar>
 			</div>
-        </svelte:fragment>
-        <h5 class="mt-2" slot="title">
-            {title} <Badge style="background: {typeColor}">{visibility}</Badge>
-        </h5>
-        <small slot="subtitle" class="text-gray">
-            {description}
-        </small>
-        <svelte:fragment slot="action">
+		</svelte:fragment>
+		<h5 class="mt-2" slot="title">
+			{title}
+			<Badge style="background: {typeColor}">{visibility}</Badge>
+		</h5>
+		<small slot="subtitle" class="text-gray">
+			{description}
+		</small>
+		<svelte:fragment slot="action">
 			{#if owner}
 				<IconButton
 					icon="edit"
@@ -27,8 +28,8 @@
 					on:click={() => dispatch('edit', { id })}
 				/>
 			{/if}
-        </svelte:fragment>	
-    </Tile>
+		</svelte:fragment>
+	</Tile>
 </div>
 
 <script lang="ts" context="module">
@@ -38,24 +39,24 @@
 </script>
 
 <script lang="ts">
-import { userAsync, userAsync } from "@/stores/user";
+	import { userAsync } from '@/stores/user';
 
 	const dispatch = createEventDispatcher();
 
-    export let id: number;
-    export let title: string;
-    export let description: string;
-    export let visibility: string;
+	export let id: number;
+	export let title: string;
+	export let description: string;
+	export let visibility: string;
 	export let userId: number;
-    export let userFirstName = '';
-    export let userLastName = '';
+	export let userFirstName = '';
+	export let userLastName = '';
 	export let typeColor = '';
 
-    $: userDisplayName = `${userFirstName} ${userLastName}`;
+	$: userDisplayName = `${userFirstName} ${userLastName}`;
 	$: owner = $user && $user.id === userId;
 
 	let visibilityColor;
-	$: switch(visibility) {
+	$: switch (visibility) {
 		case 'public':
 			visibilityColor = 'success';
 			break;
@@ -64,11 +65,11 @@ import { userAsync, userAsync } from "@/stores/user";
 			break;
 		default:
 			visibilityColor = 'error';
-	} 
+	}
 </script>
 
 <style lang="scss">
-    .tile-collection {
+	.tile-collection {
 		&:hover {
 			:global(.tile .tile-action) {
 				visibility: visible;

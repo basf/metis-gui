@@ -17,7 +17,7 @@
 {/if}
 
 <script lang="ts" context="module">
-	import { Avatar, Button, Panel, Tabs, Tile } from 'svelte-spectre';
+	import { Avatar, Button, Panel, Tabs, Tile, toast } from 'svelte-spectre';
 
 	import user, { userAsync } from '@/stores/user';
 

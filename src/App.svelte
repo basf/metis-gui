@@ -7,11 +7,11 @@
 			{#await $userAsync then user}
 				{#if user}
 					{#if user.email}
-					<div class="mt-2 pt-2">
-						<Viewpoint {...page}>
-							<svelte:fragment slot="loading">Loading...</svelte:fragment>
-						</Viewpoint>
-					</div>
+						<div class="mt-2 pt-2">
+							<Viewpoint {...page}>
+								<svelte:fragment slot="loading">Loading...</svelte:fragment>
+							</Viewpoint>
+						</div>
 					{:else}
 						<AskEmail />
 					{/if}
