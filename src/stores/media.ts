@@ -23,17 +23,17 @@ export const media: Readable<Queries> = mediaStore(queries)
 
 function mediaStore(queries: Queries = {}) {
 	return readable({}, (set) => {
-		let mqs = Object.entries(queries).reduce((mqs: { [key: string]: MediaQueryListEvent }, [key, query]) => {
-			const media = window.matchMedia(query as string);
-			media.onchange = (mq: MediaQueryListEvent) => {
+		let mqs = Object.entries(queries).reduce((mqs, [key, query]) => {
+			mqs[key] = window.matchMedia(query as string);
+			mqs[key].onchange = (mq: MediaQueryListEvent) => {
 				mqs[key] = mq;
 				update();
 			};
-			return mqs as { [key: string]: MediaQueryListEvent };
+			return mqs as Queries;
 		}, {});
 
 		function update() {
-			const matches = Object.entries(mqs).reduce((matches: Queries, [key, mq]) => {
+			const matches: Queries = Object.entries(mqs as MediaQueryList).reduce((matches, [key, mq]) => {
 				matches[key] = mq.matches;
 				return matches;
 			}, {});
@@ -45,3 +45,4 @@ function mediaStore(queries: Queries = {}) {
 		return () => mqs = {};
 	});
 }
+
