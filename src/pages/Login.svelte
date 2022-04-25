@@ -1,7 +1,7 @@
 <Grid>
 	<Col col="auto mx-auto">
 		<Form on:submit={submit} horizontal>
-			{#if !IDPS}
+			{#if !IdPs}
 				<FormGroup>
 					<Input bind:value={email} expand="xs" placeholder="Email" width="8">Email</Input
 					>
@@ -47,7 +47,6 @@
 		Grid,
 		Input,
 		Icon,
-		// IconButton,
 		toast,
 	} from 'svelte-spectre';
 
@@ -55,7 +54,7 @@
 
 	import { login, me } from '@/services/api';
 
-	import { API_BASEURL, IDPS } from '@/config';
+	import { API_BASEURL, IdPs } from '@/config';
 
 	import github from '@/assets/img/github.svg';
 	import linkedin from '@/assets/img/linkedin.svg';
@@ -66,7 +65,7 @@
 	let password = '';
 	let errmsg;
 
-	const oauth = IDPS ? { basf, linkedin } : { github, orcid };
+	const oauth = IdPs ? { basf, linkedin } : { github, orcid };
 
 	async function submit() {
 		try {
