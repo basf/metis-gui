@@ -29,3 +29,5 @@ export const SEARCH_DELAY = 1000;
 export const DOWNLOADABLE_APP_FILENAME = 'index.html';
 
 export const SYNC_TOASTS_CONFIG = { timeout: 2000, pos: 'bottom_right' } as ToastItem;
+
+export const IDPS = !['metis.science', 'localhost'].some(host => location.origin.includes(host))
