@@ -37,7 +37,7 @@
 <script lang="ts" context="module">
 	import { onMount } from 'svelte';
 	import { getStructureTitle } from '@/helpers/optimade';
-	import { Col, Grid, IconButton, Tile } from 'svelte-spectre';
+	import { Col, Grid, IconButton, Tile, toast } from 'svelte-spectre';
 
 	import type { Types } from 'optimade';
 
@@ -58,6 +58,12 @@
 
 	function setDataContent(structure: Types.Structure) {
 		setData(JSON.stringify(structure));
+		toast.success({
+			msg: 'Data downloaded',
+			timeout: 2000,
+			pos: 'top_right',
+			icon: 'download',
+		});
 	}
 </script>
 
