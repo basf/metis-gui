@@ -1,7 +1,7 @@
 <Grid>
 	<Col col="auto mx-auto">
 		<Form on:submit={submit} horizontal>
-			{#if !IdPs}
+			{#if IdPs.includes('local')}
 				<FormGroup>
 					<Input bind:value={email} expand="xs" placeholder="Email" width="8">Email</Input
 					>
@@ -18,21 +18,38 @@
 				<Button variant="primary" type="submit" block>Login</Button>
 				<Divider align="horizontal center" text="OR" />
 			{/if}
-			<Grid align="center">
-				<Col col="auto">Log in with:</Col>
-				<Col>
-					<div class="oauth-buttons">
-						{#each Object.entries(oauth) as [provider, icon]}
-							<Button size="lg" variant="link" href="{API_BASEURL}/auth/{provider}">
-								{provider} &nbsp;
-								<Icon size="2x">
-									{@html icon}
-								</Icon>
-							</Button>
-						{/each}
-					</div>
-				</Col>
-			</Grid>
+			{#if IdPs.length}
+				<Grid align="center">
+					<Col col="auto">Log in with:</Col>
+					<Col>
+						<div class="oauth-buttons">
+							{#each IdPs.filter((p) => p !== 'local') as provider}
+								{#if IdPs.length > 3}
+									<IconButton
+										size="lg"
+										iconSize="3x"
+										variant="link"
+										href="{API_BASEURL}/auth/{provider}"
+									>
+										{@html icons[provider]}
+									</IconButton>
+								{:else}
+									<Button
+										size="lg"
+										variant="link"
+										href="{API_BASEURL}/auth/{provider}"
+									>
+										{provider} &nbsp;
+										<Icon size="2x">
+											{@html icons[provider]}
+										</Icon>
+									</Button>
+								{/if}
+							{/each}
+						</div>
+					</Col>
+				</Grid>
+			{/if}
 		</Form>
 	</Col>
 </Grid>
@@ -47,6 +64,7 @@
 		Grid,
 		Input,
 		Icon,
+		IconButton,
 		toast,
 	} from 'svelte-spectre';
 
@@ -54,7 +72,7 @@
 
 	import { login, me } from '@/services/api';
 
-	import { API_BASEURL, IdPs } from '@/config';
+	import { API_BASEURL, IdPs, IdPs } from '@/config';
 
 	import github from '@/assets/img/github.svg';
 	import linkedin from '@/assets/img/linkedin.svg';
@@ -65,7 +83,7 @@
 	let password = '';
 	let errmsg;
 
-	const oauth = IdPs ? { basf, linkedin } : { github, orcid };
+	const icons = { basf, linkedin, github, orcid };
 
 	async function submit() {
 		try {
