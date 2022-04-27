@@ -21,5 +21,26 @@
 <script lang="ts">
 	export let value = '',
 		clearFiles: () => void,
-		contents: string[];
+		content = '',
+		contents: string[] = [];
+
+	function addDataItem() {
+		setData(contents.length ? contents : content);
+		content = '';
+		clearFiles();
+	}
+
+	async function handleFiles(e: any) {
+		const { files } = e.detail;
+
+		if (files.length) {
+			for (const file of files) {
+				const content = await file.text();
+				contents.push(content);
+			}
+			contents = [...contents];
+		} else {
+			contents = [];
+		}
+	}
 </script>

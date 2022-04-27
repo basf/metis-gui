@@ -12,13 +12,7 @@
 					<div class="text-center distant_msg">Upload a structure to start...</div>
 				{/if}
 				<div class="py-2">
-					<DataSourceAdd
-						{contents}
-						bind:clearFiles
-						bind:value={content}
-						on:files={handleFiles}
-						on:click={addDataItem}
-					/>
+					<DataSourceAdd value={search} />
 				</div>
 			{/if}
 			{#each makeDataList(datasources, search) as datasource (datasource.id)}
@@ -93,9 +87,6 @@
 
 <script lang="ts">
 	let width;
-	let content = '';
-	let contents: string[] = [];
-	let clearFiles: () => void;
 	let points = [];
 	let search = '';
 	let addOpen = false;
@@ -122,26 +113,6 @@
 			: items.sort((a, b) => b.id - a.id);
 	}
 
-	function addDataItem() {
-		setData(contents.length ? contents : content);
-		content = '';
-		clearFiles();
-	}
-
-	async function handleFiles(e: any) {
-		const { files } = e.detail;
-
-		if (files.length) {
-			for (const file of files) {
-				const content = await file.text();
-				contents.push(content);
-			}
-			contents = [...contents];
-		} else {
-			contents = [];
-		}
-	}
-
 	function calculate(id: number) {
 		setCalculation(id);
 		toast.success({
@@ -156,7 +127,6 @@
 		const { template, schema } = await getTemplate('dummy');
 		datasourceID = datasource.id;
 		editor = { template, schema, input: template };
-		// points = [];
 		modal = {
 			open: true,
 			header: `Edit and submit calculation for <mark> ${datasource.name} </mark>`,
@@ -175,8 +145,6 @@
 
 	function editTags(datasource: DataSource, e: Event) {
 		datasourceID = datasource.id;
-		// editor = {};
-		// points = [];
 		modal = {
 			open: true,
 			header: `Edit and submit Tags for <mark> ${datasource.name} </mark>`,
@@ -200,28 +168,15 @@
 		modal = {};
 	}
 
-	$: console.log(tags);
-
 	async function saveCollection(value) {
 		try {
 			await setCollection(value);
 		} catch (err: unknown) {
-			console.error(err);
 			toast.error({ msg: (err as HttpError).message, timeout: 2000, pos: 'top_right' });
 		}
 	}
 
-	// async function removeCollection(value) {
-	// 	try {
-	// 		await delCollection(value.id);
-	// 	} catch (err: unknown) {
-	// 		toast.error({ msg: (err as HttpError).message, timeout: 2000, pos: 'top_right' });
-	// 	}
-	// 	closeEdit();
-	// }
-
 	function editGraphic(datasource: DataSource, e: Event) {
-		// editor = {};
 		points = pointsSource;
 		modal = {
 			open: true,
