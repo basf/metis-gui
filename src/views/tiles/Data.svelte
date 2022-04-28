@@ -1,4 +1,4 @@
-<div class="tile-datasource">
+<div class="tile-data">
 	<Tile>
 		<svelte:fragment slot="title">
 			<h5 class="mt-2">{@html datasource.name}</h5>
@@ -24,7 +24,7 @@
 			</small>
 		</svelte:fragment>
 		<svelte:fragment slot="action">
-			{#if $user.id === datasource.userId}
+			{#if $user?.id === datasource.userId}
 				<TileMenu
 					data={datasources}
 					items={tileMenuItems}
@@ -49,10 +49,12 @@
 	import { showTimestamp } from '@/helpers/date';
 
 	import Sinus from '@/assets/img/sinus.svg';
+
+	import type { Collection, DataSource } from '@/types/dto';
 </script>
 
-<script>
-	export let datasource, datasources;
+<script lang="ts">
+	export let datasource: DataSource, datasources: DataSource[];
 
 	const tileMenuItems = [
 		{
@@ -80,32 +82,34 @@
 		},
 	];
 
-	$: getCollectionsList = (dataSourceId) =>
-		$collections.filter(({ dataSources }) => dataSources && dataSources.includes(dataSourceId));
+	$: getCollectionsList = (dataSourceId: number): Collection[] =>
+		$collections.filter(
+			({ dataSources }: { dataSources: number[] }): boolean =>
+				dataSources && dataSources.includes(dataSourceId)
+		);
 </script>
 
 <style lang="scss">
-	:global(.spectre .tile) {
-		padding: 0.75em;
+	.tile-data {
 		margin: 0.5em 0;
-		:global(.tile-action) {
-			display: flex;
+		:global(.tile) {
+			padding: 0.5em;
 		}
-	}
-	h5 {
-		display: inline;
-	}
-	.collections {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-		display: inline-flex;
-		flex-flow: row wrap;
-		gap: 0.25em;
-		float: right;
-		li {
+		h5 {
+			display: inline;
+		}
+		.collections {
+			list-style: none;
 			margin: 0;
 			padding: 0;
+			display: inline-flex;
+			flex-flow: row wrap;
+			gap: 0.25em;
+			float: right;
+			li {
+				margin: 0;
+				padding: 0;
+			}
 		}
 	}
 </style>

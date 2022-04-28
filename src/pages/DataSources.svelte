@@ -7,8 +7,8 @@
 				<Loaders.Tile count={1} w={width} h={74} height={74} {width} />
 			{/each}
 		{:then datasources}
-			{#if addOpen || !datasources.length}
-				{#if !datasources.length}
+			{#if addOpen || !datasources}
+				{#if !datasources}
 					<div class="text-center distant_msg">Upload a structure to start...</div>
 				{/if}
 				<div class="py-2">
@@ -16,7 +16,7 @@
 				</div>
 			{/if}
 			{#each makeDataList(datasources, search) as datasource (datasource.id)}
-				<DataSource
+				<Data
 					{datasource}
 					{datasources}
 					on:editCalculation={(e) => editCalculation(datasource, e)}
@@ -36,7 +36,7 @@
 	</div>
 </Main>
 
-<Modal bind:open={modal.open} size="lg">
+<Modal size="lg" open={!!$fragment} on:close={closeModal}>
 	<h3 slot="header">{@html modal.header}</h3>
 	{#if modal.component}
 		<svelte:component
@@ -51,7 +51,7 @@
 		<span style="height: 100%" class="loading loading-lg p-centered d-block" />
 	{/if}
 	<svelte:fragment slot="footer">
-		<Button on:click={() => (modal = {})}>Cancel</Button>
+		<Button on:click={closeModal}>Cancel</Button>
 		<Button variant="primary" on:click={editor.template ? submitCalculation : submitTags}
 			>Submit</Button
 		>
@@ -60,40 +60,37 @@
 
 <script lang="ts" context="module">
 	import { query, fragment } from 'svelte-pathfinder';
-	import { Button, Modal, Tile, Badge, toast } from 'svelte-spectre';
+	import { Button, Modal, toast } from 'svelte-spectre';
 
 	import Main from '@/layouts/Main.svelte';
 	import { Editor } from '@/components/Editor/';
 	import { Graphic } from '@/components/Graphic/';
 	import pointsSource from '@/components/Graphic/points';
-	import { TileMenu } from '@/components/Tile/';
 	import { TabSearch, match } from '@/components/Search';
 	import DataSourceAdd from '@/views/DataSource/DataSourceAdd.svelte';
-	import { DataSource } from '@/views/tiles';
+	import { Data } from '@/views/tiles';
 	import * as Loaders from '@/components/loaders';
 
-	import collections from '@/stores/collections';
-
-	import { setData, delData, setCalculation, getTemplate } from '@/services/api';
+	import { delData, setCalculation, getTemplate, HttpError } from '@/services/api';
 
 	import datasources, { datasourcesAsync } from '@/stores/datasources';
 	import { withConfirm } from '@/stores/confirmator';
 
 	import { TagsEdit } from '@/views/modals';
-	import { setCollection, delCollection } from '@/services/api';
+	import { setCollection } from '@/services/api';
 
-	import type { DataSource } from '@/types/dto';
+	import type { Collection, DataSource } from '@/types/dto';
+	import type { SvelteComponent } from 'svelte';
 </script>
 
 <script lang="ts">
-	let width;
-	let points = [];
+	let width: number | undefined;
 	let search = '';
 	let addOpen = false;
-	let modal: { open?: boolean; header?: string; component } = {
+	let modal: { open?: boolean; header?: string; component?: typeof SvelteComponent } = {
 		open: false,
 		header: '',
-		component: null,
+		component: undefined,
 	};
 	let editor: {
 		schema: { [key: string]: any };
@@ -123,6 +120,11 @@
 		});
 	}
 
+	function closeModal() {
+		modal = editor = {};
+		$fragment = '';
+	}
+
 	async function editCalculation(datasource: DataSource) {
 		const { template, schema } = await getTemplate('dummy');
 		datasourceID = datasource.id;
@@ -132,6 +134,7 @@
 			header: `Edit and submit calculation for <mark> ${datasource.name} </mark>`,
 			component: Editor,
 		};
+		$fragment = `#edit-calculation-${datasource.id}`;
 	}
 
 	function setInput(e: CustomEvent) {
@@ -140,7 +143,7 @@
 	}
 
 	function submitCalculation() {
-		if (editor) setCalculation(datasourceID, 'dummy', editor.input).then(() => (modal = {}));
+		if (editor) setCalculation(datasourceID, 'dummy', editor.input).then(() => closeModal());
 	}
 
 	function editTags(datasource: DataSource, e: Event) {
@@ -150,25 +153,28 @@
 			header: `Edit and submit Tags for <mark> ${datasource.name} </mark>`,
 			component: TagsEdit,
 		};
+		$fragment = `#edit-tags-${datasource.id}`;
 	}
 
 	function submitTags() {
 		tags.forEach(async ({ value }) => {
-			const { id, title, description, typeId, visibility, dataSources, users } = value;
+			const { id, title, description, userId, typeId, visibility, dataSources, users } =
+				value;
 			await saveCollection({
 				id,
 				title,
 				description,
+				userId,
 				typeId,
 				visibility,
 				dataSources,
 				users,
 			});
 		});
-		modal = {};
+		closeModal();
 	}
 
-	async function saveCollection(value) {
+	async function saveCollection(value: Collection) {
 		try {
 			await setCollection(value);
 		} catch (err: unknown) {
@@ -177,17 +183,15 @@
 	}
 
 	function editGraphic(datasource: DataSource, e: Event) {
-		points = pointsSource;
 		modal = {
 			open: true,
 			header: `Edit and submit Graphic for <mark> ${datasource.name} </mark>`,
 			component: Graphic,
 		};
+		$fragment = `#edit-graphic-${datasource.id}`;
 	}
 
 	function submitGraphic() {
-		modal = {};
+		closeModal();
 	}
 </script>
-
-<style lang="scss"></style>

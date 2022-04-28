@@ -4,40 +4,50 @@
 	import { Autocomplete } from 'svelte-spectre';
 	import collections from '@/stores/collections';
 	import user from '@/stores/user';
+
+	import type { Collection, DataSource } from '@/types/dto';
+
+	type Tag = {
+		index: number;
+		label: string;
+		group: string;
+		style: string;
+		value: Collection;
+	};
 </script>
 
 <script lang="ts">
-	let predefined,
-		selected = [];
+	let predefined: Tag[] = [],
+		selected: Tag[] = [];
 
-	export let datasourceID,
-		tags = [];
+	export let datasourceID: number,
+		tags: Tag[] = [];
 
 	$: predefined = $collections
 		.filter(
-			(collection) =>
-				collection.userId === $user.id &&
+			(collection: Collection) =>
+				collection.userId === $user?.id &&
 				['public', 'community'].includes(collection.visibility)
 		)
-		.map((collection) => ({
+		.map((collection: Collection) => ({
 			index: collection.id,
 			label: collection.title,
-			value: collection,
 			group: collection.visibility,
 			style: `background: ${collection.typeColor} !important`,
+			value: collection,
 		}));
 
 	$: selected = predefined.filter(({ value: { dataSources } }) =>
-		dataSources.includes(datasourceID)
+		dataSources?.includes(datasourceID)
 	);
 
-	$: tags = predefined.reduce((acc = [], tag) => {
-		tag.value.dataSources = selected.some((t) => t.index === tag.index)
-			? !tag.value.dataSources.includes(datasourceID)
-				? [...tag.value.dataSources, datasourceID]
+	$: tags = predefined.reduce((acc = [], tag: Tag): never[] => {
+		tag.value.dataSources = selected.some((s) => s.index === tag.index)
+			? !tag.value.dataSources?.includes(datasourceID)
+				? [...(tag.value.dataSources as number[]), datasourceID]
 				: tag.value.dataSources
-			: tag.value.dataSources.filter((id) => id !== datasourceID);
-		acc.push(tag);
+			: tag.value.dataSources?.filter((id) => id !== datasourceID);
+		acc.push(tag as never);
 		return acc;
 	}, []);
 </script>
