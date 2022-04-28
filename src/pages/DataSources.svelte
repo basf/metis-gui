@@ -19,9 +19,9 @@
 				<Data
 					{datasource}
 					{datasources}
-					on:editCalculation={(e) => editCalculation(datasource, e)}
-					on:editTags={(e) => editTags(datasource, e)}
-					on:editGraphic={(e) => editGraphic(datasource, e)}
+					on:editCalculation={() => editCalculation(datasource)}
+					on:editTags={() => editTags(datasource)}
+					on:editGraphic={() => editGraphic(datasource)}
 					on:setCalculation={() => calculate(datasource.id)}
 					on:delDatasource={() =>
 						withConfirm(
@@ -93,9 +93,9 @@
 		component: undefined,
 	};
 	let editor: {
-		schema: { [key: string]: any };
-		template: string;
-		input: string;
+		schema?: { [key: string]: any };
+		template?: string;
+		input?: string;
 	} = {
 		schema: {},
 		template: '',
@@ -121,7 +121,8 @@
 	}
 
 	function closeModal() {
-		modal = editor = {};
+		modal = {};
+		editor = {};
 		$fragment = '';
 	}
 
@@ -146,7 +147,7 @@
 		if (editor) setCalculation(datasourceID, 'dummy', editor.input).then(() => closeModal());
 	}
 
-	function editTags(datasource: DataSource, e: Event) {
+	function editTags(datasource: DataSource) {
 		datasourceID = datasource.id;
 		modal = {
 			open: true,
@@ -182,7 +183,7 @@
 		}
 	}
 
-	function editGraphic(datasource: DataSource, e: Event) {
+	function editGraphic(datasource: DataSource) {
 		modal = {
 			open: true,
 			header: `Edit and submit Graphic for <mark> ${datasource.name} </mark>`,

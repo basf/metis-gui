@@ -5,7 +5,7 @@
 	import collections from '@/stores/collections';
 	import user from '@/stores/user';
 
-	import type { Collection, DataSource } from '@/types/dto';
+	import type { Collection } from '@/types/dto';
 
 	type Tag = {
 		index: number;
@@ -17,11 +17,11 @@
 </script>
 
 <script lang="ts">
-	let predefined: Tag[] = [],
-		selected: Tag[] = [];
-
 	export let datasourceID: number,
 		tags: Tag[] = [];
+
+	let predefined: Tag[] = [],
+		selected: Tag[] = [];
 
 	$: predefined = $collections
 		.filter(
