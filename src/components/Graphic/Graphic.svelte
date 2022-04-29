@@ -29,9 +29,12 @@
 	</svg>
 </div>
 
-<script lang="ts">
+<script lang="ts" context="module">
+	import { onMount, onDestroy } from 'svelte';
 	import { scaleLinear } from 'd3-scale';
+</script>
 
+<script lang="ts">
 	export let source: string;
 
 	const xTicks = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 150, 200];
@@ -40,7 +43,7 @@
 
 	let width = 500;
 	let height = 200;
-	let chart: Element;
+	let chart: HTMLElement;
 	let points: { x: number; y: number }[];
 
 	$: points = parseSource(source);
@@ -73,15 +76,16 @@
 	}
 
 	const RO = new ResizeObserver(() => {
-		width = chart.clientWidth;
-		height = chart.clientHeight;
+		width = chart.offsetWidth;
+		height = chart.offsetHeight;
 	});
 
-	$: if (chart) RO.observe(chart);
+	onMount(() => RO.observe(chart));
+	onDestroy(() => RO.disconnect());
 </script>
 
 <style lang="scss">
-	.chart {
+	div.chart {
 		width: 100%;
 		height: 100%;
 
@@ -89,6 +93,8 @@
 			position: relative;
 			width: 100%;
 			height: 100%;
+			min-height: 250px;
+			overflow: visible;
 
 			.tick {
 				font-size: 0.725em;

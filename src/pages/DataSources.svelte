@@ -19,10 +19,10 @@
 				<Data
 					{datasource}
 					{datasources}
-					on:editCalculation={() => editCalculation(datasource)}
-					on:editTags={() => editTags(datasource)}
-					on:editGraphic={() => editGraphic(datasource)}
-					on:setCalculation={() => calculate(datasource.id)}
+					on:editCalculation={() => calculation.edit(datasource)}
+					on:editTags={() => tag.edit(datasource)}
+					on:editGraphic={() => graphic.edit(datasource)}
+					on:setCalculation={() => calculation.run(datasource.id)}
 					on:delDatasource={() =>
 						withConfirm(
 							delData,
@@ -37,14 +37,15 @@
 </Main>
 
 <Modal size="lg" open={!!$fragment} on:close={closeModal}>
-	<h3 slot="header">{@html modal.header}</h3>
-	{#if modal.component}
+	<h3 slot="header">
+		{@html `Edit and submit ${decodeURIComponent(dataType)} for <mark> ${
+			$datasources.find((d) => d.id === +dataId)?.name
+		} </mark>`}
+	</h3>
+	{#if modalComponent}
 		<svelte:component
-			this={modal.component}
-			source={pointsSource}
-			bind:code={editor.template}
-			on:change={setInput}
-			{datasourceID}
+			this={modalComponent}
+			dataSourceId={+decodeURIComponent(dataId)}
 			bind:tags
 		/>
 	{:else}
@@ -52,56 +53,41 @@
 	{/if}
 	<svelte:fragment slot="footer">
 		<Button on:click={closeModal}>Cancel</Button>
-		<Button variant="primary" on:click={editor.template ? submitCalculation : submitTags}
+		<Button variant="primary" on:click={$EditorCode.input ? calculation.submit : tag.submit}
 			>Submit</Button
 		>
 	</svelte:fragment>
 </Modal>
 
 <script lang="ts" context="module">
-	import { query, fragment } from 'svelte-pathfinder';
+	import { fragment } from 'svelte-pathfinder';
 	import { Button, Modal, toast } from 'svelte-spectre';
 
 	import Main from '@/layouts/Main.svelte';
-	import { Editor } from '@/components/Editor/';
-	import { Graphic } from '@/components/Graphic/';
-	import pointsSource from '@/components/Graphic/points';
+
 	import { TabSearch, match } from '@/components/Search';
 	import DataSourceAdd from '@/views/DataSource/DataSourceAdd.svelte';
 	import { Data } from '@/views/tiles';
 	import * as Loaders from '@/components/loaders';
 
-	import { delData, setCalculation, getTemplate, HttpError } from '@/services/api';
+	import { delData, setCalculation, HttpError } from '@/services/api';
 
 	import datasources, { datasourcesAsync } from '@/stores/datasources';
 	import { withConfirm } from '@/stores/confirmator';
 
-	import { TagsEdit } from '@/views/modals';
+	import { CalculationEdit, GraphicEdit, TagsEdit } from '@/views/modals';
 	import { setCollection } from '@/services/api';
 
+	import { EditorCode } from '@/stores/editor';
+
 	import type { Collection, DataSource } from '@/types/dto';
-	import type { SvelteComponent } from 'svelte';
 </script>
 
 <script lang="ts">
-	let width: number | undefined;
+	let width = 0;
 	let search = '';
 	let addOpen = false;
-	let modal: { open?: boolean; header?: string; component?: typeof SvelteComponent } = {
-		open: false,
-		header: '',
-		component: undefined,
-	};
-	let editor: {
-		schema?: { [key: string]: any };
-		template?: string;
-		input?: string;
-	} = {
-		schema: {},
-		template: '',
-		input: '',
-	};
-	let datasourceID = 0;
+	let dataSourceId = 0;
 	let tags = [];
 
 	function makeDataList(items: DataSource[], search: string) {
@@ -110,89 +96,72 @@
 			: items.sort((a, b) => b.id - a.id);
 	}
 
-	function calculate(id: number) {
-		setCalculation(id);
-		toast.success({
-			msg: 'Calculation in progress',
-			timeout: 2000,
-			pos: 'top_right',
-			icon: 'forward',
-		});
-	}
-
 	function closeModal() {
-		modal = {};
-		editor = {};
 		$fragment = '';
 	}
 
-	async function editCalculation(datasource: DataSource) {
-		const { template, schema } = await getTemplate('dummy');
-		datasourceID = datasource.id;
-		editor = { template, schema, input: template };
-		modal = {
-			open: true,
-			header: `Edit and submit calculation for <mark> ${datasource.name} </mark>`,
-			component: Editor,
-		};
-		$fragment = `#edit-calculation-${datasource.id}`;
-	}
+	$: modalComponent = $fragment.includes('calculation')
+		? CalculationEdit
+		: $fragment.includes('tags')
+		? TagsEdit
+		: $fragment.includes('graphic')
+		? GraphicEdit
+		: undefined;
 
-	function setInput(e: CustomEvent) {
-		e.preventDefault();
-		if (editor) editor.input = e.detail;
-	}
+	$: [_, dataType, dataId] = $fragment.split('-');
 
-	function submitCalculation() {
-		if (editor) setCalculation(datasourceID, 'dummy', editor.input).then(() => closeModal());
-	}
-
-	function editTags(datasource: DataSource) {
-		datasourceID = datasource.id;
-		modal = {
-			open: true,
-			header: `Edit and submit Tags for <mark> ${datasource.name} </mark>`,
-			component: TagsEdit,
-		};
-		$fragment = `#edit-tags-${datasource.id}`;
-	}
-
-	function submitTags() {
-		tags.forEach(async ({ value }) => {
-			const { id, title, description, userId, typeId, visibility, dataSources, users } =
-				value;
-			await saveCollection({
-				id,
-				title,
-				description,
-				userId,
-				typeId,
-				visibility,
-				dataSources,
-				users,
+	const calculation = {
+		edit: async (datasource: DataSource) => {
+			dataSourceId = datasource.id;
+			$fragment = `#edit-calculation-${datasource.id}`;
+		},
+		submit: () =>
+			setCalculation(dataSourceId, 'dummy', $EditorCode.input).then(() => closeModal()),
+		run: (id: number) => {
+			setCalculation(id);
+			toast.success({
+				msg: 'Calculation in progress',
+				timeout: 2000,
+				pos: 'top_right',
+				icon: 'forward',
 			});
-		});
-		closeModal();
-	}
+		},
+	};
 
-	async function saveCollection(value: Collection) {
-		try {
-			await setCollection(value);
-		} catch (err: unknown) {
-			toast.error({ msg: (err as HttpError).message, timeout: 2000, pos: 'top_right' });
-		}
-	}
+	const tag = {
+		edit: (datasource: DataSource) => {
+			dataSourceId = datasource.id;
+			$fragment = `#edit-tags-${datasource.id}`;
+		},
+		submit: async () => {
+			const promises = tags.map((collection) => saveCollection(collection));
+			try {
+				await Promise.all(promises);
+			} catch (e) {
+				console.error(e);
+			} finally {
+				closeModal();
+			}
 
-	function editGraphic(datasource: DataSource) {
-		modal = {
-			open: true,
-			header: `Edit and submit Graphic for <mark> ${datasource.name} </mark>`,
-			component: Graphic,
-		};
-		$fragment = `#edit-graphic-${datasource.id}`;
-	}
+			async function saveCollection(value: Collection) {
+				try {
+					await setCollection(value);
+				} catch (err: unknown) {
+					toast.error({
+						msg: (err as HttpError).message,
+						timeout: 2000,
+						pos: 'top_right',
+					});
+				}
+			}
+		},
+	};
 
-	function submitGraphic() {
-		closeModal();
-	}
+	const graphic = {
+		edit: (datasource: DataSource) => {
+			dataSourceId = datasource.id;
+			$fragment = `#edit-graphic-${datasource.id}`;
+		},
+		submit: () => closeModal(),
+	};
 </script>

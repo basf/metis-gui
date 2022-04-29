@@ -17,8 +17,8 @@
 </script>
 
 <script lang="ts">
-	export let datasourceID: number,
-		tags: Tag[] = [];
+	export let dataSourceId: number,
+		tags: Collection[] = [];
 
 	let predefined: Tag[] = [],
 		selected: Tag[] = [];
@@ -38,16 +38,18 @@
 		}));
 
 	$: selected = predefined.filter(({ value: { dataSources } }) =>
-		dataSources?.includes(datasourceID)
+		dataSources?.includes(dataSourceId)
 	);
 
-	$: tags = predefined.reduce((acc = [], tag: Tag): never[] => {
+	$: tags = predefined.reduce((acc: Collection[] = [], tag: Tag) => {
 		tag.value.dataSources = selected.some((s) => s.index === tag.index)
-			? !tag.value.dataSources?.includes(datasourceID)
-				? [...(tag.value.dataSources as number[]), datasourceID]
+			? !tag.value.dataSources?.includes(dataSourceId)
+				? [...(tag.value.dataSources as number[]), dataSourceId]
 				: tag.value.dataSources
-			: tag.value.dataSources?.filter((id) => id !== datasourceID);
-		acc.push(tag as never);
+			: tag.value.dataSources?.filter((id) => id !== dataSourceId);
+		const { id, title, description, userId, typeId, visibility, dataSources, users } =
+			tag.value;
+		acc.push({ id, title, description, userId, typeId, visibility, dataSources, users });
 		return acc;
 	}, []);
 </script>

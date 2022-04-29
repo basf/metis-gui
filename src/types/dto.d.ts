@@ -43,8 +43,9 @@ export interface Error {
 }
 
 export interface Template {
-	template: string;
-	schema: any;
+	template?: string;
+	schema?: any;
+	input?: string;
 }
 
 export type CollectionColor = typeof COLORSET[number];
