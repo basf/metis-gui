@@ -20,8 +20,9 @@
 </script>
 
 <script lang="ts">
-	export let value = '',
-		clearFiles: () => void,
+	export let value = '';
+
+	let clearFiles: () => void,
 		content = '',
 		contents: string[] = [];
 
