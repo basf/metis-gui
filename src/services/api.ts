@@ -16,15 +16,19 @@ export type HttpHeaders = Record<string, string>;
 export type QueryParams = Record<string, unknown>;
 
 export async function getData(): Promise<void> {
-	return getJSON('/data');
+	return getJSON('/datasources');
 }
 
 export async function setData(content: string | string[]): Promise<void> {
-	return postJSON('/data', { content });
+	return postJSON('/datasources', { content });
+}
+
+export async function patchDataSourceCollections(id: number, collections: CollectionDTO[]): Promise<unknown> {
+	return patchJSON(`/datasources/${id}/collections`, collections)
 }
 
 export async function delData(id: number): Promise<void> {
-	return delJSON(`/data/${id}`);
+	return delJSON(`/datasources/${id}`);
 }
 
 export async function getTemplate(engine = 'dummy'): Promise<TemplateDTO> {
@@ -112,7 +116,7 @@ export async function postJSON<T, U>(path: string, data: T, headers?: HttpHeader
 	const url = new URL(API_BASEURL + path);
 
 	return fetchJSON<U>(url.toString(), {
-		method: 'post',
+		method: 'POST',
 		body: JSON.stringify(data),
 		headers,
 	});
@@ -122,7 +126,7 @@ export async function putJSON<T, U>(path: string, data: T, headers?: HttpHeaders
 	const url = new URL(API_BASEURL + path);
 
 	return fetchJSON<U>(url.toString(), {
-		method: 'put',
+		method: 'PUT',
 		body: JSON.stringify(data),
 		headers,
 	});
@@ -132,7 +136,7 @@ export async function patchJSON<T, U>(path: string, data: T, headers?: HttpHeade
 	const url = new URL(API_BASEURL + path);
 
 	return fetchJSON<U>(url.toString(), {
-		method: 'patch',
+		method: 'PATCH',
 		body: JSON.stringify(data),
 		headers,
 	});

@@ -24,63 +24,23 @@
 			</small>
 		</svelte:fragment>
 		<svelte:fragment slot="action">
-			{#if $user?.id === datasource.userId}
-				<TileMenu
-					data={datasources}
-					items={tileMenuItems}
-					dataId={datasource.id}
-					on:editCalculation
-					on:editTags
-					on:editGraphic
-					on:setCalculation
-					on:delDatasource
-				/>
-			{/if}
+			<slot />
 		</svelte:fragment>
 	</Tile>
 </div>
 
 <script lang="ts" context="module">
 	import { Badge, Tile } from 'svelte-spectre';
-	import { TileMenu } from '@/components/Tile/';
 
 	import user from '@/stores/user';
 	import collections from '@/stores/collections';
 	import { showTimestamp } from '@/helpers/date';
 
-	import Sinus from '@/assets/img/sinus.svg';
-
 	import type { Collection, DataSource } from '@/types/dto';
 </script>
 
 <script lang="ts">
-	export let datasource: DataSource, datasources: DataSource[];
-
-	const tileMenuItems = [
-		{
-			icon: 'edit',
-			label: 'Edit Calculation',
-			event: { name: 'editCalculation' },
-		},
-		{ icon: 'tag', label: 'Edit Tags', event: { name: 'editTags' } },
-		{
-			icon: Sinus,
-			label: 'Edit Graphic',
-			event: { name: 'editGraphic' },
-		},
-		{
-			icon: 'forward',
-			color: 'success',
-			label: 'Calculate',
-			event: { name: 'setCalculation' },
-		},
-		{
-			icon: 'cross',
-			color: 'error',
-			label: 'Delete',
-			event: { name: 'delDatasource' },
-		},
-	];
+	export let datasource: DataSource;
 
 	$: getCollectionsList = (dataSourceId: number): Collection[] =>
 		$collections.filter(

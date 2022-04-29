@@ -8,7 +8,7 @@
 					<Button
 						href={item.href || ''}
 						variant="link"
-						on:click={() => dispatch(item.event.name, item.event.detail)}
+						on:click={() => item.action(dataId)}
 					>
 						<Icon icon={item.icon} color={item.color}>
 							{#if item.icon.includes('<svg')}
@@ -30,7 +30,7 @@
 			icon={item.icon}
 			tooltip={item.label}
 			color={item.color}
-			on:click={() => dispatch(item.event.name, item.event.detail)}
+			on:click={() => item.action(dataId)}
 			>{#if item.icon.includes('<svg')}
 				{@html item.icon}
 			{/if}
@@ -49,25 +49,21 @@
 		icon?: string;
 		color?: string;
 		label: string;
-		event: { name: string; detail?: any };
+		action: (id: number) => void;
 	}
 </script>
 
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
-
-	const dispatch = createEventDispatcher();
-
-	export let data: any[] = [],
-		dataId: number,
+	export let dataId: number,
 		header = 'Tile menu',
 		items: Item[] = [];
 
 	let active: boolean,
 		wW = 0,
-		wH = 0;
+		wH = 0,
+		activeId = dataId;
 
 	function openMenu(id: number) {
-		active = data.some((d) => d.id === id);
+		active = activeId === id;
 	}
 </script>

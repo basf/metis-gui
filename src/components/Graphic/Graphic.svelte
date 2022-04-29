@@ -1,4 +1,4 @@
-<div class="chart" bind:this={chart}>
+<div class="chart" bind:offsetWidth={width} bind:offsetHeight={height}>
 	<svg>
 		<!-- axis y -->
 		<g class="axis y-axis" transform="translate(0, {padding.top})">
@@ -43,7 +43,6 @@
 
 	let width = 500;
 	let height = 200;
-	let chart: HTMLElement;
 	let points: { x: number; y: number }[];
 
 	$: points = parseSource(source);
@@ -74,14 +73,6 @@
 				return { x: +x, y: +y };
 			});
 	}
-
-	const RO = new ResizeObserver(() => {
-		width = chart.offsetWidth;
-		height = chart.offsetHeight;
-	});
-
-	onMount(() => RO.observe(chart));
-	onDestroy(() => RO.disconnect());
 </script>
 
 <style lang="scss">

@@ -12,46 +12,30 @@
 		label: string;
 		group: string;
 		style: string;
-		value: Collection;
+		value?: number[];
 	};
 </script>
 
 <script lang="ts">
 	export let dataSourceId: number,
-		tags: Collection[] = [];
+		tags: number[] = [];
 
 	let predefined: Tag[] = [],
 		selected: Tag[] = [];
 
 	$: predefined = $collections
-		.filter(
-			(collection: Collection) =>
-				collection.userId === $user?.id &&
-				['public', 'community'].includes(collection.visibility)
-		)
+		.filter((collection: Collection) => collection.userId === $user?.id)
 		.map((collection: Collection) => ({
 			index: collection.id,
 			label: collection.title,
 			group: collection.visibility,
 			style: `background: ${collection.typeColor} !important`,
-			value: collection,
+			value: collection.dataSources,
 		}));
 
-	$: selected = predefined.filter(({ value: { dataSources } }) =>
-		dataSources?.includes(dataSourceId)
-	);
+	$: selected = predefined.filter(({ value }) => value?.includes(dataSourceId));
 
-	$: tags = predefined.reduce((acc: Collection[] = [], tag: Tag) => {
-		tag.value.dataSources = selected.some((s) => s.index === tag.index)
-			? !tag.value.dataSources?.includes(dataSourceId)
-				? [...(tag.value.dataSources as number[]), dataSourceId]
-				: tag.value.dataSources
-			: tag.value.dataSources?.filter((id) => id !== dataSourceId);
-		const { id, title, description, userId, typeId, visibility, dataSources, users } =
-			tag.value;
-		acc.push({ id, title, description, userId, typeId, visibility, dataSources, users });
-		return acc;
-	}, []);
+	$: tags = selected.map((s) => s.index);
 </script>
 
 <style lang="scss">
