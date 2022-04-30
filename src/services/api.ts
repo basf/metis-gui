@@ -23,8 +23,11 @@ export async function setData(content: string | string[]): Promise<void> {
 	return postJSON('/datasources', { content });
 }
 
-export async function patchDataSourceCollections(id: number, collections: CollectionDTO[]): Promise<unknown> {
-	return patchJSON(`/datasources/${id}/collections`, collections)
+export async function patchDataSourceCollections(
+	id: number,
+	collections: CollectionDTO[]
+): Promise<unknown> {
+	return patchJSON(`/datasources/${id}/collections`, collections);
 }
 
 export async function delData(id: number): Promise<void> {
