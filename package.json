@@ -13,7 +13,8 @@
 		"test": "jest src",
 		"test:watch": "npm run test -- --watch",
 		"size": "size-limit",
-		"clean": "rm -rf ./dist"
+		"clean": "rm -rf ./dist",
+		"husky:init": "npx husky install"
 	},
 	"engines": {
 		"node": ">= 14"
@@ -73,6 +74,7 @@
 		"eslint-plugin-svelte3": "^3.2.0",
 		"eslint-svelte3-preprocess": "0.0.5",
 		"jest": "^27.0.5",
+		"husky": "^7.0.4",
 		"postcss": "^8.3.5",
 		"postcss-flexbugs-fixes": "^5.0.2",
 		"postcss-import": "^14.0.2",
