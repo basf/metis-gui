@@ -19,7 +19,7 @@ const queries: Queries = {
 	touch: '(hover: none)',
 };
 
-export const media: Readable<Queries> = mediaStore(queries)
+export const media: Readable<Queries> = mediaStore(queries);
 
 function mediaStore(queries: Queries = {}) {
 	return readable({}, (set) => {
@@ -33,16 +33,18 @@ function mediaStore(queries: Queries = {}) {
 		}, {});
 
 		function update() {
-			const matches: Queries = Object.entries(mqs as MediaQueryList).reduce((matches, [key, mq]) => {
-				matches[key] = mq.matches;
-				return matches;
-			}, {});
+			const matches: Queries = Object.entries(mqs as MediaQueryList).reduce(
+				(matches, [key, mq]) => {
+					matches[key] = mq.matches;
+					return matches;
+				},
+				{}
+			);
 			set(matches);
 		}
 
 		update();
 
-		return () => mqs = {};
+		return () => (mqs = {});
 	});
 }
-
