@@ -75,7 +75,7 @@
 <CollectionEditModal
 	{...editCollection}
 	open={!!$fragment}
-	size="fs"
+	size="lg"
 	on:save={saveCollection}
 	on:remove={removeCollection}
 	on:close={closeEdit}
@@ -86,7 +86,7 @@
 
 	import { Col, Grid, Input, Select, IconButton, InputGroup, toast } from 'svelte-spectre';
 
-	import Collection from '@/views/tiles/Collection.svelte';
+	import { Collection } from '@/views/tiles/';
 
 	import user from '@/stores/user';
 	import collections, { collectionsAsync, typesAsync } from '@/stores/collections';

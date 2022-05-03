@@ -7,167 +7,105 @@
 				<Loaders.Tile count={1} w={width} h={74} height={74} {width} />
 			{/each}
 		{:then datasources}
-			{#if addOpen || !datasources.length}
-				{#if !datasources.length}
+			{#if addOpen || !datasources}
+				{#if !datasources}
 					<div class="text-center distant_msg">Upload a structure to start...</div>
 				{/if}
 				<div class="py-2">
-					<DataSourceAdd
-						{contents}
-						bind:clearFiles
-						bind:value={content}
-						on:files={handleFiles}
-						on:click={addDataItem}
-					/>
+					<DataSourceAdd value={search} />
 				</div>
 			{/if}
 			{#each makeDataList(datasources, search) as datasource (datasource.id)}
-				<Tile centered={false}>
-					<svelte:fragment slot="title">
-						<h5 class="mt-2">{@html datasource.name}</h5>
-						<ul class="collections">
-							{#each getCollectionsList(datasource.id) as collection (collection.id)}
-								{@const href =
-									$user?.id === collection.userId
-										? `/collections#${collection.id}`
-										: undefined}
-								<li>
-									<a {href}>
-										<Badge style="background: {collection.typeColor}"
-											>{collection.title.substring(0, 10)}</Badge
-										>
-									</a>
-								</li>
-							{/each}
-						</ul>
-					</svelte:fragment>
-					<svelte:fragment slot="subtitle">
-						<small class="text-gray">
-							Type &bull; {datasource.type} &bull; {showTimestamp(datasource)}
-						</small>
-					</svelte:fragment>
-					<svelte:fragment slot="action">
-						{#if $user.id === datasource.userId}
-							<TileMenu
-								data={datasources}
-								items={tileMenuItems}
-								dataId={datasource.id}
-								on:editCalculation={(e) => editCalculation(datasource, e)}
-								on:editTags={(e) => editTags(datasource, e)}
-								on:editGraphic={(e) => editGraphic(datasource, e)}
-								on:setCalculation={() => calculate(datasource.id)}
-								on:delDatasource={() =>
-									withConfirm(
-										delData,
-										datasource.id,
-										'Are you sure?',
-										false
-									)?.(datasource.id)}
-							/>
-						{/if}
-					</svelte:fragment>
-				</Tile>
-				<!-- {:else}
-				<div class="text-center distant_msg">Upload a structure to start...</div> -->
+				<Data {datasource}>
+					{#if $user?.id === datasource.userId}
+						<TileMenu items={tileMenuItems} dataId={datasource.id} />
+					{/if}
+				</Data>
 			{/each}
 		{/await}
 	</div>
 </Main>
 
-<Modal bind:open={modal.open} size="fs">
-	<h3 slot="header">{@html modal.header}</h3>
-	{#if modalComponent}
+<Modal size="lg" open={!!$fragment} on:close={closeModal}>
+	<h3 slot="header">
+		{@html `Edit and submit ${decodeURIComponent(dataType)} for <mark> ${
+			$datasources.find((d) => d.id === +dataId)?.name
+		} </mark>`}
+	</h3>
+	{#if modal().component}
 		<svelte:component
-			this={modalComponent}
-			source={pointsSource}
-			bind:code={editor.template}
-			on:change={setInput}
+			this={modal().component}
+			dataSourceId={+decodeURIComponent(dataId)}
+			bind:tags
 		/>
 	{:else}
 		<span style="height: 100%" class="loading loading-lg p-centered d-block" />
 	{/if}
 	<svelte:fragment slot="footer">
-		<Button on:click={() => (modal = {})}>Cancel</Button>
-		<Button variant="primary" on:click={editor.template ? submitCalculation : submitTags}
-			>Submit</Button
-		>
+		<Button on:click={closeModal}>Cancel</Button>
+		<Button variant="primary" on:click={modal().submit}>Submit</Button>
 	</svelte:fragment>
 </Modal>
 
 <script lang="ts" context="module">
-	import { Button, Modal, Tile, Badge, toast } from 'svelte-spectre';
+	import { fragment } from 'svelte-pathfinder';
+	import { Button, Modal, toast } from 'svelte-spectre';
 
 	import Main from '@/layouts/Main.svelte';
-	import { Editor } from '@/components/Editor/';
-	import { Graphic } from '@/components/Graphic/';
-	import pointsSource from '@/components/Graphic/points';
-	import { TileMenu } from '@/components/Tile/';
-	import { TabSearch, match } from '@/components/Search/';
 
-	import { setData, delData, setCalculation, getTemplate } from '@/services/api';
-
-	import collections from '@/stores/collections';
-	import datasources, { datasourcesAsync } from '@/stores/datasources';
-	import user from '@/stores/user';
-	import { withConfirm } from '@/stores/confirmator';
-	import { showTimestamp } from '@/helpers/date';
-
+	import { TabSearch, match } from '@/components/Search';
 	import DataSourceAdd from '@/views/DataSource/DataSourceAdd.svelte';
+	import { Data } from '@/views/tiles';
 	import * as Loaders from '@/components/loaders';
-	import type { DataSource } from '@/types/dto';
 
+	import { delData, setCalculation } from '@/services/api';
+
+	import datasources, { datasourcesAsync } from '@/stores/datasources';
+	import { withConfirm } from '@/stores/confirmator';
+
+	import { CalculationEdit, GraphicEdit, TagsEdit } from '@/views/modals';
+	import { patchDataSourceCollections } from '@/services/api';
+
+	import user from '@/stores/user';
+	import { TileMenu } from '@/components/Tile/';
 	import Sinus from '@/assets/img/sinus.svg';
+
+	import { editorCode } from '@/stores/editor';
+
+	import type { DataSource } from '@/types/dto';
 </script>
 
 <script lang="ts">
-	let width;
-	let content = '';
-	let contents: string[] = [];
-	let clearFiles: () => void;
-	let points = [];
+	let width = 0;
 	let search = '';
 	let addOpen = false;
-	let tileMenuItems = [
+	let tags = [];
+
+	const tileMenuItems = [
 		{
 			icon: 'edit',
 			label: 'Edit Calculation',
-			event: { name: 'editCalculation' },
+			action: editCalculation,
 		},
-		{ icon: 'tag', label: 'Edit Tags', event: { name: 'editTags' } },
+		{ icon: 'tag', label: 'Edit Tags', action: editTags },
 		{
 			icon: Sinus,
 			label: 'Edit Graphic',
-			event: { name: 'editGraphic' },
+			action: editGraphic,
 		},
 		{
 			icon: 'forward',
 			color: 'success',
 			label: 'Calculate',
-			event: { name: 'setCalculation' },
+			action: runCalculation,
 		},
 		{
 			icon: 'cross',
 			color: 'error',
 			label: 'Delete',
-			event: { name: 'delDatasource' },
+			action: delDatasource,
 		},
 	];
-	let modal: { open?: boolean; header?: string } = { open: false, header: '' };
-	let editor: {
-		schema: { [key: string]: any };
-		template: string;
-		input: string;
-	} = {
-		schema: {},
-		template: '',
-		input: '',
-	};
-	let datasourceID = 0;
-
-	$: modalComponent = editor.template ? Editor : points.length ? Graphic : undefined;
-
-	$: getCollectionsList = (dataSourceId) =>
-		$collections.filter(({ dataSources }) => dataSources && dataSources.includes(dataSourceId));
 
 	function makeDataList(items: DataSource[], search: string) {
 		return search
@@ -175,107 +113,70 @@
 			: items.sort((a, b) => b.id - a.id);
 	}
 
-	function addDataItem() {
-		setData(contents.length ? contents : content);
-		content = '';
-		clearFiles();
+	function closeModal() {
+		$fragment = '';
 	}
 
-	async function handleFiles(e: any) {
-		const { files } = e.detail;
-
-		if (files.length) {
-			for (const file of files) {
-				const content = await file.text();
-				contents.push(content);
-			}
-			contents = [...contents];
-		} else {
-			contents = [];
+	$: modal = () => {
+		switch (dataType) {
+			case 'calculation':
+				return {
+					component: CalculationEdit,
+					submit: submitCalculation,
+				};
+			case 'tags':
+				return {
+					component: TagsEdit,
+					submit: submitTags,
+				};
+			case 'graphic':
+				return {
+					component: GraphicEdit,
+					submit: submitGraphic,
+				};
+			default:
+				return {
+					component: undefined,
+					submit: () => {},
+				};
 		}
+	};
+
+	$: [_, dataType, dataId] = $fragment.split('-');
+
+	async function editCalculation(id: number) {
+		$fragment = `#edit-calculation-${id}`;
 	}
-
-	function calculate(id: number) {
-		setCalculation(id);
-		toast.success({
-			msg: 'Calculation in progress',
-			timeout: 2000,
-			pos: 'top_right',
-			icon: 'forward',
-		});
-	}
-
-	async function editCalculation(datasource: DataSource) {
-		points = [];
-		modal = {
-			open: true,
-			header: `Edit and submit calculation for <mark> ${datasource.name} </mark>`,
-		};
-
-		getTemplate('dummy').then(({ template, schema }) => {
-			datasourceID = datasource.id;
-			editor = { template, schema, input: template };
-		});
-	}
-
-	function setInput(e: CustomEvent) {
-		e.preventDefault();
-		if (editor) editor.input = e.detail;
-	}
-
 	function submitCalculation() {
-		if (editor) setCalculation(datasourceID, 'dummy', editor.input).then(() => (modal = {}));
+		setCalculation(+dataId, 'dummy', $editorCode.input).then(() => closeModal());
 	}
 
-	function editTags(datasource: DataSource, e: Event) {
-		editor = {};
-		points = [];
-		modal = {
-			open: true,
-			header: `Edit and submit Tags for <mark> ${datasource.name} </mark>`,
-		};
+	function editTags(id: number) {
+		$fragment = `#edit-tags-${id}`;
+	}
+	async function submitTags() {
+		await patchDataSourceCollections(+dataId, tags).then(() => closeModal());
 	}
 
-	function submitTags() {
-		modal = {};
+	function editGraphic(id: number) {
+		$fragment = `#edit-graphic-${id}`;
 	}
-
-	function editGraphic(datasource: DataSource, e: Event) {
-		editor = {};
-		points = pointsSource;
-		modal = {
-			open: true,
-			header: `Edit and submit Graphic for <mark> ${datasource.name} </mark>`,
-		};
-	}
-
 	function submitGraphic() {
-		modal = {};
+		closeModal();
+	}
+
+	function runCalculation(id: number) {
+		setCalculation(id).then(() => {
+			toast.success({
+				msg: 'Calculation in progress',
+				timeout: 2000,
+				pos: 'top_right',
+				icon: 'forward',
+			});
+		});
+	}
+
+	function delDatasource(id: number) {
+		withConfirm(delData, id, 'Are you sure?', false)?.(id);
 	}
 </script>
-
-<style lang="scss">
-	:global(.spectre .tile) {
-		padding: 0.75em;
-		margin: 0.5em 0;
-		:global(.tile-action) {
-			display: flex;
-		}
-	}
-	h5 {
-		display: inline;
-	}
-	.collections {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-		display: inline-flex;
-		flex-flow: row wrap;
-		gap: 0.25em;
-		float: right;
-		li {
-			margin: 0;
-			padding: 0;
-		}
-	}
-</style>

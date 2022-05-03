@@ -4,10 +4,10 @@
 	</Col>
 	<Divider align={!$media.sm ? 'vertical' : 'horizontal center'} text="OR" />
 	<Col sm="12">
-		<Upload on:files bind:clearFiles />
+		<Upload on:files={handleFiles} bind:clearFiles />
 	</Col>
 </Grid>
-<Button variant="primary" block on:click>
+<Button variant="primary" block on:click={addDataItem}>
 	{contents.length ? 'Add data' : 'Add structure'}
 </Button>
 
@@ -16,10 +16,33 @@
 	import { Upload } from '@/components/Upload/';
 
 	import { media } from '@/stores/media';
+	import { setData } from '@/services/api';
 </script>
 
 <script lang="ts">
-	export let value = '',
-		clearFiles: () => void,
-		contents: string[];
+	export let value = '';
+
+	let clearFiles: () => void,
+		content = '',
+		contents: string[] = [];
+
+	function addDataItem() {
+		setData(contents.length ? contents : content);
+		content = '';
+		clearFiles();
+	}
+
+	async function handleFiles(e: any) {
+		const { files } = e.detail;
+
+		if (files.length) {
+			for (const file of files) {
+				const content = await file.text();
+				contents.push(content);
+			}
+			contents = [...contents];
+		} else {
+			contents = [];
+		}
+	}
 </script>
