@@ -16,9 +16,9 @@
 						</small>
 					</svelte:fragment>
 					<Meter
-						value={calculation.status}
-						striped={calculation.status < 100}
-						animated={calculation.status < 100}
+						value={calculation.progress}
+						striped={calculation.progress < 100}
+						animated={calculation.progress < 100}
 					/>
 					<svelte:fragment slot="action">
 						<IconButton
