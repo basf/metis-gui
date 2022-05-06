@@ -26,7 +26,7 @@
 	</div>
 </Main>
 
-<Modal size="lg" open={!!$fragment} on:close={closeModal}>
+<Modal size={$media.sm ? 'fs' : 'lg'} open={!!$fragment} on:close={closeModal}>
 	<h3 slot="header">
 		{@html `Edit and submit ${decodeURIComponent(dataType)} for <mark> ${
 			$datasources.find((d) => d.id === +dataId)?.name
@@ -50,6 +50,7 @@
 <script lang="ts" context="module">
 	import { fragment } from 'svelte-pathfinder';
 	import { Button, Modal, toast } from 'svelte-spectre';
+	import { media } from '@/stores/media';
 
 	import Main from '@/layouts/Main.svelte';
 

@@ -75,7 +75,7 @@
 <CollectionEditModal
 	{...editCollection}
 	open={!!$fragment}
-	size="lg"
+	size={$media.sm ? 'fs' : 'lg'}
 	on:save={saveCollection}
 	on:remove={removeCollection}
 	on:close={closeEdit}
@@ -83,6 +83,7 @@
 
 <script lang="ts" context="module">
 	import { query, fragment } from 'svelte-pathfinder';
+	import { media } from '@/stores/media';
 
 	import { Col, Grid, Input, Select, IconButton, InputGroup, toast } from 'svelte-spectre';
 
