@@ -149,7 +149,7 @@ export async function delJSON<T, U>(path: string, headers?: HttpHeaders): Promis
 	const url = new URL(API_BASEURL + path);
 
 	return fetchJSON<U>(url.toString(), {
-		method: 'delete',
+		method: 'DELETE',
 		headers,
 	});
 }

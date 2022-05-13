@@ -14,7 +14,7 @@
 			<nav slot="right">
 				{#if $user}
 					<Button variant="link" size="xl" href="/profile">
-						{$user.firstName} &nbsp;<Icon icon="people" />
+						{$user.firstName}&nbsp;{$user.lastName}&nbsp;<Icon icon="people" />
 					</Button>
 				{/if}
 			</nav>
