@@ -7,8 +7,8 @@
 				<Loaders.Tile count={1} w={width} h={74} height={74} {width} />
 			{/each}
 		{:then datasources}
-			{#if addOpen || !datasources}
-				{#if !datasources}
+			{#if addOpen || !datasources.length}
+				{#if !datasources.length}
 					<div class="text-center distant_msg">Upload a structure to start...</div>
 				{/if}
 				<div class="py-2">
