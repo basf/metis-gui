@@ -53,4 +53,7 @@
 	:global([color-scheme='light'] .spectre .avatar figcaption) {
 		color: #3b4351 !important;
 	}
+	.text-center :global(figcaption) {
+		width: max-content;
+	}
 </style>
