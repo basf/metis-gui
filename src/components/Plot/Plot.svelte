@@ -30,7 +30,6 @@
 </div>
 
 <script lang="ts" context="module">
-	import { onMount, onDestroy } from 'svelte';
 	import { scaleLinear } from 'd3-scale';
 </script>
 
