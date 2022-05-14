@@ -12,7 +12,7 @@
 					<div class="text-center distant_msg">Upload a structure to start...</div>
 				{/if}
 				<div class="py-2">
-					<DataSourceAdd value={search} />
+					<DataSourceAdd />
 				</div>
 			{/if}
 			{#each makeDataList(datasources, search) as datasource (datasource.id)}
