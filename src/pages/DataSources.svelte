@@ -64,7 +64,7 @@
 	import datasources, { datasourcesAsync } from '@/stores/datasources';
 	import { withConfirm } from '@/stores/confirmator';
 
-	import { CalculationEdit, GraphicEdit, TagsEdit } from '@/views/modals';
+	import { CalculationEdit, PlotEdit, TagsEdit } from '@/views/modals';
 	import { patchDataSourceCollections } from '@/services/api';
 
 	import user from '@/stores/user';
@@ -91,8 +91,8 @@
 		{ icon: 'tag', label: 'Edit Tags', action: editTags },
 		{
 			icon: Sinus,
-			label: 'Edit Graphic',
-			action: editGraphic,
+			label: 'Edit Plot',
+			action: editPlot,
 		},
 		{
 			icon: 'forward',
@@ -130,10 +130,10 @@
 					component: TagsEdit,
 					submit: submitTags,
 				};
-			case 'graphic':
+			case 'plot':
 				return {
-					component: GraphicEdit,
-					submit: submitGraphic,
+					component: PlotEdit,
+					submit: submitPlot,
 				};
 			default:
 				return {
@@ -159,10 +159,10 @@
 		await patchDataSourceCollections(+dataId, tags).then(() => closeModal());
 	}
 
-	function editGraphic(id: number) {
-		$fragment = `#edit-graphic-${id}`;
+	function editPlot(id: number) {
+		$fragment = `#edit-plot-${id}`;
 	}
-	function submitGraphic() {
+	function submitPlot() {
 		closeModal();
 	}
 

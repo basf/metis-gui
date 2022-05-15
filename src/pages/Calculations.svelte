@@ -56,5 +56,5 @@
 </script>
 
 <script lang="ts">
-	let width;
+	let width: number;
 </script>
