@@ -23,13 +23,12 @@
 	export let value = '';
 
 	let clearFiles: () => void,
-		content = '',
 		contents: string[] = [];
 
 	function addDataItem() {
-		setData(contents.length ? contents : content);
-		content = '';
+		setData(contents.length ? contents : value);
 		clearFiles();
+		value = '';
 	}
 
 	async function handleFiles(e: any) {
