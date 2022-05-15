@@ -88,12 +88,16 @@
 			label: 'Edit Calculation',
 			action: editCalculation,
 		},
-		{ icon: 'tag', label: 'Edit Tags', action: editTags },
 		{
+			icon: 'tag',
+			label: 'Edit Tags',
+			action: editTags
+		},
+		/*{
 			icon: Sinus,
 			label: 'Edit Plot',
 			action: editPlot,
-		},
+		},*/
 		{
 			icon: 'forward',
 			color: 'success',
@@ -169,7 +173,7 @@
 	function runCalculation(id: number) {
 		setCalculation(id).then(() => {
 			toast.success({
-				msg: 'Calculation in progress',
+				msg: 'Calculation submitted',
 				timeout: 2000,
 				pos: 'top_right',
 				icon: 'forward',

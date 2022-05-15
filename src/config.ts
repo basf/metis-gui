@@ -23,7 +23,7 @@ export const NEW_VERSION_CHECK_DELAY = 60000;
 
 export const OPTIMADE_PROVIDERS_URL = 'https://providers.optimade.org/providers.json';
 export const CORS_PROXY_URL = 'https://cors.optimade.science';
-export const OPTIMADE_PROVIDERS = ['mp', 'nmd', 'threedd', 'icdd-pdf-4-plus', 'ccdc'];
+export const OPTIMADE_PROVIDERS = ['mp', 'nmd', 'icdd-pdf-4-plus', 'ccdc']; // FIXME the last two are private
 export const SEARCH_DELAY = 1000;
 
 export const DOWNLOADABLE_APP_FILENAME = 'index.html';

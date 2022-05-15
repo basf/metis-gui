@@ -15,7 +15,7 @@
 			<Input
 				bind:value
 				options={suggested}
-				placeholder=" Datasource name"
+				placeholder="Filter by name"
 				autocomplete="on"
 				type="search"
 				name="dataSearch"

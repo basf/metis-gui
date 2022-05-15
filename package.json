@@ -1,6 +1,6 @@
 {
 	"name": "bscience-gui",
-	"version": "0.2.1",
+	"version": "0.3.0",
 	"private": true,
 	"scripts": {
 		"build": "npm run clean && env BROWSERSLIST_CONFIG=./package.json rollup -c",
@@ -119,7 +119,7 @@
 		"d3-scale": "^4.0.2",
 		"debounce-promise": "^3.1.2",
 		"optimade": "^2.0.3",
-		"optimade-mpds-nlp": "^0.1.1",
+		"optimade-mpds-nlp": "^0.1.3",
 		"sirv-cli": "^1.0.12",
 		"svelte-file-dropzone": "^0.0.15",
 		"tinycolor2": "^1.4.2"

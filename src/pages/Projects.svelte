@@ -47,7 +47,7 @@
 			</Col>
 		</Grid>
 	</div>
-	<div bind:clientWidth={width}>
+	<div bind:clientWidth={width} class="py-2">
 		<Grid stack>
 			{#await $collectionsAsync}
 				{#each { length: 6 } as _}
