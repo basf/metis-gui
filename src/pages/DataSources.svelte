@@ -8,12 +8,7 @@
 			{/each}
 		{:then datasources}
 			{#if addOpen || !datasources.length}
-				{#if !datasources.length}
-					<div class="text-center distant_msg">Upload a structure to start...</div>
-				{/if}
-				<div class="py-2">
-					<DataSourceAdd />
-				</div>
+				<DataSourceAdd msg={!datasources.length} />
 			{/if}
 			{#each makeDataList(datasources, search) as datasource (datasource.id)}
 				<Data {datasource}>
@@ -91,7 +86,7 @@
 		{
 			icon: 'tag',
 			label: 'Edit Tags',
-			action: editTags
+			action: editTags,
 		},
 		/*{
 			icon: Sinus,
