@@ -72,7 +72,7 @@
 
 	import { login, me } from '@/services/api';
 
-	import { API_BASEURL, IdPs, IdPs } from '@/config';
+	import { API_BASEURL, IdPs } from '@/config';
 
 	import github from '@/assets/img/github.svg';
 	import linkedin from '@/assets/img/linkedin.svg';
