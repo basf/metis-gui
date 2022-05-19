@@ -1,15 +1,22 @@
-<Grid>
-	<Col sm="12">
-		<Input rows={4} placeholder="Paste POSCAR, CIF, or Optimade JSON" bind:value />
-	</Col>
-	<Divider align={!$media.sm ? 'vertical' : 'horizontal center'} text="OR" />
-	<Col sm="12">
-		<Upload on:files={handleFiles} bind:clearFiles />
-	</Col>
-</Grid>
-<Button variant="primary" block on:click={addDataItem}>
-	{contents.length ? 'Add data' : 'Add structure'}
-</Button>
+<div class="py-2">
+	{#if msg}
+		<div class="text-center distant_msg">Upload a structure to start...</div>
+	{/if}
+
+	<Grid>
+		<Col sm="12">
+			<Input rows={4} placeholder="Paste POSCAR, CIF, or Optimade JSON" bind:value />
+		</Col>
+		<Divider align={!$media.sm ? 'vertical' : 'horizontal center'} text="OR" />
+		<Col sm="12">
+			<Upload on:files={handleFiles} bind:clearFiles />
+		</Col>
+	</Grid>
+
+	<Button variant="primary" block on:click={addDataItem}>
+		{contents.length ? 'Add data' : 'Add structure'}
+	</Button>
+</div>
 
 <script lang="ts" context="module">
 	import { Button, Col, Divider, Grid, Input } from 'svelte-spectre';
@@ -20,7 +27,9 @@
 </script>
 
 <script lang="ts">
-	export let value = '';
+	let value = '';
+
+	export let msg = false;
 
 	let clearFiles: () => void,
 		contents: string[] = [];
