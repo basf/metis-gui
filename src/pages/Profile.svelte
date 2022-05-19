@@ -11,7 +11,7 @@
 		</div>
 
 		<svelte:fragment slot="footer">
-			<Button on:click={doLogout} variant="primary" block>Logout</Button>
+			<Button on:click={doLogout} variant="primary" block>Log out</Button>
 		</svelte:fragment>
 	</Panel>
 {/if}

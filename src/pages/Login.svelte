@@ -20,31 +20,18 @@
 			{/if}
 			{#if IdPs.length}
 				<Grid align="center">
-					<Col col="auto">Log in with:</Col>
+					<Col style="text-align:right;">Log in with:</Col>
 					<Col>
 						<div class="oauth-buttons">
 							{#each IdPs.filter((p) => p !== 'local') as provider}
-								{#if IdPs.length > 3}
-									<IconButton
-										size="lg"
-										iconSize="3x"
-										variant="link"
-										href="{API_BASEURL}/auth/{provider}"
-									>
-										{@html icons[provider]}
-									</IconButton>
-								{:else}
-									<Button
-										size="lg"
-										variant="link"
-										href="{API_BASEURL}/auth/{provider}"
-									>
-										{provider} &nbsp;
-										<Icon size="2x">
-											{@html icons[provider]}
-										</Icon>
-									</Button>
-								{/if}
+								<IconButton
+									size="lg"
+									iconSize="3x"
+									variant="link"
+									href="{API_BASEURL}/auth/{provider}"
+								>
+									{@html icons[provider]}
+								</IconButton>
 							{/each}
 						</div>
 					</Col>
