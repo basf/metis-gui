@@ -108,7 +108,7 @@ export default {
 		dev && visualizer({ filename: `${dest}/stats.html`, }),
 		html({
 			filename: 'index.html',
-			ignore: dev ? new RegExp(`${dir}/(?!full.js|${name}.css)`) : null,
+			ignore: dev ? new RegExp(`${dir}/(?!full_mode.js|${name}.css)`) : null,
 			minifyCss: !dev,
 			scriptType: dev ? 'module' : 'text/javascript',
 			absolute: dev,
