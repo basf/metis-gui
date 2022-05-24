@@ -31,7 +31,8 @@
 </Spectre>
 
 <script lang="ts">
-	import { pattern, click, path } from 'svelte-pathfinder';
+	import { setContext } from 'svelte';
+	import { pattern, click } from 'svelte-pathfinder';
 	import Viewpoint from 'svelte-viewpoint';
 	import { Container, Spectre } from 'svelte-spectre';
 
@@ -45,7 +46,11 @@
 
 	import { userAsync } from '@/stores/user';
 
-	import routes from '@/routes';
+	import type { Route } from '@/types/routes';
 
-	$: page = routes.find((route) => $pattern(route.path)) || null;
+	export let routes: Route[] = [];
+
+	setContext('routes', routes);
+
+	$: page = routes.find((route: Route) => $pattern(route.path)) || null;
 </script>
