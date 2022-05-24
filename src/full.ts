@@ -60,7 +60,7 @@ const routes: Route[] = [
 
 const app = new App({
 	target: document.body,
-	props: { routes }
+	props: { routes },
 });
 
 export default app;
