@@ -56,11 +56,11 @@ export default {
 					src: `${dest}/*.tmpl`,
 					rename: name => name,
 					transform: contents => {
-						return Object.entries(replaceValues).reduce((contents, [ key, val ]) => {
+						return Object.entries(replaceValues).reduce((contents, [key, val]) => {
 							return contents.replace(new RegExp(`{{${key}}}`, 'gi'), val);
 						}, contents.toString());
-					},	
-					dest, 
+					},
+					dest,
 				},
 				...files,
 			],
@@ -70,10 +70,10 @@ export default {
 		}),
 		svelte(svelteConfig),
 		css({ output: `${name}.css`, }),
-		url({ 
-			exclude: ['**/*.svg', '**/*.json', ], 
-			sourceDir: assets, 
-			destDir: dest, 
+		url({
+			exclude: ['**/*.svg', '**/*.json',],
+			sourceDir: assets,
+			destDir: dest,
 		}),
 		svg({ removeSVGTagAttrs: false, }),
 		json(),
@@ -108,7 +108,7 @@ export default {
 		dev && visualizer({ filename: `${dest}/stats.html`, }),
 		html({
 			filename: 'index.html',
-			ignore: dev ? new RegExp(`${dir}/(?!main.js|${name}.css)`) : null,
+			ignore: dev ? new RegExp(`${dir}/(?!full_mode.js|${name}.css)`) : null,
 			minifyCss: !dev,
 			scriptType: dev ? 'module' : 'text/javascript',
 			absolute: dev,
@@ -120,9 +120,9 @@ export default {
 		}),
 		manifestJson({
 			input: `${src}/manifest.json`,
-            minify: true,
-            manifest,
-        }),
+			minify: true,
+			manifest,
+		}),
 		dev && serve(),
 		dev && livereload(dest),
 		!dev && zipdir({ dest, name })

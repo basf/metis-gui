@@ -4,6 +4,7 @@
 	"private": true,
 	"scripts": {
 		"build": "npm run clean && env BROWSERSLIST_CONFIG=./package.json rollup -c",
+		"build:light": "npm run clean && env BROWSERSLIST_CONFIG=./package.json rollup -c --light_mode",
 		"dev": "npm run clean && env BROWSERSLIST_CONFIG=./package.json rollup -c -w",
 		"start": "sirv dist --single",
 		"validate": "svelte-check",
