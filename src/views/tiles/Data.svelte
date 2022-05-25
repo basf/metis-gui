@@ -9,11 +9,7 @@
 							? `/collections#${collection.id}`
 							: undefined}
 					<li>
-						<a
-							href="#"
-							on:click|preventDefault={() =>
-								filterDataSourcesByCollection(collection.id)}
-						>
+						<a href="?collections={collection.id}">
 							<Badge style="background: {collection.typeFlavor}"
 								>{collection.title.substring(0, 10)}</Badge
 							>
@@ -54,14 +50,14 @@
 				dataSources && dataSources.includes(dataSourceId)
 		);
 
-	function filterDataSourcesByCollection(id: number) {
-		const collectionIds = `${$query.params.collections}`.split(',') || [];
+	// function filterDataSourcesByCollection(id: number) {
+	// 	const collectionIds = `${$query.params.collections}`.split(',') || [];
 
-		if (!collectionIds.includes(`${id}`)) {
-			$query.params.collections = [...collectionIds, `${id}`].join(',');
-			getDataSourcesByCollections(id);
-		}
-	}
+	// 	if (!collectionIds.includes(`${id}`)) {
+	// 		$query.params.collections = [...collectionIds, `${id}`].join(',');
+	// 		getDataSourcesByCollections(id);
+	// 	}
+	// }
 </script>
 
 <style lang="scss">

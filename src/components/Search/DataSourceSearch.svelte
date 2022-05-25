@@ -54,7 +54,7 @@
 			value: collection.dataSources,
 		}));
 
-	$: selected = predefined.filter((tag) => $query.params.collections?.includes(tag.id));
+	$: selected = predefined.filter((tag) => `${$query.params.collections}`.includes(`${tag.id}`));
 
 	$: filterDataSourcesBySelectedCollections(selected);
 
