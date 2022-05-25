@@ -17,7 +17,7 @@
 									size="sm"
 									variant="primary"
 									title="Use this structure"
-									on:click={() => setDataContent(structure)}
+									on:click={() => setDataSourcesContent(structure)}
 								/>
 							</svelte:fragment>
 						</Tile>
@@ -41,7 +41,7 @@
 
 	import type { Types } from 'optimade';
 
-	import { setData } from '@/services/api';
+	import { setDataSources } from '@/services/api';
 </script>
 
 <script lang="ts">
@@ -56,8 +56,8 @@
 		meta = apis.find((a) => a.meta?.data_returned)?.meta;
 	});
 
-	function setDataContent(structure: Types.Structure) {
-		setData(JSON.stringify(structure));
+	function setDataSourcesContent(structure: Types.Structure) {
+		setDataSources(JSON.stringify(structure));
 		toast.success({
 			msg: 'Data downloaded',
 			timeout: 2000,

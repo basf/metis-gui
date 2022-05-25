@@ -1,6 +1,5 @@
 <Main>
-	<TabSearch add bind:value={search} bind:addOpen data={$datasources} />
-
+	<DataSourceSearch add bind:addOpen data={$datasources} />
 	<div bind:clientWidth={width}>
 		{#await $datasourcesAsync}
 			{#each { length: 4 } as _}
@@ -10,7 +9,7 @@
 			{#if addOpen || !datasources.length}
 				<DataSourceAdd msg={!datasources.length} />
 			{/if}
-			{#each makeDataList(datasources, search) as datasource (datasource.id)}
+			{#each makeDataSourcesList(datasources, search) as datasource (datasource.id)}
 				<Data {datasource}>
 					{#if $user?.id === datasource.userId}
 						<TileMenu items={tileMenuItems} dataId={datasource.id} />
@@ -49,12 +48,12 @@
 
 	import Main from '@/layouts/Main.svelte';
 
-	import { TabSearch, match } from '@/components/Search';
+	import { DataSourceSearch } from '@/components/Search';
 	import DataSourceAdd from '@/views/DataSource/DataSourceAdd.svelte';
 	import { Data } from '@/views/tiles';
 	import * as Loaders from '@/components/loaders';
 
-	import { delData, setCalculation } from '@/services/api';
+	import { delDataSource, setCalculation } from '@/services/api';
 
 	import datasources, { datasourcesAsync } from '@/stores/datasources';
 	import { withConfirm } from '@/stores/confirmator';
@@ -103,11 +102,11 @@
 			icon: 'cross',
 			color: 'error',
 			label: 'Delete',
-			action: delDatasource,
+			action: delData,
 		},
 	];
 
-	function makeDataList(items: DataSource[], search: string) {
+	function makeDataSourcesList(items: DataSource[], search: string) {
 		return search
 			? items.filter((item) => match(item, search))
 			: items.sort((a, b) => b.id - a.id);
@@ -176,7 +175,7 @@
 		});
 	}
 
-	function delDatasource(id: number) {
-		withConfirm(delData, id, 'Are you sure?', false)?.(id);
+	function delData(id: number) {
+		withConfirm(delDataSource, id, 'Are you sure?', false)?.(id);
 	}
 </script>

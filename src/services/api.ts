@@ -15,11 +15,15 @@ export interface HttpError extends Error {
 export type HttpHeaders = Record<string, string>;
 export type QueryParams = Record<string, unknown>;
 
-export async function getData(): Promise<void> {
+export async function getDataSources(): Promise<void> {
 	return getJSON('/datasources');
 }
 
-export async function setData(content: string | string[]): Promise<void> {
+export async function getDataSourcesByCollections(collectionIds: number[] | number): Promise<void> {
+	return getJSON(`/datasources?collectionIds=${collectionIds}`);
+}
+
+export async function setDataSources(content: string | string[]): Promise<void> {
 	return postJSON('/datasources', { content });
 }
 
@@ -30,7 +34,7 @@ export async function patchDataSourceCollections(
 	return patchJSON(`/datasources/${id}/collections`, collections);
 }
 
-export async function delData(id: number): Promise<void> {
+export async function delDataSource(id: number): Promise<void> {
 	return delJSON(`/datasources/${id}`);
 }
 

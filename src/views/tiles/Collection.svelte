@@ -13,7 +13,7 @@
 		</svelte:fragment>
 		<h5 class="mt-2" slot="title">
 			{title}
-			<Badge style="background: {typeColor}">{visibility}</Badge>
+			<Badge style="background: {typeFlavor}">{visibility}</Badge>
 		</h5>
 		<small slot="subtitle" class="text-gray">
 			{description}
@@ -50,7 +50,7 @@
 	export let userId: number;
 	export let userFirstName = '';
 	export let userLastName = '';
-	export let typeColor = '';
+	export let typeFlavor = '';
 
 	$: userDisplayName = `${userFirstName} ${userLastName}`;
 	$: owner = $user && $user.id === userId;

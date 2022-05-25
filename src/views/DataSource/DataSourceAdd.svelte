@@ -13,7 +13,7 @@
 		</Col>
 	</Grid>
 
-	<Button variant="primary" block on:click={addDataItem}>
+	<Button variant="primary" block on:click={addDataSourceItem}>
 		{contents.length ? 'Add data' : 'Add structure'}
 	</Button>
 </div>
@@ -23,7 +23,7 @@
 	import { Upload } from '@/components/Upload/';
 
 	import { media } from '@/stores/media';
-	import { setData } from '@/services/api';
+	import { setDataSources } from '@/services/api';
 </script>
 
 <script lang="ts">
@@ -34,8 +34,8 @@
 	let clearFiles: () => void,
 		contents: string[] = [];
 
-	function addDataItem() {
-		setData(contents.length ? contents : value);
+	function addDataSourceItem() {
+		setDataSources(contents.length ? contents : value);
 		clearFiles();
 		value = '';
 	}

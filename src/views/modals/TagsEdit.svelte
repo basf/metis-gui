@@ -29,7 +29,7 @@
 			index: collection.id,
 			label: collection.title,
 			group: collection.visibility,
-			style: `background: ${collection.typeColor} !important`,
+			style: `background: ${collection.typeFlavor} !important`,
 			value: collection.dataSources,
 		}));
 
@@ -39,7 +39,7 @@
 </script>
 
 <style lang="scss">
-	:global(.form-autocomplete .menu) {
+	:global(.modal .form-autocomplete .menu) {
 		position: relative !important;
 	}
 </style>
