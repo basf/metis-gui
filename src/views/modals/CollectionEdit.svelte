@@ -83,7 +83,7 @@
 
 	import type { Item } from 'svelte-spectre/package/components/Autocomplete/utils';
 
-	import { searchUsers, getData, getUsers } from '@/services/api';
+	import { searchUsers, getDataSources, getUsers } from '@/services/api';
 	import datasources from '@/stores/datasources';
 	import user from '@/stores/user';
 	import { types } from '@/stores/collections';
@@ -107,14 +107,14 @@
 	export let typeId: number;
 	export let typeSlug = '';
 	export let typeLabel = '';
-	export let typeColor = '';
+	export let typeFlavor = '';
 
 	export let dataSources: number[] = [];
 	export let users: number[] = [];
 
 	let search = '';
 
-	onMount(getData);
+	onMount(getDataSources);
 
 	$: userDataSources = $user ? $datasources.filter(({ userId }) => userId === $user?.id) : [];
 	$: predefinedDataSources = userDataSources.map(({ name, id }) => ({ label: name, value: id }));

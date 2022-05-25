@@ -48,14 +48,14 @@ export interface Template {
 	input?: string;
 }
 
-export type CollectionColor = typeof COLORSET[number];
+export type CollectionFlavor = typeof COLORSET[number];
 export type CollectionVisibility = typeof VISIBILITY[number];
 
 export interface CollectionType extends Timestamps {
 	id: number;
 	slug: string;
 	label: string;
-	color: CollectionColor;
+	color: CollectionFlavor;
 }
 
 export interface Collection extends Timestamps {
@@ -70,7 +70,7 @@ export interface Collection extends Timestamps {
 	typeId: number;
 	typeSlug?: string;
 	typeLabel?: string;
-	typeColor?: CollectionColor;
+	typeFlavor?: CollectionFlavor;
 
 	dataSources?: number[];
 	users?: number[];
