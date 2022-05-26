@@ -9,11 +9,7 @@
 							? `/collections#${collection.id}`
 							: undefined}
 					<li>
-						<a
-							href="#_"
-							on:click|preventDefault={() =>
-								filterDataSourcesByCollection(collection.id)}
-						>
+						<a href={filterLink(collection.id)}>
 							<Badge style="background: {collection.typeFlavor}"
 								>{collection.title.substring(0, 10)}</Badge
 							>
@@ -40,7 +36,6 @@
 	import user from '@/stores/user';
 	import collections from '@/stores/collections';
 	import { showTimestamp } from '@/helpers/date';
-	import { getDataSourcesByCollections } from '@/services/api';
 
 	import type { Collection, DataSource } from '@/types/dto';
 </script>
@@ -54,13 +49,13 @@
 				dataSources && dataSources.includes(dataSourceId)
 		);
 
-	function filterDataSourcesByCollection(id: number) {
-		const collectionIds = `${$query.params.collections}`.split(',') || [];
-
-		if (!collectionIds.includes(`${id}`)) {
-			$query.params.collections = [...collectionIds, `${id}`].join(',');
-			getDataSourcesByCollections(id);
-		}
+	function filterLink(id: number) {
+		const iDs: number[] = `${$query.params.collectionIds}`
+			.split(',')
+			.map((c) => +c)
+			.filter(Boolean);
+		const collectionIds = new Set([...iDs, id]);
+		return `?collectionIds=${Array.from(collectionIds)}`;
 	}
 </script>
 

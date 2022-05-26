@@ -25,7 +25,7 @@
 	import collections from '@/stores/collections';
 	import user from '@/stores/user';
 
-	import { getDataSources, getDataSourcesByCollections } from '@/services/api';
+	import { getDataSourcesByCollections } from '@/services/api';
 
 	import type { Collection } from '@/types/dto';
 
@@ -41,8 +41,9 @@
 <script lang="ts">
 	export let data: any[] = [],
 		add = false,
-		addOpen = false,
-		selected: Tag[] = [];
+		addOpen = false;
+
+	let selected: Tag[] = [];
 
 	$: predefined = $collections
 		.filter((collection: Collection) => collection.userId === $user?.id)
@@ -54,18 +55,15 @@
 			value: collection.dataSources,
 		}));
 
-	$: selected = predefined.filter((tag) => `${$query.params.collections}`.includes(`${tag.id}`));
+	$: selected = predefined.filter((tag) =>
+		`${$query.params.collectionIds}`.includes(`${tag.id}`)
+	);
 
-	$: filterDataSourcesBySelectedCollections(selected);
+	$: setCollectionIds(selected);
 
-	function filterDataSourcesBySelectedCollections(selected: Tag[]) {
-		if (selected.length) {
-			const collectionIds = selected.map((s) => s.id) || [];
-			$query.params.collections = collectionIds.join(',');
-			getDataSourcesByCollections(collectionIds);
-		} else {
-			$query.params.collections = '';
-			getDataSources();
-		}
+	function setCollectionIds(selected: Tag[]) {
+		const collectionIds = selected.map((s) => s.id).join(',');
+		$query.params.collectionIds = collectionIds || '';
+		getDataSourcesByCollections(collectionIds);
 	}
 </script>
