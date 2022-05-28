@@ -15,6 +15,8 @@ export interface Calculation extends Timestamps {
 	name: string;
 	userId: number;
 	status: number;
+	progress: number;
+	result?: DataSource[];
 }
 
 export interface DataSource extends Timestamps {

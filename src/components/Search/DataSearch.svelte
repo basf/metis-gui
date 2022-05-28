@@ -1,4 +1,4 @@
-{#if data.length}
+{#if data}
 	<div class="py-2">
 		<Grid>
 			{#if add}
@@ -39,7 +39,7 @@
 </script>
 
 <script lang="ts">
-	export let data: any[] = [],
+	export let data = 0,
 		add = false,
 		addOpen = false;
 
@@ -63,7 +63,7 @@
 
 	function setCollectionIds(selected: Tag[]) {
 		const collectionIds = selected.map((s) => s.id).join(',');
-		$query.params.collectionIds = collectionIds || '';
+		$query.params = collectionIds ? { collectionIds } : {};
 		getDataSourcesByCollections(collectionIds);
 	}
 </script>

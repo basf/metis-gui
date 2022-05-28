@@ -1,5 +1,5 @@
 <Main>
-	<DataSourceSearch add bind:addOpen data={$datasources} />
+	<DataSearch add bind:addOpen data={$datasources.length} />
 	<div bind:clientWidth={width}>
 		{#await $datasourcesAsync}
 			{#each { length: 4 } as _}
@@ -10,11 +10,11 @@
 				<DataSourceAdd msg={!datasources.length} />
 			{/if}
 			{#each makeDataSourcesList(datasources, search) as datasource (datasource.id)}
-				<Data {datasource}>
+				<DataSource {datasource}>
 					{#if $user?.id === datasource.userId}
 						<TileMenu items={tileMenuItems} dataId={datasource.id} />
 					{/if}
-				</Data>
+				</DataSource>
 			{/each}
 		{/await}
 	</div>
@@ -42,15 +42,15 @@
 </Modal>
 
 <script lang="ts" context="module">
-	import { fragment, query } from 'svelte-pathfinder';
+	import { fragment } from 'svelte-pathfinder';
 	import { Button, Modal, toast } from 'svelte-spectre';
 	import { media } from '@/stores/media';
 
 	import Main from '@/layouts/Main.svelte';
 
-	import { DataSourceSearch } from '@/components/Search';
+	import { DataSearch } from '@/components/Search';
 	import DataSourceAdd from '@/views/DataSource/DataSourceAdd.svelte';
-	import { Data } from '@/views/tiles';
+	import { DataSource } from '@/views/tiles';
 	import * as Loaders from '@/components/loaders';
 
 	import { delDataSource, setCalculation } from '@/services/api';
@@ -67,7 +67,7 @@
 
 	import { editorCode } from '@/stores/editor';
 
-	import type { DataSource } from '@/types/dto';
+	import type { DataSource as DataSourceDTO } from '@/types/dto';
 </script>
 
 <script lang="ts">
@@ -106,7 +106,7 @@
 		},
 	];
 
-	function makeDataSourcesList(items: DataSource[], search: string) {
+	function makeDataSourcesList(items: DataSourceDTO[], search: string) {
 		return search
 			? items.filter((item) => match(item, search))
 			: items.sort((a, b) => b.id - a.id);

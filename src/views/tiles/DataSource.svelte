@@ -4,10 +4,6 @@
 			<h5 class="mt-2">{@html datasource.name}</h5>
 			<ul class="collections">
 				{#each getCollectionsList(datasource.id) as collection (collection.id)}
-					{@const href =
-						$user?.id === collection.userId
-							? `/collections#${collection.id}`
-							: undefined}
 					<li>
 						<a href={filterLink(collection.id)}>
 							<Badge style="background: {collection.typeFlavor}"
