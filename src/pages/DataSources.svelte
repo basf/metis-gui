@@ -42,7 +42,7 @@
 </Modal>
 
 <script lang="ts" context="module">
-	import { fragment } from 'svelte-pathfinder';
+	import { fragment, query } from 'svelte-pathfinder';
 	import { Button, Modal, toast } from 'svelte-spectre';
 	import { media } from '@/stores/media';
 

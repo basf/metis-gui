@@ -17,7 +17,7 @@ type StructuresByProviders = Array<[Types.StructuresResponse[], Types.Provider]>
 
 const getStructuresAll = debounce(
 	(providers: string[], filter: string, page: number, limit: number, batch: boolean) => {
-		return optimade.getStructuresAll(providers, filter, page, limit, batch) || [];
+		return optimade.getStructuresAll({ providers, filter, page, limit, batch }) || [];
 	},
 	SEARCH_DELAY
 );

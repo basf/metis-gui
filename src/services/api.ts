@@ -19,7 +19,7 @@ export async function getDataSources(): Promise<void> {
 	return getJSON('/datasources');
 }
 
-export async function getDataSourcesByCollections(collectionIds: number[] | number): Promise<void> {
+export async function getDataSourcesByCollections(collectionIds: string): Promise<void> {
 	return getJSON(`/datasources?collectionIds=${collectionIds}`);
 }
 
