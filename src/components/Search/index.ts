@@ -1,1 +1,1 @@
-export { default as DataSourceSearch } from './DataSourceSearch.svelte';
+export { default as DataSearch } from './DataSearch.svelte';
