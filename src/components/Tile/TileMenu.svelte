@@ -44,7 +44,7 @@
 	import { Button, Dropdown, Icon, IconButton, Menu } from 'svelte-spectre';
 	import { media } from '@/stores/media';
 
-	interface Item {
+	export interface Item {
 		href?: string;
 		icon?: string;
 		color?: string;
@@ -56,7 +56,7 @@
 <script lang="ts">
 	export let dataId: number,
 		header = 'Tile menu',
-		items: Item[] = [];
+		items: (Item | null)[] = [];
 
 	let active: boolean,
 		wW = 0,
