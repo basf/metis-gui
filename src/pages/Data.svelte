@@ -12,7 +12,7 @@
 			{#each makeDataSourcesList(datasources, search) as datasource (datasource.id)}
 				<DataSource {datasource}>
 					{#if $user?.id === datasource.userId}
-						<TileMenu items={tileMenuItems} dataId={datasource.id} />
+						<TileMenu items={tileMenuItems(datasource.type)} dataId={datasource.id} />
 					{/if}
 				</DataSource>
 			{/each}
@@ -68,6 +68,7 @@
 	import { editorCode } from '@/stores/editor';
 
 	import type { DataSource as DataSourceDTO } from '@/types/dto';
+	import App from '@/App.svelte';
 </script>
 
 <script lang="ts">
@@ -76,35 +77,36 @@
 	let addOpen = false;
 	let tags = [];
 
-	const tileMenuItems = [
-		{
-			icon: 'edit',
-			label: 'Edit Calculation',
-			action: editCalculation,
-		},
-		{
-			icon: 'tag',
-			label: 'Edit Tags',
-			action: editTags,
-		},
-		/*{
-			icon: Sinus,
-			label: 'Edit Plot',
-			action: editPlot,
-		},*/
-		{
-			icon: 'forward',
-			color: 'success',
-			label: 'Calculate',
-			action: runCalculation,
-		},
-		{
-			icon: 'cross',
-			color: 'error',
-			label: 'Delete',
-			action: delData,
-		},
-	];
+	const tileMenuItems = (type: number) => {
+		const editCalc = {
+				icon: 'edit',
+				label: 'Edit Calculation',
+				action: editCalculation,
+			},
+			editTag = {
+				icon: 'tag',
+				label: 'Edit Tags',
+				action: editTags,
+			},
+			editPlot = {
+				icon: Sinus,
+				label: 'Edit Plot',
+				action: editPlots,
+			},
+			runCalc = {
+				icon: 'forward',
+				color: 'success',
+				label: 'Calculate',
+				action: runCalculation,
+			},
+			deleteData = {
+				icon: 'cross',
+				color: 'error',
+				label: 'Delete',
+				action: delData,
+			};
+		return [editCalc, editTag, type === 1 ? runCalc : null, deleteData].filter(Boolean);
+	};
 
 	function makeDataSourcesList(items: DataSourceDTO[], search: string) {
 		return search
@@ -131,7 +133,7 @@
 			case 'plot':
 				return {
 					component: PlotEdit,
-					submit: submitPlot,
+					submit: submitPlots,
 				};
 			default:
 				return {
@@ -157,10 +159,10 @@
 		await patchDataSourceCollections(+dataId, tags).then(() => closeModal());
 	}
 
-	function editPlot(id: number) {
+	function editPlots(id: number) {
 		$fragment = `#edit-plot-${id}`;
 	}
-	function submitPlot() {
+	function submitPlots() {
 		closeModal();
 	}
 
