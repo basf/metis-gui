@@ -49,25 +49,27 @@
 	</div>
 	<div bind:clientWidth={width} class="py-2">
 		<Grid stack>
-			{#await $collectionsAsync}
-				{#each { length: 6 } as _}
-					<Col col="auto">
-						<Loaders.Tile
-							count={1}
-							w={width / 2 - 12}
-							h={107}
-							height={107}
-							width={width / 2 - 12}
-						/>
-					</Col>
-				{/each}
-			{:then _}
-				{#each filtredCollections as collection (collection.id)}
-					<Col col="6" xs="12">
-						<Collection {...collection} on:edit={(e) => openEdit(e.detail.id)} />
-					</Col>
-				{/each}
-			{/await}
+			{#if !$status.hidden}
+				{#await $collectionsAsync}
+					{#each { length: 6 } as _}
+						<Col col="auto">
+							<Loaders.Tile
+								count={1}
+								w={width / 2 - 12}
+								h={107}
+								height={107}
+								width={width / 2 - 12}
+							/>
+						</Col>
+					{/each}
+				{:then _}
+					{#each filtredCollections as collection (collection.id)}
+						<Col col="6" xs="12">
+							<Collection {...collection} on:edit={(e) => openEdit(e.detail.id)} />
+						</Col>
+					{/each}
+				{/await}
+			{/if}
 		</Grid>
 	</div>
 </Main>
@@ -84,6 +86,7 @@
 <script lang="ts" context="module">
 	import { query, fragment } from 'svelte-pathfinder';
 	import { media } from '@/stores/media';
+	import status from '@/stores/status';
 
 	import { Col, Grid, Input, Select, IconButton, InputGroup, toast } from 'svelte-spectre';
 

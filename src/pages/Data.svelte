@@ -1,22 +1,27 @@
 <Main>
 	<DataSearch add bind:addOpen data={$datasources.length} />
 	<div bind:clientWidth={width}>
-		{#await $datasourcesAsync}
-			{#each { length: 4 } as _}
-				<Loaders.Tile count={1} w={width} h={74} height={74} {width} />
-			{/each}
-		{:then datasources}
-			{#if addOpen || !datasources.length}
-				<DataSourceAdd msg={!datasources.length} />
-			{/if}
-			{#each makeDataSourcesList(datasources, search) as datasource (datasource.id)}
-				<DataSource {datasource}>
-					{#if $user?.id === datasource.userId}
-						<TileMenu items={tileMenuItems(datasource.type)} dataId={datasource.id} />
-					{/if}
-				</DataSource>
-			{/each}
-		{/await}
+		{#if !$status.hidden}
+			{#await $datasourcesAsync}
+				{#each { length: 4 } as _}
+					<Loaders.Tile count={1} w={width} h={74} height={74} {width} />
+				{/each}
+			{:then datasources}
+				{#if addOpen || !datasources.length}
+					<DataSourceAdd msg={!datasources.length} />
+				{/if}
+				{#each makeDataSourcesList(datasources, search) as datasource (datasource.id)}
+					<DataSource {datasource}>
+						{#if $user?.id === datasource.userId}
+							<TileMenu
+								items={tileMenuItems(datasource.type)}
+								dataId={datasource.id}
+							/>
+						{/if}
+					</DataSource>
+				{/each}
+			{/await}
+		{/if}
 	</div>
 </Main>
 
@@ -30,7 +35,7 @@
 		<svelte:component
 			this={modal().component}
 			dataSourceId={+decodeURIComponent(dataId)}
-			bind:tags
+			bind:tags={tagIds}
 		/>
 	{:else}
 		<span style="height: 100%" class="loading loading-lg p-centered d-block" />
@@ -45,6 +50,7 @@
 	import { fragment } from 'svelte-pathfinder';
 	import { Button, Modal, toast } from 'svelte-spectre';
 	import { media } from '@/stores/media';
+	import status from '@/stores/status';
 
 	import Main from '@/layouts/Main.svelte';
 
@@ -68,14 +74,13 @@
 	import { editorCode } from '@/stores/editor';
 
 	import type { DataSource as DataSourceDTO } from '@/types/dto';
-	import App from '@/App.svelte';
 </script>
 
 <script lang="ts">
 	let width = 0;
 	let search = '';
 	let addOpen = false;
-	let tags = [];
+	let tagIds = [];
 
 	const tileMenuItems = (type: number) => {
 		const editCalc = {
@@ -156,7 +161,7 @@
 		$fragment = `#edit-tags-${id}`;
 	}
 	async function submitTags() {
-		await patchDataSourceCollections(+dataId, tags).then(() => closeModal());
+		await patchDataSourceCollections(+dataId, tagIds).then(() => closeModal());
 	}
 
 	function editPlots(id: number) {
