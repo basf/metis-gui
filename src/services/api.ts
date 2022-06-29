@@ -29,9 +29,9 @@ export async function setDataSources(content: string | string[]): Promise<void> 
 
 export async function patchDataSourceCollections(
 	id: number,
-	collections: CollectionDTO[]
+	collectionIds: CollectionDTO[]
 ): Promise<unknown> {
-	return patchJSON(`/datasources/${id}/collections`, collections);
+	return patchJSON(`/datasources/${id}/collections`, collectionIds);
 }
 
 export async function delDataSource(id: number): Promise<void> {

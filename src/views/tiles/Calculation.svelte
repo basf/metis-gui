@@ -8,6 +8,7 @@
 		</small>
 	</svelte:fragment>
 	<Meter
+		progress
 		value={calculation.progress}
 		striped={calculation.progress < 100}
 		animated={calculation.progress < 100}

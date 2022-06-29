@@ -19,6 +19,9 @@
 				Type &bull; {datasource.type} &bull; {showTimestamp(datasource)}
 			</small>
 		</svelte:fragment>
+		{#if datasource.progress}
+			<Meter value={datasource.progress} />
+		{/if}
 		<svelte:fragment slot="action">
 			<slot />
 		</svelte:fragment>
@@ -27,9 +30,7 @@
 
 <script lang="ts" context="module">
 	import { query } from 'svelte-pathfinder';
-	import { Badge, Tile } from 'svelte-spectre';
-
-	import user from '@/stores/user';
+	import { Badge, Meter, Tile } from 'svelte-spectre';
 	import collections from '@/stores/collections';
 	import { showTimestamp } from '@/helpers/date';
 

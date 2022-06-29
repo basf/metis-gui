@@ -37,9 +37,3 @@
 
 	$: tags = selected.map((s) => s.index);
 </script>
-
-<style lang="scss">
-	:global(.modal .form-autocomplete .menu) {
-		position: relative !important;
-	}
-</style>
