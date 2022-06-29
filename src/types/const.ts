@@ -29,4 +29,4 @@ export const COLORSET = [
 	'grey',
 ] as const;
 
-export const VISIBILITY = ['private', 'community', 'public'] as const;
+export const VISIBILITY = ['private', 'shared', 'community'] as const;

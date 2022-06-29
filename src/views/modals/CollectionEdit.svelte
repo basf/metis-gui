@@ -37,7 +37,7 @@
 				<label class="form-label" slot="header">Visibility</label>
 				<div class="p-2" slot="body">
 					<Select options={VISIBILITY} bind:value={visibility} />
-					{#if visibility === 'community'}
+					{#if visibility === 'shared'}
 						<div class="my-2 py-2">
 							<Divider align="horizontal center" text="Shared with" />
 						</div>
