@@ -149,7 +149,7 @@
 
 	function save() {
 		const dataSources = selectedDataSources.map(({ value }) => value);
-		const users = selectedUsers.length ? selectedUsers.map(({ value }) => value) : null;
+		const users = selectedUsers.map(({ value }) => value);
 		dispatch('save', { id, title, description, typeId, visibility, dataSources, users });
 	}
 
