@@ -56,7 +56,7 @@
 		}));
 
 	$: selected = predefined.filter((tag) =>
-		`${$query.params.collectionIds}`.includes(`${tag.id}`)
+		`${$query.params.collectionIds}`.split(',').includes(`${tag.id}`)
 	);
 
 	$: setCollectionIds(selected);
