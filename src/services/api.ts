@@ -180,7 +180,7 @@ export default async function fetchJSON<T>(
 			userAsync.set(null);
 			return null;
 		}
-		const json = await res.json()
+		const json = await res.json();
 		const err: HttpError = new Error(json.error);
 		err.response = res;
 		throw err;
