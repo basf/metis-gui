@@ -9,19 +9,19 @@
 	<Grid>
 		<Col sm="12">
 			<FormGroup>
-				<Input bind:value={title} placeholder="Enter title" />
+				<Input bind:value={title} placeholder="Input title" />
 			</FormGroup>
 			<FormGroup>
-				<Input rows={4} placeholder="Enter description" bind:value={description} />
+				<Input rows={4} placeholder="Input description" bind:value={description} />
 			</FormGroup>
 			<div class="my-2 py-2">
-				<Divider align="horizontal center" text="Structures in collection" />
+				<Divider align="horizontal center" text="Data in collection" />
 			</div>
 			<Autocomplete
 				predefined={predefinedDataSources}
 				bind:selected={selectedDataSources}
 				groupBy={({ type }) => type || ''}
-				placeholder="Add structures"
+				placeholder="Add data"
 			/>
 		</Col>
 		<Col sm="12">

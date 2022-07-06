@@ -63,7 +63,7 @@
 						</Col>
 					{/each}
 				{:then _}
-					{#each filtredCollections as collection (collection.id)}
+					{#each filteredCollections as collection (collection.id)}
 						<Col col="6" xs="12">
 							<Collection {...collection} on:edit={(e) => openEdit(e.detail.id)} />
 						</Col>
@@ -112,7 +112,7 @@
 <script lang="ts">
 	let width: number;
 
-	$: filtredCollections = $collections.filter((collection) => {
+	$: filteredCollections = $collections.filter((collection) => {
 		return (
 			(!$query.params.title || collection.title.includes($query.params.title as string)) &&
 			(!$query.params.visibility || collection.visibility === $query.params.visibility) &&

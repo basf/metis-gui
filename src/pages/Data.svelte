@@ -110,8 +110,9 @@
 				label: 'Delete',
 				action: delData,
 			};
-		return [editCalc, editTag, type === 1 ? runCalc : null, deleteData].filter(Boolean);
+		return [type === 1 ? runCalc : null, editCalc, editTag, deleteData].filter(Boolean);
 	};
+
 
 	function makeDataSourcesList(items: DataSourceDTO[], search: string) {
 		return search
