@@ -59,11 +59,11 @@
 		`${$query.params.collectionIds}`.split(',').includes(`${tag.id}`)
 	);
 
-	$: setCollectionIds(selected);
+	$: if (predefined.length) setCollectionIds(selected);
 
 	function setCollectionIds(selected: Tag[]) {
 		const collectionIds = selected.map((s) => s.id).join(',');
-		$query.params = collectionIds ? { collectionIds } : {};
+		$query.params.collectionIds = collectionIds;
 		getDataSourcesByCollections(collectionIds);
 	}
 </script>
