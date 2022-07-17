@@ -40,11 +40,12 @@
 <script lang="ts">
 	export let datasource: DataSource;
 
-	$: getCollectionsList = (dataSourceId: number): Collection[] =>
-		$collections.filter(
+	function getCollectionsList(dataSourceId: number): Collection[] {
+		return $collections?.data?.filter(
 			({ dataSources }: { dataSources: number[] }): boolean =>
 				dataSources && dataSources.includes(dataSourceId)
 		);
+	}
 
 	function filterLink(id: number) {
 		const iDs: number[] = `${$query.params.collectionIds}`
@@ -52,7 +53,7 @@
 			.map((c) => +c)
 			.filter(Boolean);
 		const collectionIds = new Set([...iDs, id]);
-		return `?collectionIds=${Array.from(collectionIds)}`;
+		return `?collectionIds=${Array.from(collectionIds)}&limit=${$query.params.limit}&page=1`;
 	}
 </script>
 

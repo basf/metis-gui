@@ -7,6 +7,7 @@ import type {
 	Collection as CollectionDTO,
 	CollectionType as CollectionTypeDTO,
 } from '@/types/dto';
+import { StringParams } from 'svelte-pathfinder';
 
 export interface HttpError extends Error {
 	response?: Response;
@@ -15,12 +16,8 @@ export interface HttpError extends Error {
 export type HttpHeaders = Record<string, string>;
 export type QueryParams = Record<string, unknown>;
 
-export async function getDataSources(): Promise<void> {
-	return getJSON('/datasources');
-}
-
-export async function getDataSourcesByCollections(collectionIds: string): Promise<void> {
-	return getJSON(`/datasources?collectionIds=${collectionIds}`);
+export async function getDataSources(query?: StringParams): Promise<void> {
+	return getJSON(`/datasources${query || ''}`);
 }
 
 export async function setDataSources(content: string | string[]): Promise<void> {
@@ -81,8 +78,8 @@ export async function getCollectionTypes(): Promise<CollectionTypeDTO[]> {
 	return getJSON('/collections/types');
 }
 
-export async function getCollections(): Promise<void> {
-	return getJSON('/collections');
+export async function getCollections(query?: StringParams): Promise<void> {
+	return getJSON(`/collections${query || ''}`);
 }
 
 export async function setCollection(collection: CollectionDTO): Promise<void> {

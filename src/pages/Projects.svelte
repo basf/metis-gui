@@ -12,27 +12,17 @@
 			</Col>
 			<Col>
 				<InputGroup>
-					<Input
-						bind:value={$query.params.title}
+					<Autocomplete
+						{predefined}
+						bind:selected
+						on:select={setCollectionIds}
+						on:remove={setCollectionIds}
 						placeholder="Filter by title"
-						type="search"
-						width="6"
-						inline
-						{size}
-					>
-						<span slot="iconRight">
-							{#if $query.params.title}
-								<IconButton
-									type="button"
-									icon="cross"
-									on:click={() => ($query.params.title = '')}
-								/>
-							{/if}
-						</span>
-					</Input>
+						style="flex: 400%;"
+					/>
 					<Select
 						options={VISIBILITY}
-						placeholder="Filter by visibility"
+						placeholder="Visibility"
 						bind:value={$query.params.visibility}
 						{size}
 					/>
@@ -40,7 +30,7 @@
 						data={$typesAsync}
 						getOptions={getTypeOptions}
 						bind:value={$query.params.type}
-						placeholder="Filter by type"
+						placeholder="Type"
 						{size}
 					/>
 				</InputGroup>
@@ -62,8 +52,19 @@
 							/>
 						</Col>
 					{/each}
-				{:then _}
-					{#each filteredCollections as collection (collection.id)}
+				{:then { data, total }}
+					{#if total}
+						<Col col="12">
+							<Pagination
+								bind:limit={$query.params.limit}
+								bind:page={$query.params.page}
+								limits={[10, 50, 100]}
+								{total}
+								rest={7}
+							/>
+						</Col>
+					{/if}
+					{#each data as collection (collection.id)}
 						<Col col="6" xs="12">
 							<Collection {...collection} on:edit={(e) => openEdit(e.detail.id)} />
 						</Col>
@@ -74,6 +75,7 @@
 	</div>
 </Main>
 
+<!-- {#if $fragment} -->
 <CollectionEditModal
 	{...editCollection}
 	open={!!$fragment}
@@ -83,19 +85,29 @@
 	on:close={closeEdit}
 />
 
+<!-- {/if} -->
 <script lang="ts" context="module">
-	import { query, fragment } from 'svelte-pathfinder';
+	import { query, fragment, Param } from 'svelte-pathfinder';
 	import { media } from '@/stores/media';
 	import status from '@/stores/status';
 
-	import { Col, Grid, Input, Select, IconButton, InputGroup, toast } from 'svelte-spectre';
+	import {
+		Col,
+		Grid,
+		Select,
+		IconButton,
+		InputGroup,
+		toast,
+		Pagination,
+		Autocomplete,
+	} from 'svelte-spectre';
 
 	import { Collection } from '@/views/tiles/';
 
 	import user from '@/stores/user';
 	import collections, { collectionsAsync, typesAsync } from '@/stores/collections';
 
-	import { setCollection, delCollection } from '@/services/api';
+	import { getCollections, setCollection, delCollection, getDataSources } from '@/services/api';
 	import type { HttpError } from '@/services/api';
 
 	import { VISIBILITY } from '@/types/const';
@@ -105,23 +117,56 @@
 	import Main from '@/layouts/Main.svelte';
 
 	import CollectionEditModal from '@/views/modals/CollectionEdit.svelte';
-
+	import type { Collection as CollectionDTO } from '@/types/dto';
 	const size = 'lg';
+
+	type Tag = {
+		index: number;
+		label: string;
+		group: string;
+		style: string;
+		value?: number[];
+	};
 </script>
 
 <script lang="ts">
-	let width: number;
+	import { onMount } from 'svelte';
 
-	$: filteredCollections = $collections.filter((collection) => {
-		return (
-			(!$query.params.title || collection.title.includes($query.params.title as string)) &&
-			(!$query.params.visibility || collection.visibility === $query.params.visibility) &&
-			(!$query.params.type || collection.typeSlug === $query.params.type)
-		);
+	let width: number,
+		selected: Tag[] = [],
+		predefined: Tag[] = [];
+
+	$: if ($collections?.data?.length) predefined = getPredefined($collections.data);
+	$: if (predefined.length) selected = getSelected($query.params.collectionIds);
+
+	function getPredefined(collections: CollectionDTO[]): Tag[] {
+		return collections.map((collection: CollectionDTO) => ({
+			index: collection.id,
+			label: collection.title,
+			group: collection.visibility,
+			style: `background: ${collection.typeFlavor} !important`,
+			value: collection.dataSources,
+		}));
+	}
+
+	function getSelected(collectionIds: Param) {
+		return predefined.filter((tag) => `${collectionIds}`.split(',').includes(`${tag.index}`));
+	}
+
+	function setCollectionIds(e: { detail: Tag[] }) {
+		const collectionIds = selected.map((s) => s.index).join(',');
+		$query.params.collectionIds = collectionIds;
+	}
+	onMount(() => {
+		getDataSources();
+		$query.params.page ??= 1;
+		$query.params.limit ??= 10;
 	});
 
+	$: if ($query.params.page && $query.params.limit) getCollections($query);
+
 	$: editCollectionId = $fragment.replace('#', '');
-	$: editCollection = $collections.find(
+	$: editCollection = $collections?.data?.find(
 		(collection) => collection.id === +editCollectionId && collection.userId === $user?.id
 	);
 
@@ -152,7 +197,9 @@
 	}
 
 	function getTypeOptions(types) {
-		return types.map(({ label, slug: value }) => ({ label, value }));
+		return types
+			.filter(({ id }) => $collections?.data?.some(({ typeId }) => typeId === id))
+			.map(({ label, slug: value }) => ({ label, value }));
 	}
 </script>
 

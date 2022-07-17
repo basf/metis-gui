@@ -23,12 +23,14 @@ export const collectionsAsync = streamable<StreamDTO<CollectionDTO[]>, Collectio
 		withCredentials: true,
 	},
 	(res) => {
+		console.log(res)
 		if (res) {
 			toast.primary({ ...SYNC_TOASTS_CONFIG, msg: 'Collections synced' });
 			return res.data;
-		} else {
-			getCollections();
 		}
+		// else {
+		// 	getCollections();
+		// }
 	}
 );
 

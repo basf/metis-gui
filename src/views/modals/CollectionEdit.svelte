@@ -114,12 +114,14 @@
 
 	let search = '';
 
-	onMount(getDataSources);
-
-	$: userDataSources = $user ? $datasources.filter(({ userId }) => userId === $user?.id) : [];
-	$: predefinedDataSources = userDataSources.map(({ name, id }) => ({ label: name, value: id }));
+	// onMount(getDataSources);
+	// $: console.log($datasources);
+	$: userDataSources = $user
+		? $datasources?.data?.filter(({ userId }) => userId === $user?.id)
+		: [];
+	$: predefinedDataSources = userDataSources?.map(({ name, id }) => ({ label: name, value: id }));
 	$: selectedDataSources = dataSources
-		? predefinedDataSources.filter(({ value }) => dataSources.includes(value))
+		? predefinedDataSources?.filter(({ value }) => dataSources.includes(value))
 		: [];
 
 	$: typesOptions = $types.map(({ label, id: value }) => ({ label, value }));

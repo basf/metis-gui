@@ -1,16 +1,25 @@
 <Main>
-	<DataSearch add bind:addOpen data={$datasources.length} />
+	<DataSearch bind:add />
 	<div bind:clientWidth={width}>
 		{#if !$status.hidden}
 			{#await $datasourcesAsync}
 				{#each { length: 4 } as _}
 					<Loaders.Tile count={1} w={width} h={74} height={74} {width} />
 				{/each}
-			{:then datasources}
-				{#if addOpen || !datasources.length}
-					<DataSourceAdd msg={!datasources.length} />
+			{:then { data, total }}
+				{#if add || !data.length}
+					<DataSourceAdd msg={!data.length} />
 				{/if}
-				{#each makeDataSourcesList(datasources, search) as datasource (datasource.id)}
+				{#if total}
+					<Pagination
+						bind:limit={$query.params.limit}
+						bind:page={$query.params.page}
+						limits={[10, 50, 100]}
+						{total}
+						rest={7}
+					/>
+				{/if}
+				{#each data as datasource (datasource.id)}
 					<DataSource {datasource}>
 						{#if $user?.id === datasource.userId}
 							<TileMenu
@@ -27,9 +36,7 @@
 
 <Modal size={$media.sm ? 'fs' : 'lg'} open={!!$fragment} on:close={closeModal}>
 	<h3 slot="header">
-		{@html `Edit and submit ${decodeURIComponent(dataType)} for <mark> ${
-			$datasources.find((d) => d.id === +dataId)?.name
-		} </mark>`}
+		{@html modalHeader}
 	</h3>
 	{#if modal().component}
 		<svelte:component
@@ -47,8 +54,8 @@
 </Modal>
 
 <script lang="ts" context="module">
-	import { fragment } from 'svelte-pathfinder';
-	import { Button, Modal, toast } from 'svelte-spectre';
+	import { fragment, query } from 'svelte-pathfinder';
+	import { Button, Modal, Pagination, toast } from 'svelte-spectre';
 	import { media } from '@/stores/media';
 	import status from '@/stores/status';
 
@@ -59,13 +66,13 @@
 	import { DataSource } from '@/views/tiles';
 	import * as Loaders from '@/components/loaders';
 
-	import { delDataSource, setCalculation } from '@/services/api';
+	import { delDataSource, getCollections, setCalculation } from '@/services/api';
 
 	import datasources, { datasourcesAsync } from '@/stores/datasources';
 	import { withConfirm } from '@/stores/confirmator';
 
 	import { CalculationEdit, PlotEdit, TagsEdit } from '@/views/modals';
-	import { patchDataSourceCollections } from '@/services/api';
+	import { getDataSources, patchDataSourceCollections } from '@/services/api';
 
 	import user from '@/stores/user';
 	import { TileMenu } from '@/components/Tile/';
@@ -73,14 +80,26 @@
 
 	import { editorCode } from '@/stores/editor';
 
-	import type { DataSource as DataSourceDTO } from '@/types/dto';
+	import type { DataSource as DataDTO } from '@/types/dto';
 </script>
 
 <script lang="ts">
-	let width = 0;
-	let search = '';
-	let addOpen = false;
-	let tagIds = [];
+	import { onMount } from 'svelte';
+
+	let width = 0,
+		add = false,
+		tagIds = [];
+
+	onMount(() => {
+		getCollections();
+		$query.params.page ??= 1;
+		$query.params.limit ??= 10;
+	});
+	$: if ($query.params.page && $query.params.limit) getDataSources($query);
+
+	$: modalHeader = `Edit and submit ${decodeURIComponent(dataType)} for <mark> ${
+		$datasources?.data?.find((data) => data.id === +dataId)?.name
+	} </mark>`;
 
 	const tileMenuItems = (type: number) => {
 		const editCalc = {
@@ -113,11 +132,8 @@
 		return [type === 1 ? runCalc : null, editCalc, editTag, deleteData].filter(Boolean);
 	};
 
-
-	function makeDataSourcesList(items: DataSourceDTO[], search: string) {
-		return search
-			? items.filter((item) => match(item, search))
-			: items.sort((a, b) => b.id - a.id);
+	function makeDataSourcesList(items: DataDTO[]) {
+		return items.sort((a, b) => b.id - a.id);
 	}
 
 	function closeModal() {

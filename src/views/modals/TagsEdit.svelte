@@ -23,8 +23,8 @@
 	let predefined: Tag[] = [],
 		selected: Tag[] = [];
 
-	$: predefined = $collections
-		.filter((collection: Collection) => collection.userId === $user?.id)
+	$: predefined = $collections?.data
+		?.filter((collection: Collection) => collection.userId === $user?.id)
 		.map((collection: Collection) => ({
 			index: collection.id,
 			label: collection.title,
@@ -33,7 +33,7 @@
 			value: collection.dataSources,
 		}));
 
-	$: selected = predefined.filter(({ value }) => value?.includes(dataSourceId));
+	$: selected = predefined?.filter(({ value }) => value?.includes(dataSourceId));
 
-	$: tags = selected.map((s) => s.index);
+	$: tags = selected?.map((s) => s.index);
 </script>
