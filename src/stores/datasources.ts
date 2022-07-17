@@ -18,7 +18,7 @@ export const datasourcesAsync = streamable<StreamDTO<Data>, Data>(
 		withCredentials: true,
 	},
 	(res) => {
-		console.log(res)
+		console.log(res);
 		if (res) {
 			toast.primary({ ...SYNC_TOASTS_CONFIG, msg: 'Structures synced' });
 			return res.data;
