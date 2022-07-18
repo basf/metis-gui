@@ -1,41 +1,41 @@
 <Main>
 	<DataSearch bind:add />
 	<div bind:clientWidth={width}>
-		{#if !$status.hidden}
-			{#await $datasourcesAsync}
-				{#each { length: 4 } as _}
-					<Loaders.Tile count={1} w={width} h={74} height={74} {width} />
-				{/each}
-			{:then { data, total }}
-				{#if add || !data.length}
-					<DataSourceAdd msg={!data.length} />
-				{/if}
-				{#if total}
-					<Pagination
-						bind:limit={$query.params.limit}
-						bind:page={$query.params.page}
-						limits={[10, 50, 100]}
-						{total}
-						rest={7}
-					/>
-				{/if}
-				{#each data as datasource (datasource.id)}
-					<DataSource {datasource}>
-						{#if $user?.id === datasource.userId}
-							<TileMenu
-								items={tileMenuItems(datasource.type)}
-								dataId={datasource.id}
-							/>
-						{/if}
-					</DataSource>
-				{/each}
-			{/await}
-		{/if}
+		<!-- {#if !$status.hidden} -->
+		{#await $datasourcesAsync}
+			{#each { length: 4 } as _}
+				<Loaders.Tile count={1} w={width} h={74} height={74} {width} />
+			{/each}
+		{:then { data, total }}
+			{#if add || !data.length}
+				<DataSourceAdd msg={!data.length} />
+			{/if}
+			{#if total}
+				<Pagination
+					bind:limit={$query.params.limit}
+					bind:page={$query.params.page}
+					limits={[10, 50, 100]}
+					{total}
+					rest={7}
+				/>
+			{/if}
+			{#each data as datasource (datasource.id)}
+				<DataSource {datasource}>
+					{#if $user?.id === datasource.userId}
+						<TileMenu items={tileMenuItems(datasource.type)} dataId={datasource.id} />
+					{/if}
+				</DataSource>
+			{/each}
+		{/await}
+		<!-- {/if} -->
 	</div>
 </Main>
 
 <Modal size={$media.sm ? 'fs' : 'lg'} open={!!$fragment} on:close={closeModal}>
 	<h3 slot="header">
+		{@const modalHeader = `Edit and submit ${decodeURIComponent(dataType)} for <mark> ${
+			$datasources?.data?.find((data) => data.id === +dataId)?.name
+		} </mark>`}
 		{@html modalHeader}
 	</h3>
 	{#if modal().component}
@@ -79,8 +79,6 @@
 	import Sinus from '@/assets/img/sinus.svg';
 
 	import { editorCode } from '@/stores/editor';
-
-	import type { DataSource as DataDTO } from '@/types/dto';
 </script>
 
 <script lang="ts">
@@ -91,15 +89,12 @@
 		tagIds = [];
 
 	onMount(() => {
-		getCollections();
 		$query.params.page ??= 1;
 		$query.params.limit ??= 10;
+		getCollections($query);
 	});
-	$: if ($query.params.page && $query.params.limit) getDataSources($query);
 
-	$: modalHeader = `Edit and submit ${decodeURIComponent(dataType)} for <mark> ${
-		$datasources?.data?.find((data) => data.id === +dataId)?.name
-	} </mark>`;
+	$: if ($query.params.page && $query.params.limit) getDataSources($query);
 
 	const tileMenuItems = (type: number) => {
 		const editCalc = {
@@ -131,10 +126,6 @@
 			};
 		return [type === 1 ? runCalc : null, editCalc, editTag, deleteData].filter(Boolean);
 	};
-
-	function makeDataSourcesList(items: DataDTO[]) {
-		return items.sort((a, b) => b.id - a.id);
-	}
 
 	function closeModal() {
 		$fragment = '';

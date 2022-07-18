@@ -39,57 +39,52 @@
 	</div>
 	<div bind:clientWidth={width} class="py-2">
 		<Grid stack>
-			{#if !$status.hidden}
-				{#await $collectionsAsync}
-					{#each { length: 6 } as _}
-						<Col col="auto">
-							<Loaders.Tile
-								count={1}
-								w={width / 2 - 12}
-								h={107}
-								height={107}
-								width={width / 2 - 12}
-							/>
-						</Col>
-					{/each}
-				{:then { data, total }}
-					{#if total}
-						<Col col="12">
-							<Pagination
-								bind:limit={$query.params.limit}
-								bind:page={$query.params.page}
-								limits={[10, 50, 100]}
-								{total}
-								rest={7}
-							/>
-						</Col>
-					{/if}
-					{#each data as collection (collection.id)}
-						<Col col="6" xs="12">
-							<Collection {...collection} on:edit={(e) => openEdit(e.detail.id)} />
-						</Col>
-					{/each}
-				{/await}
-			{/if}
+			{#await $collectionsAsync}
+				{#each { length: 6 } as _}
+					<Col col="auto">
+						<Loaders.Tile
+							count={1}
+							w={width / 2 - 12}
+							h={107}
+							height={107}
+							width={width / 2 - 12}
+						/>
+					</Col>
+				{/each}
+			{:then { data, total }}
+				<Col col="12">
+					<Pagination
+						bind:limit={$query.params.limit}
+						bind:page={$query.params.page}
+						limits={[10, 50, 100]}
+						{total}
+						rest={7}
+					/>
+				</Col>
+				{#each data as collection (collection.id)}
+					<Col col="6" xs="12">
+						<Collection {...collection} on:edit={(e) => openEdit(e.detail.id)} />
+					</Col>
+				{/each}
+			{/await}
 		</Grid>
 	</div>
 </Main>
 
-<!-- {#if $fragment} -->
-<CollectionEditModal
-	{...editCollection}
-	open={!!$fragment}
-	size={$media.sm ? 'fs' : 'lg'}
-	on:save={saveCollection}
-	on:remove={removeCollection}
-	on:close={closeEdit}
-/>
+{#if $fragment}
+	<CollectionEditModal
+		{...editCollection}
+		open={!!$fragment}
+		size={$media.sm ? 'fs' : 'lg'}
+		on:save={saveCollection}
+		on:remove={removeCollection}
+		on:close={closeEdit}
+	/>
+{/if}
 
-<!-- {/if} -->
 <script lang="ts" context="module">
 	import { query, fragment, Param } from 'svelte-pathfinder';
 	import { media } from '@/stores/media';
-	import status from '@/stores/status';
 
 	import {
 		Col,
@@ -107,7 +102,7 @@
 	import user from '@/stores/user';
 	import collections, { collectionsAsync, typesAsync } from '@/stores/collections';
 
-	import { getCollections, setCollection, delCollection, getDataSources } from '@/services/api';
+	import { getCollections, setCollection, delCollection } from '@/services/api';
 	import type { HttpError } from '@/services/api';
 
 	import { VISIBILITY } from '@/types/const';
@@ -136,33 +131,13 @@
 		selected: Tag[] = [],
 		predefined: Tag[] = [];
 
-	$: if ($collections?.data?.length) predefined = getPredefined($collections.data);
-	$: if (predefined.length) selected = getSelected($query.params.collectionIds);
-
-	function getPredefined(collections: CollectionDTO[]): Tag[] {
-		return collections.map((collection: CollectionDTO) => ({
-			index: collection.id,
-			label: collection.title,
-			group: collection.visibility,
-			style: `background: ${collection.typeFlavor} !important`,
-			value: collection.dataSources,
-		}));
-	}
-
-	function getSelected(collectionIds: Param) {
-		return predefined.filter((tag) => `${collectionIds}`.split(',').includes(`${tag.index}`));
-	}
-
-	function setCollectionIds(e: { detail: Tag[] }) {
-		const collectionIds = selected.map((s) => s.index).join(',');
-		$query.params.collectionIds = collectionIds;
-	}
 	onMount(() => {
-		getDataSources();
 		$query.params.page ??= 1;
 		$query.params.limit ??= 10;
 	});
 
+	$: if ($collections?.data?.length) predefined = getPredefined($collections.data);
+	$: if (predefined.length) selected = getSelected($query.params.collectionIds);
 	$: if ($query.params.page && $query.params.limit) getCollections($query);
 
 	$: editCollectionId = $fragment.replace('#', '');
@@ -197,9 +172,26 @@
 	}
 
 	function getTypeOptions(types) {
-		return types
-			.filter(({ id }) => $collections?.data?.some(({ typeId }) => typeId === id))
-			.map(({ label, slug: value }) => ({ label, value }));
+		return types.map(({ label, slug: value }) => ({ label, value }));
+	}
+
+	function getPredefined(collections: CollectionDTO[]): Tag[] {
+		return collections.map((collection: CollectionDTO) => ({
+			index: collection.id,
+			label: collection.title,
+			group: collection.visibility,
+			style: `background: ${collection.typeFlavor} !important`,
+			value: collection.dataSources,
+		}));
+	}
+
+	function getSelected(collectionIds: Param) {
+		return predefined.filter((tag) => `${collectionIds}`.split(',').includes(`${tag.index}`));
+	}
+
+	function setCollectionIds(e: { detail: Tag[] }) {
+		const collectionIds = selected.map((s) => s.index).join(',');
+		$query.params.collectionIds = collectionIds;
 	}
 </script>
 

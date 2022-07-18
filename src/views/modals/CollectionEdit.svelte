@@ -114,12 +114,17 @@
 
 	let search = '';
 
-	// onMount(getDataSources);
-	// $: console.log($datasources);
+	onMount(getDataSources);
+
 	$: userDataSources = $user
 		? $datasources?.data?.filter(({ userId }) => userId === $user?.id)
 		: [];
-	$: predefinedDataSources = userDataSources?.map(({ name, id }) => ({ label: name, value: id }));
+	$: predefinedDataSources = userDataSources?.map(({ name, id }) => ({
+		index: id,
+		label: name,
+		value: id,
+	}));
+
 	$: selectedDataSources = dataSources
 		? predefinedDataSources?.filter(({ value }) => dataSources.includes(value))
 		: [];
@@ -162,7 +167,7 @@
 	function withoutMe(users: UserDTO[]) {
 		return users.reduce<Item[]>((users, { firstName, lastName, id, email }) => {
 			id !== $user?.id &&
-				users.push({ label: `${firstName} ${lastName} (${email})`, value: id });
+				users.push({ index: id, label: `${firstName} ${lastName} (${email})`, value: id });
 			return users;
 		}, []);
 	}

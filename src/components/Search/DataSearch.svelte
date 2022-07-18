@@ -10,21 +10,40 @@
 			/>
 		</Col>
 		<Col>
-			<Autocomplete
-				{predefined}
-				bind:selected
-				on:select={setCollectionIds}
-				on:remove={setCollectionIds}
-				placeholder="Filter by tags"
-			/>
+			<InputGroup>
+				<Autocomplete
+					{predefined}
+					bind:selected
+					on:select={setCollectionIds}
+					on:remove={setCollectionIds}
+					placeholder="Filter by tags title"
+					style="flex: 400%;"
+				/>
+				<Select
+					options={VISIBILITY}
+					placeholder="Visibility"
+					bind:value={$query.params.visibility}
+					size="lg"
+				/>
+				<AsyncSelect
+					data={$typesAsync}
+					getOptions={getTypeOptions}
+					bind:value={$query.params.type}
+					placeholder="Type"
+					size="lg"
+				/>
+			</InputGroup>
 		</Col>
 	</Grid>
 </div>
 
 <script lang="ts" context="module">
 	import { Param, query } from 'svelte-pathfinder';
-	import { Autocomplete, Col, Grid, IconButton } from 'svelte-spectre';
-	import collections from '@/stores/collections';
+	import { Autocomplete, Col, Grid, IconButton, InputGroup, Select } from 'svelte-spectre';
+	import collections, { collectionsAsync, typesAsync } from '@/stores/collections';
+	import AsyncSelect from '../AsyncSelect.svelte';
+	import { VISIBILITY } from '@/types/const';
+
 	import type { Collection } from '@/types/dto';
 
 	type Tag = {
@@ -62,5 +81,11 @@
 	function setCollectionIds(e: { detail: Tag[] }) {
 		const collectionIds = selected.map((s) => s.index).join(',');
 		$query.params.collectionIds = collectionIds;
+	}
+
+	function getTypeOptions(types) {
+		return types
+			.filter(({ id }) => $collections?.data?.some(({ typeId }) => typeId === id))
+			.map(({ label, slug: value }) => ({ label, value }));
 	}
 </script>
