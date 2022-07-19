@@ -1,42 +1,5 @@
 <Main>
-	<div class="py-2">
-		<Grid>
-			<Col col="auto">
-				<IconButton
-					{size}
-					icon="plus"
-					variant="default"
-					tooltip="Add collection"
-					on:click={() => openEdit()}
-				/>
-			</Col>
-			<Col>
-				<InputGroup>
-					<Autocomplete
-						{predefined}
-						bind:selected
-						on:select={setCollectionIds}
-						on:remove={setCollectionIds}
-						placeholder="Filter by title"
-						style="flex: 400%;"
-					/>
-					<Select
-						options={VISIBILITY}
-						placeholder="Visibility"
-						bind:value={$query.params.visibility}
-						{size}
-					/>
-					<AsyncSelect
-						data={$typesAsync}
-						getOptions={getTypeOptions}
-						bind:value={$query.params.type}
-						placeholder="Type"
-						{size}
-					/>
-				</InputGroup>
-			</Col>
-		</Grid>
-	</div>
+	<Filter tooltip="Add collection" action={() => openEdit()} />
 	<div bind:clientWidth={width} class="py-2">
 		<Grid stack>
 			{#await $collectionsAsync}
@@ -53,13 +16,15 @@
 				{/each}
 			{:then { data, total }}
 				<Col col="12">
-					<Pagination
-						bind:limit={$query.params.limit}
-						bind:page={$query.params.page}
-						limits={[10, 50, 100]}
-						{total}
-						rest={7}
-					/>
+					{#if total}
+						<Pagination
+							bind:limit={$query.params.limit}
+							bind:page={$query.params.page}
+							limits={[5, 10, 50, 100]}
+							{total}
+							rest={7}
+						/>
+					{/if}
 				</Col>
 				{#each data as collection (collection.id)}
 					<Col col="6" xs="12">
@@ -98,6 +63,7 @@
 	} from 'svelte-spectre';
 
 	import { Collection } from '@/views/tiles/';
+	import { Filter } from '@/components/Filter';
 
 	import user from '@/stores/user';
 	import collections, { collectionsAsync, typesAsync } from '@/stores/collections';

@@ -1,13 +1,7 @@
 <div class="py-2">
 	<Grid>
 		<Col col="auto">
-			<IconButton
-				size="lg"
-				icon={add ? 'minus' : 'plus'}
-				variant="default"
-				tooltip="Add structure"
-				on:click={() => (add = !add)}
-			/>
+			<IconButton size="lg" {icon} variant="default" {tooltip} on:click={action} />
 		</Col>
 		<Col>
 			<InputGroup>
@@ -56,7 +50,9 @@
 </script>
 
 <script lang="ts">
-	export let add = false;
+	export let icon = 'plus',
+		tooltip = 'Add structure',
+		action = () => {};
 
 	let selected: Tag[] = [],
 		predefined: Tag[] = [];
@@ -84,8 +80,6 @@
 	}
 
 	function getTypeOptions(types) {
-		return types
-			.filter(({ id }) => $collections?.data?.some(({ typeId }) => typeId === id))
-			.map(({ label, slug: value }) => ({ label, value }));
+		return types.map(({ label, slug: value }) => ({ label, value }));
 	}
 </script>

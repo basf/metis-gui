@@ -1,7 +1,6 @@
 <Main>
-	<DataSearch bind:add />
+	<Filter icon={add ? 'minus' : 'plus'} action={() => (add = !add)} />
 	<div bind:clientWidth={width}>
-		<!-- {#if !$status.hidden} -->
 		{#await $datasourcesAsync}
 			{#each { length: 4 } as _}
 				<Loaders.Tile count={1} w={width} h={74} height={74} {width} />
@@ -27,7 +26,6 @@
 				</DataSource>
 			{/each}
 		{/await}
-		<!-- {/if} -->
 	</div>
 </Main>
 
@@ -61,7 +59,7 @@
 
 	import Main from '@/layouts/Main.svelte';
 
-	import { DataSearch } from '@/components/Search';
+	import { Filter } from '@/components/Filter';
 	import DataSourceAdd from '@/views/DataSource/DataSourceAdd.svelte';
 	import { DataSource } from '@/views/tiles';
 	import * as Loaders from '@/components/loaders';
