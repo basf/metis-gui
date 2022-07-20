@@ -55,7 +55,6 @@
 	import { fragment, query } from 'svelte-pathfinder';
 	import { Button, Modal, Pagination, toast } from 'svelte-spectre';
 	import { media } from '@/stores/media';
-	import status from '@/stores/status';
 
 	import Main from '@/layouts/Main.svelte';
 
@@ -66,7 +65,7 @@
 
 	import { delDataSource, getCollections, setCalculation } from '@/services/api';
 
-	import datasources, { datasourcesAsync } from '@/stores/datasources';
+	import data, { datasources, datasourcesAsync } from '@/stores/datasources';
 	import { withConfirm } from '@/stores/confirmator';
 
 	import { CalculationEdit, PlotEdit, TagsEdit } from '@/views/modals';
@@ -89,10 +88,39 @@
 	onMount(() => {
 		$query.params.page ??= 1;
 		$query.params.limit ??= 10;
+		// getDataSources($query);
 		getCollections($query);
 	});
 
-	$: if ($query.params.page && $query.params.limit) getDataSources($query);
+	$: console.log($datasources);
+	// $: if ($query.params.page && $query.params.limit) getDataSources($query);
+
+	$: modal = () => {
+		switch (dataType) {
+			case 'calculation':
+				return {
+					component: CalculationEdit,
+					submit: submitCalculation,
+				};
+			case 'tags':
+				return {
+					component: TagsEdit,
+					submit: submitTags,
+				};
+			case 'plot':
+				return {
+					component: PlotEdit,
+					submit: submitPlots,
+				};
+			default:
+				return {
+					component: undefined,
+					submit: () => {},
+				};
+		}
+	};
+
+	$: [_, dataType, dataId] = $fragment.split('-');
 
 	const tileMenuItems = (type: number) => {
 		const editCalc = {
@@ -128,33 +156,6 @@
 	function closeModal() {
 		$fragment = '';
 	}
-
-	$: modal = () => {
-		switch (dataType) {
-			case 'calculation':
-				return {
-					component: CalculationEdit,
-					submit: submitCalculation,
-				};
-			case 'tags':
-				return {
-					component: TagsEdit,
-					submit: submitTags,
-				};
-			case 'plot':
-				return {
-					component: PlotEdit,
-					submit: submitPlots,
-				};
-			default:
-				return {
-					component: undefined,
-					submit: () => {},
-				};
-		}
-	};
-
-	$: [_, dataType, dataId] = $fragment.split('-');
 
 	async function editCalculation(id: number) {
 		$fragment = `#edit-calculation-${id}`;

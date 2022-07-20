@@ -1,34 +1,45 @@
 <Main>
+	<Filter tooltip="Add calculation" />
 	<div bind:clientWidth={width}>
-		{#if !$status.hidden}
-			{#await $calculationsAsync}
-				{#each { length: 4 } as _}
-					<Loaders.Tile count={1} w={width} h={74} height={74} {width} />
-				{/each}
-			{:then calculations}
-				{#each calculations as calculation (calculation.id)}
-					{#if calculation.data}
-						{#each calculation.data as datasource}
-							<DataSource {datasource} />
-						{/each}
-					{:else}
-						<Calculation {calculation} />
-					{/if}
+		{#await $calculationsAsync}
+			{#each { length: 4 } as _}
+				<Loaders.Tile count={1} w={width} h={74} height={74} {width} />
+			{/each}
+		{:then calculations}
+			{@const total = calculations.length}
+			{#if total}
+				<Pagination
+					bind:limit={$query.params.limit}
+					bind:page={$query.params.page}
+					limits={[10, 50, 100]}
+					{total}
+					rest={7}
+				/>
+			{/if}
+			{#each calculations as calculation (calculation.id)}
+				{#if calculation.data}
+					{#each calculation.data as datasource}
+						<DataSource {datasource} />
+					{/each}
 				{:else}
-					<div class="text-center distant_msg">No calculations</div>
-				{/each}
-			{/await}
-		{/if}
+					<Calculation {calculation} />
+				{/if}
+			{:else}
+				<div class="text-center distant_msg">No calculations</div>
+			{/each}
+		{/await}
 	</div>
 </Main>
 
 <script lang="ts" context="module">
+	import { query } from 'svelte-pathfinder';
 	import Main from '@/layouts/Main.svelte';
 	import { Calculation, DataSource } from '@/views/tiles';
 	import * as Loaders from '@/components/loaders';
-	import status from '@/stores/status';
 
 	import { calculationsAsync } from '@/stores/calculations';
+	import { Filter } from '@/components/Filter';
+	import { Pagination } from 'svelte-spectre';
 </script>
 
 <script lang="ts">

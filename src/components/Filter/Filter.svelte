@@ -1,8 +1,10 @@
 <div class="py-2">
 	<Grid>
-		<Col col="auto">
-			<IconButton size="lg" {icon} variant="default" {tooltip} on:click={action} />
-		</Col>
+		{#if add}
+			<Col col="auto">
+				<IconButton size="lg" {icon} variant="default" {tooltip} on:click={action} />
+			</Col>
+		{/if}
 		<Col>
 			<InputGroup>
 				<Autocomplete
@@ -50,7 +52,8 @@
 </script>
 
 <script lang="ts">
-	export let icon = 'plus',
+	export let add = true,
+		icon = 'plus',
 		tooltip = 'Add structure',
 		action = () => {};
 

@@ -48,62 +48,36 @@
 {/if}
 
 <script lang="ts" context="module">
-	import { query, fragment, Param } from 'svelte-pathfinder';
+	import { query, fragment } from 'svelte-pathfinder';
 	import { media } from '@/stores/media';
 
-	import {
-		Col,
-		Grid,
-		Select,
-		IconButton,
-		InputGroup,
-		toast,
-		Pagination,
-		Autocomplete,
-	} from 'svelte-spectre';
+	import { Col, Grid, toast, Pagination } from 'svelte-spectre';
 
 	import { Collection } from '@/views/tiles/';
 	import { Filter } from '@/components/Filter';
 
 	import user from '@/stores/user';
-	import collections, { collectionsAsync, typesAsync } from '@/stores/collections';
+	import collections, { collectionsAsync } from '@/stores/collections';
 
 	import { getCollections, setCollection, delCollection } from '@/services/api';
 	import type { HttpError } from '@/services/api';
 
-	import { VISIBILITY } from '@/types/const';
-
-	import AsyncSelect from '@/components/AsyncSelect.svelte';
 	import * as Loaders from '@/components/loaders';
 	import Main from '@/layouts/Main.svelte';
 
 	import CollectionEditModal from '@/views/modals/CollectionEdit.svelte';
-	import type { Collection as CollectionDTO } from '@/types/dto';
-	const size = 'lg';
-
-	type Tag = {
-		index: number;
-		label: string;
-		group: string;
-		style: string;
-		value?: number[];
-	};
 </script>
 
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	let width: number,
-		selected: Tag[] = [],
-		predefined: Tag[] = [];
+	let width: number;
 
 	onMount(() => {
 		$query.params.page ??= 1;
 		$query.params.limit ??= 10;
 	});
 
-	$: if ($collections?.data?.length) predefined = getPredefined($collections.data);
-	$: if (predefined.length) selected = getSelected($query.params.collectionIds);
 	$: if ($query.params.page && $query.params.limit) getCollections($query);
 
 	$: editCollectionId = $fragment.replace('#', '');
@@ -135,29 +109,6 @@
 			toast.error({ msg: (err as HttpError).message, timeout: 2000, pos: 'top_right' });
 		}
 		closeEdit();
-	}
-
-	function getTypeOptions(types) {
-		return types.map(({ label, slug: value }) => ({ label, value }));
-	}
-
-	function getPredefined(collections: CollectionDTO[]): Tag[] {
-		return collections.map((collection: CollectionDTO) => ({
-			index: collection.id,
-			label: collection.title,
-			group: collection.visibility,
-			style: `background: ${collection.typeFlavor} !important`,
-			value: collection.dataSources,
-		}));
-	}
-
-	function getSelected(collectionIds: Param) {
-		return predefined.filter((tag) => `${collectionIds}`.split(',').includes(`${tag.index}`));
-	}
-
-	function setCollectionIds(e: { detail: Tag[] }) {
-		const collectionIds = selected.map((s) => s.index).join(',');
-		$query.params.collectionIds = collectionIds;
 	}
 </script>
 

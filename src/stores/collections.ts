@@ -4,11 +4,16 @@ import { streamable } from 'svelte-streamable';
 
 import type {
 	CollectionType as CollectionTypeDTO,
-	Collection as CollectionDTO,
+	Collection,
 	Stream as StreamDTO,
 } from '@/types/dto';
 
-import { getCollectionTypes, getCollections } from '@/services/api';
+type CollectionDTO = {
+	data: Collection[],
+	total: number
+}
+
+import { getCollectionTypes } from '@/services/api';
 
 import { STREAM_URL, SYNC_TOASTS_CONFIG } from '@/config';
 
@@ -16,7 +21,7 @@ export const typesAsync = asyncable<CollectionTypeDTO[]>(getCollectionTypes, nul
 
 export const types = syncable<CollectionTypeDTO[]>(typesAsync, []);
 
-export const collectionsAsync = streamable<StreamDTO<CollectionDTO[]>, CollectionDTO[]>(
+export const collectionsAsync = streamable<StreamDTO<CollectionDTO>, CollectionDTO>(
 	{
 		url: STREAM_URL,
 		event: 'collections',
@@ -28,10 +33,7 @@ export const collectionsAsync = streamable<StreamDTO<CollectionDTO[]>, Collectio
 			toast.primary({ ...SYNC_TOASTS_CONFIG, msg: 'Collections synced' });
 			return res.data;
 		}
-		// else {
-		// 	getCollections();
-		// }
 	}
 );
 
-export default syncable(collectionsAsync, []);
+export default syncable<CollectionDTO>(collectionsAsync, { data: [], total: 0 });
