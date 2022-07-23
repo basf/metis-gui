@@ -7,9 +7,15 @@
 				{/if}
 			</nav>
 
-			<IconButton id="xray" slot="center" size="xxl" iconSize="4x" href="/"
-				>{@html Xray}</IconButton
+			<IconButton
+				id="xray"
+				slot="center"
+				size="xxl"
+				iconSize="4x"
+				href="/datasources?page=1&limit=10&visibility=&type="
 			>
+				{@html Xray}
+			</IconButton>
 
 			<nav slot="right">
 				{#if $user}

@@ -3,18 +3,15 @@
 		<svelte:fragment slot="title">
 			<h5 class="mt-2">{@html datasource.name}</h5>
 			<ul class="collections">
-				{#await $collectionsAsync then { data, total }}
-					{@const collections = getCollectionsList(data, datasource.id)}
-					{#each collections as collection (collection.id)}
-						<li>
-							<a href={setCollectionLink(collection.id)}>
-								<Badge style="background: {collection.typeFlavor}">
-									{collection.title.substring(0, 10)}
-								</Badge>
-							</a>
-						</li>
-					{/each}
-				{/await}
+				{#each datasource.collections as collection (collection.id)}
+					<li>
+						<a href={setCollectionLink(collection.id)}>
+							<Badge style="background: {collection.typeFlavor}">
+								{collection.title}
+							</Badge>
+						</a>
+					</li>
+				{/each}
 			</ul>
 		</svelte:fragment>
 		<svelte:fragment slot="subtitle">
@@ -34,21 +31,13 @@
 <script lang="ts" context="module">
 	import { query } from 'svelte-pathfinder';
 	import { Badge, Meter, Tile } from 'svelte-spectre';
-	import { collectionsAsync } from '@/stores/collections';
 	import { showTimestamp } from '@/helpers/date';
 
-	import type { Collection, DataSource } from '@/types/dto';
+	import type { DataSource } from '@/types/dto';
 </script>
 
 <script lang="ts">
 	export let datasource: DataSource;
-
-	function getCollectionsList(collections, dataSourceId: number): Collection[] {
-		return collections.filter(
-			({ dataSources }: { dataSources: number[] }): boolean =>
-				dataSources && dataSources.includes(dataSourceId)
-		);
-	}
 
 	function setCollectionLink(id: number) {
 		const iDs: number[] = `${$query.params.collectionIds}`
@@ -57,7 +46,7 @@
 			.filter(Boolean);
 		const collectionIds = new Set([...iDs, id]);
 
-		return `?collectionIds=${Array.from(collectionIds)}&limit=${
+		return `/datasources?collectionIds=${Array.from(collectionIds)}&limit=${
 			$query.params.limit
 		}&page=1&type=${$query.params.type}&visibility=${$query.params.visibility}`;
 	}

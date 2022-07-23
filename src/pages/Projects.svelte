@@ -1,8 +1,9 @@
 <Main>
 	<Filter tooltip="Add collection" action={() => openEdit()} />
+
 	<div bind:clientWidth={width} class="py-2">
 		<Grid stack>
-			{#await $collectionsAsync}
+			{#if !$collections?.total}
 				{#each { length: 6 } as _}
 					<Col col="auto">
 						<Loaders.Tile
@@ -14,24 +15,23 @@
 						/>
 					</Col>
 				{/each}
-			{:then { data, total }}
+			{:else}
+				{@const { data, total } = $collections}
 				<Col col="12">
-					{#if total}
-						<Pagination
-							bind:limit={$query.params.limit}
-							bind:page={$query.params.page}
-							limits={[5, 10, 50, 100]}
-							{total}
-							rest={7}
-						/>
-					{/if}
+					<Pagination
+						bind:limit={$query.params.limit}
+						bind:page={$query.params.page}
+						limits={[5, 10, 50, 100]}
+						{total}
+						rest={7}
+					/>
 				</Col>
 				{#each data as collection (collection.id)}
 					<Col col="6" xs="12">
 						<Collection {...collection} on:edit={(e) => openEdit(e.detail.id)} />
 					</Col>
 				{/each}
-			{/await}
+			{/if}
 		</Grid>
 	</div>
 </Main>
@@ -57,9 +57,9 @@
 	import { Filter } from '@/components/Filter';
 
 	import user from '@/stores/user';
-	import collections, { collectionsAsync } from '@/stores/collections';
+	import { collections } from '@/stores/collections';
 
-	import { getCollections, setCollection, delCollection } from '@/services/api';
+	import { setCollection, delCollection } from '@/services/api';
 	import type { HttpError } from '@/services/api';
 
 	import * as Loaders from '@/components/loaders';
@@ -69,16 +69,7 @@
 </script>
 
 <script lang="ts">
-	import { onMount } from 'svelte';
-
 	let width: number;
-
-	onMount(() => {
-		$query.params.page ??= 1;
-		$query.params.limit ??= 10;
-	});
-
-	$: if ($query.params.page && $query.params.limit) getCollections($query);
 
 	$: editCollectionId = $fragment.replace('#', '');
 	$: editCollection = $collections?.data?.find(

@@ -23,14 +23,20 @@
 <script lang="ts" context="module">
 	import { fragment } from 'svelte-pathfinder';
 	import { Button, Modal } from 'svelte-spectre';
+
 	import { CalculationEdit, PlotEdit, TagsEdit } from '.';
+	import { patchDataSourceCollections, setCalculation } from '@/services/api';
+	import { editorCode } from '@/stores/editor';
+	import { media } from '@/stores/media';
 </script>
 
 <script lang="ts">
-	export let dataName, tagIds;
+	export let data;
+	let tagIds;
 
 	$: [_, dataType, dataId] = $fragment.split('-');
 
+	$: dataName = data?.find((data) => data.id === +dataId)?.name;
 	$: modal = () => {
 		switch (dataType) {
 			case 'calculation':
@@ -55,4 +61,20 @@
 				};
 		}
 	};
+
+	function closeModal() {
+		$fragment = '';
+	}
+
+	function submitCalculation() {
+		setCalculation(+dataId, 'dummy', $editorCode.input).then(() => closeModal());
+	}
+
+	async function submitTags() {
+		await patchDataSourceCollections(+dataId, tagIds).then(() => closeModal());
+	}
+
+	function submitPlots() {
+		closeModal();
+	}
 </script>

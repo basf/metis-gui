@@ -2,10 +2,12 @@
 
 <script lang="ts" context="module">
 	import { Autocomplete } from 'svelte-spectre';
-	import collections from '@/stores/collections';
+	import { collections } from '@/stores/collections';
 	import user from '@/stores/user';
 
 	import type { Collection } from '@/types/dto';
+	import { getCollections } from '@/services/api';
+	import { onMount } from 'svelte';
 
 	type Tag = {
 		index: number;
@@ -22,6 +24,8 @@
 
 	let predefined: Tag[] = [],
 		selected: Tag[] = [];
+
+	onMount(getCollections);
 
 	$: predefined = $collections?.data
 		?.filter((collection: Collection) => collection.userId === $user?.id)

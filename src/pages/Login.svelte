@@ -65,6 +65,7 @@
 	import linkedin from '@/assets/img/linkedin.svg';
 	import basf from '@/assets/img/BASF-invert.svg';
 	import orcid from '@/assets/img/ORCID-invert.svg';
+	import { redirect } from 'svelte-pathfinder';
 
 	let email = '';
 	let password = '';
@@ -76,6 +77,7 @@
 		try {
 			await login(email, password);
 			$userAsync = me();
+			redirect('/datasources?page=1&limit=10&visibility=&type=');
 			toast.success({ msg: 'You are logged in', timeout: 4000, pos: 'top_right' });
 		} catch (err) {
 			errmsg = err;

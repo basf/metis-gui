@@ -6,9 +6,10 @@
 			</Col>
 		{/if}
 		<Col>
+			<!-- {#if $filters?.total} -->
 			<InputGroup>
 				<Autocomplete
-					{predefined}
+					bind:predefined
 					bind:selected
 					on:select={setCollectionIds}
 					on:remove={setCollectionIds}
@@ -17,18 +18,18 @@
 				/>
 				<Select
 					options={VISIBILITY}
-					placeholder="Visibility"
 					bind:value={$query.params.visibility}
+					placeholder="Visibility"
 					size="lg"
 				/>
-				<AsyncSelect
-					data={$typesAsync}
-					getOptions={getTypeOptions}
+				<Select
+					options={types}
 					bind:value={$query.params.type}
 					placeholder="Type"
 					size="lg"
 				/>
 			</InputGroup>
+			<!-- {/if} -->
 		</Col>
 	</Grid>
 </div>
@@ -36,11 +37,12 @@
 <script lang="ts" context="module">
 	import { Param, query } from 'svelte-pathfinder';
 	import { Autocomplete, Col, Grid, IconButton, InputGroup, Select } from 'svelte-spectre';
-	import collections, { collectionsAsync, typesAsync } from '@/stores/collections';
-	import AsyncSelect from '../AsyncSelect.svelte';
 	import { VISIBILITY } from '@/types/const';
 
-	import type { Collection } from '@/types/dto';
+	import type { Collection, CollectionType } from '@/types/dto';
+	import { onMount } from 'svelte';
+	import { getFilters } from '@/services/api';
+	import filters from '@/stores/filters';
 
 	type Tag = {
 		index: number;
@@ -58,13 +60,19 @@
 		action = () => {};
 
 	let selected: Tag[] = [],
-		predefined: Tag[] = [];
+		predefined: Tag[] = [],
+		types: CollectionType[];
 
-	$: if ($collections?.data?.length) predefined = getPredefined($collections.data);
-	$: if (predefined.length) selected = getSelected($query.params.collectionIds);
+	onMount(getFilters);
+
+	$: if ($filters?.total) {
+		predefined = getPredefined($filters.data);
+		selected = getSelected($query.params.collectionIds);
+		types = getTypeOptions($filters.types);
+	}
 
 	function getPredefined(collections: Collection[]): Tag[] {
-		return collections.map((collection: Collection) => ({
+		return collections?.map((collection: Collection) => ({
 			index: collection.id,
 			label: collection.title,
 			group: collection.visibility,
@@ -82,7 +90,7 @@
 		$query.params.collectionIds = collectionIds;
 	}
 
-	function getTypeOptions(types) {
-		return types.map(({ label, slug: value }) => ({ label, value }));
+	function getTypeOptions(types: CollectionType[]) {
+		return types.map(({ label, slug: value }) => ({ label, value })).filter(Boolean);
 	}
 </script>

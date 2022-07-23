@@ -25,6 +25,8 @@ export interface DataSource extends Timestamps {
 	name: string;
 	content: string;
 	type: number;
+	collections: Collection[];
+	progress: number;
 }
 
 export interface User extends Timestamps {

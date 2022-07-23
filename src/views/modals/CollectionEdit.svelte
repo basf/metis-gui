@@ -86,7 +86,7 @@
 	import { searchUsers, getDataSources, getUsers } from '@/services/api';
 	import datasources from '@/stores/datasources';
 	import user from '@/stores/user';
-	import { types } from '@/stores/collections';
+	import { collections, types } from '@/stores/collections';
 
 	import { VISIBILITY } from '@/types/const';
 	import type { User as UserDTO } from '@/types/dto';
@@ -119,6 +119,7 @@
 	$: userDataSources = $user
 		? $datasources?.data?.filter(({ userId }) => userId === $user?.id)
 		: [];
+
 	$: predefinedDataSources = userDataSources?.map(({ name, id }) => ({
 		index: id,
 		label: name,
@@ -129,7 +130,7 @@
 		? predefinedDataSources?.filter(({ value }) => dataSources.includes(value))
 		: [];
 
-	$: typesOptions = $types.map(({ label, id: value }) => ({ label, value }));
+	$: typesOptions = $collections?.types?.map(({ label, id: value }) => ({ label, value }));
 	$: if (!typeId && typesOptions.length) {
 		typeId = typesOptions[0].value;
 	}

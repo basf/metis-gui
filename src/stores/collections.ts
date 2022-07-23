@@ -1,4 +1,4 @@
-import { asyncable, syncable } from 'svelte-asyncable';
+import { syncable } from 'svelte-asyncable';
 import { toast } from 'svelte-spectre';
 import { streamable } from 'svelte-streamable';
 
@@ -10,16 +10,16 @@ import type {
 
 type CollectionDTO = {
 	data: Collection[],
-	total: number
+	total: number,
+	types: CollectionTypeDTO[]
 }
 
-import { getCollectionTypes } from '@/services/api';
+import { getCollections } from '@/services/api';
 
 import { STREAM_URL, SYNC_TOASTS_CONFIG } from '@/config';
+import { derived, Readable } from 'svelte/store';
+import { state, query } from 'svelte-pathfinder';
 
-export const typesAsync = asyncable<CollectionTypeDTO[]>(getCollectionTypes, null);
-
-export const types = syncable<CollectionTypeDTO[]>(typesAsync, []);
 
 export const collectionsAsync = streamable<StreamDTO<CollectionDTO>, CollectionDTO>(
 	{
@@ -31,9 +31,20 @@ export const collectionsAsync = streamable<StreamDTO<CollectionDTO>, CollectionD
 		console.log(res);
 		if (res) {
 			toast.primary({ ...SYNC_TOASTS_CONFIG, msg: 'Collections synced' });
-			return res.data;
+			return { ...res };
 		}
-	}
+	}, { data: [], total: 0, types: [] }
 );
 
-export default syncable<CollectionDTO>(collectionsAsync, { data: [], total: 0 });
+export default syncable<CollectionDTO>(collectionsAsync, { data: [], total: 0, types: [] });
+
+export const collections: Readable<CollectionDTO> = derived(
+	[collectionsAsync, state, query],
+	([$collectionsAsync, $state, $query], set) => {
+		$collectionsAsync.then(($collections) => {
+			if ($state.query !== $query.toString()) {
+				$state.query = $query.toString()
+				getCollections($query);
+			} else set($collections);
+		});
+	});

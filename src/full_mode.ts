@@ -25,7 +25,7 @@ const routes: Route[] = [
 		},
 	},
 	{
-		path: '/',
+		path: '/datasources',
 		component: () => import('@/pages/Data.svelte'),
 		menu: {
 			title: 'Data',

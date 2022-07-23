@@ -16,6 +16,10 @@ export interface HttpError extends Error {
 export type HttpHeaders = Record<string, string>;
 export type QueryParams = Record<string, unknown>;
 
+export async function getFilters(query?: StringParams): Promise<void> {
+	return getJSON(`/filters${query || ''}`);
+}
+
 export async function getDataSources(query?: StringParams): Promise<void> {
 	return getJSON(`/datasources${query || ''}`);
 }
