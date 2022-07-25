@@ -77,7 +77,6 @@
 		try {
 			await login(email, password);
 			$userAsync = me();
-			redirect('/datasources?page=1&limit=10&visibility=&type=');
 			toast.success({ msg: 'You are logged in', timeout: 4000, pos: 'top_right' });
 		} catch (err) {
 			errmsg = err;

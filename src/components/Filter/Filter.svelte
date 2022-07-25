@@ -6,10 +6,9 @@
 			</Col>
 		{/if}
 		<Col>
-			<!-- {#if $filters?.total} -->
 			<InputGroup>
 				<Autocomplete
-					bind:predefined
+					{predefined}
 					bind:selected
 					on:select={setCollectionIds}
 					on:remove={setCollectionIds}
@@ -23,13 +22,12 @@
 					size="lg"
 				/>
 				<Select
-					options={types}
+					options={getTypeOptions($filters.types)}
 					bind:value={$query.params.type}
 					placeholder="Type"
 					size="lg"
 				/>
 			</InputGroup>
-			<!-- {/if} -->
 		</Col>
 	</Grid>
 </div>
@@ -42,7 +40,7 @@
 	import type { Collection, CollectionType } from '@/types/dto';
 	import { onMount } from 'svelte';
 	import { getFilters } from '@/services/api';
-	import filters from '@/stores/filters';
+	import { filters } from '@/stores/filters';
 
 	type Tag = {
 		index: number;
@@ -60,15 +58,13 @@
 		action = () => {};
 
 	let selected: Tag[] = [],
-		predefined: Tag[] = [],
-		types: CollectionType[];
+		predefined: Tag[] = [];
 
 	onMount(getFilters);
 
-	$: if ($filters?.total) {
+	$: {
 		predefined = getPredefined($filters.data);
 		selected = getSelected($query.params.collectionIds);
-		types = getTypeOptions($filters.types);
 	}
 
 	function getPredefined(collections: Collection[]): Tag[] {

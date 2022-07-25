@@ -1,4 +1,6 @@
-<Editor code={$editorCode.template} on:change={(e) => ($editorCode.input = e.detail)} />
+{#if $editorCode.template}
+	<Editor code={$editorCode.template} on:change={(e) => ($editorCode.input = e.detail)} />
+{/if}
 
 <script lang="ts" context="module">
 	import { onMount } from 'svelte';

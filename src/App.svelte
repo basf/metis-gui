@@ -32,7 +32,7 @@
 
 <script lang="ts">
 	import { setContext } from 'svelte';
-	import { pattern, click } from 'svelte-pathfinder';
+	import { path, pattern, click, redirect } from 'svelte-pathfinder';
 	import Viewpoint from 'svelte-viewpoint';
 	import { Container, Spectre } from 'svelte-spectre';
 
@@ -53,4 +53,5 @@
 	setContext('routes', routes);
 
 	$: page = routes.find((route: Route) => $pattern(route.path)) || null;
+	$: $path.length <= 1 && redirect('/data');
 </script>

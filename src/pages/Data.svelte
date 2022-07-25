@@ -1,5 +1,12 @@
 <Main>
 	<Filter icon={add ? 'minus' : 'plus'} action={() => (add = !add)} />
+	<Pagination
+		bind:limit={$query.params.limit}
+		bind:page={$query.params.page}
+		limits={[5, 10, 50, 100]}
+		total={$datasources?.total || 10}
+		rest={7}
+	/>
 
 	<div bind:clientWidth={width}>
 		{#if !$datasources?.total}
@@ -10,14 +17,6 @@
 			{@const { data, total } = $datasources}
 			{#if add || !total}
 				<DataSourceAdd msg={!total} />
-			{:else}
-				<Pagination
-					bind:limit={$query.params.limit}
-					bind:page={$query.params.page}
-					limits={[5, 10, 50, 100]}
-					{total}
-					rest={7}
-				/>
 			{/if}
 			{#each data as datasource (datasource.id)}
 				<DataSource {datasource}>
@@ -42,7 +41,7 @@
 	import { DataSource } from '@/views/tiles';
 	import * as Loaders from '@/components/loaders';
 
-	import { delDataSource, setCalculation } from '@/services/api';
+	import { delDataSource, getCollections, setCalculation } from '@/services/api';
 
 	import { datasources } from '@/stores/datasources';
 	import { withConfirm } from '@/stores/confirmator';
@@ -52,11 +51,14 @@
 	import user from '@/stores/user';
 	import { TileMenu } from '@/components/Tile/';
 	import Sinus from '@/assets/img/sinus.svg';
+	import { onMount } from 'svelte';
 </script>
 
 <script lang="ts">
 	let width = 0,
 		add = false;
+
+	// onMount(getCollections);
 
 	const tileMenuItems = (type: number) => {
 		const editCalc = {

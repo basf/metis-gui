@@ -1,6 +1,12 @@
 <Main>
 	<Filter tooltip="Add collection" action={() => openEdit()} />
-
+	<Pagination
+		bind:limit={$query.params.limit}
+		bind:page={$query.params.page}
+		limits={[5, 10, 50, 100]}
+		total={$collections?.total || 10}
+		rest={7}
+	/>
 	<div bind:clientWidth={width} class="py-2">
 		<Grid stack>
 			{#if !$collections?.total}
@@ -17,15 +23,6 @@
 				{/each}
 			{:else}
 				{@const { data, total } = $collections}
-				<Col col="12">
-					<Pagination
-						bind:limit={$query.params.limit}
-						bind:page={$query.params.page}
-						limits={[5, 10, 50, 100]}
-						{total}
-						rest={7}
-					/>
-				</Col>
 				{#each data as collection (collection.id)}
 					<Col col="6" xs="12">
 						<Collection {...collection} on:edit={(e) => openEdit(e.detail.id)} />

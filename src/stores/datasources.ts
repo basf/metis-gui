@@ -3,18 +3,17 @@ import { syncable } from 'svelte-asyncable';
 import { toast } from 'svelte-spectre';
 import { streamable } from 'svelte-streamable';
 import { state, query } from 'svelte-pathfinder';
-
-import type { DataSource as Data, Stream as StreamDTO, CollectionType as CollectionTypeDTO } from '@/types/dto';
-
-import { STREAM_URL, SYNC_TOASTS_CONFIG } from '@/config';
 import { getDataSources } from '@/services/api';
+import { STREAM_URL, SYNC_TOASTS_CONFIG } from '@/config';
+import type { DataSource, Stream, CollectionType } from '@/types/dto';
 
-interface DataDTO {
-	data: Data[];
-	total: number;
-	type: CollectionTypeDTO[]
+type DataDTO = {
+	data: DataSource[],
+	total: number,
+	type: CollectionType[]
 }
-export const datasourcesAsync = streamable<StreamDTO<DataDTO>, DataDTO>(
+
+export const datasourcesAsync = streamable<Stream<DataDTO>, DataDTO>(
 	{
 		url: STREAM_URL,
 		event: 'datasources',
@@ -31,13 +30,12 @@ export const datasourcesAsync = streamable<StreamDTO<DataDTO>, DataDTO>(
 
 export default syncable<DataDTO>(datasourcesAsync, { data: [], total: 0, types: [] });
 
-export const datasources = derived(
-	[datasourcesAsync, state, query],
+export const datasources = derived([datasourcesAsync, state, query],
 	([$datasourcesAsync, $state, $query], set) => {
 		$datasourcesAsync.then(($datasources) => {
-			if ($state.query !== $query.toString()) {
+			if (Object.keys($query.params).length >= 4 && $state.query !== $query.toString()) {
+				getDataSources($query.toString());
 				$state.query = $query.toString()
-				getDataSources($query);
 			} else set($datasources)
 		});
 	});

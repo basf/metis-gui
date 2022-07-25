@@ -27,16 +27,16 @@
 		<Col sm="12">
 			<div class="mb-2">
 				<Panel>
-					<label class="form-label" slot="header">Collection Type</label>
+					<label class="form-label" slot="header" for="types">Type</label>
 					<div class="p-2" slot="body">
-						<Select options={typesOptions} bind:value={typeId} />
+						<Select id="types" options={typesOptions} bind:value={typeId} />
 					</div>
 				</Panel>
 			</div>
 			<Panel>
-				<label class="form-label" slot="header">Visibility</label>
+				<label class="form-label" slot="header" for="visibility">Visibility</label>
 				<div class="p-2" slot="body">
-					<Select options={VISIBILITY} bind:value={visibility} />
+					<Select id="visibility" options={VISIBILITY} bind:value={visibility} />
 					{#if visibility === 'shared'}
 						<div class="my-2 py-2">
 							<Divider align="horizontal center" text="Shared with" />
@@ -131,7 +131,7 @@
 		: [];
 
 	$: typesOptions = $collections?.types?.map(({ label, id: value }) => ({ label, value }));
-	$: if (!typeId && typesOptions.length) {
+	$: if (!typeId && typesOptions?.length) {
 		typeId = typesOptions[0].value;
 	}
 

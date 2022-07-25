@@ -3,15 +3,17 @@
 		<svelte:fragment slot="title">
 			<h5 class="mt-2">{@html datasource.name}</h5>
 			<ul class="collections">
-				{#each datasource.collections as collection (collection.id)}
-					<li>
-						<a href={setCollectionLink(collection.id)}>
-							<Badge style="background: {collection.typeFlavor}">
-								{collection.title}
-							</Badge>
-						</a>
-					</li>
-				{/each}
+				{#if $filters?.total}
+					{#each getCollectionsList(datasource.id, $filters.data) as tag (tag.id)}
+						<li>
+							<a href={setCollectionLink(tag.id)}>
+								<Badge style="background: {tag.typeFlavor}">
+									{tag.title}
+								</Badge>
+							</a>
+						</li>
+					{/each}
+				{/if}
 			</ul>
 		</svelte:fragment>
 		<svelte:fragment slot="subtitle">
@@ -29,26 +31,31 @@
 </div>
 
 <script lang="ts" context="module">
-	import { query } from 'svelte-pathfinder';
+	import { query, url } from 'svelte-pathfinder';
 	import { Badge, Meter, Tile } from 'svelte-spectre';
 	import { showTimestamp } from '@/helpers/date';
-
-	import type { DataSource } from '@/types/dto';
+	import { filters } from '@/stores/filters';
+	import type { DataSource, Collection } from '@/types/dto';
 </script>
 
 <script lang="ts">
 	export let datasource: DataSource;
 
+	function getCollectionsList(datasourceId: number, data: Collection[]) {
+		return data.filter((filter) => filter.dataSources?.includes(datasourceId));
+	}
+
 	function setCollectionLink(id: number) {
-		const iDs: number[] = `${$query.params.collectionIds}`
+		const iDs = `${$query.params.collectionIds}`
 			.split(',')
 			.map((c) => +c)
 			.filter(Boolean);
+
 		const collectionIds = new Set([...iDs, id]);
 
-		return `/datasources?collectionIds=${Array.from(collectionIds)}&limit=${
-			$query.params.limit
-		}&page=1&type=${$query.params.type}&visibility=${$query.params.visibility}`;
+		return $url.includes('collectionIds')
+			? $url.replace(/collectionIds=(.*)/, `collectionIds=${Array.from(collectionIds)}`)
+			: $url + `&collectionIds=${Array.from(collectionIds)}`;
 	}
 </script>
 
