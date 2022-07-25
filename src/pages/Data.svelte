@@ -110,7 +110,12 @@
 				label: 'Delete',
 				action: delData,
 			};
-		return [type === 1 ? runCalc : null, editCalc, editTag, deleteData].filter(Boolean);
+		return [
+			type === 1 ? runCalc : null,
+			type === 1 ? editCalc : null,
+			editTag,
+			deleteData
+		].filter(Boolean);
 	};
 
 
@@ -155,7 +160,7 @@
 		$fragment = `#edit-calculation-${id}`;
 	}
 	function submitCalculation() {
-		setCalculation(+dataId, 'dummy', $editorCode.input).then(() => closeModal());
+		setCalculation(+dataId, 'dummy', $editorCode.input, 'workflow').then(() => closeModal());
 	}
 
 	function editTags(id: number) {
@@ -173,7 +178,7 @@
 	}
 
 	function runCalculation(id: number) {
-		setCalculation(id).then(() => {
+		setCalculation(id, 'dummy', null, 'workflow').then(() => {
 			toast.success({
 				msg: 'Calculation submitted',
 				timeout: 2000,
