@@ -53,5 +53,5 @@
 	setContext('routes', routes);
 
 	$: page = routes.find((route: Route) => $pattern(route.path)) || null;
-	$: $path.length <= 1 && redirect('/data');
+	$: $path.length <= 1 && redirect('/data?page=1&limit=10&visibility=&type=&collectionIds=');
 </script>

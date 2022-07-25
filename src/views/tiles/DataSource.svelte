@@ -41,6 +41,8 @@
 <script lang="ts">
 	export let datasource: DataSource;
 
+	// $: console.log(datasource);
+
 	function getCollectionsList(datasourceId: number, data: Collection[]) {
 		return data.filter((filter) => filter.dataSources?.includes(datasourceId));
 	}

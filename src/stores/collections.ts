@@ -25,7 +25,8 @@ export const collectionsAsync = streamable<Stream<CollectionDTO>, CollectionDTO>
 			toast.primary({ ...SYNC_TOASTS_CONFIG, msg: 'Collections synced' });
 			return { ...res };
 		}
-	}, { data: [], total: 0, types: [] }
+	}
+	// , { data: [], total: 0, types: [] }
 );
 
 export default syncable<CollectionDTO>(collectionsAsync);

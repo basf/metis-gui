@@ -1,34 +1,36 @@
 <Main>
 	<Filter tooltip="Add collection" action={() => openEdit()} />
-	<Pagination
-		bind:limit={$query.params.limit}
-		bind:page={$query.params.page}
-		limits={[5, 10, 50, 100]}
-		total={$collections?.total || 10}
-		rest={7}
-	/>
+
 	<div bind:clientWidth={width} class="py-2">
 		<Grid stack>
-			{#if !$collections?.total}
-				{#each { length: 6 } as _}
+			{#await $collectionsAsync}
+				{#each { length: 9 } as _}
 					<Col col="auto">
 						<Loaders.Tile
 							count={1}
-							w={width / 2 - 12}
+							w={width / 3 - 12}
 							h={107}
 							height={107}
-							width={width / 2 - 12}
+							width={width / 3 - 12}
 						/>
 					</Col>
 				{/each}
-			{:else}
-				{@const { data, total } = $collections}
+			{:then { data, total }}
+				<Col col="12">
+					<Pagination
+						bind:limit={$query.params.limit}
+						bind:page={$query.params.page}
+						limits={[5, 10, 50, 100]}
+						{total}
+						rest={7}
+					/>
+				</Col>
 				{#each data as collection (collection.id)}
-					<Col col="6" xs="12">
+					<Col col="4" md="6" xs="12">
 						<Collection {...collection} on:edit={(e) => openEdit(e.detail.id)} />
 					</Col>
 				{/each}
-			{/if}
+			{/await}
 		</Grid>
 	</div>
 </Main>
@@ -54,9 +56,9 @@
 	import { Filter } from '@/components/Filter';
 
 	import user from '@/stores/user';
-	import { collections } from '@/stores/collections';
+	import collections, { collectionsAsync } from '@/stores/collections';
 
-	import { setCollection, delCollection } from '@/services/api';
+	import { setCollection, delCollection, getCollections } from '@/services/api';
 	import type { HttpError } from '@/services/api';
 
 	import * as Loaders from '@/components/loaders';
@@ -67,6 +69,13 @@
 
 <script lang="ts">
 	let width: number;
+
+	let stateQuery = '';
+
+	$: if (stateQuery !== $query.toString()) {
+		getCollections($query.toString());
+		stateQuery = $query.toString();
+	}
 
 	$: editCollectionId = $fragment.replace('#', '');
 	$: editCollection = $collections?.data?.find(

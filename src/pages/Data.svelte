@@ -1,23 +1,22 @@
 <Main>
 	<Filter icon={add ? 'minus' : 'plus'} action={() => (add = !add)} />
-	<Pagination
-		bind:limit={$query.params.limit}
-		bind:page={$query.params.page}
-		limits={[5, 10, 50, 100]}
-		total={$datasources?.total || 10}
-		rest={7}
-	/>
 
 	<div bind:clientWidth={width}>
-		{#if !$datasources?.total}
+		{#await $datasourcesAsync}
 			{#each { length: 4 } as _}
 				<Loaders.Tile count={1} w={width} h={74} height={74} {width} />
 			{/each}
-		{:else}
-			{@const { data, total } = $datasources}
+		{:then { data, total }}
 			{#if add || !total}
 				<DataSourceAdd msg={!total} />
 			{/if}
+			<Pagination
+				bind:limit={$query.params.limit}
+				bind:page={$query.params.page}
+				limits={[5, 10, 50, 100]}
+				total={total || 10}
+				rest={7}
+			/>
 			{#each data as datasource (datasource.id)}
 				<DataSource {datasource}>
 					{#if $user?.id === datasource.userId}
@@ -26,12 +25,12 @@
 				</DataSource>
 			{/each}
 			<DataModal {data} />
-		{/if}
+		{/await}
 	</div>
 </Main>
 
 <script lang="ts" context="module">
-	import { fragment, query } from 'svelte-pathfinder';
+	import { fragment, query, state } from 'svelte-pathfinder';
 	import { Pagination, toast } from 'svelte-spectre';
 
 	import Main from '@/layouts/Main.svelte';
@@ -41,9 +40,9 @@
 	import { DataSource } from '@/views/tiles';
 	import * as Loaders from '@/components/loaders';
 
-	import { delDataSource, getCollections, setCalculation } from '@/services/api';
+	import { delDataSource, getCollections, getDataSources, setCalculation } from '@/services/api';
 
-	import { datasources } from '@/stores/datasources';
+	import { datasources, datasourcesAsync } from '@/stores/datasources';
 	import { withConfirm } from '@/stores/confirmator';
 
 	import { DataModal } from '@/views/modals';
@@ -59,6 +58,12 @@
 		add = false;
 
 	// onMount(getCollections);
+	let stateQuery = '';
+
+	$: if (stateQuery !== $query.toString()) {
+		getDataSources($query.toString());
+		stateQuery = $query.toString();
+	}
 
 	const tileMenuItems = (type: number) => {
 		const editCalc = {

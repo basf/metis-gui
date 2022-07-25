@@ -25,17 +25,20 @@ export const datasourcesAsync = streamable<Stream<DataDTO>, DataDTO>(
 			toast.primary({ ...SYNC_TOASTS_CONFIG, msg: 'Structures synced' });
 			return { ...res };
 		}
-	}, { data: [], total: 0, types: [] }
+	}
+	// , { data: [], total: 0, types: [] }
 );
 
 export default syncable<DataDTO>(datasourcesAsync, { data: [], total: 0, types: [] });
 
-export const datasources = derived([datasourcesAsync, state, query],
-	([$datasourcesAsync, $state, $query], set) => {
+let stateQuery = '';
+
+export const datasources = derived([datasourcesAsync, query],
+	([$datasourcesAsync, $query], set) => {
 		$datasourcesAsync.then(($datasources) => {
-			if (Object.keys($query.params).length >= 4 && $state.query !== $query.toString()) {
+			if (Object.keys($query.params).length >= 4 && stateQuery !== $query.toString()) {
 				getDataSources($query.toString());
-				$state.query = $query.toString()
+				stateQuery = $query.toString()
 			} else set($datasources)
 		});
 	});
