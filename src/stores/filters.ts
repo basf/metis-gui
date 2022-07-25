@@ -29,7 +29,4 @@ export const filtersAsync = streamable<Stream<CollectionDTO>, CollectionDTO>(
 	}
 );
 
-export const filters = syncable<CollectionDTO>(filtersAsync, { data: [], total: 0, types: [] });
-
-storage.setItem<string>('filters_query', get(query).toString(), sessionStorage);
-storage.setItem<CollectionDTO>('filters_data', get(filters), sessionStorage);
+export default syncable<CollectionDTO>(filtersAsync, { data: [], total: 0, types: [] });

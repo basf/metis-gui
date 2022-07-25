@@ -13,7 +13,7 @@ prefs.basePath = BASE_PATH;
 
 const routes: Route[] = [
 	{
-		path: '/data',
+		path: '/',
 		component: () => import('@/pages/Data.svelte'),
 		menu: {
 			title: 'Data',

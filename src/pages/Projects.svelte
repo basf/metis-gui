@@ -69,16 +69,15 @@
 
 <script lang="ts">
 	let width: number;
+	let queryString = $query.toString();
 
-	let stateQuery = '';
-
-	$: if (stateQuery !== $query.toString()) {
-		getCollections($query.toString());
-		stateQuery = $query.toString();
+	$: if (queryString !== $query.toString()) {
+		queryString = $query.toString();
+		getCollections(queryString);
 	}
 
 	$: editCollectionId = $fragment.replace('#', '');
-	$: editCollection = $collections?.data?.find(
+	$: editCollection = $collections.data.find(
 		(collection) => collection.id === +editCollectionId && collection.userId === $user?.id
 	);
 

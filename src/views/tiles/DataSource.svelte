@@ -3,17 +3,15 @@
 		<svelte:fragment slot="title">
 			<h5 class="mt-2">{@html datasource.name}</h5>
 			<ul class="collections">
-				{#if $filters?.total}
-					{#each getCollectionsList(datasource.id, $filters.data) as tag (tag.id)}
-						<li>
-							<a href={setCollectionLink(tag.id)}>
-								<Badge style="background: {tag.typeFlavor}">
-									{tag.title}
-								</Badge>
-							</a>
-						</li>
-					{/each}
-				{/if}
+				{#each getCollectionsList(datasource.id, $filters.data) as tag (tag.id)}
+					<li>
+						<a href={setCollectionIds(tag.id)}>
+							<Badge style="background: {tag.typeFlavor}">
+								{tag.title}
+							</Badge>
+						</a>
+					</li>
+				{/each}
 			</ul>
 		</svelte:fragment>
 		<svelte:fragment slot="subtitle">
@@ -34,20 +32,18 @@
 	import { query, url } from 'svelte-pathfinder';
 	import { Badge, Meter, Tile } from 'svelte-spectre';
 	import { showTimestamp } from '@/helpers/date';
-	import { filters } from '@/stores/filters';
+	import filters from '@/stores/filters';
 	import type { DataSource, Collection } from '@/types/dto';
 </script>
 
 <script lang="ts">
 	export let datasource: DataSource;
 
-	// $: console.log(datasource);
-
 	function getCollectionsList(datasourceId: number, data: Collection[]) {
 		return data.filter((filter) => filter.dataSources?.includes(datasourceId));
 	}
 
-	function setCollectionLink(id: number) {
+	function setCollectionIds(id: number) {
 		const iDs = `${$query.params.collectionIds}`
 			.split(',')
 			.map((c) => +c)

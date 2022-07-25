@@ -2,8 +2,8 @@
 
 <script lang="ts" context="module">
 	import { Autocomplete } from 'svelte-spectre';
-	import { collections } from '@/stores/collections';
-	import { filters } from '@/stores/filters';
+	import collections from '@/stores/collections';
+	import filters from '@/stores/filters';
 	import user from '@/stores/user';
 
 	import type { Collection } from '@/types/dto';

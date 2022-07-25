@@ -40,9 +40,9 @@
 	import { DataSource } from '@/views/tiles';
 	import * as Loaders from '@/components/loaders';
 
-	import { delDataSource, getCollections, getDataSources, setCalculation } from '@/services/api';
+	import { delDataSource, getDataSources, setCalculation } from '@/services/api';
 
-	import { datasources, datasourcesAsync } from '@/stores/datasources';
+	import { datasourcesAsync } from '@/stores/datasources';
 	import { withConfirm } from '@/stores/confirmator';
 
 	import { DataModal } from '@/views/modals';
@@ -50,19 +50,16 @@
 	import user from '@/stores/user';
 	import { TileMenu } from '@/components/Tile/';
 	import Sinus from '@/assets/img/sinus.svg';
-	import { onMount } from 'svelte';
 </script>
 
 <script lang="ts">
-	let width = 0,
-		add = false;
+	let width = 0;
+	let add = false;
+	let queryString = $query.toString();
 
-	// onMount(getCollections);
-	let stateQuery = '';
-
-	$: if (stateQuery !== $query.toString()) {
-		getDataSources($query.toString());
-		stateQuery = $query.toString();
+	$: if (Object.keys($query.params).length >= 4 && queryString !== $query.toString()) {
+		queryString = $query.toString();
+		getDataSources(queryString);
 	}
 
 	const tileMenuItems = (type: number) => {

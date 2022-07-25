@@ -65,7 +65,7 @@
 </Modal>
 
 <script lang="ts" context="module">
-	import { onMount, createEventDispatcher } from 'svelte';
+	import { createEventDispatcher } from 'svelte';
 
 	import {
 		Col,
@@ -83,10 +83,10 @@
 
 	import type { Item } from 'svelte-spectre/package/components/Autocomplete/utils';
 
-	import { searchUsers, getDataSources, getUsers } from '@/services/api';
+	import { searchUsers, getUsers } from '@/services/api';
 	import datasources from '@/stores/datasources';
 	import user from '@/stores/user';
-	import { collections, types } from '@/stores/collections';
+	import collections from '@/stores/collections';
 
 	import { VISIBILITY } from '@/types/const';
 	import type { User as UserDTO } from '@/types/dto';
@@ -114,10 +114,10 @@
 
 	let search = '';
 
-	onMount(getDataSources);
+	// onMount(getDataSources);
 
 	$: userDataSources = $user
-		? $datasources?.data?.filter(({ userId }) => userId === $user?.id)
+		? $datasources.data.filter(({ userId }) => userId === $user?.id)
 		: [];
 
 	$: predefinedDataSources = userDataSources?.map(({ name, id }) => ({
@@ -127,10 +127,10 @@
 	}));
 
 	$: selectedDataSources = dataSources
-		? predefinedDataSources?.filter(({ value }) => dataSources.includes(value))
+		? predefinedDataSources.filter(({ value }) => dataSources.includes(value))
 		: [];
 
-	$: typesOptions = $collections?.types?.map(({ label, id: value }) => ({ label, value }));
+	$: typesOptions = $collections.types.map(({ label, id: value }) => ({ label, value }));
 	$: if (!typeId && typesOptions?.length) {
 		typeId = typesOptions[0].value;
 	}

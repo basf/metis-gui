@@ -40,7 +40,7 @@
 	import type { Collection, CollectionType } from '@/types/dto';
 	import { onMount } from 'svelte';
 	import { getFilters } from '@/services/api';
-	import { filters } from '@/stores/filters';
+	import filters from '@/stores/filters';
 
 	type Tag = {
 		index: number;

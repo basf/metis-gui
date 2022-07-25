@@ -1,8 +1,8 @@
-import { derived } from 'svelte/store'
+import { get } from 'svelte/store'
+import { query } from 'svelte-pathfinder';
 import { syncable } from 'svelte-asyncable';
-import { toast } from 'svelte-spectre';
 import { streamable } from 'svelte-streamable';
-import { state, query } from 'svelte-pathfinder';
+import { toast } from 'svelte-spectre';
 import { getDataSources } from '@/services/api';
 import { STREAM_URL, SYNC_TOASTS_CONFIG } from '@/config';
 import type { DataSource, Stream, CollectionType } from '@/types/dto';
@@ -24,21 +24,10 @@ export const datasourcesAsync = streamable<Stream<DataDTO>, DataDTO>(
 		if (res) {
 			toast.primary({ ...SYNC_TOASTS_CONFIG, msg: 'Structures synced' });
 			return { ...res };
+		} else {
+			getDataSources(get(query).toString())
 		}
 	}
-	// , { data: [], total: 0, types: [] }
 );
 
 export default syncable<DataDTO>(datasourcesAsync, { data: [], total: 0, types: [] });
-
-let stateQuery = '';
-
-export const datasources = derived([datasourcesAsync, query],
-	([$datasourcesAsync, $query], set) => {
-		$datasourcesAsync.then(($datasources) => {
-			if (Object.keys($query.params).length >= 4 && stateQuery !== $query.toString()) {
-				getDataSources($query.toString());
-				stateQuery = $query.toString()
-			} else set($datasources)
-		});
-	});
