@@ -90,7 +90,12 @@
 				label: 'Delete',
 				action: delData,
 			};
-		return [type === 1 ? runCalc : null, editCalc, editTag, deleteData].filter(Boolean);
+		return [
+			type === 1 ? runCalc : null,
+			type === 1 ? editCalc : null,
+			editTag,
+			deleteData,
+		].filter(Boolean);
 	};
 
 	async function editCalculation(id: number) {
@@ -106,7 +111,7 @@
 	}
 
 	function runCalculation(id: number) {
-		setCalculation(id).then(() => {
+		setCalculation(id, 'dummy', null, 'workflow').then(() => {
 			toast.success({
 				msg: 'Calculation submitted',
 				timeout: 2000,

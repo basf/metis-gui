@@ -52,10 +52,11 @@ export async function getCalculations(): Promise<void> {
 
 export async function setCalculation(
 	dataId: number,
-	engine = 'dummy',
-	input?: string
+	engine: string = 'dummy',
+	input?: string,
+	workflow: string = 'workflow'
 ): Promise<void> {
-	return postJSON('/calculations', { dataId, engine, input });
+	return postJSON('/calculations', { dataId, engine, input, workflow });
 }
 
 export async function delCalculation(id: number): Promise<void> {
