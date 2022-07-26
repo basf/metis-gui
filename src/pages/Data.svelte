@@ -1,5 +1,5 @@
 <Main>
-	<DataSearch add bind:addOpen data={$datasources.length} />
+
 	<div bind:clientWidth={width}>
 		{#if !$status.hidden}
 			{#await $datasourcesAsync}
@@ -7,9 +7,7 @@
 					<Loaders.Tile count={1} w={width} h={74} height={74} {width} />
 				{/each}
 			{:then datasources}
-				{#if addOpen || !datasources.length}
-					<DataSourceAdd msg={!datasources.length} />
-				{/if}
+
 				{#each makeDataSourcesList(datasources, search) as datasource (datasource.id)}
 					<DataSource {datasource}>
 						{#if $user?.id === datasource.userId}
@@ -19,6 +17,8 @@
 							/>
 						{/if}
 					</DataSource>
+				{:else}
+					<div class="text-center distant_msg">No data added</div>
 				{/each}
 			{/await}
 		{/if}
@@ -55,7 +55,7 @@
 	import Main from '@/layouts/Main.svelte';
 
 	import { DataSearch } from '@/components/Search';
-	import DataSourceAdd from '@/views/DataSource/DataSourceAdd.svelte';
+	//import DataSourceAdd from '@/views/DataSource/DataSourceAdd.svelte';
 	import { DataSource } from '@/views/tiles';
 	import * as Loaders from '@/components/loaders';
 
@@ -79,7 +79,7 @@
 <script lang="ts">
 	let width = 0;
 	let search = '';
-	let addOpen = false;
+	//let addOpen = false;
 	let tagIds = [];
 
 	const tileMenuItems = (type: number) => {
@@ -112,12 +112,11 @@
 			};
 		return [
 			type === 1 ? runCalc : null,
-			type === 1 ? editCalc : null,
-			editTag,
-			deleteData
+			//type === 1 ? editCalc : null,
+			//editTag,
+			type === 1 ? deleteData : null,
 		].filter(Boolean);
 	};
-
 
 	function makeDataSourcesList(items: DataSourceDTO[], search: string) {
 		return search

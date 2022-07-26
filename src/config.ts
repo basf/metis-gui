@@ -5,13 +5,13 @@ export const IS_FILE = location.protocol === 'file:';
 
 export const GUI_HOST = IS_FILE
 	? IS_PROD
-		? 'https://metis.science'
+		? 'https://absolidix.com'
 		: 'http://localhost:5000'
 	: location.origin;
 
 export const API_VERSION = 'v0';
 
-export const API_HOST = IS_PROD ? 'https://gate.metis.science' : 'http://localhost:3000';
+export const API_HOST = IS_PROD ? 'https://bff.absolidix.com' : 'http://localhost:3000';
 
 export const API_BASEURL = `${API_HOST}/${API_VERSION}`;
 
@@ -30,4 +30,4 @@ export const DOWNLOADABLE_APP_FILENAME = 'index.html';
 
 export const SYNC_TOASTS_CONFIG = { timeout: 2000, pos: 'bottom_right' } as ToastItem;
 
-export const IdPs = ['github', 'linkedin', 'orcid', 'basf', 'local']; // available: github, linkedin, orcid, basf, and local
+export const IdPs = ['dummy']; // available: github, linkedin, orcid, basf, and local

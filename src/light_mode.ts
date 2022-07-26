@@ -16,14 +16,13 @@ const routes: Route[] = [
 	// 	path: '/profile',
 	// 	component: () => import('@/pages/Profile.svelte'),
 	// },
-	// {
-	// 	path: '/search',
-	// 	component: () => import('@/pages/Search.svelte'),
-	// 	menu: {
-	// 		title: 'Search',
-	// 		pos: 0,
-	// 	},
-	// },
+	{
+		path: 'https://mpds.io/#inquiry/years=2000-2020&props=crystal%20structure&classes=non-disordered',
+		menu: {
+			title: 'Search',
+			pos: 0,
+		},
+	},
 	{
 		path: '/',
 		component: () => import('@/pages/Data.svelte'),

@@ -1,4 +1,4 @@
-<header class="mb-2">
+<header class="my-2">
 	<Container>
 		<Navbar>
 			<nav slot="left">
@@ -8,12 +8,12 @@
 			</nav>
 
 			<IconButton id="xray" slot="center" size="xxl" iconSize="4x" href="/"
-				>{@html Xray}</IconButton
+				>{@html axlogo}</IconButton
 			>
 
 			<nav slot="right">
 				{#if $user}
-					<Button variant="link" size="xl" href="/profile">
+					<Button variant="link" size="xl" href="https://mpds.io/#modal/menu">
 						{$user.firstName}&nbsp;{$user.lastName}&nbsp;<Icon icon="people" />
 					</Button>
 				{/if}
@@ -26,7 +26,7 @@
 	import { back, path } from 'svelte-pathfinder';
 	import { Button, Container, Icon, IconButton, Navbar } from 'svelte-spectre';
 	import user from '@/stores/user';
-	import Xray from '@/assets/img/b-science.svg';
+	import axlogo from '@/assets/img/absolidix.svg';
 </script>
 
 <style lang="scss">
