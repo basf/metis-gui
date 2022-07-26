@@ -39,6 +39,7 @@ const {
 
 const svelteConfig = require('./svelte.config.js');
 const dir = `${dest}/build`;
+const LIGHT_MODE = process.argv.includes('--light_mode');
 
 export default {
 	input,
@@ -108,7 +109,7 @@ export default {
 		dev && visualizer({ filename: `${dest}/stats.html`, }),
 		html({
 			filename: 'index.html',
-			ignore: dev ? new RegExp(`${dir}/(?!full_mode.js|${name}.css)`) : null,
+			ignore: dev ? new RegExp(`${dir}/(?!${LIGHT_MODE ? 'light' : 'full'}_mode.js|${name}.css)`) : null,
 			minifyCss: !dev,
 			scriptType: dev ? 'module' : 'text/javascript',
 			absolute: dev,
