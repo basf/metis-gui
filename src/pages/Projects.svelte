@@ -1,6 +1,14 @@
 <Main>
 	<Filter tooltip="Add collection" action={() => openEdit()} />
 
+	<Pagination
+		bind:limit={$query.params.limit}
+		bind:page={$query.params.page}
+		total={$collections.total}
+		limits={[5, 10, 50, 100]}
+		rest={7}
+	/>
+
 	<div bind:clientWidth={width} class="py-2">
 		<Grid stack>
 			{#await $collectionsAsync}
@@ -15,21 +23,16 @@
 						/>
 					</Col>
 				{/each}
-			{:then { data, total }}
-				<Col col="12">
-					<Pagination
-						bind:limit={$query.params.limit}
-						bind:page={$query.params.page}
-						limits={[5, 10, 50, 100]}
-						{total}
-						rest={7}
-					/>
-				</Col>
+			{:then { data }}
 				{#each data as collection (collection.id)}
 					<Col col="4" md="6" xs="12">
 						<Collection {...collection} on:edit={(e) => openEdit(e.detail.id)} />
 					</Col>
 				{/each}
+			{:catch}
+				<Col>
+					<Overlay>Server disconnected</Overlay>
+				</Col>
 			{/await}
 		</Grid>
 	</div>
@@ -58,23 +61,17 @@
 	import user from '@/stores/user';
 	import collections, { collectionsAsync } from '@/stores/collections';
 
-	import { setCollection, delCollection, getCollections } from '@/services/api';
+	import { setCollection, delCollection } from '@/services/api';
 	import type { HttpError } from '@/services/api';
 
 	import * as Loaders from '@/components/loaders';
-	import Main from '@/layouts/Main.svelte';
+	import { Main, Overlay } from '@/layouts';
 
 	import CollectionEditModal from '@/views/modals/CollectionEdit.svelte';
 </script>
 
 <script lang="ts">
 	let width: number;
-	let queryString = $query.toString();
-
-	$: if (queryString !== $query.toString()) {
-		queryString = $query.toString();
-		getCollections(queryString);
-	}
 
 	$: editCollectionId = $fragment.replace('#', '');
 	$: editCollection = $collections.data.find(

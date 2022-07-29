@@ -1,8 +1,8 @@
 {
 	"background_color": "#ffffff",
 	"theme_color": "#5755d9",
-	"name": "Bscience",
-	"short_name": "Bscience",
+	"name": "Metis",
+	"short_name": "Metis",
 	"display": "browser",
 	"orientation": "natural",
 	"start_url": "/",

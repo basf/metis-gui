@@ -26,13 +26,15 @@
 		</Container>
 	</main>
 	<Footer />
-	<Msgbar />
+	{#key $user?.id}
+		<Msgbar />
+	{/key}
 	<Confirmator />
 </Spectre>
 
 <script lang="ts">
 	import { setContext } from 'svelte';
-	import { path, pattern, click, redirect } from 'svelte-pathfinder';
+	import { pattern, click } from 'svelte-pathfinder';
 	import Viewpoint from 'svelte-viewpoint';
 	import { Container, Spectre } from 'svelte-spectre';
 
@@ -47,11 +49,11 @@
 	import { userAsync } from '@/stores/user';
 
 	import type { Route } from '@/types/routes';
+	import user from '@/stores/user';
 
 	export let routes: Route[] = [];
 
 	setContext('routes', routes);
 
 	$: page = routes.find((route: Route) => $pattern(route.path)) || null;
-	// $: $path.length <= 1 && redirect('/data');
 </script>

@@ -22,6 +22,9 @@ export interface Calculation extends Timestamps {
 export interface DataSource extends Timestamps {
 	id: number;
 	userId: number;
+	userFirstName: string;
+	userLastName: string;
+	userEmail: string;
 	name: string;
 	content: string;
 	type: number;

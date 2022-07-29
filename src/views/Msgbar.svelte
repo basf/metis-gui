@@ -1,20 +1,17 @@
-<Toaster />
-
 {#if !$status.online || !$status.heartbeat}
-	<div class="overlay">
-		<slot>We are offline</slot>
-		<IconButton icon="refresh" on:click={() => location.reload()} />
-	</div>
+	<Overlay />
 {:else if $updates}
-	<div class="overlay">
-		<slot>New version of this software available, click to update</slot>
-		<IconButton icon="download" on:click={updateAppVersion} />
-	</div>
+	<Overlay icon="download" action={updateAppVersion}>
+		New version of this software available, click to update
+	</Overlay>
 {/if}
 
+<Toaster />
+
 <script lang="ts" context="module">
-	import { IconButton, Toaster, toast } from 'svelte-spectre';
-	import user from '@/stores/user';
+	import { Toaster, toast } from 'svelte-spectre';
+	import { Overlay } from '@/layouts';
+
 	import status, { updates } from '@/stores/status';
 	import errors from '@/stores/errors';
 
@@ -22,16 +19,8 @@
 </script>
 
 <script lang="ts">
-	// let offline = false;
-	// $: {
-	// offline = !$status.online || !$status.heartbeat;
-
-	// if (offline && $user)
-	// 	toast.warning({ msg: 'You are logged out', timeout: 1000, pos: 'top_right' });
-
 	$: $errors.forEach(({ error }) => {
 		const msg = error.message || error;
 		toast.error({ msg, timeout: 4000, pos: 'top_right' });
 	});
-	// }
 </script>

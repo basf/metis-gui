@@ -1,48 +1,65 @@
 <Main>
 	<Filter icon={add ? 'minus' : 'plus'} action={() => (add = !add)} />
 
-	<div bind:clientWidth={width}>
-		{#await $datasourcesAsync}
-			{#each { length: 4 } as _}
-				<Loaders.Tile count={1} w={width} h={74} height={74} {width} />
-			{/each}
-		{:then { data, total }}
-			{#if add || !total}
-				<DataSourceAdd msg={!total} />
-			{/if}
-			<Pagination
-				bind:limit={$query.params.limit}
-				bind:page={$query.params.page}
-				limits={[5, 10, 50, 100]}
-				total={total || 10}
-				rest={7}
-			/>
-			{#each data as datasource (datasource.id)}
-				<DataSource {datasource}>
-					{#if $user?.id === datasource.userId}
-						<TileMenu items={tileMenuItems(datasource.type)} dataId={datasource.id} />
-					{/if}
-				</DataSource>
-			{/each}
-			<DataModal {data} />
-		{/await}
+	{#if add || !$datasources.total}
+		<DataSourceAdd msg={!$datasources.total} />
+	{/if}
+
+	<Pagination
+		bind:limit={$query.params.limit}
+		bind:page={$query.params.page}
+		total={$datasources.total}
+		limits={[5, 10, 50, 100]}
+		rest={7}
+	/>
+
+	<div bind:clientWidth={width} class="py-2">
+		<Grid stack>
+			{#await $datasourcesAsync}
+				{#each { length: 4 } as _}
+					<Col col="12">
+						<Loaders.Tile count={1} w={width} h={74} height={74} {width} />
+					</Col>
+				{/each}
+			{:then { data, total }}
+				{#each data as datasource (datasource.id)}
+					<Col col="12">
+						<DataSource {datasource}>
+							{#if $user?.id === datasource.userId}
+								<TileMenu
+									items={tileMenuItems(datasource.type)}
+									dataId={datasource.id}
+								/>
+							{/if}
+						</DataSource>
+					</Col>
+				{/each}
+			{:catch error}
+				<!-- {console.log(error)} -->
+				<Col>
+					<Overlay>Server disconnected</Overlay>
+				</Col>
+			{/await}
+		</Grid>
 	</div>
 </Main>
 
-<script lang="ts" context="module">
-	import { fragment, query, state } from 'svelte-pathfinder';
-	import { Pagination, toast } from 'svelte-spectre';
+<DataModal data={$datasources.data} />
 
-	import Main from '@/layouts/Main.svelte';
+<script lang="ts" context="module">
+	import { fragment, query } from 'svelte-pathfinder';
+	import { Col, Grid, Pagination, toast } from 'svelte-spectre';
+
+	import { Main, Overlay } from '@/layouts';
 
 	import { Filter } from '@/components/Filter';
 	import DataSourceAdd from '@/views/DataSource/DataSourceAdd.svelte';
 	import { DataSource } from '@/views/tiles';
 	import * as Loaders from '@/components/loaders';
 
-	import { delDataSource, getDataSources, setCalculation } from '@/services/api';
+	import { delDataSource, setCalculation, getCalculationsEngines } from '@/services/api';
 
-	import { datasourcesAsync } from '@/stores/datasources';
+	import datasources, { datasourcesAsync } from '@/stores/datasources';
 	import { withConfirm } from '@/stores/confirmator';
 
 	import { DataModal } from '@/views/modals';
@@ -55,12 +72,6 @@
 <script lang="ts">
 	let width = 0;
 	let add = false;
-	let queryString = $query.toString();
-
-	$: if (Object.keys($query.params).length >= 4 && queryString !== $query.toString()) {
-		queryString = $query.toString();
-		getDataSources(queryString);
-	}
 
 	const tileMenuItems = (type: number) => {
 		const editCalc = {

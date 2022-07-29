@@ -14,11 +14,9 @@
 	const routes: Route[] = getContext('routes');
 
 	const menu = routes.reduce<MenuProp[]>((items, { path, menu }) => {
-		// const queried = ['/data', '/calculations', '/projects'];
-		// path = queried.includes(path)
-		// 	? `${path}?page=1&limit=10&visibility=&type=&collectionIds=`
-		// 	: path;
-		path = path + $query.toString();
+		// const queried = ['/search', '/materials'];
+		// path = !queried.includes(path) ? `${path}?page=1&limit=10&visibility=&type=` : path;
+		// path = `${path + $query}`;
 		return !!menu && items.push({ path, ...menu }), items;
 	}, []);
 

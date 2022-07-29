@@ -114,8 +114,6 @@
 
 	let search = '';
 
-	// onMount(getDataSources);
-
 	$: userDataSources = $user
 		? $datasources.data.filter(({ userId }) => userId === $user?.id)
 		: [];

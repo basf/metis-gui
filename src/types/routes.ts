@@ -11,6 +11,6 @@ export type MenuProp = {
 
 export interface Route {
 	path: string;
-	component: Props['component'];
+	component?: Props['component'];
 	menu?: MenuProp;
 }

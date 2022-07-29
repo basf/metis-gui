@@ -1,5 +1,10 @@
 <div class="tile-data">
 	<Tile>
+		<svelte:fragment slot="icon">
+			<div class="tooltip" data-tooltip={dataUserName}>
+				<Avatar size="lg" name={dataUserName} />
+			</div>
+		</svelte:fragment>
 		<svelte:fragment slot="title">
 			<h5 class="mt-2">{@html datasource.name}</h5>
 			<ul class="collections">
@@ -29,15 +34,19 @@
 </div>
 
 <script lang="ts" context="module">
-	import { query, url } from 'svelte-pathfinder';
-	import { Badge, Meter, Tile } from 'svelte-spectre';
+	import { query, path } from 'svelte-pathfinder';
+	import { Avatar, Badge, Meter, Tile } from 'svelte-spectre';
 	import { showTimestamp } from '@/helpers/date';
+
 	import filters from '@/stores/filters';
+
 	import type { DataSource, Collection } from '@/types/dto';
 </script>
 
 <script lang="ts">
 	export let datasource: DataSource;
+
+	let dataUserName = `${datasource.userFirstName} ${datasource.userLastName}`;
 
 	function getCollectionsList(datasourceId: number, data: Collection[]) {
 		return data.filter((filter) => filter.dataSources?.includes(datasourceId));
@@ -51,15 +60,17 @@
 
 		const collectionIds = new Set([...iDs, id]);
 
-		return $url.includes('collectionIds')
-			? $url.replace(/collectionIds=(.*)/, `collectionIds=${Array.from(collectionIds)}`)
-			: $url + `&collectionIds=${Array.from(collectionIds)}`;
+		return (
+			$path +
+			`?page=1&limit=${$query.params.limit}&type=${$query.params.type}&visibility=${
+				$query.params.visibility
+			}&collectionIds=${Array.from(collectionIds)}`
+		);
 	}
 </script>
 
 <style lang="scss">
 	.tile-data {
-		margin: 0.5em 0;
 		:global(.tile) {
 			padding: 0.5em;
 		}

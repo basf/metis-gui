@@ -27,5 +27,5 @@ export const updates = readable(false, (set) => {
 
 export default statusable({
 	ping: API_BASEURL,
-	sse: STREAM_URL,
+	// sse: STREAM_URL,
 });

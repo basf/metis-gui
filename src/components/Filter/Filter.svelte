@@ -16,7 +16,7 @@
 					style="flex: 400%;"
 				/>
 				<Select
-					options={VISIBILITY}
+					options={getVisibilityOptions($filters.data)}
 					bind:value={$query.params.visibility}
 					placeholder="Visibility"
 					size="lg"
@@ -36,11 +36,9 @@
 	import { Param, query } from 'svelte-pathfinder';
 	import { Autocomplete, Col, Grid, IconButton, InputGroup, Select } from 'svelte-spectre';
 	import { VISIBILITY } from '@/types/const';
+	import filters from '@/stores/filters';
 
 	import type { Collection, CollectionType } from '@/types/dto';
-	import { onMount } from 'svelte';
-	import { getFilters } from '@/services/api';
-	import filters from '@/stores/filters';
 
 	type Tag = {
 		index: number;
@@ -52,20 +50,16 @@
 </script>
 
 <script lang="ts">
-	export let add = true,
-		icon = 'plus',
-		tooltip = 'Add structure',
-		action = () => {};
+	export let add = true;
+	export let icon = 'plus';
+	export let tooltip = 'Add structure';
+	export let action = () => {};
 
-	let selected: Tag[] = [],
-		predefined: Tag[] = [];
+	let selected: Tag[] = [];
+	let predefined: Tag[] = [];
 
-	onMount(getFilters);
-
-	$: {
-		predefined = getPredefined($filters.data);
-		selected = getSelected($query.params.collectionIds);
-	}
+	$: predefined = getPredefined($filters.data);
+	$: if (predefined.length) selected = getSelected($query.params.collectionIds);
 
 	function getPredefined(collections: Collection[]): Tag[] {
 		return collections?.map((collection: Collection) => ({
@@ -84,6 +78,12 @@
 	function setCollectionIds(e: { detail: Tag[] }) {
 		const collectionIds = selected.map((s) => s.index).join(',');
 		$query.params.collectionIds = collectionIds;
+	}
+
+	function getVisibilityOptions(filters: Collection[]) {
+		// const visibilitys = new Set([...filters.map(({ visibility }) => visibility)]);
+		// console.log(visibilitys);
+		return VISIBILITY;
 	}
 
 	function getTypeOptions(types: CollectionType[]) {

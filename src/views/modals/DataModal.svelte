@@ -32,6 +32,7 @@
 
 <script lang="ts">
 	export let data;
+
 	let tagIds;
 
 	$: [_, dataType, dataId] = $fragment.split('-');
