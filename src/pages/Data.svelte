@@ -64,7 +64,7 @@
 	import datasources, { datasourcesAsync } from '@/stores/datasources';
 	import { withConfirm } from '@/stores/confirmator';
 
-	import { CalculationEdit, PlotEdit, TagsEdit } from '@/views/modals';
+	import { CalculationEdit, PlotEdit, TagsEdit, EnginesEdit } from '@/views/modals';
 	import { patchDataSourceCollections } from '@/services/api';
 
 	import user from '@/stores/user';
@@ -114,10 +114,9 @@
 			type === 1 ? runCalc : null,
 			type === 1 ? editCalc : null,
 			editTag,
-			deleteData
+			deleteData,
 		].filter(Boolean);
 	};
-
 
 	function makeDataSourcesList(items: DataSourceDTO[], search: string) {
 		return search
@@ -131,6 +130,11 @@
 
 	$: modal = () => {
 		switch (dataType) {
+			case 'engine':
+				return {
+					component: EnginesEdit,
+					submit: submitEngines,
+				};
 			case 'calculation':
 				return {
 					component: CalculationEdit,
@@ -154,7 +158,7 @@
 		}
 	};
 
-	$: [_, dataType, dataId] = $fragment.split('-');
+	$: [_, dataType, dataId, engine] = $fragment.split('-');
 
 	async function editCalculation(id: number) {
 		$fragment = `#edit-calculation-${id}`;
@@ -178,7 +182,17 @@
 	}
 
 	function runCalculation(id: number) {
-		setCalculation(id, 'dummy', null, 'workflow').then(() => {
+		$fragment = `#edit-engine-${id}`;
+	}
+
+	function submitEngines() {
+		setCalculation({
+			dataId: +dataId,
+			engine,
+			input: '',
+			workflow: 'workflow',
+		}).then(() => {
+			closeModal();
 			toast.success({
 				msg: 'Calculation submitted',
 				timeout: 2000,
