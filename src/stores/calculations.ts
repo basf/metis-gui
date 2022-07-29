@@ -1,13 +1,16 @@
 import { get } from 'svelte/store';
 import { query } from 'svelte-pathfinder';
-import { syncable } from 'svelte-asyncable';
+import { asyncable, syncable } from 'svelte-asyncable';
 import { streamable } from 'svelte-streamable';
 import { toast } from 'svelte-spectre';
 
-import { getCalculations } from '@/services/api';
+import { getCalculations, getCalculationsEngines } from '@/services/api';
 import { STREAM_URL, SYNC_TOASTS_CONFIG } from '@/config';
 
 import type { Calculation as CalculationDTO, Stream as StreamDTO } from '@/types/dto';
+
+export const enginesAsync = asyncable(getCalculationsEngines)
+export const engines = syncable(enginesAsync)
 
 export const calculationsAsync = streamable<StreamDTO<CalculationDTO[]>, CalculationDTO[]>(
 	{

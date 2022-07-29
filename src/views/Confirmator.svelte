@@ -1,7 +1,9 @@
 <Modal size="sm" bind:open={$confirmator.open}>
-	<h3>{$confirmator.message}</h3>
-	<Button variant="link" on:click={cancelModal}>No</Button>
-	<Button variant="error" on:click={confirmModal}>Yes</Button>
+	<h3 slot="header">{$confirmator.message}</h3>
+	<svelte:fragment slot="footer">
+		<Button variant="link" on:click={cancelModal}>No</Button>
+		<Button variant="error" on:click={confirmModal}>Yes</Button>
+	</svelte:fragment>
 </Modal>
 
 <svelte:window on:keydown={handleKeydown} />
@@ -16,9 +18,11 @@
 		if ('function' in $confirmator)
 			$confirmator.function($confirmator.args).then(() => confirmator.set({ open: false }));
 	}
+
 	function cancelModal() {
 		confirmator.set({ open: false });
 	}
+
 	function handleKeydown(e) {
 		if ($confirmator.open) {
 			switch (e.key) {

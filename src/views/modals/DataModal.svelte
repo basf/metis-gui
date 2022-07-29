@@ -1,4 +1,4 @@
-<Modal size={$media.sm ? 'fs' : 'lg'} open={!!$fragment} on:close={closeModal}>
+<Modal size={modal().size || ($media.sm ? 'fs' : 'lg')} open={!!$fragment} on:close={closeModal}>
 	<h3 slot="header">
 		{@const modalHeader = `Edit and submit ${decodeURIComponent(
 			dataType
@@ -22,9 +22,9 @@
 
 <script lang="ts" context="module">
 	import { fragment } from 'svelte-pathfinder';
-	import { Button, Modal } from 'svelte-spectre';
+	import { Button, Modal, toast } from 'svelte-spectre';
 
-	import { CalculationEdit, PlotEdit, TagsEdit } from '.';
+	import { CalculationEdit, EnginesEdit, PlotEdit, TagsEdit } from '.';
 	import { patchDataSourceCollections, setCalculation } from '@/services/api';
 	import { editorCode } from '@/stores/editor';
 	import { media } from '@/stores/media';
@@ -35,11 +35,18 @@
 
 	let tagIds;
 
-	$: [_, dataType, dataId] = $fragment.split('-');
+	$: [_, dataType, dataId, engine] = $fragment.split('-');
 
 	$: dataName = data?.find((data) => data.id === +dataId)?.name;
+
 	$: modal = () => {
 		switch (dataType) {
+			case 'engine':
+				return {
+					component: EnginesEdit,
+					submit: submitEngines,
+					size: 'md',
+				};
 			case 'calculation':
 				return {
 					component: CalculationEdit,
@@ -68,7 +75,9 @@
 	}
 
 	function submitCalculation() {
-		setCalculation(+dataId, 'dummy', $editorCode.input).then(() => closeModal());
+		setCalculation({ dataId: +dataId, engine, input: $editorCode.input }).then(() =>
+			closeModal()
+		);
 	}
 
 	async function submitTags() {
@@ -77,5 +86,22 @@
 
 	function submitPlots() {
 		closeModal();
+	}
+
+	function submitEngines() {
+		setCalculation({
+			dataId: +dataId,
+			engine,
+			input: '',
+			workflow: 'workflow',
+		}).then(() => {
+			closeModal();
+			toast.success({
+				msg: 'Calculation submitted',
+				timeout: 2000,
+				pos: 'top_right',
+				icon: 'forward',
+			});
+		});
 	}
 </script>
