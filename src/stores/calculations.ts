@@ -1,5 +1,3 @@
-import { get } from 'svelte/store';
-import { query } from 'svelte-pathfinder';
 import { asyncable, syncable } from 'svelte-asyncable';
 import { streamable } from 'svelte-streamable';
 import { toast } from 'svelte-spectre';
