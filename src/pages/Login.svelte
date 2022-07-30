@@ -63,15 +63,15 @@
 
 	import github from '@/assets/img/github.svg';
 	import linkedin from '@/assets/img/linkedin.svg';
-	//import basf from '@/assets/img/BASF-invert.svg';
 	import orcid from '@/assets/img/ORCID-invert.svg';
-	import dummy from '@/assets/img/mpds.svg';
+	//import basf from '@/assets/img/BASF-invert.svg';
+	import mpds from '@/assets/img/mpds.svg';
 
 	let email = '';
 	let password = '';
 	let errmsg;
 
-	const icons = { github, linkedin, orcid, dummy };
+	const icons = { github, linkedin, orcid, mpds };
 
 	async function submit() {
 		try {

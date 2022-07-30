@@ -2,8 +2,8 @@
 	<Container>
 		<Navbar>
 			<nav slot="left">
-				Created by Tilde Materials Informatics,<br />
-				Materials Platform for Data Science O&Uuml;, and BASF SE.
+				Created by Tilde Materials Informatics<br />
+				and Materials Platform for Data Science.
 			</nav>
 			<nav slot="right"><Switch bind:value={$darkTheme}>Dark theme</Switch></nav>
 		</Navbar>

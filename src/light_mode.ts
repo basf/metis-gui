@@ -17,9 +17,9 @@ const routes: Route[] = [
 	// 	component: () => import('@/pages/Profile.svelte'),
 	// },
 	{
-		path: 'https://mpds.io/#inquiry/years=2000-2020&props=crystal%20structure&classes=non-disordered',
+		path: 'https://mpds.io/#inquiry/years=2000-2020&props=crystal%20structure',
 		menu: {
-			title: 'Search',
+			title: 'Add data',
 			pos: 0,
 		},
 	},
@@ -27,7 +27,7 @@ const routes: Route[] = [
 		path: '/',
 		component: () => import('@/pages/Data.svelte'),
 		menu: {
-			title: 'Data',
+			title: 'My data',
 			pos: 1,
 		},
 	},

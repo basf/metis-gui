@@ -2,7 +2,7 @@
 
 {#if offline}
 	<div class="overlay">
-		<slot>We are offline</slot>
+		<slot>Sorry, we are currently offline</slot>
 		<IconButton icon="refresh" on:click={() => location.reload()} />
 	</div>
 {/if}
