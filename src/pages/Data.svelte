@@ -35,7 +35,6 @@
 					</Col>
 				{/each}
 			{:catch error}
-				<!-- {console.log(error)} -->
 				<Col>
 					<Overlay>Server disconnected</Overlay>
 				</Col>
@@ -48,7 +47,7 @@
 
 <script lang="ts" context="module">
 	import { fragment, query } from 'svelte-pathfinder';
-	import { Col, Grid, Pagination, toast } from 'svelte-spectre';
+	import { Col, Grid, Pagination } from 'svelte-spectre';
 
 	import { Main, Overlay } from '@/layouts';
 
@@ -57,7 +56,7 @@
 	import { DataSource } from '@/views/tiles';
 	import * as Loaders from '@/components/loaders';
 
-	import { delDataSource, setCalculation, getCalculationsEngines } from '@/services/api';
+	import { delDataSource } from '@/services/api';
 
 	import datasources, { datasourcesAsync } from '@/stores/datasources';
 	import { withConfirm } from '@/stores/confirmator';
@@ -122,14 +121,7 @@
 	}
 
 	function runCalculation(id: number) {
-		setCalculation(id, 'dummy', null, 'workflow').then(() => {
-			toast.success({
-				msg: 'Calculation submitted',
-				timeout: 2000,
-				pos: 'top_right',
-				icon: 'forward',
-			});
-		});
+		$fragment = `#edit-engine-${id}`;
 	}
 
 	function delData(id: number) {

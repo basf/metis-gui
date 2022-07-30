@@ -46,16 +46,21 @@ export async function getTemplate(engine = 'dummy'): Promise<TemplateDTO> {
 	);
 }
 
-export async function getCalculations(): Promise<void> {
-	return getJSON('/calculations');
+export async function getCalculations(query?: string): Promise<void> {
+	return getJSON(`/calculations${query || ''}`);
 }
 
-export async function setCalculation(
-	dataId: number,
-	engine: string = 'dummy',
-	input?: string,
-	workflow: string = 'workflow'
-): Promise<void> {
+export async function getCalculationsEngines(): Promise<void> {
+	return getJSON(`/calculations/engines`);
+}
+
+export async function setCalculation({ dataId, engine = 'dummy', input, workflow = 'workflow' }:
+	{
+		dataId: number,
+		engine: string,
+		input?: string,
+		workflow?: string
+	}): Promise<void> {
 	return postJSON('/calculations', { dataId, engine, input, workflow });
 }
 
