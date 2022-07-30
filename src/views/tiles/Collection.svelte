@@ -2,7 +2,7 @@
 	<Tile>
 		<svelte:fragment slot="icon">
 			<div class="tooltip" data-tooltip={userDisplayName}>
-				<Avatar size="lg" name={userDisplayName}>
+				<Avatar size="lg" name={userDisplayName} badge={`${id}`}>
 					<svelte:fragment slot="sub">
 						{#if !owner && $user}
 							<Avatar size="sm" name="{$user.firstName} {$user.lastName}" />

@@ -2,7 +2,7 @@
 	<Tile>
 		<svelte:fragment slot="icon">
 			<div class="tooltip" data-tooltip={dataUserName}>
-				<Avatar size="lg" name={dataUserName} />
+				<Avatar size="lg" name={dataUserName} badge={`${datasource.id}`} />
 			</div>
 		</svelte:fragment>
 		<svelte:fragment slot="title">
@@ -10,7 +10,7 @@
 			<ul class="collections">
 				{#each getCollectionsList(datasource.id, $filters.data) as tag (tag.id)}
 					<li>
-						<a href={setCollectionIds(tag.id)}>
+						<a href={setTagLink(tag)}>
 							<Badge style="background: {tag.typeFlavor}">
 								{tag.title}
 							</Badge>
@@ -52,19 +52,17 @@
 		return data.filter((filter) => filter.dataSources?.includes(datasourceId));
 	}
 
-	function setCollectionIds(id: number) {
-		const iDs = `${$query.params.collectionIds}`
-			.split(',')
-			.map((c) => +c)
-			.filter(Boolean);
+	function setTagLink({ id, typeId, visibility }: Partial<Collection>) {
+		// const iDs = `${$query.params.collectionIds}`
+		// 	.split(',')
+		// 	.map((c) => +c)
+		// 	.filter(Boolean);
 
-		const collectionIds = new Set([...iDs, id]);
+		// const collectionIds = new Set([...iDs, id]);
 
 		return (
 			$path +
-			`?page=1&limit=${$query.params.limit}&type=${$query.params.type}&visibility=${
-				$query.params.visibility
-			}&collectionIds=${Array.from(collectionIds)}`
+			`?page=1&limit=${$query.params.limit}&type=${typeId}&visibility=${visibility}&collectionIds=${id}`
 		);
 	}
 </script>

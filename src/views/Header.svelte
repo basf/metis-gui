@@ -7,7 +7,13 @@
 				{/if}
 			</nav>
 
-			<IconButton id="xray" slot="center" size="xxl" iconSize="4x" href="/">
+			<IconButton
+				id="xray"
+				slot="center"
+				size="xxl"
+				iconSize="4x"
+				href="/?page=1&limit=10&visibility=&type="
+			>
 				{@html Xray}
 			</IconButton>
 

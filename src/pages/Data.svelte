@@ -49,7 +49,7 @@
 	import { fragment, query } from 'svelte-pathfinder';
 	import { Col, Grid, Pagination } from 'svelte-spectre';
 
-	import { Main, Overlay } from '@/layouts';
+	import { Main, Overlay } from '@/layouts/';
 
 	import { Filter } from '@/components/Filter';
 	import DataSourceAdd from '@/views/DataSource/DataSourceAdd.svelte';

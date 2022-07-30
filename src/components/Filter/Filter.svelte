@@ -16,13 +16,13 @@
 					style="flex: 400%;"
 				/>
 				<Select
-					options={getVisibilityOptions($filters.data)}
+					options={optionsVisibility}
 					bind:value={$query.params.visibility}
 					placeholder="Visibility"
 					size="lg"
 				/>
 				<Select
-					options={getTypeOptions($filters.types)}
+					options={optionsTypes}
 					bind:value={$query.params.type}
 					placeholder="Type"
 					size="lg"
@@ -33,7 +33,7 @@
 </div>
 
 <script lang="ts" context="module">
-	import { Param, query } from 'svelte-pathfinder';
+	import { pattern, query, type Param, type Params } from 'svelte-pathfinder';
 	import { Autocomplete, Col, Grid, IconButton, InputGroup, Select } from 'svelte-spectre';
 	import { VISIBILITY } from '@/types/const';
 	import filters from '@/stores/filters';
@@ -46,6 +46,7 @@
 		group: string;
 		style: string;
 		value?: number[];
+		type: number;
 	};
 </script>
 
@@ -58,35 +59,70 @@
 	let selected: Tag[] = [];
 	let predefined: Tag[] = [];
 
-	$: predefined = getPredefined($filters.data);
+	$: predefined = getPredefined($filters.data, $query.params);
 	$: if (predefined.length) selected = getSelected($query.params.collectionIds);
+	$: optionsVisibility = getVisibilityOptions(selected, $query.params.type);
+	$: optionsTypes = getTypeOptions($filters.types, selected, $query.params.visibility);
 
-	function getPredefined(collections: Collection[]): Tag[] {
-		return collections?.map((collection: Collection) => ({
-			index: collection.id,
-			label: collection.title,
-			group: collection.visibility,
-			style: `background: ${collection.typeFlavor} !important`,
-			value: collection.dataSources,
-		}));
+	function getPredefined(collections: Collection[], params: Params): Tag[] {
+		return collections
+			.filter(({ dataSources }) => ($pattern('/') ? dataSources?.length : true))
+			.map((collection: Collection) => ({
+				index: collection.id,
+				label: collection.title,
+				group: collection.visibility,
+				type: collection.typeId,
+				style: `background: ${collection.typeFlavor} !important`,
+				value: collection.dataSources,
+			}))
+			.filter((tag) => {
+				const { type, visibility } = params;
+				return type || visibility ? tag.type === type || tag.group === visibility : true;
+			});
 	}
 
 	function getSelected(collectionIds: Param) {
 		return predefined.filter((tag) => `${collectionIds}`.split(',').includes(`${tag.index}`));
 	}
 
-	function setCollectionIds(e: { detail: Tag[] }) {
-		const collectionIds = selected.map((s) => s.index).join(',');
-		$query.params.collectionIds = collectionIds;
+	function setCollectionIds({ detail: tag }) {
+		const selectedIds = selected.map((s) => s.index).join(',');
+		$query.params.collectionIds = selectedIds;
 	}
 
-	function getVisibilityOptions(filters: Collection[]) {
-		// const visibilitys = new Set([...filters.map(({ visibility }) => visibility)]);
-		// console.log(visibilitys);
-		return VISIBILITY;
+	function getVisibilityOptions(tags: Tag[], typeId: Param) {
+		const visibilitys = new Set([
+			...$filters.data
+				.filter((filter) => filter.typeId === typeId)
+				.map(({ visibility }) => visibility),
+		]);
+
+		return VISIBILITY.filter((group) =>
+			tags.length
+				? selected.some((tag) => tag.group === group)
+				: typeId
+				? visibilitys.has(group)
+				: true
+		);
 	}
 
-	function getTypeOptions(types: CollectionType[]) {
-		return types.map(({ label, slug: value }) => ({ label, value })).filter(Boolean);
+	function getTypeOptions(types: CollectionType[], tags: Tag[], visibility: Params) {
+		const optionsTypes = types
+			.map(({ label, id: value }) => ({ label, value }))
+			.filter(Boolean);
+
+		const typeIds = new Set([
+			...$filters.data
+				.filter((filter) => filter.visibility === (visibility as unknown as string))
+				.map(({ typeId }) => typeId),
+		]);
+
+		return optionsTypes.filter((type) =>
+			tags.length
+				? selected.some((tag) => tag.type === type.value)
+				: visibility
+				? typeIds.has(type.value)
+				: true
+		);
 	}
 </script>

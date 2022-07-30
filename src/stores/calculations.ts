@@ -1,3 +1,4 @@
+import { query } from 'svelte-pathfinder';
 import { asyncable, syncable } from 'svelte-asyncable';
 import { streamable } from 'svelte-streamable';
 import { toast } from 'svelte-spectre';
@@ -5,25 +6,43 @@ import { toast } from 'svelte-spectre';
 import { getCalculations, getCalculationsEngines } from '@/services/api';
 import { STREAM_URL, SYNC_TOASTS_CONFIG } from '@/config';
 
-import type { Calculation as CalculationDTO, Stream as StreamDTO } from '@/types/dto';
+import type { Unsubscriber } from 'svelte/store';
+import type { Calculation, CollectionType, Stream } from '@/types/dto';
+
+type CalculationDTO = {
+	reqId: string,
+	data: Calculation[],
+	total: number,
+	type: CollectionType[]
+}
+
+let unsubscribe: Unsubscriber
 
 export const enginesAsync = asyncable(getCalculationsEngines)
 export const engines = syncable(enginesAsync)
 
-export const calculationsAsync = streamable<StreamDTO<CalculationDTO[]>, CalculationDTO[]>(
+export const calculationsAsyncReq = asyncable(($query) => getCalculations($query), null, [query])
+export const calculationsAsync = streamable<Stream<CalculationDTO>, CalculationDTO>(
 	{
 		url: STREAM_URL,
 		event: 'calculations',
 		withCredentials: true,
 	},
-	(res) => {
+	(res, set) => {
+		console.log(res);
 		if (res) {
 			toast.primary({ ...SYNC_TOASTS_CONFIG, msg: 'Calculations synced' });
-			return res.data;
+			set(res.data);
 		} else {
-			getCalculations(get(query).toString());
+			unsubscribe = calculationsAsyncReq.subscribe(async ($calculationsAsyncReq) => {
+				const { reqId } = await $calculationsAsyncReq
+				// toast.primary({ ...SYNC_TOASTS_CONFIG, msg: `Calculations requested: ${reqId}` });
+			})
+		}
+		return (lastSubscriber) => {
+			if (lastSubscriber) unsubscribe()
 		}
 	}
 );
 
-export default syncable(calculationsAsync, []);
+export default syncable<CalculationDTO>(calculationsAsync, []);
