@@ -74,6 +74,7 @@
 	import { editorCode } from '@/stores/editor';
 
 	import type { DataSource as DataSourceDTO } from '@/types/dto';
+	import { API_BASEURL } from '@/config';
 </script>
 
 <script lang="ts">
@@ -104,6 +105,11 @@
 				label: 'Calculate',
 				action: runCalculation,
 			},
+			viewRes = {
+				icon: 'download',
+				label: 'View Result',
+				action: viewResult,
+			},
 			deleteData = {
 				icon: 'cross',
 				color: 'error',
@@ -114,7 +120,8 @@
 			type === 1 ? runCalc : null,
 			//type === 1 ? editCalc : null,
 			//editTag,
-			type === 1 ? deleteData : null,
+			type === 3 ? viewRes : null,
+			deleteData,
 		].filter(Boolean);
 	};
 
@@ -158,13 +165,15 @@
 	async function editCalculation(id: number) {
 		$fragment = `#edit-calculation-${id}`;
 	}
+
 	function submitCalculation() {
-		setCalculation(+dataId, 'dummy', $editorCode.input, 'workflow').then(() => closeModal());
+		setCalculation(+dataId, 'pcrystal', $editorCode.input, null).then(() => closeModal());
 	}
 
 	function editTags(id: number) {
 		$fragment = `#edit-tags-${id}`;
 	}
+
 	async function submitTags() {
 		await patchDataSourceCollections(+dataId, tagIds).then(() => closeModal());
 	}
@@ -172,12 +181,13 @@
 	function editPlots(id: number) {
 		$fragment = `#edit-plot-${id}`;
 	}
+
 	function submitPlots() {
 		closeModal();
 	}
 
 	function runCalculation(id: number) {
-		setCalculation(id, 'dummy', null, 'workflow').then(() => {
+		setCalculation(id, 'pcrystal', null, null).then(() => {
 			toast.success({
 				msg: 'Calculation submitted',
 				timeout: 2000,
@@ -189,5 +199,9 @@
 
 	function delData(id: number) {
 		withConfirm(delDataSource, id, 'Are you sure?', false)?.(id);
+	}
+
+	function viewResult(id: number){
+		window.open(`${API_BASEURL}/datasources/${id}`);
 	}
 </script>

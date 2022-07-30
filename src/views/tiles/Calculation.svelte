@@ -4,7 +4,7 @@
 	</svelte:fragment>
 	<svelte:fragment slot="subtitle">
 		<small class="text-gray">
-			{showTimestamp(calculation)}
+			Started {showTimestamp(calculation)}
 		</small>
 	</svelte:fragment>
 	<Meter
@@ -13,19 +13,6 @@
 		striped={calculation.progress < 100}
 		animated={calculation.progress < 100}
 	/>
-	<svelte:fragment slot="action">
-		<IconButton
-			icon="cross"
-			color="error"
-			on:click={() =>
-				withConfirm(
-					delCalculation,
-					calculation.id,
-					'Are you sure?',
-					false
-				)?.(calculation.id)}
-		/>
-	</svelte:fragment>
 </Tile>
 
 <script lang="ts" context="module">

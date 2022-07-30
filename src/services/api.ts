@@ -38,7 +38,7 @@ export async function delDataSource(id: number): Promise<void> {
 	return delJSON(`/datasources/${id}`);
 }
 
-export async function getTemplate(engine = 'dummy'): Promise<TemplateDTO> {
+export async function getTemplate(engine): Promise<TemplateDTO> {
 	return fetchJSON(
 		`${__env === 'production' ? API_HOST : API_BASEURL}/calculations/template?engine=${engine}`,
 		{ credentials: 'omit' }
@@ -51,9 +51,9 @@ export async function getCalculations(): Promise<void> {
 
 export async function setCalculation(
 	dataId: number,
-	engine: string = 'dummy',
+	engine: string,
 	input?: string,
-	workflow: string = 'workflow'
+	workflow?: string = 'workflow'
 ): Promise<void> {
 	return postJSON('/calculations', { dataId, engine, input, workflow });
 }

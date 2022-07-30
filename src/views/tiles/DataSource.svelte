@@ -16,7 +16,7 @@
 		</svelte:fragment>
 		<svelte:fragment slot="subtitle">
 			<small class="text-gray">
-				Type &bull; {datasource.type} &bull; {showTimestamp(datasource)}
+				Added {showTimestamp(datasource)}
 			</small>
 		</svelte:fragment>
 		{#if datasource.progress}
