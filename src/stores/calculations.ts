@@ -13,7 +13,7 @@ type CalculationDTO = {
 	reqId: string,
 	data: Calculation[],
 	total: number,
-	type: CollectionType[]
+	types: CollectionType[]
 }
 
 let unsubscribe: Unsubscriber
@@ -32,7 +32,7 @@ export const calculationsAsync = streamable<Stream<CalculationDTO>, CalculationD
 		console.log(res);
 		if (res) {
 			toast.primary({ ...SYNC_TOASTS_CONFIG, msg: 'Calculations synced' });
-			set(res.data);
+			set({ ...res });
 		} else {
 			unsubscribe = calculationsAsyncReq.subscribe(async ($calculationsAsyncReq) => {
 				const { reqId } = await $calculationsAsyncReq
@@ -45,4 +45,4 @@ export const calculationsAsync = streamable<Stream<CalculationDTO>, CalculationD
 	}
 );
 
-export default syncable<CalculationDTO>(calculationsAsync, []);
+export default syncable<CalculationDTO>(calculationsAsync, { data: [], total: 10, types: [] });
