@@ -59,7 +59,7 @@
 
 		return (
 			$path +
-			`?page=1&limit=${$query.params.limit}&type=${typeId}&visibility=${visibility}&collectionIds=${id}`
+			`?page=1&limit=${$query.params.limit}&type=${$query.params.type}&visibility=${$query.params.visibility}&collectionIds=${id}`
 		);
 	}
 </script>
