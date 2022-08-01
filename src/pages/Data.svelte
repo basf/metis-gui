@@ -5,13 +5,15 @@
 		<DataSourceAdd msg={!$datasources.total} />
 	{/if}
 
-	<Pagination
-		bind:limit={$query.params.limit}
-		bind:page={$query.params.page}
-		total={$datasources.total}
-		limits={[5, 10, 50, 100]}
-		rest={5}
-	/>
+	{#if $datasources.total}
+		<Pagination
+			bind:limit={$query.params.limit}
+			bind:page={$query.params.page}
+			total={$datasources.total}
+			limits={[5, 10, 50, 100]}
+			rest={5}
+		/>
+	{/if}
 
 	<div bind:clientWidth={width} class="py-2">
 		<Grid stack>

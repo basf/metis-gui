@@ -14,17 +14,19 @@
 		animated={calculation.progress < 100}
 	/>
 	<svelte:fragment slot="action">
-		<IconButton
-			icon="cross"
-			color="error"
-			on:click={() =>
-				withConfirm(
-					delCalculation,
-					{ id: calculation.id, query: $query.toString() },
-					'Are you sure?',
-					false
-				)?.({ id: calculation.id, query: $query.toString() })}
-		/>
+		{#if calculation.progress < 100}
+			<IconButton
+				icon="cross"
+				color="error"
+				on:click={() =>
+					withConfirm(
+						delCalculation,
+						{ id: calculation.id, query: $query.toString() },
+						'Are you sure?',
+						false
+					)?.({ id: calculation.id, query: $query.toString() })}
+			/>
+		{/if}
 	</svelte:fragment>
 </Tile>
 

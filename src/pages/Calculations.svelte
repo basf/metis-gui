@@ -1,15 +1,17 @@
 <Main>
 	<Filter tooltip="Add calculation" />
 
-	<Pagination
-		bind:limit={$query.params.limit}
-		bind:page={$query.params.page}
-		limits={[5, 10, 50, 100]}
-		total={$calculations.total}
-		rest={5}
-	/>
+	{#if $calculations.total}
+		<Pagination
+			bind:limit={$query.params.limit}
+			bind:page={$query.params.page}
+			limits={[5, 10, 50, 100]}
+			total={$calculations.total}
+			rest={5}
+		/>
+	{/if}
 
-	<div bind:clientWidth={width}>
+	<div bind:clientWidth={width} class="py-2">
 		<Grid stack>
 			{#await $calculationsAsync}
 				{#each { length: 4 } as _}
