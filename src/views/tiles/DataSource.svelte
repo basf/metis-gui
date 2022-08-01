@@ -50,16 +50,18 @@
 	}
 
 	function setTagLink({ id, typeId, visibility }: Partial<Collection>) {
-		// const iDs = `${$query.params.collectionIds}`
-		// 	.split(',')
-		// 	.map((c) => +c)
-		// 	.filter(Boolean);
+		const iDs = `${$query.params.collectionIds}`
+			.split(',')
+			.map((c) => +c)
+			.filter(Boolean);
 
-		// const collectionIds = new Set([...iDs, id]);
+		const collectionIds = new Set([...iDs, id]);
 
 		return (
 			$path +
-			`?page=1&limit=${$query.params.limit}&type=${$query.params.type}&visibility=${$query.params.visibility}&collectionIds=${id}`
+			`?page=1&limit=${$query.params.limit}&type=${$query.params.type}&visibility=${
+				$query.params.visibility
+			}&collectionIds=${Array.from(collectionIds)}`
 		);
 	}
 </script>
