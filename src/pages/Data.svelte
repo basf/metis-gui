@@ -99,6 +99,7 @@
 				color: 'error',
 				label: 'Delete',
 				action: delData,
+				query: $query.toString(),
 			};
 		return [
 			type === 1 ? runCalc : null,
@@ -124,7 +125,7 @@
 		$fragment = `#edit-engine-${id}`;
 	}
 
-	function delData(id: number) {
-		withConfirm(delDataSource, id, 'Are you sure?', false)?.(id);
+	function delData(id: number, query: string) {
+		withConfirm(delDataSource, { id, query }, 'Are you sure?', false)?.({ id, query });
 	}
 </script>

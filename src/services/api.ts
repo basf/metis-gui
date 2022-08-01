@@ -35,8 +35,8 @@ export async function patchDataSourceCollections(
 	return patchJSON(`/datasources/${id}/filters`, collectionIds);
 }
 
-export async function delDataSource(id: number): Promise<void> {
-	return delJSON(`/datasources/${id}`);
+export async function delDataSource({ id, query }: { id: number, query?: string }): Promise<void> {
+	return delJSON(`/datasources/${id}${query || ''}`);
 }
 
 export async function getTemplate(engine = 'dummy'): Promise<TemplateDTO> {
@@ -64,8 +64,8 @@ export async function setCalculation({ dataId, engine = 'dummy', input, workflow
 	return postJSON('/calculations', { dataId, engine, input, workflow });
 }
 
-export async function delCalculation(id: number): Promise<void> {
-	return delJSON(`/calculations/${id}`);
+export async function delCalculation({ id, query }: { id: number, query?: string }): Promise<void> {
+	return delJSON(`/calculations/${id}${query || ''}`);
 }
 
 export async function login(email: string, password: string): Promise<void> {

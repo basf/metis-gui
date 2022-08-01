@@ -4,41 +4,44 @@
 	<Pagination
 		bind:limit={$query.params.limit}
 		bind:page={$query.params.page}
-		limits={[10, 50, 100]}
+		limits={[5, 10, 50, 100]}
 		total={$calculations.total}
-		rest={7}
 	/>
 
 	<div bind:clientWidth={width}>
-		{#await $calculationsAsync}
-			{#each { length: 4 } as _}
-				<Loaders.Tile count={1} w={width} h={74} height={74} {width} />
-			{/each}
-		{:then { data }}
-			{#each data as calculation (calculation.id)}
-				{#if calculation.data}
-					{#each calculation.data as datasource}
-						<DataSource {datasource} />
-					{/each}
+		<Grid stack>
+			{#await $calculationsAsync}
+				{#each { length: 4 } as _}
+					<Col col="12">
+						<Loaders.Tile count={1} w={width} h={74} height={74} {width} />
+					</Col>
+				{/each}
+			{:then { data }}
+				{#each data as calculation (calculation.id)}
+					<Col col="12">
+						<Calculation {calculation} />
+					</Col>
 				{:else}
-					<Calculation {calculation} />
-				{/if}
-			{:else}
-				<div class="text-center distant_msg">No calculations</div>
-			{/each}
-		{/await}
+					<div class="text-center distant_msg">No calculations</div>
+				{/each}
+			{:catch error}
+				<Col>
+					<Overlay>Server disconnected</Overlay>
+				</Col>
+			{/await}
+		</Grid>
 	</div>
 </Main>
 
 <script lang="ts" context="module">
 	import { query } from 'svelte-pathfinder';
-	import { Main } from '@/layouts/';
-	import { Calculation, DataSource } from '@/views/tiles';
+	import { Main, Overlay } from '@/layouts/';
+	import { Calculation } from '@/views/tiles';
 	import * as Loaders from '@/components/loaders';
 
 	import calculations, { calculationsAsync } from '@/stores/calculations';
 	import { Filter } from '@/components/Filter';
-	import { Pagination } from 'svelte-spectre';
+	import { Col, Grid, Pagination } from 'svelte-spectre';
 </script>
 
 <script lang="ts">

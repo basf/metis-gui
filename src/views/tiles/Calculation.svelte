@@ -20,16 +20,17 @@
 			on:click={() =>
 				withConfirm(
 					delCalculation,
-					calculation.id,
+					{ id: calculation.id, query: $query.toString() },
 					'Are you sure?',
 					false
-				)?.(calculation.id)}
+				)?.({ id: calculation.id, query: $query.toString() })}
 		/>
 	</svelte:fragment>
 </Tile>
 
 <script lang="ts" context="module">
 	import { IconButton, Meter, Tile } from 'svelte-spectre';
+	import { query } from 'svelte-pathfinder';
 
 	import { delCalculation } from '@/services/api';
 
