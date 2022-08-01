@@ -6,7 +6,7 @@
 		bind:page={$query.params.page}
 		total={$collections.total}
 		limits={[5, 10, 50, 100]}
-		rest={7}
+		rest={5}
 	/>
 
 	<div bind:clientWidth={width} class="py-2">

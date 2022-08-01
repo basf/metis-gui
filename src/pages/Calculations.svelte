@@ -6,6 +6,7 @@
 		bind:page={$query.params.page}
 		limits={[5, 10, 50, 100]}
 		total={$calculations.total}
+		rest={5}
 	/>
 
 	<div bind:clientWidth={width}>
