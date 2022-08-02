@@ -2,8 +2,8 @@
 	<Container>
 		<Navbar>
 			<nav slot="left">
-				Created by Tilde Materials Informatics<br />
-				and Materials Platform for Data Science.
+				Created by <a href="https://tilde.pro" target="_blank">Tilde Materials Informatics</a><br />
+				&amp; <a href="https://mpds.io" target="_blank">Materials Platform for Data Science</a>.
 			</nav>
 			<nav slot="right"><Switch bind:value={$darkTheme}>Dark theme</Switch></nav>
 		</Navbar>
