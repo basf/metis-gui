@@ -26,7 +26,7 @@
 	import { back, path, pattern, query } from 'svelte-pathfinder';
 	import { Button, Container, Icon, IconButton, Navbar } from 'svelte-spectre';
 	import user from '@/stores/user';
-	import Xray from '@/assets/img/b-science.svg';
+	import Xray from '@/assets/img/metis.svg';
 </script>
 
 <style lang="scss">
