@@ -2,7 +2,7 @@
 
 <script lang="ts" context="module">
 	import { Autocomplete } from 'svelte-spectre';
-	import collections from '@/stores/collections';
+	import filters from '@/stores/filters';
 	import user from '@/stores/user';
 
 	import type { Collection } from '@/types/dto';
@@ -17,13 +17,13 @@
 </script>
 
 <script lang="ts">
-	export let dataSourceId: number,
-		tags: number[] = [];
+	export let dataSourceId: number;
+	export let tags: number[] = [];
 
-	let predefined: Tag[] = [],
-		selected: Tag[] = [];
+	let predefined: Tag[] = [];
+	let selected: Tag[] = [];
 
-	$: predefined = $collections
+	$: predefined = $filters.data
 		.filter((collection: Collection) => collection.userId === $user?.id)
 		.map((collection: Collection) => ({
 			index: collection.id,

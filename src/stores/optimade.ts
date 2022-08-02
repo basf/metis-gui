@@ -17,7 +17,8 @@ type StructuresByProviders = Array<[Types.StructuresResponse[], Types.Provider]>
 
 const getStructuresAll = debounce(
 	(providers: string[], filter: string, page: number, limit: number, batch: boolean) => {
-		return optimade.getStructuresAll({ providers, filter, page, limit, batch }) || [];
+		const offset = (page - 1) * limit;
+		return optimade.getStructuresAll({ providers, filter, page, limit, offset, batch }) || [];
 	},
 	SEARCH_DELAY
 );
@@ -27,8 +28,8 @@ export const providersAsync: Asyncable<Types.Provider[]> = asyncable(
 		const providers = optimade.providers || (await optimade.getProviders());
 		return providers
 			? Object.values(providers).filter((provider) =>
-					OPTIMADE_PROVIDERS.includes(provider.id)
-			  )
+				OPTIMADE_PROVIDERS.includes(provider.id)
+			)
 			: [];
 	},
 	null

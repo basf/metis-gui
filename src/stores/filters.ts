@@ -3,14 +3,13 @@ import { asyncable, syncable } from 'svelte-asyncable';
 import { streamable } from 'svelte-streamable';
 import { toast } from 'svelte-spectre';
 
-import { getCollections } from '@/services/api';
+import { getFilters } from '@/services/api';
 import { STREAM_URL, SYNC_TOASTS_CONFIG } from '@/config';
 
-import type { CollectionType, Collection, Stream } from '@/types/dto';
 import { type Unsubscriber } from 'svelte/store'
+import type { CollectionType, Collection, Stream } from '@/types/dto';
 
 type CollectionDTO = {
-	reqId: string,
 	data: Collection[],
 	total: number,
 	types: CollectionType[]
@@ -18,22 +17,22 @@ type CollectionDTO = {
 
 let unsubscribe: Unsubscriber
 
-export const collectionsAsyncReq = asyncable(($query) => getCollections($query), null, [query])
+export const filtersAsyncReq = asyncable(getFilters)
 
-export const collectionsAsync = streamable<Stream<CollectionDTO>, CollectionDTO>(
+export const filtersAsync = streamable<Stream<CollectionDTO>, CollectionDTO>(
 	{
 		url: STREAM_URL,
-		event: 'collections',
+		event: 'filters',
 		withCredentials: true,
 	},
 	(res, set) => {
 		console.log(res);
 		if (res) {
-			toast.primary({ ...SYNC_TOASTS_CONFIG, msg: 'Collections synced' });
+			toast.primary({ ...SYNC_TOASTS_CONFIG, msg: 'Filters synced' });
 			set({ ...res });
 		} else {
-			unsubscribe = collectionsAsyncReq.subscribe(async ($collectionsAsyncReq) => {
-				const { reqId } = await $collectionsAsyncReq
+			unsubscribe = filtersAsyncReq.subscribe(async ($filtersAsyncReq) => {
+				const { reqId } = await $filtersAsyncReq
 				// toast.primary({ ...SYNC_TOASTS_CONFIG, msg: `Collections requested: ${reqId}` });
 			})
 		}
@@ -43,4 +42,4 @@ export const collectionsAsync = streamable<Stream<CollectionDTO>, CollectionDTO>
 	}
 );
 
-export default syncable<CollectionDTO>(collectionsAsync, { data: [], total: 10, types: [] });
+export default syncable<CollectionDTO>(filtersAsync, { data: [], total: 10, types: [] });

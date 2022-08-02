@@ -1,86 +1,78 @@
 <Main>
-	<DataSearch add bind:addOpen data={$datasources.length} />
-	<div bind:clientWidth={width}>
-		{#if !$status.hidden}
+	<Filter icon={add ? 'minus' : 'plus'} action={() => (add = !add)} />
+
+	{#if add || !$datasources.total}
+		<DataSourceAdd msg={!$datasources.total} />
+	{/if}
+
+	{#if $datasources.total}
+		<Pagination
+			bind:limit={$query.params.limit}
+			bind:page={$query.params.page}
+			total={$datasources.total}
+			limits={[5, 10, 50, 100]}
+			rest={5}
+		/>
+	{/if}
+
+	<div bind:clientWidth={width} class="py-2">
+		<Grid stack>
 			{#await $datasourcesAsync}
 				{#each { length: 4 } as _}
-					<Loaders.Tile count={1} w={width} h={74} height={74} {width} />
+					<Col col="12">
+						<Loaders.Tile count={1} w={width} h={74} height={74} {width} />
+					</Col>
 				{/each}
-			{:then datasources}
-				{#if addOpen || !datasources.length}
-					<DataSourceAdd msg={!datasources.length} />
-				{/if}
-				{#each makeDataSourcesList(datasources, search) as datasource (datasource.id)}
-					<DataSource {datasource}>
-						{#if $user?.id === datasource.userId}
-							<TileMenu
-								items={tileMenuItems(datasource.type)}
-								dataId={datasource.id}
-							/>
-						{/if}
-					</DataSource>
+			{:then { data, total }}
+				{#each data as datasource (datasource.id)}
+					<Col col="12">
+						<DataSource {datasource}>
+							{#if $user?.id === datasource.userId}
+								<TileMenu
+									items={tileMenuItems(datasource.type)}
+									dataId={datasource.id}
+								/>
+							{/if}
+						</DataSource>
+					</Col>
 				{/each}
+			{:catch error}
+				<Col>
+					<Overlay>Server disconnected</Overlay>
+				</Col>
 			{/await}
-		{/if}
+		</Grid>
 	</div>
 </Main>
 
-<Modal size={$media.sm ? 'fs' : 'lg'} open={!!$fragment} on:close={closeModal}>
-	<h3 slot="header">
-		{@html `Edit and submit ${decodeURIComponent(dataType)} for <mark> ${
-			$datasources.find((d) => d.id === +dataId)?.name
-		} </mark>`}
-	</h3>
-	{#if modal().component}
-		<svelte:component
-			this={modal().component}
-			dataSourceId={+decodeURIComponent(dataId)}
-			bind:tags={tagIds}
-		/>
-	{:else}
-		<span style="height: 100%" class="loading loading-lg p-centered d-block" />
-	{/if}
-	<svelte:fragment slot="footer">
-		<Button on:click={closeModal}>Cancel</Button>
-		<Button variant="primary" on:click={modal().submit}>Submit</Button>
-	</svelte:fragment>
-</Modal>
+<DataModal data={$datasources.data} />
 
 <script lang="ts" context="module">
-	import { fragment } from 'svelte-pathfinder';
-	import { Button, Modal, toast } from 'svelte-spectre';
-	import { media } from '@/stores/media';
-	import status from '@/stores/status';
+	import { fragment, query } from 'svelte-pathfinder';
+	import { Col, Grid, Pagination } from 'svelte-spectre';
 
-	import Main from '@/layouts/Main.svelte';
+	import { Main, Overlay } from '@/layouts/';
 
-	import { DataSearch } from '@/components/Search';
+	import { Filter } from '@/components/Filter';
 	import DataSourceAdd from '@/views/DataSource/DataSourceAdd.svelte';
 	import { DataSource } from '@/views/tiles';
 	import * as Loaders from '@/components/loaders';
 
-	import { delDataSource, setCalculation } from '@/services/api';
+	import { delDataSource } from '@/services/api';
 
 	import datasources, { datasourcesAsync } from '@/stores/datasources';
 	import { withConfirm } from '@/stores/confirmator';
 
-	import { CalculationEdit, PlotEdit, TagsEdit, EnginesEdit } from '@/views/modals';
-	import { patchDataSourceCollections } from '@/services/api';
+	import { DataModal } from '@/views/modals';
 
 	import user from '@/stores/user';
 	import { TileMenu } from '@/components/Tile/';
 	import Sinus from '@/assets/img/sinus.svg';
-
-	import { editorCode } from '@/stores/editor';
-
-	import type { DataSource as DataSourceDTO } from '@/types/dto';
 </script>
 
 <script lang="ts">
 	let width = 0;
-	let search = '';
-	let addOpen = false;
-	let tagIds = [];
+	let add = false;
 
 	const tileMenuItems = (type: number) => {
 		const editCalc = {
@@ -109,6 +101,7 @@
 				color: 'error',
 				label: 'Delete',
 				action: delData,
+				query: $query.toString(),
 			};
 		return [
 			type === 1 ? runCalc : null,
@@ -118,91 +111,23 @@
 		].filter(Boolean);
 	};
 
-	function makeDataSourcesList(items: DataSourceDTO[], search: string) {
-		return search
-			? items.filter((item) => match(item, search))
-			: items.sort((a, b) => b.id - a.id);
-	}
-
-	function closeModal() {
-		$fragment = '';
-	}
-
-	$: modal = () => {
-		switch (dataType) {
-			case 'engine':
-				return {
-					component: EnginesEdit,
-					submit: submitEngines,
-				};
-			case 'calculation':
-				return {
-					component: CalculationEdit,
-					submit: submitCalculation,
-				};
-			case 'tags':
-				return {
-					component: TagsEdit,
-					submit: submitTags,
-				};
-			case 'plot':
-				return {
-					component: PlotEdit,
-					submit: submitPlots,
-				};
-			default:
-				return {
-					component: undefined,
-					submit: () => {},
-				};
-		}
-	};
-
-	$: [_, dataType, dataId, engine] = $fragment.split('-');
-
 	async function editCalculation(id: number) {
 		$fragment = `#edit-calculation-${id}`;
-	}
-	function submitCalculation() {
-		setCalculation(+dataId, 'dummy', $editorCode.input, 'workflow').then(() => closeModal());
 	}
 
 	function editTags(id: number) {
 		$fragment = `#edit-tags-${id}`;
 	}
-	async function submitTags() {
-		await patchDataSourceCollections(+dataId, tagIds).then(() => closeModal());
-	}
 
 	function editPlots(id: number) {
 		$fragment = `#edit-plot-${id}`;
-	}
-	function submitPlots() {
-		closeModal();
 	}
 
 	function runCalculation(id: number) {
 		$fragment = `#edit-engine-${id}`;
 	}
 
-	function submitEngines() {
-		setCalculation({
-			dataId: +dataId,
-			engine,
-			input: '',
-			workflow: 'workflow',
-		}).then(() => {
-			closeModal();
-			toast.success({
-				msg: 'Calculation submitted',
-				timeout: 2000,
-				pos: 'top_right',
-				icon: 'forward',
-			});
-		});
-	}
-
-	function delData(id: number) {
-		withConfirm(delDataSource, id, 'Are you sure?', false)?.(id);
+	function delData(id: number, query: string) {
+		withConfirm(delDataSource, { id, query }, 'Are you sure?', false)?.({ id, query });
 	}
 </script>

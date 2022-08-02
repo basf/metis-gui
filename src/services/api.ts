@@ -7,6 +7,7 @@ import type {
 	Collection as CollectionDTO,
 	CollectionType as CollectionTypeDTO,
 } from '@/types/dto';
+import { StringParams } from 'svelte-pathfinder';
 
 export interface HttpError extends Error {
 	response?: Response;
@@ -15,12 +16,12 @@ export interface HttpError extends Error {
 export type HttpHeaders = Record<string, string>;
 export type QueryParams = Record<string, unknown>;
 
-export async function getDataSources(): Promise<void> {
-	return getJSON('/datasources');
+export async function getFilters(query?: string): Promise<void> {
+	return getJSON(`/filters${query || ''}`);
 }
 
-export async function getDataSourcesByCollections(collectionIds: string): Promise<void> {
-	return getJSON(`/datasources?collectionIds=${collectionIds}`);
+export async function getDataSources(query?: string): Promise<void> {
+	return getJSON(`/datasources${query || ''}`);
 }
 
 export async function setDataSources(content: string | string[]): Promise<void> {
@@ -31,11 +32,11 @@ export async function patchDataSourceCollections(
 	id: number,
 	collectionIds: CollectionDTO[]
 ): Promise<unknown> {
-	return patchJSON(`/datasources/${id}/collections`, collectionIds);
+	return patchJSON(`/datasources/${id}/filters`, collectionIds);
 }
 
-export async function delDataSource(id: number): Promise<void> {
-	return delJSON(`/datasources/${id}`);
+export async function delDataSource({ id, query }: { id: number, query?: string }): Promise<void> {
+	return delJSON(`/datasources/${id}${query || ''}`);
 }
 
 export async function getTemplate(engine = 'dummy'): Promise<TemplateDTO> {
@@ -63,8 +64,8 @@ export async function setCalculation({ dataId, engine = 'dummy', input, workflow
 	return postJSON('/calculations', { dataId, engine, input, workflow });
 }
 
-export async function delCalculation(id: number): Promise<void> {
-	return delJSON(`/calculations/${id}`);
+export async function delCalculation({ id, query }: { id: number, query?: string }): Promise<void> {
+	return delJSON(`/calculations/${id}${query || ''}`);
 }
 
 export async function login(email: string, password: string): Promise<void> {
@@ -87,8 +88,8 @@ export async function getCollectionTypes(): Promise<CollectionTypeDTO[]> {
 	return getJSON('/collections/types');
 }
 
-export async function getCollections(): Promise<void> {
-	return getJSON('/collections');
+export async function getCollections(query?: string): Promise<void> {
+	return getJSON(`/collections${query || ''}`);
 }
 
 export async function setCollection(collection: CollectionDTO): Promise<void> {

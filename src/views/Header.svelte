@@ -7,9 +7,9 @@
 				{/if}
 			</nav>
 
-			<IconButton id="xray" slot="center" size="xxl" iconSize="4x" href="/"
-				>{@html Xray}</IconButton
-			>
+			<IconButton id="xray" slot="center" size="xxl" iconSize="4x" href="/">
+				{@html Xray}
+			</IconButton>
 
 			<nav slot="right">
 				{#if $user}
@@ -23,7 +23,7 @@
 </header>
 
 <script lang="ts">
-	import { back, path } from 'svelte-pathfinder';
+	import { back, path, pattern, query } from 'svelte-pathfinder';
 	import { Button, Container, Icon, IconButton, Navbar } from 'svelte-spectre';
 	import user from '@/stores/user';
 	import Xray from '@/assets/img/b-science.svg';

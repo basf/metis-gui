@@ -14,22 +14,25 @@
 		animated={calculation.progress < 100}
 	/>
 	<svelte:fragment slot="action">
-		<IconButton
-			icon="cross"
-			color="error"
-			on:click={() =>
-				withConfirm(
-					delCalculation,
-					calculation.id,
-					'Are you sure?',
-					false
-				)?.(calculation.id)}
-		/>
+		{#if calculation.progress < 100}
+			<IconButton
+				icon="cross"
+				color="error"
+				on:click={() =>
+					withConfirm(
+						delCalculation,
+						{ id: calculation.id, query: $query.toString() },
+						'Are you sure?',
+						false
+					)?.({ id: calculation.id, query: $query.toString() })}
+			/>
+		{/if}
 	</svelte:fragment>
 </Tile>
 
 <script lang="ts" context="module">
 	import { IconButton, Meter, Tile } from 'svelte-spectre';
+	import { query } from 'svelte-pathfinder';
 
 	import { delCalculation } from '@/services/api';
 

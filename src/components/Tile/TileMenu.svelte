@@ -8,7 +8,7 @@
 					<Button
 						href={item.href || ''}
 						variant="link"
-						on:click={() => item.action(dataId)}
+						on:click={() => item.action(dataId, item.query)}
 					>
 						<Icon icon={item.icon} color={item.color}>
 							{#if item.icon.includes('<svg')}
@@ -30,7 +30,7 @@
 			icon={item.icon}
 			tooltip={item.label}
 			color={item.color}
-			on:click={() => item.action(dataId)}
+			on:click={() => item.action(dataId, item.query)}
 			>{#if item.icon.includes('<svg')}
 				{@html item.icon}
 			{/if}
@@ -49,7 +49,8 @@
 		icon?: string;
 		color?: string;
 		label: string;
-		action: (id: number) => void;
+		query?: string;
+		action: (id: number, query?: string) => void;
 	}
 </script>
 

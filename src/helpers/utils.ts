@@ -27,3 +27,9 @@ export async function downloadFile(url: string, filename?: string): Promise<void
 		console.error('Download failed', err);
 	}
 }
+
+function unifyArray(array: Array<any>, key: string) {
+	return array.filter((value, index, self) => {
+		return self.findIndex((v) => v[key] === value[key]) === index;
+	});
+}

@@ -14,6 +14,4 @@ export const userAsync = asyncable<UserDTO>(me, ($user) => {
 	}
 });
 
-const user = syncable<UserDTO | null>(userAsync, null);
-
-export default user;
+export default syncable<UserDTO | null>(userAsync, null);

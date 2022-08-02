@@ -49,7 +49,7 @@ const routes: Route[] = [
 		},
 	},
 	{
-		path: '/collections',
+		path: '/projects',
 		component: () => import('@/pages/Projects.svelte'),
 		menu: {
 			title: 'Projects',

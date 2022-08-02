@@ -1,5 +1,5 @@
 <Panel>
-	<Tabs slot="nav" items={menu} bind:active block />
+	<Tabs slot="nav" items={menu} active={findActive()} block />
 	<div slot="body" class="mt-2">
 		<slot />
 	</div>
@@ -7,17 +7,21 @@
 
 <script lang="ts">
 	import { getContext } from 'svelte';
-	import { path } from 'svelte-pathfinder';
+	import { pattern, query } from 'svelte-pathfinder';
 	import { Panel, Tabs } from 'svelte-spectre';
 	import type { MenuProp, Route } from '@/types/routes';
 
 	const routes: Route[] = getContext('routes');
-	const menu = routes
-		.reduce<MenuProp[]>((items, { path, menu }, i) => {
-			return !!menu && items.push({ path, pos: i + 1, ...menu }), items;
-		}, [])
-		.sort((a, b) => (a.pos > b.pos ? 1 : -1));
-	const current = menu.find((item) => item.path === $path.toString());
 
-	$: active = menu.indexOf(current as MenuProp);
+	$: menu = routes.reduce<MenuProp[]>((items, { path, menu }) => {
+		path = $pattern(path) ? `${path + $query}` : path;
+		return !!menu && items.push({ path, ...menu }), items;
+	}, []);
+
+	function findActive() {
+		return menu.findIndex((item) => {
+			const path = item.path?.match(/^[^?]*/);
+			return $pattern(path?.toString());
+		});
+	}
 </script>

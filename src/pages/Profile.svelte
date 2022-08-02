@@ -36,23 +36,6 @@
 </script>
 
 <style>
-	/* tmp theme fix */
-	@media (prefers-color-scheme: dark) {
-		:global(.spectre .avatar figcaption) {
-			color: #f2f2f2 !important;
-		}
-	}
-	@media (prefers-color-scheme: light) {
-		:global(.spectre .avatar figcaption) {
-			color: #3b4351 !important;
-		}
-	}
-	:global([color-scheme='dark'] .spectre .avatar figcaption) {
-		color: #f2f2f2 !important;
-	}
-	:global([color-scheme='light'] .spectre .avatar figcaption) {
-		color: #3b4351 !important;
-	}
 	.text-center :global(figcaption) {
 		width: max-content;
 	}

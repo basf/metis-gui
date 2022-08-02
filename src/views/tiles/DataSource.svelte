@@ -1,14 +1,19 @@
 <div class="tile-data">
 	<Tile>
+		<svelte:fragment slot="icon">
+			<div class="tooltip" data-tooltip={dataUserName}>
+				<Avatar size="lg" name={dataUserName} badge={`${datasource.id}`} />
+			</div>
+		</svelte:fragment>
 		<svelte:fragment slot="title">
 			<h5 class="mt-2">{@html datasource.name}</h5>
 			<ul class="collections">
-				{#each getCollectionsList(datasource.id) as collection (collection.id)}
+				{#each getCollectionsList(datasource.id, $filters.data) as tag (tag.id)}
 					<li>
-						<a href={filterLink(collection.id)}>
-							<Badge style="background: {collection.typeFlavor}"
-								>{collection.title.substring(0, 10)}</Badge
-							>
+						<a href={setTagLink(tag)}>
+							<Badge style="background: {tag.typeFlavor}">
+								{tag.title}
+							</Badge>
 						</a>
 					</li>
 				{/each}
@@ -19,9 +24,6 @@
 				Type &bull; {datasource.type} &bull; {showTimestamp(datasource)}
 			</small>
 		</svelte:fragment>
-		{#if datasource.progress}
-			<Meter value={datasource.progress} />
-		{/if}
 		<svelte:fragment slot="action">
 			<slot />
 		</svelte:fragment>
@@ -29,36 +31,43 @@
 </div>
 
 <script lang="ts" context="module">
-	import { query } from 'svelte-pathfinder';
-	import { Badge, Meter, Tile } from 'svelte-spectre';
-	import collections from '@/stores/collections';
+	import { query, path } from 'svelte-pathfinder';
+	import { Avatar, Badge, Tile } from 'svelte-spectre';
 	import { showTimestamp } from '@/helpers/date';
 
-	import type { Collection, DataSource } from '@/types/dto';
+	import filters from '@/stores/filters';
+
+	import type { DataSource, Collection } from '@/types/dto';
 </script>
 
 <script lang="ts">
 	export let datasource: DataSource;
 
-	$: getCollectionsList = (dataSourceId: number): Collection[] =>
-		$collections.filter(
-			({ dataSources }: { dataSources: number[] }): boolean =>
-				dataSources && dataSources.includes(dataSourceId)
-		);
+	let dataUserName = `${datasource.userFirstName} ${datasource.userLastName}`;
 
-	function filterLink(id: number) {
-		const iDs: number[] = `${$query.params.collectionIds}`
+	function getCollectionsList(datasourceId: number, data: Collection[]) {
+		return data.filter((filter) => filter.dataSources?.includes(datasourceId));
+	}
+
+	function setTagLink({ id, typeId, visibility }: Partial<Collection>) {
+		const iDs = `${$query.params.collectionIds}`
 			.split(',')
 			.map((c) => +c)
 			.filter(Boolean);
+
 		const collectionIds = new Set([...iDs, id]);
-		return `?collectionIds=${Array.from(collectionIds)}`;
+
+		return (
+			$path +
+			`?page=1&limit=${$query.params.limit}&type=${$query.params.type}&visibility=${
+				$query.params.visibility
+			}&collectionIds=${Array.from(collectionIds)}`
+		);
 	}
 </script>
 
 <style lang="scss">
 	.tile-data {
-		margin: 0.5em 0;
 		:global(.tile) {
 			padding: 0.5em;
 		}

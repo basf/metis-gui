@@ -26,7 +26,9 @@
 		</Container>
 	</main>
 	<Footer />
-	<Msgbar />
+	{#key $user?.id}
+		<Msgbar />
+	{/key}
 	<Confirmator />
 </Spectre>
 
@@ -47,6 +49,7 @@
 	import { userAsync } from '@/stores/user';
 
 	import type { Route } from '@/types/routes';
+	import user from '@/stores/user';
 
 	export let routes: Route[] = [];
 
