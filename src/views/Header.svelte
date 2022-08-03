@@ -8,7 +8,7 @@
 			</nav>
 
 			<IconButton id="xray" slot="center" size="xxl" iconSize="4x" href="/">
-				{@html Xray}
+				{@html logo}
 			</IconButton>
 
 			<nav slot="right">
@@ -30,7 +30,7 @@
 	import { back, path } from 'svelte-pathfinder';
 	import { Button, Container, Icon, IconButton, Navbar, toast } from 'svelte-spectre';
 
-	import Xray from '@/assets/img/b-science.svg';
+	import logo from '@/assets/img/metis.svg';
 
 	import user, { userAsync } from '@/stores/user';
 	import { logout } from '@/services/api';
