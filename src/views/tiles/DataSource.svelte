@@ -21,7 +21,8 @@
 		</svelte:fragment>
 		<svelte:fragment slot="subtitle">
 			<small class="text-gray">
-				Type &bull; {datasource.type} &bull; {showTimestamp(datasource)}
+				<span class="text-primary">{datasource.id}</span> Type &bull; {datasource.type} &bull;
+				{showTimestamp(datasource)}
 			</small>
 		</svelte:fragment>
 		<svelte:fragment slot="action">
