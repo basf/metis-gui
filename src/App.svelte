@@ -52,8 +52,10 @@
 	import user from '@/stores/user';
 
 	export let routes: Route[] = [];
+	export let mode = '';
 
 	setContext('routes', routes);
+	setContext('mode', mode);
 
 	$: page = routes.find((route: Route) => $pattern(route.path)) || null;
 </script>
