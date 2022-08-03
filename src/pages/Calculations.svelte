@@ -25,7 +25,7 @@
 						<Calculation {calculation} />
 					</Col>
 				{:else}
-					<div class="text-center distant_msg">No calculations</div>
+					<div class="text-center distant_msg">No calculations running</div>
 				{/each}
 			{:catch error}
 				<Col>

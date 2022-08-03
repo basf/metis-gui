@@ -1,5 +1,5 @@
 <div class="upload">
-	<Dropzone on:drop={select} accept=".json" on:droprejected={onReject}
+	<Dropzone on:drop={select} on:droprejected={onReject}
 		>Upload POSCAR, CIF, or Optimade files</Dropzone
 	>
 </div>
@@ -40,7 +40,7 @@
 	}
 
 	function onReject() {
-		toast.error({ msg: `Unaccepted file-types`, timeout: 4000, pos: 'top_right' });
+		toast.error({ msg: `Unaccepted file type`, timeout: 4000, pos: 'top_right' });
 	}
 </script>
 
