@@ -1,9 +1,9 @@
 <div class="tile-data">
 	<Tile>
 		<svelte:fragment slot="icon">
-			<div class="tooltip" data-tooltip={dataUserName}>
-				<Avatar size="lg" name={dataUserName} badge={`${datasource.id}`} />
-			</div>
+			{#if datasource.type === 1}
+				<Icon size="2x" color="gray">{@html Cube}</Icon>
+			{/if}
 		</svelte:fragment>
 		<svelte:fragment slot="title">
 			<h5 class="mt-2">{@html datasource.name}</h5>
@@ -21,7 +21,8 @@
 		</svelte:fragment>
 		<svelte:fragment slot="subtitle">
 			<small class="text-gray">
-				Type &bull; {datasource.type} &bull; {showTimestamp(datasource)}
+				<span class="text-primary">{datasource.id}</span> Type &bull; {datasource.type} &bull;
+				{showTimestamp(datasource)}
 			</small>
 		</svelte:fragment>
 		<svelte:fragment slot="action">
@@ -32,8 +33,9 @@
 
 <script lang="ts" context="module">
 	import { query, path } from 'svelte-pathfinder';
-	import { Avatar, Badge, Tile } from 'svelte-spectre';
+	import { Avatar, Badge, Icon, Tile } from 'svelte-spectre';
 	import { showTimestamp } from '@/helpers/date';
+	import Cube from '@/assets/img/cube.svg';
 
 	import filters from '@/stores/filters';
 
