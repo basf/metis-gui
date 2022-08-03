@@ -17,16 +17,33 @@
 						{$user.firstName}&nbsp;{$user.lastName}&nbsp;<Icon icon="people" />
 					</Button>
 				{/if}
+				{#if mode === 'light'}
+					<IconButton icon="shutdown" on:click={doLogout} />
+				{/if}
 			</nav>
 		</Navbar>
 	</Container>
 </header>
 
-<script lang="ts">
-	import { back, path, pattern, query } from 'svelte-pathfinder';
-	import { Button, Container, Icon, IconButton, Navbar } from 'svelte-spectre';
-	import user from '@/stores/user';
+<script lang="ts" context="module">
+	import { getContext } from 'svelte';
+	import { back, path } from 'svelte-pathfinder';
+	import { Button, Container, Icon, IconButton, Navbar, toast } from 'svelte-spectre';
+
 	import logo from '@/assets/img/metis.svg';
+
+	import user, { userAsync } from '@/stores/user';
+	import { logout } from '@/services/api';
+</script>
+
+<script lang="ts">
+	const mode = getContext('mode');
+
+	async function doLogout() {
+		await logout();
+		$userAsync = null;
+		toast.warning({ msg: 'You are logged out', timeout: 4000, pos: 'top_right' });
+	}
 </script>
 
 <style lang="scss">
