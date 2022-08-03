@@ -33,7 +33,7 @@ export const datasourcesAsync = streamable<Stream<DataDTO>, DataDTO>(
 			set({ ...res });
 		} else {
 			unsubscribe = datasourcesAsyncReq.subscribe(async ($datasourcesAsyncReq) => {
-				const { reqId } = await $datasourcesAsyncReq
+				// const { reqId } = await $datasourcesAsyncReq
 				// toast.primary({ ...SYNC_TOASTS_CONFIG, msg: `Structures requested: ${reqId}` });
 			})
 		}

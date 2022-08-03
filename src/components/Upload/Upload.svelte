@@ -1,5 +1,7 @@
 <div class="upload">
-	<Dropzone on:drop={select} />
+	<Dropzone on:drop={select} accept=".json" on:droprejected={onReject}
+		>Upload POSCAR, CIF, or Optimade files</Dropzone
+	>
 </div>
 <ul>
 	{#each files as file, i (file)}
@@ -13,7 +15,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import Dropzone from 'svelte-file-dropzone';
-	import { IconButton } from 'svelte-spectre';
+	import { IconButton, toast } from 'svelte-spectre';
 
 	const dispatch = createEventDispatcher();
 
@@ -35,6 +37,10 @@
 	export function clearFiles() {
 		files = [];
 		dispatch('files', { files });
+	}
+
+	function onReject() {
+		toast.error({ msg: `Unaccepted file-types`, timeout: 4000, pos: 'top_right' });
 	}
 </script>
 

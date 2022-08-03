@@ -3,9 +3,9 @@
 		<div class="text-center distant_msg">Upload a structure to start...</div>
 	{/if}
 
-	<Grid>
+	<Grid stack>
 		<Col sm="12">
-			<Input rows={4} placeholder="Paste POSCAR, CIF, or Optimade JSON" bind:value />
+			<Input rows={3} placeholder="Paste POSCAR, CIF, or Optimade JSON" bind:value />
 		</Col>
 		<Divider align={!$media.sm ? 'vertical' : 'horizontal center'} text="OR" />
 		<Col sm="12">
@@ -19,7 +19,7 @@
 </div>
 
 <script lang="ts" context="module">
-	import { Button, Col, Divider, Grid, Input } from 'svelte-spectre';
+	import { Button, Col, Divider, Grid, Input, toast } from 'svelte-spectre';
 	import { Upload } from '@/components/Upload/';
 
 	import { media } from '@/stores/media';
@@ -34,10 +34,15 @@
 	let clearFiles: () => void,
 		contents: string[] = [];
 
-	function addDataSourceItem() {
-		setDataSources(contents.length ? contents : value);
-		clearFiles();
-		value = '';
+	async function addDataSourceItem() {
+		try {
+			const uploaded = await setDataSources(contents.length ? contents : value);
+			console.log(uploaded);
+			clearFiles();
+			value = '';
+		} catch (error) {
+			toast.error({ msg: `Can't upload file`, timeout: 4000, pos: 'top_right' });
+		}
 	}
 
 	async function handleFiles(e: any) {
