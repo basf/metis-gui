@@ -32,7 +32,7 @@ const routes: Route[] = [
 
 const app = new App({
 	target: document.body,
-	props: { routes },
+	props: { routes, mode: 'light' },
 });
 
 export default app;
