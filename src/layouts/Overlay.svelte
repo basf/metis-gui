@@ -1,5 +1,5 @@
 <div class="overlay">
-	<slot>We are offline</slot>
+	<slot>Sorry, we are currently offline</slot>
 	<IconButton {icon} on:click={action} />
 </div>
 

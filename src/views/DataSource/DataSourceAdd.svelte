@@ -1,11 +1,11 @@
 <div class="py-2">
 	{#if msg}
-		<div class="text-center distant_msg">Upload a structure to start...</div>
+		<div class="text-center distant_msg">Upload a structure to start</div>
 	{/if}
 
 	<Grid stack>
 		<Col sm="12">
-			<Input rows={3} placeholder="Paste POSCAR, CIF, or Optimade JSON" bind:value />
+			<Input rows={2} placeholder="Paste POSCAR, CIF, or Optimade JSON" bind:value />
 		</Col>
 		<Divider align={!$media.sm ? 'vertical' : 'horizontal center'} text="OR" />
 		<Col sm="12">
@@ -41,7 +41,7 @@
 			clearFiles();
 			value = '';
 		} catch (error) {
-			toast.error({ msg: `Can't upload file`, timeout: 4000, pos: 'top_right' });
+			toast.error({ msg: `Sorry, cannot upload file`, timeout: 4000, pos: 'top_right' });
 		}
 	}
 
