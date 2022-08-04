@@ -30,5 +30,6 @@ export const DOWNLOADABLE_APP_FILENAME = 'index.html';
 
 export const SYNC_TOASTS_CONFIG = { timeout: 2000, pos: 'bottom_right' } as ToastItem;
 
-// available: github, linkedin, orcid, basf, mpds, and local
-export const IdPs = ['basf', 'local'];
+export const IdPs = ['basf', 'local']; // available: github, linkedin, orcid, basf, and local
+
+export const PAGE_LIMIT = 100

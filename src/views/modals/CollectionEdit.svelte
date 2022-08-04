@@ -84,17 +84,14 @@
 	import type { Item } from 'svelte-spectre/package/components/Autocomplete/utils';
 
 	import { searchUsers, getUsers } from '@/services/api';
-	import datasources from '@/stores/datasources';
 	import user from '@/stores/user';
-	import collections from '@/stores/collections';
+	import collections, { datasources } from '@/stores/collections';
 
 	import { VISIBILITY } from '@/types/const';
 	import type { User as UserDTO } from '@/types/dto';
 </script>
 
 <script lang="ts">
-	const dispatch = createEventDispatcher();
-
 	export let id: number;
 	export let title = '';
 	export let description = '';
@@ -113,6 +110,7 @@
 	export let users: number[] = [];
 
 	let search = '';
+	const dispatch = createEventDispatcher();
 
 	$: userDataSources = $user
 		? $datasources.data.filter(({ userId }) => userId === $user?.id)

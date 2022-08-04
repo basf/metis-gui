@@ -5,16 +5,6 @@
 		<DataSourceAdd msg={!$datasources.total} />
 	{/if}
 
-	{#if $datasources.total}
-		<Pagination
-			bind:limit={$query.params.limit}
-			bind:page={$query.params.page}
-			total={$datasources.total}
-			limits={[5, 10, 50, 100]}
-			rest={5}
-		/>
-	{/if}
-
 	<div bind:clientWidth={width} class="py-2">
 		<Grid stack>
 			{#await $datasourcesAsync}
@@ -24,6 +14,17 @@
 					</Col>
 				{/each}
 			{:then { data, total }}
+				{#if total > $query.params.limit}
+					<Col col="12">
+						<Pagination
+							bind:page={$query.params.page}
+							limit={$query.params.limit}
+							perpage={false}
+							rest={5}
+							{total}
+						/>
+					</Col>
+				{/if}
 				{#each data as datasource (datasource.id)}
 					<Col col="12">
 						<DataSource {datasource}>
@@ -58,9 +59,10 @@
 	import { DataSource } from '@/views/tiles';
 	import * as Loaders from '@/components/loaders';
 
-	import { delDataSource } from '@/services/api';
+	import { delDataSource, setCalculation } from '@/services/api';
 
 	import datasources, { datasourcesAsync } from '@/stores/datasources';
+	import { engines } from '@/stores/calculations';
 	import { withConfirm } from '@/stores/confirmator';
 
 	import { DataModal } from '@/views/modals';
@@ -68,11 +70,15 @@
 	import user from '@/stores/user';
 	import { TileMenu } from '@/components/Tile/';
 	import Sinus from '@/assets/img/sinus.svg';
+
+	import { PAGE_LIMIT } from '@/config';
 </script>
 
 <script lang="ts">
 	let width = 0;
 	let add = false;
+
+	$query.params.limit = PAGE_LIMIT;
 
 	const tileMenuItems = (type: number) => {
 		const editCalc = {
@@ -124,7 +130,9 @@
 	}
 
 	function runCalculation(id: number) {
-		$fragment = `#edit-engine-${id}`;
+		if ($engines) {
+			$fragment = `#edit-engine-${id}`;
+		} else setCalculation({ dataId: id });
 	}
 
 	function delData(id: number, query: string) {

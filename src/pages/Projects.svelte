@@ -1,16 +1,6 @@
 <Main>
 	<Filter tooltip="Add collection" action={() => openEdit()} />
 
-	{#if $collections.total}
-		<Pagination
-			bind:limit={$query.params.limit}
-			bind:page={$query.params.page}
-			total={$collections.total}
-			limits={[5, 10, 50, 100]}
-			rest={5}
-		/>
-	{/if}
-
 	<div bind:clientWidth={width} class="py-2">
 		<Grid stack>
 			{#await $collectionsAsync}
@@ -25,7 +15,18 @@
 						/>
 					</Col>
 				{/each}
-			{:then { data }}
+			{:then { data, total }}
+				{#if total > $query.params.limit}
+					<Col col="12">
+						<Pagination
+							bind:page={$query.params.page}
+							limit={$query.params.limit}
+							perpage={false}
+							rest={5}
+							{total}
+						/>
+					</Col>
+				{/if}
 				{#each data as collection (collection.id)}
 					<Col col="4" md="6" xs="12">
 						<Collection {...collection} on:edit={(e) => openEdit(e.detail.id)} />
@@ -41,7 +42,7 @@
 </Main>
 
 {#if $fragment}
-	<CollectionEditModal
+	<CollectionEdit
 		{...editCollection}
 		open={!!$fragment}
 		size={$media.sm ? 'fs' : 'lg'}
@@ -69,11 +70,14 @@
 	import * as Loaders from '@/components/loaders';
 	import { Main, Overlay } from '@/layouts';
 
-	import CollectionEditModal from '@/views/modals/CollectionEdit.svelte';
+	import { CollectionEdit } from '@/views/modals';
+	import { PAGE_LIMIT } from '@/config';
 </script>
 
 <script lang="ts">
 	let width: number;
+
+	$query.params.limit = PAGE_LIMIT;
 
 	$: editCollectionId = $fragment.replace('#', '');
 	$: editCollection = $collections.data.find(

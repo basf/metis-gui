@@ -4,7 +4,7 @@ import { streamable } from 'svelte-streamable';
 import { toast } from 'svelte-spectre';
 
 import { getDataSources } from '@/services/api';
-import { STREAM_URL, SYNC_TOASTS_CONFIG } from '@/config';
+import { PAGE_LIMIT, STREAM_URL, SYNC_TOASTS_CONFIG } from '@/config';
 
 import { type Unsubscriber } from 'svelte/store'
 import type { DataSource, Stream, CollectionType } from '@/types/dto';
