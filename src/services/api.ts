@@ -41,7 +41,7 @@ export async function delDataSource({ id, query }: { id: number, query?: string 
 
 export async function getTemplate(engine = 'dummy'): Promise<TemplateDTO> {
 	return fetchJSON(
-		`${__env === 'production' ? API_HOST : API_BASEURL}/calculations/template?engine=${engine}`,
+		`${API_HOST}/calculations/template?engine=${engine}`,
 		{ credentials: 'omit' }
 	);
 }
