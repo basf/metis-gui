@@ -4,7 +4,7 @@
 			{#if datasource.type === 1}
 				<Icon size="2x" color="gray">{@html Cube}</Icon>
 			{:else}
-				<span class="placeholder"></span>
+				<span class="placeholder" />
 			{/if}
 		</svelte:fragment>
 		<svelte:fragment slot="title">
@@ -92,7 +92,7 @@
 		}
 	}
 	span.placeholder {
-		display:inline-block;
-		width:32px;
+		display: inline-block;
+		width: 32px;
 	}
 </style>
