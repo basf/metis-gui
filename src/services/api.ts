@@ -88,6 +88,10 @@ export async function getCollectionTypes(): Promise<CollectionTypeDTO[]> {
 	return getJSON('/collections/types');
 }
 
+export async function getCollectionDataSources(): Promise<void> {
+	return getJSON(`/collections/datasources`);
+}
+
 export async function getCollections(query?: string): Promise<void> {
 	return getJSON(`/collections${query || ''}`);
 }

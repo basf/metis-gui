@@ -34,7 +34,7 @@
 
 <script lang="ts">
 	import { setContext } from 'svelte';
-	import { pattern, click } from 'svelte-pathfinder';
+	import { pattern, click, query } from 'svelte-pathfinder';
 	import Viewpoint from 'svelte-viewpoint';
 	import { Container, Spectre } from 'svelte-spectre';
 

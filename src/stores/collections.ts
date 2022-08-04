@@ -3,7 +3,7 @@ import { asyncable, syncable } from 'svelte-asyncable';
 import { streamable } from 'svelte-streamable';
 import { toast } from 'svelte-spectre';
 
-import { getCollections } from '@/services/api';
+import { getCollections, getCollectionDataSources } from '@/services/api';
 import { STREAM_URL, SYNC_TOASTS_CONFIG } from '@/config';
 
 import type { CollectionType, Collection, Stream } from '@/types/dto';
@@ -44,3 +44,23 @@ export const collectionsAsync = streamable<Stream<CollectionDTO>, CollectionDTO>
 );
 
 export default syncable<CollectionDTO>(collectionsAsync, { data: [], total: 10, types: [] });
+
+export const collectionDataSourcesAsync = streamable<Stream<CollectionDTO>, CollectionDTO>(
+	{
+		url: STREAM_URL,
+		event: 'collectionDataSources',
+		withCredentials: true,
+	},
+	(res, set) => {
+		console.log(res);
+		if (res) {
+			toast.primary({ ...SYNC_TOASTS_CONFIG, msg: 'Collection DataSources synced' });
+			set({ ...res });
+		} else {
+			getCollectionDataSources()
+		}
+	}
+);
+
+export const datasources = syncable<CollectionDTO>(collectionDataSourcesAsync, { data: [], total: 10, types: [] });
+

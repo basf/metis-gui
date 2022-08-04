@@ -3,7 +3,7 @@ import { prefs } from 'svelte-pathfinder';
 
 import '@/assets/global.css';
 
-import { BASE_PATH } from '@/config';
+import { BASE_PATH, PAGE_LIMIT } from '@/config';
 
 import App from '@/App.svelte';
 
