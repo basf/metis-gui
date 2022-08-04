@@ -57,7 +57,7 @@ export async function getCalculationsEngines(): Promise<void> {
 export async function setCalculation({ dataId, engine = 'dummy', input, workflow = 'workflow' }:
 	{
 		dataId: number,
-		engine: string,
+		engine?: string,
 		input?: string,
 		workflow?: string
 	}): Promise<void> {

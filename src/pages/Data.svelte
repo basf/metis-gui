@@ -59,9 +59,10 @@
 	import { DataSource } from '@/views/tiles';
 	import * as Loaders from '@/components/loaders';
 
-	import { delDataSource } from '@/services/api';
+	import { delDataSource, setCalculation } from '@/services/api';
 
 	import datasources, { datasourcesAsync } from '@/stores/datasources';
+	import { engines } from '@/stores/calculations';
 	import { withConfirm } from '@/stores/confirmator';
 
 	import { DataModal } from '@/views/modals';
@@ -129,7 +130,9 @@
 	}
 
 	function runCalculation(id: number) {
-		$fragment = `#edit-engine-${id}`;
+		if ($engines) {
+			$fragment = `#edit-engine-${id}`;
+		} else setCalculation({ dataId: id });
 	}
 
 	function delData(id: number, query: string) {
