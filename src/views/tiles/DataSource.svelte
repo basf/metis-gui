@@ -3,6 +3,8 @@
 		<svelte:fragment slot="icon">
 			{#if datasource.type === 1}
 				<Icon size="2x" color="gray">{@html Cube}</Icon>
+			{:else}
+				<span class="placeholder"></span>
 			{/if}
 		</svelte:fragment>
 		<svelte:fragment slot="title">
@@ -21,8 +23,7 @@
 		</svelte:fragment>
 		<svelte:fragment slot="subtitle">
 			<small class="text-gray">
-				<span class="text-primary">{datasource.id}</span> Type &bull; {datasource.type} &bull;
-				{showTimestamp(datasource)}
+				Added {showTimestamp(datasource)}
 			</small>
 		</svelte:fragment>
 		<svelte:fragment slot="action">
@@ -89,5 +90,9 @@
 				padding: 0;
 			}
 		}
+	}
+	span.placeholder {
+		display:inline-block;
+		width:32px;
 	}
 </style>

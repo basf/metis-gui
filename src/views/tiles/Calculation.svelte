@@ -4,7 +4,7 @@
 	</svelte:fragment>
 	<svelte:fragment slot="subtitle">
 		<small class="text-gray">
-			{showTimestamp(calculation)}
+			Started {showTimestamp(calculation)}
 		</small>
 	</svelte:fragment>
 	<Meter

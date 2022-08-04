@@ -2,7 +2,7 @@
 	<Container>
 		<Navbar>
 			<nav slot="left">
-				This is the <a href="https://metis.science">Metis</a> &mdash; <br />
+				This is Metis &mdash;<br />
 				an open-source XRPD online data management system.
 			</nav>
 			<nav slot="right"><Switch bind:value={$darkTheme}>Dark theme</Switch></nav>

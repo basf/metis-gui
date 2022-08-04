@@ -1,5 +1,5 @@
 <!-- <h3>Select engine</h3> -->
-<Select options={getOptions($engines)} bind:value={engine} placeholder="Engines" />
+<Select options={getOptions($engines)} bind:value={engine} placeholder="Select..." />
 
 <script lang="ts" context="module">
 	import { fragment } from 'svelte-pathfinder';
