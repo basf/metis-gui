@@ -42,8 +42,9 @@
 		<Pagination
 			bind:total
 			bind:limits
-			bind:limit={$query.params.limit}
 			bind:page={$query.params.page}
+			limit={$query.params.limit}
+			perpage={false}
 			{rest}
 		/>
 		<div class="p-2" />
@@ -120,6 +121,7 @@
 	import AsyncSelect from '@/components/AsyncSelect.svelte';
 	import OptimadeApis from '@/views/optimade/OptimadeApis.svelte';
 	import Main from '@/layouts/Main.svelte';
+	import { PAGE_LIMIT } from '@/config';
 
 	const size = 'lg';
 
@@ -141,6 +143,8 @@
 		meta: Types.Meta,
 		data: Types.Structure[],
 		search = $query.params.q;
+
+	$query.params.limit = PAGE_LIMIT;
 
 	function clearPagination() {
 		if (meta) {
