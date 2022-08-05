@@ -1,5 +1,7 @@
 <Main>
-	<Filter icon={add ? 'minus' : 'plus'} action={() => (add = !add)} />
+	{#if mode !== 'light'}
+		<Filter icon={add ? 'minus' : 'plus'} action={() => (add = !add)} />
+	{/if}
 
 	{#if add || !$datasources.total}
 		<DataSourceAdd msg={!$datasources.total} />
@@ -72,6 +74,7 @@
 	import Sinus from '@/assets/img/sinus.svg';
 
 	import { PAGE_LIMIT } from '@/config';
+	import { getContext } from 'svelte';
 </script>
 
 <script lang="ts">
@@ -79,6 +82,8 @@
 	let add = false;
 
 	$query.params.limit = PAGE_LIMIT;
+
+	const mode = getContext('mode');
 
 	const tileMenuItems = (type: number) => {
 		const editCalc = {

@@ -1,5 +1,7 @@
 <Main>
-	<Filter tooltip="Add calculation" />
+	{#if mode !== 'light'}
+		<Filter tooltip="Add calculation" />
+	{/if}
 
 	<div bind:clientWidth={width} class="py-2">
 		<Grid stack>
@@ -48,10 +50,13 @@
 
 	import { calculationsAsync } from '@/stores/calculations';
 	import { PAGE_LIMIT } from '@/config';
+	import { getContext } from 'svelte';
 </script>
 
 <script lang="ts">
 	let width: number;
 
 	$query.params.limit = PAGE_LIMIT;
+
+	const mode = getContext('mode');
 </script>

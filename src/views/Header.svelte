@@ -17,7 +17,7 @@
 						{$user.firstName}&nbsp;{$user.lastName}&nbsp;<Icon icon="people" />
 					</Button>
 				{/if}
-				{#if mode === 'light'}
+				{#if mode === 'light' && $user}
 					<IconButton icon="shutdown" on:click={doLogout} />
 				{/if}
 			</nav>
