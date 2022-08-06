@@ -12,7 +12,7 @@
 			<ul class="collections">
 				{#each getCollectionsList(datasource.id, $filters.data) as tag (tag.id)}
 					<li>
-						<a href={setTagLink(tag)}>
+						<a href={setTagLink(tag.id)}>
 							<Badge style="background: {tag.typeFlavor}">
 								{tag.title}
 							</Badge>
@@ -34,7 +34,7 @@
 
 <script lang="ts" context="module">
 	import { query, path } from 'svelte-pathfinder';
-	import { Avatar, Badge, Icon, Tile } from 'svelte-spectre';
+	import { Badge, Icon, Tile } from 'svelte-spectre';
 	import { showTimestamp } from '@/helpers/date';
 	import Cube from '@/assets/img/cube.svg';
 
@@ -46,13 +46,11 @@
 <script lang="ts">
 	export let datasource: DataSource;
 
-	let dataUserName = `${datasource.userFirstName} ${datasource.userLastName}`;
-
 	function getCollectionsList(datasourceId: number, data: Collection[]) {
 		return data.filter((filter) => filter.dataSources?.includes(datasourceId));
 	}
 
-	function setTagLink({ id, typeId, visibility }: Partial<Collection>) {
+	function setTagLink(id: number) {
 		const iDs = `${$query.params.collectionIds}`
 			.split(',')
 			.map((c) => +c)

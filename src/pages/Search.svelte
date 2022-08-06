@@ -148,7 +148,7 @@
 
 	function clearPagination() {
 		if (meta) {
-			$query.params.limit = 10;
+			$query.params.limit = 100;
 			$query.params.page = 1;
 			meta.data_returned = 0;
 			limits = [];
