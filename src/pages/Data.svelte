@@ -1,6 +1,6 @@
 <Main>
-	<Section asyncData={$datasourcesAsync} bind:add>
-		<svelte:fragment slot="add">
+	<Section asyncData={$datasourcesAsync}>
+		<svelte:fragment slot="add" let:add>
 			{#if add || !$datasources.total}
 				<Col col="12">
 					<DataSourceAdd msg={!$datasources.total} />
@@ -41,8 +41,6 @@
 </script>
 
 <script lang="ts">
-	let add = false;
-
 	const tileMenuItems = (type: number) => {
 		const editCalc = {
 				icon: 'edit',

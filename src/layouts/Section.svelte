@@ -13,7 +13,7 @@
 				{/each}
 			</slot>
 		{:then { data, total }}
-			<slot name="add" />
+			<slot name="add" {add} />
 			{#if total > $query.params.limit}
 				<Col col="12">
 					<Pagination
