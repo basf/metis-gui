@@ -16,9 +16,9 @@
 					<Button variant="link" size="xl" href="/profile">
 						{$user.firstName}&nbsp;{$user.lastName}&nbsp;<Icon icon="people" />
 					</Button>
-				{/if}
-				{#if mode === 'light' && $user}
-					<IconButton icon="shutdown" on:click={doLogout} />
+					{#if mode === 'light'}
+						<IconButton icon="shutdown" on:click={doLogout} />
+					{/if}
 				{/if}
 			</nav>
 		</Navbar>
