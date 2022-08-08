@@ -13,7 +13,7 @@
 					on:select={setCollectionIds}
 					on:remove={setCollectionIds}
 					placeholder="Filter by tags"
-					style="flex: 400%;"
+					style="flex: 500%;"
 				/>
 				<Select
 					options={optionsVisibility}
