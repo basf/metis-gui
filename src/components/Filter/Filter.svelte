@@ -12,7 +12,7 @@
 					bind:selected
 					on:select={setCollectionIds}
 					on:remove={setCollectionIds}
-					placeholder="Filter by tags title"
+					placeholder="Filter by tags"
 					style="flex: 400%;"
 				/>
 				<Select
