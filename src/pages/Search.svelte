@@ -43,7 +43,7 @@
 			bind:total
 			bind:limits
 			bind:page={$query.params.page}
-			limit={$query.params.limit}
+			bind:limit={$query.params.limit}
 			perpage={false}
 			{rest}
 		/>
@@ -138,17 +138,15 @@
 
 <script lang="ts">
 	let width: number,
-		limits: number[] | undefined = [10],
+		limits: number[] | undefined = [PAGE_LIMIT],
 		total: number,
 		meta: Types.Meta,
 		data: Types.Structure[],
 		search = $query.params.q;
 
-	$query.params.limit = PAGE_LIMIT;
-
 	function clearPagination() {
+		$query.params.limit = PAGE_LIMIT;
 		if (meta) {
-			$query.params.limit = 100;
 			$query.params.page = 1;
 			meta.data_returned = 0;
 			limits = [];
