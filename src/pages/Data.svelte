@@ -10,6 +10,7 @@
 		<svelte:fragment let:item>
 			<Col col="12">
 				<DataSource datasource={item}>
+					<TileTags datasourceId={item.id} />
 					{#if $user?.id === item.userId}
 						<TileMenu items={tileMenuItems(item.type)} dataId={item.id} />
 					{/if}
@@ -29,7 +30,7 @@
 	import { DataSource } from '@/views/tiles';
 	import { DataSourceAdd } from '@/views/DataSource';
 	import { DataModal } from '@/views/modals';
-	import { TileMenu } from '@/components/Tile/';
+	import { TileMenu, TileTags } from '@/components/Tile/';
 	import Sinus from '@/assets/img/sinus.svg';
 
 	import { delDataSource, setCalculation } from '@/services/api';
