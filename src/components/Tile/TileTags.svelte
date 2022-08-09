@@ -31,7 +31,7 @@
 	import { query, path } from 'svelte-pathfinder';
 	import { Badge, Button, Dropdown } from 'svelte-spectre';
 
-	import filters from '@/stores/filters';
+	import { filters } from '@/stores/filters';
 	import { media } from '@/stores/media';
 
 	import type { Collection } from '@/types/dto';
