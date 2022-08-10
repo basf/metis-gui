@@ -12,8 +12,8 @@
 					bind:selected
 					on:select={setCollectionIds}
 					on:remove={setCollectionIds}
-					placeholder="Filter by tags title"
-					style="flex: 400%;"
+					placeholder="Filter by tags"
+					style="flex: 500%;"
 				/>
 				<Select
 					options={optionsVisibility}
@@ -36,7 +36,7 @@
 	import { pattern, query, type Param, type Params } from 'svelte-pathfinder';
 	import { Autocomplete, Col, Grid, IconButton, InputGroup, Select } from 'svelte-spectre';
 	import { VISIBILITY } from '@/types/const';
-	import filters from '@/stores/filters';
+	import { filters, type CollectionDTO } from '@/stores/filters';
 
 	import type { Collection, CollectionType } from '@/types/dto';
 
@@ -62,7 +62,7 @@
 	$: predefined = getPredefined($filters.data, $query.params);
 	$: if (predefined.length) selected = getSelected($query.params.collectionIds);
 	$: optionsVisibility = getVisibilityOptions(selected, $query.params.type);
-	$: optionsTypes = getTypeOptions($filters.types, selected, $query.params.visibility);
+	$: optionsTypes = getTypeOptions($filters, selected, $query.params.visibility);
 
 	function getPredefined(collections: Collection[], params: Params): Tag[] {
 		return collections
@@ -106,13 +106,13 @@
 		);
 	}
 
-	function getTypeOptions(types: CollectionType[], tags: Tag[], visibility: Params) {
-		const optionsTypes = types
+	function getTypeOptions(filters: CollectionDTO, tags: Tag[], visibility: Param) {
+		const optionsTypes = filters.types
 			.map(({ label, id: value }) => ({ label, value }))
-			.filter(Boolean);
+			.filter(({ value }) => filters.data.some(({ typeId }) => value === typeId));
 
 		const typeIds = new Set([
-			...$filters.data
+			...filters.data
 				.filter((filter) => filter.visibility === (visibility as unknown as string))
 				.map(({ typeId }) => typeId),
 		]);

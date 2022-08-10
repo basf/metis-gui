@@ -1,44 +1,29 @@
 <Main>
-	<Filter tooltip="Add collection" action={() => openEdit()} />
-
-	<div bind:clientWidth={width} class="py-2">
-		<Grid stack>
-			{#await $collectionsAsync}
-				{#each { length: 9 } as _}
-					<Col col="auto">
-						<Loaders.Tile
-							count={1}
-							w={width / 3 - 12}
-							h={107}
-							height={107}
-							width={width / 3 - 12}
-						/>
-					</Col>
-				{/each}
-			{:then { data, total }}
-				{#if total > $query.params.limit}
-					<Col col="12">
-						<Pagination
-							bind:page={$query.params.page}
-							limit={$query.params.limit}
-							perpage={false}
-							rest={5}
-							{total}
-						/>
-					</Col>
-				{/if}
-				{#each data as collection (collection.id)}
-					<Col col="4" md="6" xs="12">
-						<Collection {...collection} on:edit={(e) => openEdit(e.detail.id)} />
-					</Col>
-				{/each}
-			{:catch}
-				<Col>
-					<Overlay>Server disconnected</Overlay>
+	<Section
+		asyncData={$collectionsAsync}
+		addTooltip="Add collection"
+		addAction={() => openEdit()}
+		bind:width
+	>
+		<svelte:fragment slot="loader">
+			{#each { length: 9 } as _}
+				<Col col="auto">
+					<Loaders.Tile
+						count={1}
+						w={width / 3 - 12}
+						h={107}
+						height={107}
+						width={width / 3 - 12}
+					/>
 				</Col>
-			{/await}
-		</Grid>
-	</div>
+			{/each}
+		</svelte:fragment>
+		<svelte:fragment let:item>
+			<Col col="4" md="6" xs="12">
+				<Collection {...item} on:edit={(e) => openEdit(e.detail.id)} />
+			</Col>
+		</svelte:fragment>
+	</Section>
 </Main>
 
 {#if $fragment}
@@ -53,31 +38,24 @@
 {/if}
 
 <script lang="ts" context="module">
-	import { query, fragment } from 'svelte-pathfinder';
-	import { media } from '@/stores/media';
-
-	import { Col, Grid, toast, Pagination } from 'svelte-spectre';
+	import { fragment } from 'svelte-pathfinder';
+	import { Col, toast } from 'svelte-spectre';
 
 	import { Collection } from '@/views/tiles/';
-	import { Filter } from '@/components/Filter';
+	import * as Loaders from '@/components/loaders';
+	import { Main, Section } from '@/layouts';
+	import { CollectionEdit } from '@/views/modals';
 
 	import user from '@/stores/user';
+	import { media } from '@/stores/media';
 	import collections, { collectionsAsync } from '@/stores/collections';
 
 	import { setCollection, delCollection } from '@/services/api';
 	import type { HttpError } from '@/services/api';
-
-	import * as Loaders from '@/components/loaders';
-	import { Main, Overlay } from '@/layouts';
-
-	import { CollectionEdit } from '@/views/modals';
-	import { PAGE_LIMIT } from '@/config';
 </script>
 
 <script lang="ts">
 	let width: number;
-
-	$query.params.limit = PAGE_LIMIT;
 
 	$: editCollectionId = $fragment.replace('#', '');
 	$: editCollection = $collections.data.find(

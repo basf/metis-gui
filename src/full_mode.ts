@@ -3,7 +3,7 @@ import { prefs } from 'svelte-pathfinder';
 
 import '@/assets/global.css';
 
-import { BASE_PATH, PAGE_LIMIT } from '@/config';
+import { BASE_PATH } from '@/config';
 
 import App from '@/App.svelte';
 
@@ -42,7 +42,7 @@ const routes: Route[] = [
 	},
 	{
 		path: '/materials',
-		component: () => import('@/pages/Empty.svelte'),
+		component: () => import('@/pages/Materials.svelte'),
 		menu: {
 			title: 'Materials',
 			pos: 3,

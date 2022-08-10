@@ -2,8 +2,8 @@
 	<Container>
 		<Navbar>
 			<nav slot="left">
-				{#if $user && $path.toString() === '/profile'}
-					<IconButton icon="back" size="xl" on:click={() => back()} />
+				{#if $user && $pattern('/profile')}
+					<IconButton icon="back" size="xl" on:click={back} />
 				{/if}
 			</nav>
 
@@ -16,9 +16,9 @@
 					<Button variant="link" size="xl" href="/profile">
 						{$user.firstName}&nbsp;{$user.lastName}&nbsp;<Icon icon="people" />
 					</Button>
-				{/if}
-				{#if mode === 'light'}
-					<IconButton icon="shutdown" on:click={doLogout} />
+					{#if mode === 'light'}
+						<IconButton icon="shutdown" on:click={doLogout} />
+					{/if}
 				{/if}
 			</nav>
 		</Navbar>
@@ -27,7 +27,7 @@
 
 <script lang="ts" context="module">
 	import { getContext } from 'svelte';
-	import { back, path } from 'svelte-pathfinder';
+	import { back, pattern } from 'svelte-pathfinder';
 	import { Button, Container, Icon, IconButton, Navbar, toast } from 'svelte-spectre';
 
 	import logo from '@/assets/img/metis.svg';

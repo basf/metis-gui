@@ -9,7 +9,7 @@ import { STREAM_URL, SYNC_TOASTS_CONFIG } from '@/config';
 import { type Unsubscriber } from 'svelte/store'
 import type { CollectionType, Collection, Stream } from '@/types/dto';
 
-type CollectionDTO = {
+export type CollectionDTO = {
 	data: Collection[],
 	total: number,
 	types: CollectionType[]
@@ -42,4 +42,4 @@ export const filtersAsync = streamable<Stream<CollectionDTO>, CollectionDTO>(
 	}
 );
 
-export default syncable<CollectionDTO>(filtersAsync, { data: [], total: 10, types: [] });
+export const filters = syncable<CollectionDTO>(filtersAsync, { data: [], total: 10, types: [] });
