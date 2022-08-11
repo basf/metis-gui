@@ -31,13 +31,12 @@
 </script>
 
 <script lang="ts">
-	export let data;
+	export let dataName = '';
+	export let dataId = '';
 
-	let tagIds;
+	let tagIds: number[];
 
 	$: [_, dataType, dataId, engine] = $fragment.split('-');
-
-	$: dataName = data?.find((data) => data.id === +dataId)?.name;
 
 	$: modal = () => {
 		switch (dataType) {
