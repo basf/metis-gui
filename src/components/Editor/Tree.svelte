@@ -1,5 +1,11 @@
 <Code lang="JSON">
-	<IconButton size="sm" icon="copy" style="position: absolute !important; top: 5px; left: 5px;" title="Copy JSON to clipboard" on:click={() => copy(json)} />
+	<IconButton
+		size="sm"
+		icon="copy"
+		style="position: absolute !important; top: 5px; left: 5px;"
+		title="Copy JSON to clipboard"
+		on:click={() => copy(json)}
+	/>
 	<section use:jsonViewer={filter} />
 </Code>
 
@@ -9,8 +15,8 @@
 </script>
 
 <script lang="ts">
-	export let value: string | object | null = null,
-		filter = '';
+	export let value: string | object | null = null;
+	export let filter = '';
 
 	$: json = JSON.stringify(value);
 

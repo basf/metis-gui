@@ -5,7 +5,6 @@
 			{key}: {JSON.stringify(value, 0, 2)}
 		{/each}
 	</pre>
-	<!-- <slot>Form representation placeholder</slot> -->
 </Form>
 
 <script lang="ts" context="module">

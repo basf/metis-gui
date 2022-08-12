@@ -1,6 +1,10 @@
 import getDataType from './utils/getDataType';
 import { listen, detach, element } from './utils/dom';
 
+type Params = {
+	key: string, value: string, size: string, type: string
+}
+
 const classes = {
 	HIDDEN: 'hidden',
 	CARET_ICON: 'caret-icon',
@@ -9,7 +13,7 @@ const classes = {
 	ICON: 'fas'
 };
 
-function expandedTemplate(params = {}) {
+function expandedTemplate(params: Partial<Params>) {
 	const { key, size } = params;
 	return `
     <div class="line click">
@@ -20,7 +24,7 @@ function expandedTemplate(params = {}) {
   `;
 }
 
-function notExpandedTemplate(params = {}) {
+function notExpandedTemplate(params: Partial<Params>) {
 	const { key, value, type } = params;
 	return `
     <div class="line">
@@ -98,7 +102,7 @@ function createNodeElement(node) {
 		const len = node.children.length;
 		if (node.type === 'array') return `[${len}]`;
 		if (node.type === 'object') return `{${len}}`;
-		return null;
+		return undefined;
 	};
 
 	if (node.children.length > 0) {
@@ -141,12 +145,23 @@ function traverse(node, callback) {
 	}
 }
 
+type Options = {
+	key: string,
+	parent: ParentNode,
+	value: string,
+	isExpanded: boolean,
+	type: string,
+	children: ChildNode[],
+	el: Element,
+	depth: number,
+	dispose: null
+}
 /**
  * Create node object
  * @param {object} opt options
  * @return {object}
  */
-function createNode(opt = {}) {
+function createNode(opt: Partial<Options>) {
 	return {
 		key: opt.key || null,
 		parent: opt.parent || null,
