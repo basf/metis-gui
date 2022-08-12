@@ -10,6 +10,7 @@
 			this={modal().component}
 			dataSourceId={+decodeURIComponent(dataId)}
 			bind:tags={tagIds}
+			bind:input
 		/>
 	{:else}
 		<span style="height: 100%" class="loading loading-lg p-centered d-block" />
@@ -25,8 +26,8 @@
 	import { Button, Modal, toast } from 'svelte-spectre';
 
 	import { CalculationEdit, EnginesEdit, PlotEdit, TagsEdit } from '.';
+
 	import { patchDataSourceCollections, setCalculation } from '@/services/api';
-	import { editorCode } from '@/stores/editor';
 	import { media } from '@/stores/media';
 </script>
 
@@ -35,6 +36,7 @@
 	export let dataId = '';
 
 	let tagIds: number[];
+	let input = '';
 
 	$: [_, dataType, dataId, engine] = $fragment.split('-');
 
@@ -43,7 +45,7 @@
 			case 'engine':
 				return {
 					component: EnginesEdit,
-					submit: submitEngines,
+					submit: submitCalculation,
 					size: 'md',
 				};
 			case 'calculation':
@@ -74,24 +76,10 @@
 	}
 
 	function submitCalculation() {
-		setCalculation({ dataId: +dataId, engine, input: $editorCode.input }).then(() =>
-			closeModal()
-		);
-	}
-
-	async function submitTags() {
-		await patchDataSourceCollections(+dataId, tagIds).then(() => closeModal());
-	}
-
-	function submitPlots() {
-		closeModal();
-	}
-
-	function submitEngines() {
 		setCalculation({
 			dataId: +dataId,
 			engine,
-			input: '',
+			input,
 			workflow: 'workflow',
 		}).then(() => {
 			closeModal();
@@ -102,5 +90,13 @@
 				icon: 'forward',
 			});
 		});
+	}
+
+	function submitTags() {
+		patchDataSourceCollections(+dataId, tagIds).then(closeModal);
+	}
+
+	function submitPlots() {
+		closeModal();
 	}
 </script>

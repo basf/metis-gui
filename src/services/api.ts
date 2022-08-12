@@ -30,7 +30,7 @@ export async function setDataSources(content: string | string[]): Promise<void> 
 
 export async function patchDataSourceCollections(
 	id: number,
-	collectionIds: CollectionDTO[]
+	collectionIds: number[]
 ): Promise<unknown> {
 	return patchJSON(`/datasources/${id}/filters`, collectionIds);
 }
@@ -54,7 +54,7 @@ export async function getCalculationsEngines(): Promise<void> {
 	return getJSON(`/calculations/engines`);
 }
 
-export async function setCalculation({ dataId, engine = 'dummy', input, workflow = 'workflow' }:
+export async function setCalculation({ dataId, engine = 'dummy', input = '', workflow = 'workflow' }:
 	{
 		dataId: number,
 		engine?: string,

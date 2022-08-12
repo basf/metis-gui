@@ -69,4 +69,7 @@
 			color: inherit !important;
 		}
 	}
+	.modal .modal-body {
+		overflow-y: auto !important;
+	}
 </style>
