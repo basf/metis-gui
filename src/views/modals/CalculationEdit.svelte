@@ -18,8 +18,10 @@
 {:then { template, schema }}
 	{#if $fragment.includes('code')}
 		<Code code={template} on:change={(e) => (input = e.detail)} />
-	{:else}
+	{:else if $fragment.includes('form')}
 		<Form {template} {schema} bind:input />
+	{:else}
+		<Tree value={schema} />
 	{/if}
 {:catch error}
 	{error}
@@ -30,7 +32,7 @@
 	import { Col, Grid, Select } from 'svelte-spectre';
 
 	import * as Loaders from '@/components/loaders';
-	import { Code, Form } from '@/components/Editor';
+	import { Code, Form, Tree } from '@/components/Editor';
 
 	import { getTemplate } from '@/services/api';
 	import { engines } from '@/stores/calculations';
@@ -45,6 +47,7 @@
 	let modes = [
 		{ label: 'Code', value: 'code' },
 		{ label: 'Form', value: 'form' },
+		{ label: 'Tree', value: 'tree' },
 	];
 
 	$: $fragment = `#edit-calculation-${dataSourceId}-${engine}-${mode}`;
