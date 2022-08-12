@@ -9,11 +9,11 @@
 
 {#await getTemplate(engine)}
 	<Loaders.Circle big />
-{:then { template }}
+{:then { template, schema }}
 	{#if $fragment.includes('code')}
-		<Editor code={template} on:change={(e) => (input = e.detail)} />
+		<Code code={template} on:change={(e) => (input = e.detail)} />
 	{:else}
-		<Form>Form representation placeholder</Form>
+		<Form {template} {schema} bind:input />
 	{/if}
 {:catch error}
 	{error}
@@ -21,10 +21,10 @@
 
 <script lang="ts" context="module">
 	import { fragment } from 'svelte-pathfinder';
-	import { Form, Col, Grid, Select } from 'svelte-spectre';
+	import { Col, Grid, Select } from 'svelte-spectre';
 
 	import * as Loaders from '@/components/loaders';
-	import { Editor } from '@/components/Editor';
+	import { Code, Form } from '@/components/Editor';
 
 	import { getTemplate } from '@/services/api';
 	import { engines } from '@/stores/calculations';
