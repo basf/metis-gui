@@ -26,7 +26,7 @@
 	import { fragment } from 'svelte-pathfinder';
 	import { Button, Modal, toast } from 'svelte-spectre';
 
-	import { CalculationEdit, EnginesEdit, PlotEdit, TagsEdit } from '.';
+	import { CalculationEdit, EngineEdit, PlotEdit, TagsEdit } from '.';
 
 	import { patchDataSourceCollections, setCalculation } from '@/services/api';
 	import { media } from '@/stores/media';
@@ -45,7 +45,7 @@
 		switch (dataType) {
 			case 'engine':
 				return {
-					component: EnginesEdit,
+					component: EngineEdit,
 					submit: submitCalculation,
 					size: 'md',
 				};
