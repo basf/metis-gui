@@ -1,20 +1,21 @@
-<Modal size={modal().size || ($media.sm ? 'fs' : 'lg')} open={!!$fragment} on:close={closeModal}>
+<Modal
+	title={dataType}
+	size={modal().size || ($media.sm ? 'fs' : 'lg')}
+	open={!!$fragment}
+	on:close={closeModal}
+>
 	<h3 slot="header">
 		{@const modalHeader = `Edit and submit ${decodeURIComponent(
 			dataType
 		)} for <mark> ${dataName} </mark>`}
 		{@html modalHeader}
 	</h3>
-	{#if modal().component}
-		<svelte:component
-			this={modal().component}
-			dataSourceId={+decodeURIComponent(dataId)}
-			bind:tags={tagIds}
-			bind:input
-		/>
-	{:else}
-		<span style="height: 100%" class="loading loading-lg p-centered d-block" />
-	{/if}
+	<svelte:component
+		this={modal().component}
+		dataSourceId={+decodeURIComponent(dataId)}
+		bind:tags={tagIds}
+		bind:input
+	/>
 	<svelte:fragment slot="footer">
 		<Button on:click={closeModal}>Cancel</Button>
 		<Button variant="primary" on:click={modal().submit}>Submit</Button>

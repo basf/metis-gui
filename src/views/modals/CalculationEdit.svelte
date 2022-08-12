@@ -9,9 +9,9 @@
 
 {#await getTemplate(engine)}
 	<Loaders.Circle big />
-{:then engine}
+{:then { template }}
 	{#if $fragment.includes('code')}
-		<Editor code={engine.template} on:change={(e) => (input = e.detail)} />
+		<Editor code={template} on:change={(e) => (input = e.detail)} />
 	{:else}
 		<Form>Form representation placeholder</Form>
 	{/if}

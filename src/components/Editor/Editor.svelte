@@ -69,7 +69,7 @@
 			color: inherit !important;
 		}
 	}
-	.modal .modal-body {
+	.modal[title='calculation'] .modal-body {
 		overflow-y: auto !important;
 	}
 </style>
