@@ -1,11 +1,17 @@
-<Grid>
-	<Col>
-		<Select options={getEngines($engines)} bind:value={engine} placeholder="Select engine..." />
-	</Col>
-	<Col>
-		<Select options={modes} bind:value={mode} placeholder="Represent like..." />
-	</Col>
-</Grid>
+<div id="controls">
+	<Grid>
+		<Col>
+			<Select
+				options={getEngines($engines)}
+				bind:value={engine}
+				placeholder="Select engine..."
+			/>
+		</Col>
+		<Col>
+			<Select options={modes} bind:value={mode} placeholder="Represent like..." />
+		</Col>
+	</Grid>
+</div>
 
 {#await getTemplate(engine)}
 	<Loaders.Circle big />
@@ -47,3 +53,11 @@
 		return engines?.map((engine) => ({ label: engine, value: engine }));
 	}
 </script>
+
+<style lang="scss">
+	div#controls {
+		position: sticky;
+		top: 0;
+		z-index: 1;
+	}
+</style>
