@@ -78,6 +78,4 @@
 			}
 		}
 	}
-	:global([color-scheme='light']) {
-	}
 </style>

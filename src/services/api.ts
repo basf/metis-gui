@@ -1,5 +1,4 @@
 import { userAsync } from '@/stores/user';
-
 import { API_HOST, API_BASEURL } from '@/config';
 import type {
 	User as UserDTO,
@@ -7,7 +6,6 @@ import type {
 	Collection as CollectionDTO,
 	CollectionType as CollectionTypeDTO,
 } from '@/types/dto';
-import { StringParams } from 'svelte-pathfinder';
 
 export interface HttpError extends Error {
 	response?: Response;
