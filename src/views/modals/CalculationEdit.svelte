@@ -2,7 +2,7 @@
 	<Grid>
 		<Col>
 			<Select
-				options={getEngines($engines)}
+				options={optionsEngines($engines)}
 				bind:value={engine}
 				placeholder="Select engine..."
 			/>
@@ -13,7 +13,7 @@
 	</Grid>
 </div>
 
-{#await getTemplate(engine)}
+{#await getCalculationEngine(engine)}
 	<Loaders.Circle big />
 {:then { template, schema }}
 	{#if $fragment.includes('code')}
@@ -34,7 +34,7 @@
 	import * as Loaders from '@/components/loaders';
 	import { Code, Form, Tree } from '@/components/Editor';
 
-	import { getTemplate } from '@/services/api';
+	import { getCalculationEngine } from '@/services/api';
 	import { engines } from '@/stores/calculations';
 </script>
 
@@ -52,7 +52,7 @@
 
 	$: $fragment = `#edit-calculation-${dataSourceId}-${engine}-${mode}`;
 
-	function getEngines(engines) {
+	function optionsEngines(engines: string[]) {
 		return engines?.map((engine) => ({ label: engine, value: engine }));
 	}
 </script>

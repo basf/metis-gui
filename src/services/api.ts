@@ -3,7 +3,7 @@ import { userAsync } from '@/stores/user';
 import { API_HOST, API_BASEURL } from '@/config';
 import type {
 	User as UserDTO,
-	Template as TemplateDTO,
+	Engine as EngineDTO,
 	Collection as CollectionDTO,
 	CollectionType as CollectionTypeDTO,
 } from '@/types/dto';
@@ -39,19 +39,19 @@ export async function delDataSource({ id, query }: { id: number, query?: string 
 	return delJSON(`/datasources/${id}${query || ''}`);
 }
 
-export async function getTemplate(engine = 'dummy'): Promise<TemplateDTO> {
-	return fetchJSON(
-		`${API_HOST}/calculations/template?engine=${engine}`,
-		{ credentials: 'omit' }
-	);
-}
-
 export async function getCalculations(query?: string): Promise<void> {
 	return getJSON(`/calculations${query || ''}`);
 }
 
-export async function getCalculationsEngines(): Promise<void> {
+export async function getCalculationEngines(): Promise<string[]> {
 	return getJSON(`/calculations/engines`);
+}
+
+export async function getCalculationEngine(engine = 'dummy'): Promise<EngineDTO> {
+	return fetchJSON(
+		`${API_HOST}/calculations/template?engine=${engine}`,
+		{ credentials: 'omit' }
+	);
 }
 
 export async function setCalculation({ dataId, engine = 'dummy', input = '', workflow = 'workflow' }:

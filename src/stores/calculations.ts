@@ -3,7 +3,7 @@ import { asyncable, syncable } from 'svelte-asyncable';
 import { streamable } from 'svelte-streamable';
 import { toast } from 'svelte-spectre';
 
-import { getCalculations, getCalculationsEngines } from '@/services/api';
+import { getCalculations, getCalculationEngines } from '@/services/api';
 import { STREAM_URL, SYNC_TOASTS_CONFIG } from '@/config';
 
 import type { Unsubscriber } from 'svelte/store';
@@ -18,8 +18,8 @@ type CalculationDTO = {
 
 let unsubscribe: Unsubscriber
 
-export const enginesAsync = asyncable(getCalculationsEngines)
-export const engines = syncable(enginesAsync)
+export const enginesAsync = asyncable<Promise<string[]>>(getCalculationEngines)
+export const engines = syncable<string[]>(enginesAsync)
 
 export const calculationsAsyncReq = asyncable(($query) => getCalculations($query), null, [query])
 export const calculationsAsync = streamable<Stream<CalculationDTO>, CalculationDTO>(
