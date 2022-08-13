@@ -1,9 +1,7 @@
 <div class="imposter p-centered">
 	<Grid align="center">
-		<Col col="12">
-			<Logo />
-		</Col>
 		<Col col="auto mx-auto">
+			<Logo />
 			<Form on:submit={submit} horizontal>
 				{#if IdPs.includes('local')}
 					<FormGroup>
@@ -105,7 +103,7 @@
 	.imposter {
 		position: absolute;
 		inset-block-start: 40%;
-		inset-inline: 0%;
+		inset-inline: 0.4rem;
 		transform: translate(0%, -50%);
 	}
 </style>
