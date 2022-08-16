@@ -11,7 +11,9 @@ module.exports = {
 	name: 'app',
 	input: LIGHT_MODE ? `${src}/light_mode.ts` : `${src}/full_mode.ts`,
 	template: `${src}/index.html`,
-	files: [],
+	files: [
+		{ src: 'src/assets/favicon.ico', dest: 'dist' }
+	],
 	externals: [],
 	replace: {
 		__env: JSON.stringify(dev ? 'development' : 'production'),

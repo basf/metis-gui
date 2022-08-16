@@ -2,23 +2,27 @@
 	<Container>
 		<Navbar>
 			<nav slot="left">
-				{#if $user && $path.toString() === '/profile'}
-					<IconButton icon="back" size="xl" on:click={() => back()} />
+				{#if $user && $pattern('/profile')}
+					<IconButton icon="back" size="xl" on:click={back} />
 				{/if}
 			</nav>
 
-			<IconButton id="xray" slot="center" size="xxl" iconSize="4x" href="/">
-				{@html logo}
-			</IconButton>
+			<svelte:fragment slot="center">
+				{#if $user}
+					<IconButton size="xxl" iconSize="4x" href="/">
+						<Logo />
+					</IconButton>
+				{/if}
+			</svelte:fragment>
 
 			<nav slot="right">
 				{#if $user}
 					<Button variant="link" size="xl" href="/profile">
 						<Icon icon="people" />&nbsp;{$user.firstName}&nbsp;{$user.lastName}
 					</Button>
-				{/if}
-				{#if mode === 'light'}
-					<IconButton icon="shutdown" on:click={doLogout} />
+					{#if mode === 'light'}
+						<IconButton icon="shutdown" on:click={doLogout} />
+					{/if}
 				{/if}
 			</nav>
 		</Navbar>
@@ -27,10 +31,10 @@
 
 <script lang="ts" context="module">
 	import { getContext } from 'svelte';
-	import { back, path } from 'svelte-pathfinder';
+	import { back, pattern } from 'svelte-pathfinder';
 	import { Button, Container, Icon, IconButton, Navbar, toast } from 'svelte-spectre';
 
-	import logo from '@/assets/img/metis.svg';
+	import Logo from '@/components/Logo.svelte';
 
 	import user, { userAsync } from '@/stores/user';
 	import { logout } from '@/services/api';
@@ -45,26 +49,3 @@
 		toast.warning({ msg: 'You are logged out', timeout: 4000, pos: 'top_right' });
 	}
 </script>
-
-<style lang="scss">
-	@media (prefers-color-scheme: dark) {
-		:global(#xray) {
-			color: $gray-color;
-		}
-	}
-	@media (prefers-color-scheme: light) {
-		:global(#xray) {
-			color: $dark-color;
-		}
-	}
-	:global([color-scheme='dark']) {
-		:global(#xray) {
-			color: $gray-color;
-		}
-	}
-	:global([color-scheme='light']) {
-		:global(#xray) {
-			color: $dark-color;
-		}
-	}
-</style>
