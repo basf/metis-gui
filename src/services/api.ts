@@ -54,7 +54,7 @@ export async function getCalculationsEngines(): Promise<void> {
 	return getJSON(`/calculations/engines`);
 }
 
-export async function setCalculation({ dataId, engine = 'dummy', input, workflow = 'workflow' }:
+export async function setCalculation({ dataId, engine = 'dummy', input, workflow = 'unused' }:
 	{
 		dataId: number,
 		engine?: string,
