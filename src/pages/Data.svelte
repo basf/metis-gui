@@ -74,6 +74,7 @@
 		return [
 			type === 1 ? runCalc : null,
 			type === 1 ? editCalc : null,
+			type === 3 ? editPlot : null,
 			editTag,
 			deleteData,
 		].filter(Boolean);

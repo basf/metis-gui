@@ -20,6 +20,10 @@ export async function getFilters(query?: string): Promise<void> {
 	return getJSON(`/filters${query || ''}`);
 }
 
+export async function getDataSource(id: number): Promise<void> {
+	return getJSON(`/datasources/${id}`);
+}
+
 export async function getDataSources(query?: string): Promise<void> {
 	return getJSON(`/datasources${query || ''}`);
 }
