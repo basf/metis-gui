@@ -39,7 +39,6 @@
 	import { withConfirm } from '@/stores/confirmator';
 	import { engines } from '@/stores/calculations';
 	import user from '@/stores/user';
-	import { API_BASEURL } from '@/config';
 </script>
 
 <script lang="ts">
@@ -102,9 +101,5 @@
 
 	function delData(id: number, query: string) {
 		withConfirm(delDataSource, { id, query }, 'Are you sure?', false)?.({ id, query });
-	}
-
-	function viewResult(id: number) {
-		window.open(`${API_BASEURL}/datasources/${id}`);
 	}
 </script>
