@@ -95,7 +95,7 @@
 	function runCalculation(id: number) {
 		if ($engines) {
 			$fragment = `#edit-engine-${id}`;
-		} else setCalculation({ dataId: id });
+		} else setCalculation({ dataId: id, workflow: 'unused' });
 	}
 
 	function delData(id: number, query: string) {

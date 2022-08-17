@@ -93,7 +93,7 @@
 			dataId: +dataId,
 			engine,
 			input: '',
-			workflow: 'workflow',
+			workflow: 'unused',
 		}).then(() => {
 			closeModal();
 			toast.success({
