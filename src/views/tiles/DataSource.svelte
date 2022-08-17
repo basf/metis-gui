@@ -42,4 +42,8 @@
 			display: inline;
 		}
 	}
+	span.placeholder {
+		display: inline-block;
+		width: 32px;
+	}
 </style>
