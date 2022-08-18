@@ -1,4 +1,3 @@
-<!-- <h3>Select engine</h3> -->
 <Select options={getOptions($engines)} bind:value={engine} placeholder="Select..." />
 
 <script lang="ts" context="module">
@@ -8,11 +7,11 @@
 </script>
 
 <script lang="ts">
-	let engine = '';
+	export let dataSourceId: number;
 
-	const [, , dataId] = $fragment.split('-');
+	let engine = 'dummy';
 
-	$: $fragment = `#edit-engine-${dataId}-${engine}`;
+	$: $fragment = `#edit-engine-${dataSourceId}-${engine}`;
 
 	function getOptions(engines) {
 		return engines?.map((engine) => ({ label: engine, value: engine }));

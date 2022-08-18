@@ -20,7 +20,7 @@
 	</Section>
 </Main>
 
-<DataModal data={$datasources.data} />
+<DataModal bind:dataId {dataName} />
 
 <script lang="ts" context="module">
 	import { fragment, query } from 'svelte-pathfinder';
@@ -39,12 +39,17 @@
 	import { withConfirm } from '@/stores/confirmator';
 	import { engines } from '@/stores/calculations';
 	import user from '@/stores/user';
-	import { API_BASEURL } from '@/config';
 </script>
 
 <script lang="ts">
 	const tileMenuItems = (type: number) => {
-		const editCalc = {
+		const runCalc = {
+				icon: 'forward',
+				color: 'success',
+				label: 'Calculate',
+				action: runCalculation,
+			},
+			editCalc = {
 				icon: 'edit',
 				label: 'Edit Calculation',
 				action: editCalculation,
@@ -54,21 +59,10 @@
 				label: 'Edit Tags',
 				action: editTags,
 			},
-			editPlot = {
-				icon: Sinus,
-				label: 'Edit Plot',
-				action: editPlots,
-			},
-			runCalc = {
-				icon: 'forward',
-				color: 'success',
-				label: 'Calculate',
-				action: runCalculation,
-			},
 			viewRes = {
-				icon: 'download',
-				label: 'View Result',
-				action: viewResult,
+				icon: Sinus,
+				label: 'View Data',
+				action: viewData,
 			},
 			deleteData = {
 				icon: 'cross',
@@ -77,6 +71,7 @@
 				action: delData,
 				query: $query.toString(),
 			};
+
 		return [
 			type === 1 ? runCalc : null,
 			type === 1 ? editCalc : null,
@@ -86,6 +81,10 @@
 		].filter(Boolean);
 	};
 
+	let dataId = '';
+
+	$: dataName = $datasources.data.find((data) => data.id === +dataId)?.name;
+
 	async function editCalculation(id: number) {
 		$fragment = `#edit-calculation-${id}`;
 	}
@@ -94,8 +93,8 @@
 		$fragment = `#edit-tags-${id}`;
 	}
 
-	function editPlots(id: number) {
-		$fragment = `#edit-plot-${id}`;
+	function viewData(id: number) {
+		$fragment = `#view-data-${id}`;
 	}
 
 	function runCalculation(id: number) {
@@ -106,9 +105,5 @@
 
 	function delData(id: number, query: string) {
 		withConfirm(delDataSource, { id, query }, 'Are you sure?', false)?.({ id, query });
-	}
-
-	function viewResult(id: number){
-		window.open(`${API_BASEURL}/datasources/${id}`);
 	}
 </script>

@@ -5,11 +5,7 @@
 			<h6 slot="header">{header}</h6>
 			{#each items as item, i (item)}
 				<li>
-					<Button
-						href={item.href || ''}
-						variant="link"
-						on:click={() => item.action(dataId, item.query)}
-					>
+					<Button href={item.href || ''} variant="link" on:click={() => onClick(item)}>
 						<Icon icon={item.icon} color={item.color}>
 							{#if item.icon.includes('<svg')}
 								{@html item.icon}
@@ -30,7 +26,8 @@
 			icon={item.icon}
 			tooltip={item.label}
 			color={item.color}
-			on:click={() => item.action(dataId, item.query)}
+			href={item.href || ''}
+			on:click={() => onClick(item)}
 			>{#if item.icon.includes('<svg')}
 				{@html item.icon}
 			{/if}
@@ -66,5 +63,9 @@
 
 	function openMenu(id: number) {
 		active = activeId === id;
+	}
+
+	function onClick(item: Item) {
+		item.action ? item.action(dataId, item.query) : null;
 	}
 </script>
