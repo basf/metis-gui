@@ -6,6 +6,7 @@
 		<svelte:component
 			this={modal().component}
 			dataSourceId={+decodeURIComponent(dataId)}
+			dataSourceName={dataName}
 			bind:tags={tagIds}
 		/>
 	{:else}

@@ -4,6 +4,7 @@ import { API_HOST, API_BASEURL } from '@/config';
 import type {
 	User as UserDTO,
 	Template as TemplateDTO,
+	DataSource as DataDTO,
 	Collection as CollectionDTO,
 	CollectionType as CollectionTypeDTO,
 } from '@/types/dto';
