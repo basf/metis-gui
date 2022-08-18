@@ -20,7 +20,7 @@
 	</Section>
 </Main>
 
-<DataModal data={$datasources.data} />
+<DataModal bind:dataId {dataName} />
 
 <script lang="ts" context="module">
 	import { fragment, query } from 'svelte-pathfinder';
@@ -80,6 +80,10 @@
 			deleteData,
 		].filter(Boolean);
 	};
+
+	let dataId = '';
+
+	$: dataName = $datasources.data.find((data) => data.id === +dataId)?.name;
 
 	async function editCalculation(id: number) {
 		$fragment = `#edit-calculation-${id}`;

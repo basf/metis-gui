@@ -1,17 +1,19 @@
-<Modal size={modal().size || ($media.sm ? 'fs' : 'lg')} open={!!$fragment} on:close={closeModal}>
+<Modal
+	title={dataType}
+	size={modal().size || ($media.sm ? 'fs' : 'lg')}
+	open={!!$fragment}
+	on:close={closeModal}
+>
 	<h3 slot="header">
 		{@html `${modal().header} <mark> ${dataName} </mark>`}
 	</h3>
-	{#if modal().component}
-		<svelte:component
-			this={modal().component}
-			dataSourceId={+decodeURIComponent(dataId)}
-			dataSourceName={dataName}
-			bind:tags={tagIds}
-		/>
-	{:else}
-		<span style="height: 100%" class="loading loading-lg p-centered d-block" />
-	{/if}
+	<svelte:component
+		this={modal().component}
+		dataSourceId={+decodeURIComponent(dataId)}
+		dataSourceName={dataName}
+		bind:tags={tagIds}
+		bind:input={calcInput}
+	/>
 	<svelte:fragment slot="footer">
 		<Button on:click={closeModal}>Cancel</Button>
 		<Button variant="primary" on:click={modal().submit}>Submit</Button>
@@ -22,28 +24,27 @@
 	import { fragment } from 'svelte-pathfinder';
 	import { Button, Modal, toast } from 'svelte-spectre';
 
-	import { CalculationEdit, EnginesEdit, DataView, TagsEdit } from '.';
+	import { CalculationEdit, EngineEdit, DataView, TagsEdit } from '.';
 	import { patchDataSourceCollections, setCalculation } from '@/services/api';
-	import { editorCode } from '@/stores/editor';
 	import { media } from '@/stores/media';
 </script>
 
 <script lang="ts">
-	export let data;
+	export let dataName = '';
+	export let dataId = '';
 
-	let tagIds;
+	let calcInput = '';
+	let tagIds: number[];
 
 	$: [_, dataType, dataId, engine] = $fragment.split('-');
-
-	$: dataName = data?.find((data) => data.id === +dataId)?.name;
 
 	$: modal = () => {
 		switch (dataType) {
 			case 'engine':
 				return {
 					header: `Select calculation engine for`,
-					component: EnginesEdit,
-					submit: submitEngines,
+					component: EngineEdit,
+					submit: submitCalculation,
 					size: 'md',
 				};
 			case 'calculation':
@@ -62,7 +63,7 @@
 				return {
 					header: `View datasource`,
 					component: DataView,
-					submit: submitPlots,
+					submit: submitData,
 				};
 			default:
 				return {
@@ -77,24 +78,10 @@
 	}
 
 	function submitCalculation() {
-		setCalculation({ dataId: +dataId, engine, input: $editorCode.input }).then(() =>
-			closeModal()
-		);
-	}
-
-	async function submitTags() {
-		await patchDataSourceCollections(+dataId, tagIds).then(() => closeModal());
-	}
-
-	function submitPlots() {
-		closeModal();
-	}
-
-	function submitEngines() {
 		setCalculation({
 			dataId: +dataId,
 			engine,
-			input: '',
+			input: calcInput,
 			workflow: 'unused',
 		}).then(() => {
 			closeModal();
@@ -105,5 +92,13 @@
 				icon: 'forward',
 			});
 		});
+	}
+
+	function submitTags() {
+		patchDataSourceCollections(+dataId, tagIds).then(closeModal);
+	}
+
+	function submitData() {
+		closeModal();
 	}
 </script>

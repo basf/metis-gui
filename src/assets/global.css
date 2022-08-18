@@ -12,7 +12,7 @@ body,
 }
 
 div.distant_msg {
-	margin: 5vh auto;
+	margin: 5vh auto !important;
 }
 
 .modal .modal-body {

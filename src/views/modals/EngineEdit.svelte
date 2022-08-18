@@ -7,11 +7,11 @@
 </script>
 
 <script lang="ts">
+	export let dataSourceId: number;
+
 	let engine = 'dummy';
 
-	const [, , dataId] = $fragment.split('-');
-
-	$: $fragment = `#edit-engine-${dataId}-${engine}`;
+	$: $fragment = `#edit-engine-${dataSourceId}-${engine}`;
 
 	function getOptions(engines) {
 		return engines?.map((engine) => ({ label: engine, value: engine }));

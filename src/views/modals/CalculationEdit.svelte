@@ -1,21 +1,66 @@
-{#if $editorCode.template}
-	<Editor code={$editorCode.template} on:change={(e) => ($editorCode.input = e.detail)} />
-{:else}
+<div id="controls">
+	<Grid>
+		<Col>
+			<Select
+				options={optionsEngines($engines)}
+				bind:value={engine}
+				placeholder="Select engine..."
+			/>
+		</Col>
+		<Col>
+			<Select options={modes} bind:value={mode} placeholder="Represent like..." />
+		</Col>
+	</Grid>
+</div>
+
+{#await getCalculationEngine(engine)}
 	<Loaders.Circle big />
-{/if}
+{:then { template, schema }}
+	{#if $fragment.includes('code')}
+		<Code code={template} on:change={(e) => (input = e.detail)} />
+	{:else if $fragment.includes('form')}
+		<Form {template} {schema} bind:input />
+	{:else}
+		<Tree value={schema} />
+	{/if}
+{:catch error}
+	{error}
+{/await}
 
 <script lang="ts" context="module">
-	import { onMount } from 'svelte';
-	import { Editor } from '@/components/Editor';
-	import { editorCode } from '@/stores/editor';
-	import { getTemplate } from '@/services/api';
+	import { fragment } from 'svelte-pathfinder';
+	import { Col, Grid, Select } from 'svelte-spectre';
+
 	import * as Loaders from '@/components/loaders';
+	import { Code, Form, Tree } from '@/components/Editor';
+
+	import { getCalculationEngine } from '@/services/api';
+	import { engines } from '@/stores/calculations';
 </script>
 
 <script lang="ts">
-	export const dataSourceId = 0;
+	export let dataSourceId = 0;
+	export let input = '';
 
-	onMount(async () => {
-		$editorCode = await getTemplate('dummy');
-	});
+	let engine = 'dummy';
+	let mode = 'code';
+	let modes = [
+		{ label: 'Code', value: 'code' },
+		{ label: 'Form', value: 'form' },
+		{ label: 'Tree', value: 'tree' },
+	];
+
+	$: $fragment = `#edit-calculation-${dataSourceId}-${engine}-${mode}`;
+
+	function optionsEngines(engines: string[]) {
+		return engines?.map((engine) => ({ label: engine, value: engine }));
+	}
 </script>
+
+<style lang="scss">
+	div#controls {
+		position: sticky;
+		top: 0;
+		z-index: 1;
+	}
+</style>

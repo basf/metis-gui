@@ -1,14 +1,11 @@
 import { userAsync } from '@/stores/user';
-
 import { API_HOST, API_BASEURL } from '@/config';
 import type {
 	User as UserDTO,
-	Template as TemplateDTO,
-	DataSource as DataDTO,
+	Engine as EngineDTO,
 	Collection as CollectionDTO,
 	CollectionType as CollectionTypeDTO,
 } from '@/types/dto';
-import { StringParams } from 'svelte-pathfinder';
 
 export interface HttpError extends Error {
 	response?: Response;
@@ -35,7 +32,7 @@ export async function setDataSources(content: string | string[]): Promise<void> 
 
 export async function patchDataSourceCollections(
 	id: number,
-	collectionIds: CollectionDTO[]
+	collectionIds: number[]
 ): Promise<unknown> {
 	return patchJSON(`/datasources/${id}/filters`, collectionIds);
 }
@@ -44,22 +41,22 @@ export async function delDataSource({ id, query }: { id: number, query?: string 
 	return delJSON(`/datasources/${id}${query || ''}`);
 }
 
-export async function getTemplate(engine = 'dummy'): Promise<TemplateDTO> {
+export async function getCalculations(query?: string): Promise<void> {
+	return getJSON(`/calculations${query || ''}`);
+}
+
+export async function getCalculationEngines(): Promise<void> {
+	return getJSON(`/calculations/engines`);
+}
+
+export async function getCalculationEngine(engine = 'dummy'): Promise<EngineDTO> {
 	return fetchJSON(
 		`${API_HOST}/calculations/template?engine=${engine}`,
 		{ credentials: 'omit' }
 	);
 }
 
-export async function getCalculations(query?: string): Promise<void> {
-	return getJSON(`/calculations${query || ''}`);
-}
-
-export async function getCalculationsEngines(): Promise<void> {
-	return getJSON(`/calculations/engines`);
-}
-
-export async function setCalculation({ dataId, engine = 'dummy', input, workflow = 'unused' }:
+export async function setCalculation({ dataId, engine = 'dummy', input, workflow = 'workflow' }:
 	{
 		dataId: number,
 		engine?: string,

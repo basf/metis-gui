@@ -49,7 +49,7 @@ export interface Error {
 	error: { message: string } | string;
 }
 
-export interface Template {
+export interface Engine {
 	template?: string;
 	schema?: any;
 	input?: string;
