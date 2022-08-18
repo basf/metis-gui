@@ -36,9 +36,9 @@
 <script lang="ts">
 	export let source: string;
 
-	const xTicks = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 150, 200];
+	const xTicks = [0, 50, 100, 150, 200];
 	const yTicks = [0, 5, 10, 20];
-	const padding = { top: 20, right: 15, bottom: 20, left: 25 };
+	const padding = { top: 20, right: 130, bottom: 20, left: 65 };
 
 	let width = 500;
 	let height = 200;

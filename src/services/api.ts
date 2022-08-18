@@ -4,6 +4,7 @@ import { API_HOST, API_BASEURL } from '@/config';
 import type {
 	User as UserDTO,
 	Template as TemplateDTO,
+	DataSource as DataDTO,
 	Collection as CollectionDTO,
 	CollectionType as CollectionTypeDTO,
 } from '@/types/dto';
@@ -18,6 +19,10 @@ export type QueryParams = Record<string, unknown>;
 
 export async function getFilters(query?: string): Promise<void> {
 	return getJSON(`/filters${query || ''}`);
+}
+
+export async function getDataSource(id: number): Promise<void> {
+	return getJSON(`/datasources/${id}`);
 }
 
 export async function getDataSources(query?: string): Promise<void> {

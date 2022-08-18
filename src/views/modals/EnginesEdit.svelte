@@ -1,4 +1,3 @@
-<!-- <h3>Select engine</h3> -->
 <Select options={getOptions($engines)} bind:value={engine} placeholder="Select..." />
 
 <script lang="ts" context="module">
@@ -8,7 +7,7 @@
 </script>
 
 <script lang="ts">
-	let engine = '';
+	let engine = 'dummy';
 
 	const [, , dataId] = $fragment.split('-');
 
