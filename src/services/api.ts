@@ -41,7 +41,7 @@ export async function getCalculations(query?: string): Promise<void> {
 	return getJSON(`/calculations${query || ''}`);
 }
 
-export async function getCalculationEngines(): Promise<string[]> {
+export async function getCalculationEngines(): Promise<void> {
 	return getJSON(`/calculations/engines`);
 }
 
@@ -52,7 +52,7 @@ export async function getCalculationEngine(engine = 'dummy'): Promise<EngineDTO>
 	);
 }
 
-export async function setCalculation({ dataId, engine = 'dummy', input = '', workflow = 'workflow' }:
+export async function setCalculation({ dataId, engine = 'dummy', input, workflow = 'workflow' }:
 	{
 		dataId: number,
 		engine?: string,

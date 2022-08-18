@@ -80,8 +80,8 @@
 		setCalculation({
 			dataId: +dataId,
 			engine,
-			input,
-			workflow: 'workflow',
+			input: '',
+			workflow: 'unused',
 		}).then(() => {
 			closeModal();
 			toast.success({

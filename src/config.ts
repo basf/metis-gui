@@ -32,4 +32,4 @@ export const SYNC_TOASTS_CONFIG = { timeout: 2000, pos: 'bottom_right' } as Toas
 
 export const IdPs = ['basf', 'local']; // available: github, linkedin, orcid, basf, and local
 
-export const PAGE_LIMIT = 100
+export const PAGE_LIMIT = 25;

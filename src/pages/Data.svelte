@@ -39,6 +39,7 @@
 	import { withConfirm } from '@/stores/confirmator';
 	import { engines } from '@/stores/calculations';
 	import user from '@/stores/user';
+	import { API_BASEURL } from '@/config';
 </script>
 
 <script lang="ts">
@@ -64,6 +65,11 @@
 				label: 'Calculate',
 				action: runCalculation,
 			},
+			viewRes = {
+				icon: 'download',
+				label: 'View Result',
+				action: viewResult,
+			},
 			deleteData = {
 				icon: 'cross',
 				color: 'error',
@@ -74,7 +80,8 @@
 		return [
 			type === 1 ? runCalc : null,
 			type === 1 ? editCalc : null,
-			editTag,
+			type === 1 ? editTag : null,
+			type === 3 ? viewRes : null,
 			deleteData,
 		].filter(Boolean);
 	};
@@ -96,10 +103,14 @@
 	function runCalculation(id: number) {
 		if ($engines) {
 			$fragment = `#edit-engine-${id}`;
-		} else setCalculation({ dataId: id });
+		} else setCalculation({ dataId: id, workflow: 'unused' });
 	}
 
 	function delData(id: number, query: string) {
 		withConfirm(delDataSource, { id, query }, 'Are you sure?', false)?.({ id, query });
+	}
+
+	function viewResult(id: number){
+		window.open(`${API_BASEURL}/datasources/${id}`);
 	}
 </script>
