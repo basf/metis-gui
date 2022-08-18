@@ -59,10 +59,10 @@
 				label: 'Edit Tags',
 				action: editTags,
 			},
-			editPlot = {
+			viewRes = {
 				icon: Sinus,
-				label: 'Edit Plot',
-				action: editPlots,
+				label: 'View Data',
+				action: viewData,
 			},
 			deleteData = {
 				icon: 'cross',
@@ -76,7 +76,7 @@
 			type === 1 ? runCalc : null,
 			type === 1 ? editCalc : null,
 			type === 1 ? editTag : null,
-			type === 3 ? editPlot : null,
+			type === 3 ? viewRes : null,
 			deleteData,
 		].filter(Boolean);
 	};
@@ -89,8 +89,8 @@
 		$fragment = `#edit-tags-${id}`;
 	}
 
-	function editPlots(id: number) {
-		$fragment = `#edit-plot-${id}`;
+	function viewData(id: number) {
+		$fragment = `#view-data-${id}`;
 	}
 
 	function runCalculation(id: number) {

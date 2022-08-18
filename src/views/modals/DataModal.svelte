@@ -1,9 +1,6 @@
 <Modal size={modal().size || ($media.sm ? 'fs' : 'lg')} open={!!$fragment} on:close={closeModal}>
 	<h3 slot="header">
-		{@const modalHeader = `Edit and submit ${decodeURIComponent(
-			dataType
-		)} for <mark> ${dataName} </mark>`}
-		{@html modalHeader}
+		{@html `${modal().header} <mark> ${dataName} </mark>`}
 	</h3>
 	{#if modal().component}
 		<svelte:component
@@ -24,7 +21,7 @@
 	import { fragment } from 'svelte-pathfinder';
 	import { Button, Modal, toast } from 'svelte-spectre';
 
-	import { CalculationEdit, EnginesEdit, PlotEdit, TagsEdit } from '.';
+	import { CalculationEdit, EnginesEdit, DataView, TagsEdit } from '.';
 	import { patchDataSourceCollections, setCalculation } from '@/services/api';
 	import { editorCode } from '@/stores/editor';
 	import { media } from '@/stores/media';
@@ -43,23 +40,27 @@
 		switch (dataType) {
 			case 'engine':
 				return {
+					header: `Select calculation engine for`,
 					component: EnginesEdit,
 					submit: submitEngines,
 					size: 'md',
 				};
 			case 'calculation':
 				return {
+					header: 'Edit and submit calculation for',
 					component: CalculationEdit,
 					submit: submitCalculation,
 				};
 			case 'tags':
 				return {
+					header: 'Edit and submit tags for',
 					component: TagsEdit,
 					submit: submitTags,
 				};
-			case 'plot':
+			case 'data':
 				return {
-					component: PlotEdit,
+					header: `View datasource`,
+					component: DataView,
 					submit: submitPlots,
 				};
 			default:
