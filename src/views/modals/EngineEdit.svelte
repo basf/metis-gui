@@ -8,8 +8,11 @@
 
 <script lang="ts">
 	export let dataSourceId: number;
+	export let disable = false;
 
 	let engine = 'dummy';
+
+	$: disable = !engine;
 
 	$: $fragment = `#edit-engine-${dataSourceId}-${engine}`;
 
