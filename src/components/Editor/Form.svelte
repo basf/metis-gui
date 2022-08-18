@@ -36,5 +36,5 @@
 
 	const { description, properties } = schema;
 
-	console.log(template, schema, input);
+	//console.log(template, schema, input);
 </script>
