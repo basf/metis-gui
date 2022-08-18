@@ -63,7 +63,7 @@
 				};
 			case 'data':
 				return {
-					header: `View datasource`,
+					header: `View`,
 					component: DataView,
 					submit: submitData,
 				};

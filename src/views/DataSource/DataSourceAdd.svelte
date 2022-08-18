@@ -1,6 +1,6 @@
 <div class="py-2">
 	{#if msg}
-		<div class="text-center distant_msg">Upload a structure to start</div>
+		<div class="text-center distant_msg">Upload a structure to start...</div>
 	{/if}
 
 	<Grid stack>

@@ -8,7 +8,7 @@
 			/>
 		</Col>
 		<Col>
-			<Select options={modes} bind:value={mode} placeholder="Represent like..." />
+			<Select options={modes} bind:value={mode} placeholder="Select display type..." />
 		</Col>
 	</Grid>
 </div>
@@ -45,9 +45,9 @@
 	let engine = 'dummy';
 	let mode = 'code';
 	let modes = [
-		{ label: 'Code', value: 'code' },
-		{ label: 'Form', value: 'form' },
-		{ label: 'Tree', value: 'tree' },
+		{ label: 'Raw input file', value: 'code' },
+		{ label: 'Auto-generated form', value: 'form' },
+		{ label: 'JSON schema tree', value: 'tree' },
 	];
 
 	$: $fragment = `#edit-calculation-${dataSourceId}-${engine}-${mode}`;

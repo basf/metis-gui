@@ -3,7 +3,7 @@
 		<Navbar>
 			<nav slot="left">
 				This is Metis &mdash;<br />
-				an open-source XRPD online data management system.
+				an open-source materials science data organizer.
 			</nav>
 			<nav slot="right"><Switch bind:value={$darkTheme}>Dark theme</Switch></nav>
 		</Navbar>
