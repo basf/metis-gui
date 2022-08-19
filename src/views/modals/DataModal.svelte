@@ -13,7 +13,6 @@
 		dataSourceName={dataName}
 		bind:tags={tagIds}
 		bind:input={calcInput}
-		bind:disable={disableSubmit}
 	/>
 	<svelte:fragment slot="footer">
 		<Button on:click={closeModal}>Cancel</Button>
@@ -36,7 +35,8 @@
 
 	let calcInput = '';
 	let tagIds: number[];
-	let disableSubmit = false;
+
+	$: disableSubmit = !engine;
 
 	$: [_, dataType, dataId, engine] = $fragment.split('-');
 
