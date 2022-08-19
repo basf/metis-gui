@@ -38,3 +38,13 @@
 
 	//console.log(template, schema, input);
 </script>
+
+<style lang="scss">
+	h5 {
+		text-align: center;
+		letter-spacing: 1px;
+		margin: 20px 0 10px;
+		font-size: 1.3em;
+		color: #999;
+	}
+</style>

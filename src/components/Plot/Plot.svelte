@@ -34,10 +34,10 @@
 </script>
 
 <script lang="ts">
-	export let source: string;
+	export let source: number[][];
 
-	const xTicks = [0, 50, 100, 150, 200];
-	const yTicks = [0, 5, 10, 20];
+	const xTicks = [0, 45, 90, 135, 180];
+	const yTicks = [0, 50, 100, 200];
 	const padding = { top: 20, right: 130, bottom: 20, left: 65 };
 
 	let width = 500;
@@ -63,13 +63,10 @@
 		return "'" + tick.toString().slice(-2);
 	}
 
-	function parseSource(source: string) {
+	function parseSource(source: number[][]) {
 		return source
-			.split(/\n/)
-			.filter(Boolean)
-			.map((s) => {
-				const [x, y] = s.split(/\s+/).filter(Boolean);
-				return { x: +x, y: +y };
+			.map((row) => {
+				return { x: row[0], y: row[1] };
 			});
 	}
 </script>
@@ -122,14 +119,10 @@
 
 			.path-line {
 				fill: none;
-				stroke: darken($highlight-color, 15%);
+				stroke: #000;
 				stroke-linejoin: round;
 				stroke-linecap: round;
 				stroke-width: 1;
-			}
-
-			.path-area {
-				fill: $highlight-color;
 			}
 		}
 	}

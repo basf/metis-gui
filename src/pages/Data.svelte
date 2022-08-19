@@ -51,7 +51,8 @@
 			},
 			editCalc = {
 				icon: 'edit',
-				label: 'Edit Calculation',
+				color: 'success',
+				label: 'Edit calculation input',
 				action: editCalculation,
 			},
 			editTag = {

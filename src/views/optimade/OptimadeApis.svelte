@@ -59,7 +59,7 @@
 	function setDataSourcesContent(structure: Types.Structure) {
 		setDataSources(JSON.stringify(structure));
 		toast.success({
-			msg: 'Data downloaded',
+			msg: 'Structure added',
 			timeout: 2000,
 			pos: 'top_right',
 			icon: 'download',
