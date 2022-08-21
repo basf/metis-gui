@@ -18,7 +18,7 @@ export type CollectionDTO = {
 
 let unsubscribe: Unsubscriber
 
-export const filtersAsyncReq = asyncable(($datasources) => getFilters(), null, [datasources])
+export const filtersAsyncReq = asyncable(getFilters)
 export const filtersAsync = streamable<Stream<CollectionDTO>, CollectionDTO>(
 	{
 		url: STREAM_URL,
