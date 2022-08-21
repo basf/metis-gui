@@ -21,7 +21,7 @@
 </Modal>
 
 <script lang="ts" context="module">
-	import { fragment } from 'svelte-pathfinder';
+	import { fragment, query } from 'svelte-pathfinder';
 	import { Button, Modal, toast } from 'svelte-spectre';
 
 	import { CalculationEdit, EngineEdit, DataView, TagsEdit } from '.';
@@ -85,6 +85,7 @@
 			engine,
 			input: calcInput,
 			workflow: 'unused',
+			query: $query.toString(),
 		}).then(() => {
 			closeModal();
 			toast.success({

@@ -56,14 +56,16 @@ export async function getCalculationEngine(engine = 'dummy'): Promise<EngineDTO>
 	);
 }
 
-export async function setCalculation({ dataId, engine = 'dummy', input, workflow = 'workflow' }:
+export async function setCalculation({ dataId, engine = 'dummy', input, workflow = 'workflow', query = '' }:
 	{
 		dataId: number,
 		engine?: string,
 		input?: string,
-		workflow?: string
+		workflow?: string,
+		query?: string
 	}): Promise<void> {
-	return postJSON('/calculations', { dataId, engine, input, workflow });
+	postJSON(`/webhooks/calc_update${query}`, {})
+	return postJSON(`/calculations${query}`, { dataId, engine, input, workflow });
 }
 
 export async function delCalculation({ id, query }: { id: number, query?: string }): Promise<void> {
