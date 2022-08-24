@@ -36,9 +36,10 @@
 	import { pattern, query, type Param, type Params } from 'svelte-pathfinder';
 	import { Autocomplete, Col, Grid, IconButton, InputGroup, Select } from 'svelte-spectre';
 
-	import { VISIBILITY } from '@/types/const';
 	import { autoColor } from '@/helpers/style';
 	import { filters, type CollectionDTO } from '@/stores/filters';
+
+	import { VISIBILITY } from '@/types/const';
 	import type { Collection, CollectionType } from '@/types/dto';
 
 	type Tag = {
