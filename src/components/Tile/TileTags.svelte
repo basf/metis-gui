@@ -5,7 +5,7 @@
 			{#each getCollectionsList(datasourceId, $filters.data) as tag (tag.id)}
 				<li>
 					<a href={setTagLink(tag.id)}>
-						<Badge style="background: {tag.typeFlavor}">
+						<Badge style={autoColor(tag.typeFlavor)}>
 							{tag.title}
 						</Badge>
 					</a>
@@ -18,7 +18,7 @@
 		{#each getCollectionsList(datasourceId, $filters.data) as tag (tag.id)}
 			<li>
 				<a href={setTagLink(tag.id)}>
-					<Badge style="background: {tag.typeFlavor}">
+					<Badge style={autoColor(tag.typeFlavor)}>
 						{tag.title}
 					</Badge>
 				</a>
@@ -31,6 +31,7 @@
 	import { query, path } from 'svelte-pathfinder';
 	import { Badge, Button, Dropdown } from 'svelte-spectre';
 
+	import { autoColor } from '@/helpers/style';
 	import { filters } from '@/stores/filters';
 	import { media } from '@/stores/media';
 

@@ -35,9 +35,10 @@
 <script lang="ts" context="module">
 	import { pattern, query, type Param, type Params } from 'svelte-pathfinder';
 	import { Autocomplete, Col, Grid, IconButton, InputGroup, Select } from 'svelte-spectre';
-	import { VISIBILITY } from '@/types/const';
-	import { filters, type CollectionDTO } from '@/stores/filters';
 
+	import { VISIBILITY } from '@/types/const';
+	import { autoColor } from '@/helpers/style';
+	import { filters, type CollectionDTO } from '@/stores/filters';
 	import type { Collection, CollectionType } from '@/types/dto';
 
 	type Tag = {
@@ -72,7 +73,7 @@
 				label: collection.title,
 				group: collection.visibility,
 				type: collection.typeId,
-				style: `background: ${collection.typeFlavor} !important`,
+				style: autoColor(collection.typeFlavor),
 				value: collection.dataSources,
 			}))
 			.filter((tag) => {
