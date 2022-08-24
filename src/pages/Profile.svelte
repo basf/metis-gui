@@ -11,7 +11,11 @@
 		</div>
 
 		<svelte:fragment slot="footer">
-			<Button on:click={doLogout} variant="primary" block>Log out</Button>
+			<Button
+				on:click={() => withConfirm(doLogout, {}, 'Are you sure?', false)}
+				variant="primary"
+				block>Log out</Button
+			>
 		</svelte:fragment>
 	</Panel>
 {/if}
@@ -20,6 +24,7 @@
 	import { Avatar, Button, Panel, Tabs, Tile, toast } from 'svelte-spectre';
 
 	import user, { userAsync } from '@/stores/user';
+	import { withConfirm } from '@/stores/confirmator';
 
 	import { logout } from '@/services/api';
 </script>
