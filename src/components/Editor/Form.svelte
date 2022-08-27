@@ -16,7 +16,13 @@
 				{/each}
 			</fieldset>
 		{:else}
-			<Input type={value.type} placeholder={value.description}>{key}</Input>
+			{#if value.type === 'boolean'}
+				<Checkbox>{key}</Checkbox>
+			{:else if value?.enum?.length || value?.items?.enum?.length}
+				<Select options={value.enum || value.items.enum} placeholder={key} />
+			{:else}
+				<Input type={value.type} placeholder={value.description}>{key}</Input>
+			{/if}
 			<details class="text-gray">
 				<summary>JSON</summary>
 				<small><pre>{key}: {JSON.stringify(value, 0, 2)}</pre></small>
@@ -26,7 +32,7 @@
 </Form>
 
 <script lang="ts" context="module">
-	import { Form, Input, Select } from 'svelte-spectre';
+	import { Checkbox, Form, Input, Select } from 'svelte-spectre';
 </script>
 
 <script lang="ts">

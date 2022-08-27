@@ -47,7 +47,7 @@
 	let modes = [
 		{ label: 'Raw input file', value: 'code' },
 		{ label: 'Auto-generated form', value: 'form' },
-		{ label: 'JSON schema tree', value: 'tree' },
+		// { label: 'JSON schema tree', value: 'tree' },
 	];
 
 	$: $fragment = `#edit-calculation-${dataSourceId}-${engine}-${mode}`;
