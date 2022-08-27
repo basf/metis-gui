@@ -13,7 +13,7 @@
 		</svelte:fragment>
 		<h5 class="mt-2" slot="title">
 			{title}
-			<Badge style="background: {typeFlavor}">{visibility}</Badge>
+			<Badge style={autoColor(typeFlavor)}>{visibility}</Badge>
 		</h5>
 		<small slot="subtitle" class="text-gray">
 			{description}
@@ -35,12 +35,12 @@
 <script lang="ts" context="module">
 	import { createEventDispatcher } from 'svelte';
 	import { IconButton, Tile, Avatar, Badge } from 'svelte-spectre';
+
 	import user from '@/stores/user';
+	import { autoColor } from '@/helpers/style';
 </script>
 
 <script lang="ts">
-	import { userAsync } from '@/stores/user';
-
 	const dispatch = createEventDispatcher();
 
 	export let id: number;
@@ -54,18 +54,6 @@
 
 	$: userDisplayName = `${userFirstName} ${userLastName}`;
 	$: owner = $user && $user.id === userId;
-
-	let visibilityColor;
-	$: switch (visibility) {
-		case 'public':
-			visibilityColor = 'success';
-			break;
-		case 'community':
-			visibilityColor = 'warning';
-			break;
-		default:
-			visibilityColor = 'error';
-	}
 </script>
 
 <style lang="scss">
