@@ -8,6 +8,7 @@ import { STREAM_URL, SYNC_TOASTS_CONFIG } from '@/config';
 
 import { type Unsubscriber } from 'svelte/store'
 import type { CollectionType, Collection, Stream } from '@/types/dto';
+import datasources from './datasources';
 
 export type CollectionDTO = {
 	data: Collection[],
@@ -18,7 +19,6 @@ export type CollectionDTO = {
 let unsubscribe: Unsubscriber
 
 export const filtersAsyncReq = asyncable(getFilters)
-
 export const filtersAsync = streamable<Stream<CollectionDTO>, CollectionDTO>(
 	{
 		url: STREAM_URL,
