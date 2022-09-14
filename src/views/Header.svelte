@@ -21,7 +21,7 @@
 						<Icon icon="people" />&nbsp;{$user.firstName}&nbsp;{$user.lastName}
 					</Button>
 					{#if mode === 'light'}
-						<IconButton icon="shutdown" on:click={doLogout} />
+						<IconButton icon="shutdown" on:click={() => withConfirm(doLogout, {}, 'Are you sure?', false)} />
 					{/if}
 				{/if}
 			</nav>
@@ -37,6 +37,7 @@
 	import Logo from '@/components/Logo.svelte';
 
 	import user, { userAsync } from '@/stores/user';
+	import { withConfirm } from '@/stores/confirmator';
 	import { logout } from '@/services/api';
 </script>
 

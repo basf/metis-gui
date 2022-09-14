@@ -49,8 +49,8 @@
 	h5 {
 		text-align: center;
 		letter-spacing: 1px;
-		margin: 20px 0 10px;
-		font-size: 1.3em;
 		color: #999;
+		background: #9c9;
+		padding: 8px 0;
 	}
 </style>
