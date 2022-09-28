@@ -24,7 +24,7 @@
 
 <script lang="ts" context="module">
 	import { fragment, query } from 'svelte-pathfinder';
-	import { Col } from 'svelte-spectre';
+	import { Col, toast } from 'svelte-spectre';
 
 	import { Main, Section } from '@/layouts/';
 	import { DataSource } from '@/views/tiles';
@@ -99,9 +99,17 @@
 	}
 
 	function runCalculation(id: number) {
-		if ($engines) {
+		if ($engines.length > 1) {
 			$fragment = `#edit-engine-${id}`;
-		} else setCalculation({ dataId: id, workflow: 'unused', query: $query.toString() });
+		} else {
+			setCalculation({ dataId: id, workflow: 'unused', query: $query.toString() })
+			.then(() => toast.success({
+				msg: 'Calculation submitted',
+				timeout: 2000,
+				pos: 'top_right',
+				icon: 'forward'
+			}))
+		};
 	}
 
 	function delData(id: number, query: string) {
