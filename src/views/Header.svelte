@@ -21,7 +21,7 @@
 						<Icon icon="people" />&nbsp;{$user.firstName}&nbsp;{$user.lastName}
 					</Button>
 					{#if mode === 'light'}
-						<IconButton icon="shutdown" on:click={() => withConfirm(doLogout, {}, 'Are you sure?', false)} />
+						<IconButton icon="shutdown" on:click={() => withConfirm(doLogout, {}, 'Log out indeed?', false)} />
 					{/if}
 				{/if}
 			</nav>

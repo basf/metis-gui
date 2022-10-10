@@ -102,7 +102,7 @@
 		if ($engines.length > 1) {
 			$fragment = `#edit-engine-${id}`;
 		} else {
-			setCalculation({ dataId: id, workflow: 'unused', query: $query.toString() })
+			setCalculation({ dataId: id, engine: $engines[0], workflow: 'unused', query: $query.toString() })
 			.then(() => toast.success({
 				msg: 'Calculation submitted',
 				timeout: 2000,
