@@ -27,7 +27,7 @@ export const collectionsAsync = streamable<Stream<CollectionDTO>, CollectionDTO>
 		withCredentials: true,
 	},
 	(res, set) => {
-		console.log(res);
+		//console.log(res);
 		if (res) {
 			toast.primary({ ...SYNC_TOASTS_CONFIG, msg: 'Collections synced' });
 			set({ ...res });
@@ -52,7 +52,7 @@ export const collectionDataSourcesAsync = streamable<Stream<CollectionDTO>, Coll
 		withCredentials: true,
 	},
 	(res, set) => {
-		console.log(res);
+		//console.log(res);
 		if (res) {
 			toast.primary({ ...SYNC_TOASTS_CONFIG, msg: 'Collection DataSources synced' });
 			set({ ...res });

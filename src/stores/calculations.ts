@@ -29,7 +29,7 @@ export const calculationsAsync = streamable<Stream<CalculationDTO>, CalculationD
 		withCredentials: true,
 	},
 	(res, set) => {
-		console.log(res);
+		//console.log(res);
 		if (res) {
 			toast.primary({ ...SYNC_TOASTS_CONFIG, msg: 'Calculations synced' });
 			set({ ...res });

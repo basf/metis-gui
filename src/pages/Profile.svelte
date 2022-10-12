@@ -11,11 +11,7 @@
 		</div>
 
 		<svelte:fragment slot="footer">
-			<Button
-				on:click={() => withConfirm(doLogout, {}, 'Are you sure?', false)}
-				variant="primary"
-				block>Log out</Button
-			>
+			<Button on:click={doLogout} variant="primary" block>Log out</Button>
 		</svelte:fragment>
 	</Panel>
 {/if}

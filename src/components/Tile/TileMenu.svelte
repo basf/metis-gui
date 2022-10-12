@@ -13,7 +13,8 @@
 						</Icon>
 						{#if item.color}
 							<span class="text-{item.color}">&nbsp; {item.label}</span>
-						{:else}&nbsp; {item.label}
+						{:else}
+							&nbsp; {item.label}
 						{/if}
 					</Button>
 				</li>

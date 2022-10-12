@@ -262,7 +262,7 @@ export function collapse(node) {
 }
 
 export function filter(node, keys) {
-	console.log(keys);
+	//console.log(keys);
 
 	traverse(node, function (child) {
 		if ([...keys].every(key => child.key.includes(key))) {

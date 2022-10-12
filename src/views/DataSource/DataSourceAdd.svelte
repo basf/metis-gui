@@ -37,7 +37,7 @@
 	async function addDataSourceItem() {
 		try {
 			const uploaded = await setDataSources(contents.length ? contents : value);
-			console.log(uploaded);
+			//console.log(uploaded);
 			clearFiles();
 			value = '';
 		} catch (error) {
