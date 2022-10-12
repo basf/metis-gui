@@ -1,5 +1,5 @@
 <div class="overlay">
-	<slot>Sorry, we are currently offline</slot><!-- FIXME not GUI offline, but BFF offline -->
+	<slot>Connecting to server...</slot><!-- FIXME (1) not GUI offline, but BFF offline (2) splash screen -->
 	<IconButton {icon} on:click={action} />
 </div>
 

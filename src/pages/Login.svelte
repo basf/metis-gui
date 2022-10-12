@@ -65,10 +65,10 @@
 
 	import { API_BASEURL, IdPs } from '@/config';
 
-	//import github from '@/assets/img/github.svg';
-	//import linkedin from '@/assets/img/linkedin.svg';
-	//import orcid from '@/assets/img/ORCID-invert.svg';
-	//import mpds from '@/assets/img/mpds.svg';
+	import github from '@/assets/img/github.svg';
+	import linkedin from '@/assets/img/linkedin.svg';
+	import orcid from '@/assets/img/ORCID-invert.svg';
+	import mpds from '@/assets/img/mpds.svg';
 	import basf from '@/assets/img/BASF-invert.svg';
 
 	import Logo from '@/components/Logo.svelte';
@@ -77,7 +77,7 @@
 	let password = '';
 	let errmsg;
 
-	const icons = { basf };
+	const icons = { github, linkedin, orcid, mpds, basf };
 
 	async function submit() {
 		try {

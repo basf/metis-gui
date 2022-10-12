@@ -1,31 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<svg role="img" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<title>MPDS</title>
 <g>
-<circle cx="50" cy="12" r="12" fill="#999" />
-<path d="M 50,10 50,35 z" stroke="#999" stroke-width="2" />
-<path d="M 50,42 55,32 45,32 z" fill="#999" />
+<path d="M 50,10 90,50 z" stroke-width="3" stroke="#999" />
+<path d="M 90,50 50,90 z" stroke-width="3" stroke="#999" />
+<path d="M 50,90 10,50 z" stroke-width="3" stroke="#999" />
+<path d="M 10,50 50,10 z" stroke-width="3" stroke="#999" />
 </g>
 <g>
-<circle cx="88" cy="50" r="12" fill="#999" />
-<path d="M 90,50 65,50 z" stroke="#999" stroke-width="2" />
-<path d="M 58,50 68,55 68,45 z" fill="#999" />
+<circle cx="50" cy="12" r="12" />
+<line x1="50" y1="24" x2="50" y2="35" stroke-width="2" stroke="#999"></line>
+<path d="M 50,42 55,32 45,32 z" stroke-width="2" />
 </g>
 <g>
-<circle cx="50" cy="88" r="12" fill="#999" />
-<path d="M 50,90 50,65 z" stroke="#999" stroke-width="2" />
-<path d="M 50,58 55,68 45,68 z" fill="#999" />
+<circle cx="88" cy="50" r="12" />
+<line x1="76" y1="50" x2="65" y2="50" stroke-width="2" stroke="#999"></line>
+<path d="M 58,50 68,55 68,45 z" stroke-width="2" />
 </g>
 <g>
-<circle cx="12" cy="50" r="12" fill="#999" />
-<path d="M 10,50 35,50 z" stroke="#999" stroke-width="2" />
-<path d="M 42,50 32,55 32,45 z" fill="#999" />
+<circle cx="50" cy="88" r="12" />
+<line x1="50" y1="76" x2="50" y2="65" stroke-width="2" stroke="#999"></line>
+<path d="M 50,58 55,68 45,68 z" stroke-width="2" />
 </g>
 <g>
-<circle cx="50" cy="50" r="12" fill="#999" />
+<circle cx="12" cy="50" r="12" />
+<line x1="24" y1="50" x2="35" y2="50" stroke-width="2" stroke="#999"></line>
+<path d="M 42,50 32,55 32,45 z" stroke-width="2" />
 </g>
 <g>
-<path d="M 50,10 90,50 z" stroke="#999" stroke-width="3" />
-<path d="M 90,50 50,90 z" stroke="#999" stroke-width="3" />
-<path d="M 50,90 10,50 z" stroke="#999" stroke-width="3" />
-<path d="M 10,50 50,10 z" stroke="#999" stroke-width="3" />
+<circle cx="50" cy="50" r="12" />
 </g>
 </svg>
