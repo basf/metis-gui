@@ -2,7 +2,7 @@
 	<Tile>
 		<svelte:fragment slot="icon">
 			{#if datasource.type === 1}
-				<Icon size="2x" color="gray">{@html Cube}</Icon>
+				<IconButton tooltip="View details" icon="more-horiz" on:click={() => visData(datasource.id)} />
 			{:else}
 				<span class="placeholder" />
 			{/if}
@@ -12,7 +12,11 @@
 		</svelte:fragment>
 		<svelte:fragment slot="subtitle">
 			<small class="text-gray">
-				Added {showTimestamp(datasource)}
+				{#if $user.roleSlug == 'admin'}
+					{showTimestamp(datasource)} by {datasource.userFirstName}
+				{:else}
+					Added {showTimestamp(datasource)}
+				{/if}
 			</small>
 		</svelte:fragment>
 		<svelte:fragment slot="action">
@@ -22,7 +26,9 @@
 </div>
 
 <script lang="ts" context="module">
-	import { Icon, Tile } from 'svelte-spectre';
+	import { fragment } from 'svelte-pathfinder';
+	import { IconButton, Tile } from 'svelte-spectre';
+	import user from '@/stores/user';
 	import { showTimestamp } from '@/helpers/date';
 	import Cube from '@/assets/img/cube.svg';
 
@@ -31,6 +37,10 @@
 
 <script lang="ts">
 	export let datasource: DataSource;
+
+	function visData(id: number) {
+		$fragment = `#view-vis-${id}`;
+	}
 </script>
 
 <style lang="scss">

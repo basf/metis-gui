@@ -24,7 +24,7 @@
 	import { fragment, query } from 'svelte-pathfinder';
 	import { Button, Modal, toast } from 'svelte-spectre';
 
-	import { CalculationEdit, EngineEdit, DataView, TagsEdit } from '.';
+	import { CalculationEdit, EngineEdit, TagsEdit, DataView, DataIFrame } from '.';
 	import { patchDataSourceCollections, setCalculation } from '@/services/api';
 	import { media } from '@/stores/media';
 </script>
@@ -44,7 +44,7 @@
 		switch (dataType) {
 			case 'engine':
 				return {
-					header: `Select calculation engine for`,
+					header: 'Select calculation engine for',
 					component: EngineEdit,
 					submit: submitCalculation,
 					size: 'md',
@@ -63,9 +63,16 @@
 				};
 			case 'data':
 				return {
-					header: `View`,
+					header: 'View',
 					component: DataView,
 					submit: submitData,
+				};
+			case 'vis':
+				return {
+					header: 'View',
+					component: DataIFrame,
+					submit: () => {},
+					size: 'lg',
 				};
 			default:
 				return {

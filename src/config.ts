@@ -21,6 +21,7 @@ export const BASE_PATH = '';
 
 export const NEW_VERSION_CHECK_DELAY = 60000;
 
+export const VISUALIZER_URL = 'https://tilde-lab.github.io/cifplayer/player.html';
 export const OPTIMADE_PROVIDERS_URL = 'https://providers.optimade.org/providers.json';
 export const CORS_PROXY_URL = 'https://cors.optimade.science';
 export const OPTIMADE_PROVIDERS = ['mp', 'mc2d', 'mc3d', 'icdd-pdf-4-plus', 'ccdc']; // FIXME the last two are private

@@ -4,3 +4,4 @@ export { default as CollectionEdit } from './CollectionEdit.svelte';
 export { default as TagsEdit } from './TagsEdit.svelte';
 export { default as CalculationEdit } from './CalculationEdit.svelte';
 export { default as DataView } from './DataView.svelte';
+export { default as DataIFrame } from './DataIFrame.svelte';
