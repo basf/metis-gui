@@ -1,23 +1,20 @@
 <div class="tile-collection">
 	<Tile>
 		<svelte:fragment slot="icon">
-			<div class="tooltip" data-tooltip={userDisplayName}>
-				<Avatar size="lg" name={userDisplayName}>
+			<div class="tooltip" data-tooltip="by {userDisplayName}">
+				<a href="/?collectionIds={id}"><Avatar size="lg" name={userDisplayName} bg="#ccc">
 					<svelte:fragment slot="sub">
 						{#if !owner && $user}
 							<Avatar size="sm" name="{$user.firstName} {$user.lastName}" />
 						{/if}
 					</svelte:fragment>
-				</Avatar>
+				</Avatar></a>
 			</div>
 		</svelte:fragment>
 		<h5 class="mt-2" slot="title">
 			{title}
-			<Badge style={autoColor(typeFlavor)}>{visibility}</Badge>
 		</h5>
-		<small slot="subtitle" class="text-gray">
-			{description}
-		</small>
+		<Badge style={autoColor(typeFlavor)}>{visibility}</Badge>
 		<svelte:fragment slot="action">
 			{#if owner}
 				<IconButton
