@@ -1,0 +1,14 @@
+.editorconfig
+.eslintignore
+.eslintrc.js
+.gitignore
+.husky
+/.git
+/.github
+/dist
+/node_modules
+/scripts
+/tests
+LICENSE
+README.md
+npm-debug.log
