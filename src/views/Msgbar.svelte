@@ -1,7 +1,7 @@
 {#if !$status.online }
 	<Overlay>Internet connection lost</Overlay>
 {:else if !$status.heartbeat}
-	<Overlay>No connection with BFF server</Overlay>
+	<Overlay>No connection to BFF server</Overlay>
 {:else if $updates}
 	<Overlay icon="download" action={updateAppVersion}>
 		New version of this software available, click to update
