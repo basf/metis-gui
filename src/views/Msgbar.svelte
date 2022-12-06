@@ -1,4 +1,4 @@
-{#if !$status.online }
+{#if !$status.online}
 	<Overlay>Internet connection lost</Overlay>
 {:else if !$status.heartbeat}
 	<Overlay>No connection to BFF server</Overlay>
