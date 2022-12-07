@@ -1,0 +1,17 @@
+server {
+    listen       ${PORT} default_server;
+    listen  [::]:${PORT};
+    server_name  ${HOST};
+
+    gzip on;
+
+    include redirect-to-https.conf;
+    include proxy_defaults.conf;
+    include bff_location.conf;
+
+    location / {
+        root   /srv;
+        index  index.html;
+        error_page 404 /index.html;
+    }
+}
