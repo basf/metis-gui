@@ -6,6 +6,7 @@
 	import user from '@/stores/user';
 
 	import type { Collection } from '@/types/dto';
+	import { autoColor } from '@/helpers/style';
 
 	type Tag = {
 		index: number;
@@ -29,7 +30,7 @@
 			index: collection.id,
 			label: collection.title,
 			group: collection.visibility,
-			style: `background: ${collection.typeFlavor} !important`,
+			style: autoColor(collection.typeFlavor),
 			value: collection.dataSources,
 		}));
 
