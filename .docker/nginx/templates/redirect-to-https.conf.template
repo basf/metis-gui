@@ -1,0 +1,6 @@
+# redirect to https (only behind load balancer)
+set $force_https "${http_x_forwarded_proto}${FORCE_HTTPS}";
+# if protocol is http and FORCE_HTTPS flage is 1
+if ($force_https = "http1") {
+   return 307 https://$host$request_uri;
+}
