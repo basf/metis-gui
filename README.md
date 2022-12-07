@@ -32,6 +32,7 @@ Additional configuration options:
 - `REAL_IP_HEADER`, `SET_REAL_IP_FROM1`, ..., `SET_REAL_IP_FROM5` - options for
   [real ip module](https://nginx.org/en/docs/http/ngx_http_realip_module.html)
 - `PROXY_BFF_API_URL` - proxy `/api` to `metis-bff` if set
+- `RUNTIME_CONFIG` - optional javascript object with runtime config, see `src/config.ts`
 
 ### docker compose
 
@@ -47,6 +48,11 @@ services:
       PORT: "8080"
       FORCE_HTTPS: "0"
       PROXY_BFF_API_URL: "http://metis-bff:3000"
+      METIS_RUNTIME_CONFIG: |
+        {
+          'API_HOST': location.origin.concat('/api'),
+          'IDPS': ['local'],
+        }
     ports:
       - "9080:8080"
 ```
