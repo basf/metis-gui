@@ -1,4 +1,6 @@
-# XRPD data management GUI
+# Metis data management GUI
+
+**This is the first part of the whole Metis infra: [GUI](https://github.com/basf/metis-gui) &rlarr; [BFF](https://github.com/basf/metis-bff) &rlarr; [backend](https://github.com/basf/metis-backend).**
 
 # Installation
 
