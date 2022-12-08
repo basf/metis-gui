@@ -19,14 +19,16 @@
 						>
 					</FormGroup>
 					<Button variant="primary" type="submit" block>Login</Button>
-					<Divider align="horizontal center" text="OR" />
+					{#if providers.length}
+						<Divider align="horizontal center" text="OR" />
+					{/if}
 				{/if}
-				{#if IdPs.length}
+				{#if providers.length}
 					<Grid align="center">
 						<Col style="text-align:right;">Log in with:</Col>
 						<Col>
 							<div class="oauth-buttons">
-								{#each IdPs.filter((p) => p !== 'local') as provider}
+								{#each providers as provider}
 									<IconButton
 										size="lg"
 										iconSize="3x"
@@ -76,6 +78,7 @@
 	let email = '';
 	let password = '';
 	let errmsg;
+	let providers = IdPs.filter((p)=> p !== 'local');
 
 	const icons = { github, linkedin, orcid, mpds, basf };
 
