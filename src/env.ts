@@ -1,7 +1,4 @@
 import { parseEnv, z } from 'znv';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 const env = parseEnv(process.env, {
 	NODE_ENV: z.enum(['production', 'development', 'test']).default('development'),
