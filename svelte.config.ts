@@ -1,13 +1,14 @@
-const preprocess = require('svelte-preprocess');
-const componentBudget = require('svelte-component-budget');
+import preprocess from 'svelte-preprocess';
+import componentBudget from 'svelte-component-budget';
 
-const { dev, sourceMap, legacy, replace } = require('./app.config.js');
+import app from './app.config.js';
+const { dev, sourceMap, legacy, replace } = app;
 
-module.exports = {
+const config = {
 	compilerOptions: {
 		immutable: true,
 		legacy,
-		dev
+		dev,
 	},
 	preprocess: [
 		componentBudget({ budget: 250, exclude: ['node_modules'] }),
@@ -25,11 +26,12 @@ module.exports = {
 					$dark-secondary: #343a51;
                 `,
 				quietDeps: true, // dismiss version 2.0 warning
-				renderSync: true // improve perfomance
+				renderSync: true, // improve perfomance
 			},
 			typescript: true,
 			postcss: true,
 			sourceMap,
 		}),
-	]
+	],
 };
+export default config;

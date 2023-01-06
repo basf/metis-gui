@@ -17,8 +17,12 @@ import visualizer from 'rollup-plugin-visualizer';
 import html from 'rollup-plugin-bundle-html-plus';
 import manifestJson from 'rollup-plugin-manifest-json';
 import zip from 'zip-dir';
-import dotenv from 'rollup-plugin-dotenv';
+import dotenv from 'dotenv';
+import injectProcessEnv from 'rollup-plugin-inject-process-env';
 
+dotenv.config();
+
+import app from './app.config';
 const {
 	src,
 	dev,
@@ -36,9 +40,12 @@ const {
 	extensions,
 	mainFields,
 	replace: replaceValues,
-} = require('./app.config.js');
+} = app;
 
-const svelteConfig = require('./svelte.config.js');
+import svelteConfig from './svelte.config';
+import { spawn } from 'child_process';
+import env from './env';
+
 const dir = `${dest}/build`;
 const LIGHT_MODE = process.argv.includes('--light_mode');
 
@@ -52,7 +59,6 @@ export default {
 		dir,
 	},
 	plugins: [
-		dotenv(),
 		copy({
 			targets: [
 				{
@@ -89,6 +95,7 @@ export default {
 			extensions,
 		}),
 		commonjs({ sourceMap, extensions }),
+		injectProcessEnv(env),
 		typescript({ sourceMap, inlineSources: sourceMap }),
 		!dev &&
 			legacy &&
@@ -154,14 +161,10 @@ function serve() {
 	return {
 		writeBundle() {
 			if (server) return;
-			server = require('child_process').spawn(
-				'npm',
-				['run', 'start', '--', '--single', '--dev'],
-				{
-					stdio: ['ignore', 'inherit', 'inherit'],
-					shell: true,
-				}
-			);
+			server = spawn('npm', ['run', 'start', '--', '--single', '--dev'], {
+				stdio: ['ignore', 'inherit', 'inherit'],
+				shell: true,
+			});
 
 			process.on('SIGTERM', toExit);
 			process.on('exit', toExit);
