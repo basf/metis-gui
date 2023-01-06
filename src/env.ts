@@ -33,8 +33,6 @@ const env = parseEnv(process.env, {
 		.default(['mp', 'mc2d', 'mc3d', 'icdd-pdf-4-plus', 'ccdc']), // FIXME the last two are private
 	SEARCH_DELAY: z.number().int().default(1000),
 
-	DOWNLOADABLE_APP_FILENAME: z.string().default('index.html'),
-
 	IdPs: z.string().array().default(['basf']), // available: mpds, github, linkedin, orcid, basf, local
 
 	PAGE_LIMIT: z.number().int().default(25),
