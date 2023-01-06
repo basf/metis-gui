@@ -1,8 +1,10 @@
 import preprocess from 'svelte-preprocess';
 import componentBudget from 'svelte-component-budget';
 
-import app from './app.config.js';
+import app from './app.config';
 const { dev, sourceMap, legacy, replace } = app;
+
+import postcssConfig from './postcss.config';
 
 const config = {
 	compilerOptions: {
@@ -29,7 +31,7 @@ const config = {
 				renderSync: true, // improve perfomance
 			},
 			typescript: true,
-			postcss: true,
+			postcss: postcssConfig,
 			sourceMap,
 		}),
 	],

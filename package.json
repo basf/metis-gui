@@ -81,7 +81,7 @@
 		"postcss": "^8.3.5",
 		"postcss-flexbugs-fixes": "^5.0.2",
 		"postcss-import": "^14.0.2",
-		"postcss-load-config": "^3.1.0",
+		"postcss-load-config": "^3.1.4",
 		"postcss-preset-env": "^7.3.0",
 		"postcss-url": "^10.1.3",
 		"prettier": "^2.3.1",
@@ -115,6 +115,7 @@
 		"svelte-streamable": "^2.3.0",
 		"svelte-viewpoint": "^1.4.3",
 		"ts-jest": "^27.0.3",
+		"ts-node": "^10.9.1",
 		"tslib": "^2.3.0",
 		"typescript": "^4.3.4",
 		"zip-dir": "^2.0.0"
