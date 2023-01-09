@@ -4,9 +4,9 @@
 	"private": true,
 	"scripts": {
 		"build": "npm run clean && env BROWSERSLIST_CONFIG=./package.json rollup -c rollup.config.ts --configPlugin @rollup/plugin-typescript",
-		"build:light": "npm run clean && env BROWSERSLIST_CONFIG=./package.json rollup --light_mode -c rollup.config.ts --configPlugin @rollup/plugin-typescript",
+		"build:light": "npm run clean && env BROWSERSLIST_CONFIG=./package.json LIGHT_MODE=1 rollup -c rollup.config.ts --configPlugin @rollup/plugin-typescript",
 		"dev": "npm run clean && env BROWSERSLIST_CONFIG=./package.json rollup -w -c rollup.config.ts --configPlugin @rollup/plugin-typescript",
-		"dev:light": "npm run clean && env BROWSERSLIST_CONFIG=./package.json rollup -w --light_mode -c rollup.config.ts --configPlugin @rollup/plugin-typescript",
+		"dev:light": "npm run clean && env BROWSERSLIST_CONFIG=./package.json LIGHT_MODE=1 rollup -w -c rollup.config.ts --configPlugin @rollup/plugin-typescript",
 		"start": "sirv dist --single --host",
 		"validate": "svelte-check",
 		"format": "prettier --write src",

@@ -1,6 +1,6 @@
+import env from './env';
 import { version as pkgVersion } from './package.json';
 
-const LIGHT_MODE = process.argv.includes('--light_mode');
 const dev = !!process.env.ROLLUP_WATCH;
 const dest = 'dist';
 const src = 'src';
@@ -9,7 +9,7 @@ const version = `${pkgVersion}.${Date.now()}`;
 
 const config = {
 	name: 'app',
-	input: LIGHT_MODE ? `${src}/light_mode.ts` : `${src}/full_mode.ts`,
+	input: env.LIGHT_MODE ? `${src}/light_mode.ts` : `${src}/full_mode.ts`,
 	template: `${src}/index.html`,
 	files: [{ src: 'src/assets/favicon.ico', dest: 'dist' }],
 	externals: [],

@@ -17,10 +17,7 @@ import visualizer from 'rollup-plugin-visualizer';
 import html from 'rollup-plugin-bundle-html-plus';
 import manifestJson from 'rollup-plugin-manifest-json';
 import zip from 'zip-dir';
-import dotenv from 'dotenv';
 import injectProcessEnv from 'rollup-plugin-inject-process-env';
-
-dotenv.config();
 
 import app from './app.config';
 const {
@@ -47,7 +44,6 @@ import { spawn } from 'child_process';
 import env from './env';
 
 const dir = `${dest}/build`;
-const LIGHT_MODE = process.argv.includes('--light_mode');
 
 export default {
 	input,
@@ -127,7 +123,7 @@ export default {
 		html({
 			filename: 'index.html',
 			ignore: dev
-				? new RegExp(`${dir}/(?!${LIGHT_MODE ? 'light' : 'full'}_mode.js|${name}.css)`)
+				? new RegExp(`${dir}/(?!${env.LIGHT_MODE ? 'light' : 'full'}_mode.js|${name}.css)`)
 				: null,
 			minifyCss: !dev,
 			scriptType: dev ? 'module' : 'text/javascript',
