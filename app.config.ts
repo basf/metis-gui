@@ -1,7 +1,7 @@
 import env from './env';
 import { version as pkgVersion } from './package.json';
 
-const dev = !!process.env.ROLLUP_WATCH;
+const dev = env.NODE_ENV === 'development';
 const dest = 'dist';
 const src = 'src';
 const assets = `${src}/assets`;
