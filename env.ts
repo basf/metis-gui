@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const env = parseEnv(process.env, {
-	NODE_ENV: z.enum(['production', 'development', 'test']).default('development'),
+	NODE_ENV: z.enum(['production', 'development', 'test']),
 	LIGHT_MODE: z.boolean().default(false),
 	GUI_HOST: {
 		schema: z.string().url(),
