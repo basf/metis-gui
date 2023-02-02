@@ -4,7 +4,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import importResolver from 'rollup-plugin-import-resolver';
 import replace from '@rollup/plugin-replace';
 import copy from 'rollup-plugin-copy';
-import url from "@rollup/plugin-url";
+import url from '@rollup/plugin-url';
 import babel from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import typescript from '@rollup/plugin-typescript';
@@ -17,7 +17,15 @@ import visualizer from 'rollup-plugin-visualizer';
 import html from 'rollup-plugin-bundle-html-plus';
 import manifestJson from 'rollup-plugin-manifest-json';
 import zip from 'zip-dir';
+import injectProcessEnv from 'rollup-plugin-inject-process-env';
+import builtins from 'rollup-plugin-node-builtins';
 
+import dotenv from 'dotenv';
+
+dotenv.config();
+const env = getEnv();
+
+import app from './app.config';
 const {
 	src,
 	dev,
@@ -34,12 +42,14 @@ const {
 	sourceMap,
 	extensions,
 	mainFields,
-	replace: replaceValues
-} = require('./app.config.js');
+	replace: replaceValues,
+} = app;
 
-const svelteConfig = require('./svelte.config.js');
+import svelteConfig from './svelte.config';
+import { spawn } from 'child_process';
+import { getEnv } from './src/env';
+
 const dir = `${dest}/build`;
-const LIGHT_MODE = process.argv.includes('--light_mode');
 
 export default {
 	input,
@@ -55,8 +65,8 @@ export default {
 			targets: [
 				{
 					src: `${dest}/*.tmpl`,
-					rename: name => name,
-					transform: contents => {
+					rename: (name) => name,
+					transform: (contents) => {
 						return Object.entries(replaceValues).reduce((contents, [key, val]) => {
 							return contents.replace(new RegExp(`{{${key}}}`, 'gi'), val);
 						}, contents.toString());
@@ -70,46 +80,59 @@ export default {
 			dot: true,
 		}),
 		svelte(svelteConfig),
-		css({ output: `${name}.css`, }),
+		css({ output: `${name}.css` }),
 		url({
-			exclude: ['**/*.svg', '**/*.json',],
+			exclude: ['**/*.svg', '**/*.json'],
 			sourceDir: assets,
 			destDir: dest,
 		}),
-		svg({ removeSVGTagAttrs: false, }),
+		svg({ removeSVGTagAttrs: false }),
 		json(),
-		importResolver({ extensions, alias, }),
-		replace({ values: replaceValues, preventAssignment: true, }),
+		importResolver({ extensions, alias }),
+		replace({ values: replaceValues, preventAssignment: true }),
 		resolve({
 			browser: true,
 			dedupe: ['svelte'],
 			mainFields,
 			extensions,
+			preferBuiltins: false,
 		}),
-		commonjs({ sourceMap, extensions, }),
-		typescript({ sourceMap, inlineSources: sourceMap, }),
-		!dev && legacy && babel({
-			extensions,
-			babelHelpers: 'runtime',
-			exclude: ['node_modules/@babel/**', 'node_modules/core-js/**',],
-			presets: [
-				['@babel/preset-env', {
-					useBuiltIns: 'entry',
-					corejs: 3,
-				}],
-			],
-			plugins: [
-				'@babel/plugin-proposal-optional-chaining',
-				['@babel/plugin-transform-runtime', {
-					useESModules: true,
-				}],
-			],
-		}),
+		commonjs({ sourceMap, extensions }),
+		builtins(),
+		injectProcessEnv(process.env), // set raw env
+		typescript({ sourceMap, inlineSources: sourceMap }),
+		!dev &&
+			legacy &&
+			babel({
+				extensions,
+				babelHelpers: 'runtime',
+				exclude: ['node_modules/@babel/**', 'node_modules/core-js/**'],
+				presets: [
+					[
+						'@babel/preset-env',
+						{
+							useBuiltIns: 'entry',
+							corejs: 3,
+						},
+					],
+				],
+				plugins: [
+					'@babel/plugin-proposal-optional-chaining',
+					[
+						'@babel/plugin-transform-runtime',
+						{
+							useESModules: true,
+						},
+					],
+				],
+			}),
 		!dev && terser(),
-		dev && visualizer({ filename: `${dest}/stats.html`, }),
+		dev && visualizer({ filename: `${dest}/stats.html` }),
 		html({
 			filename: 'index.html',
-			ignore: dev ? new RegExp(`${dir}/(?!${LIGHT_MODE ? 'light' : 'full'}_mode.js|${name}.css)`) : null,
+			ignore: dev
+				? new RegExp(`${dir}/(?!${env.LIGHT_MODE ? 'light' : 'full'}_mode.js|${name}.css)`)
+				: null,
 			minifyCss: !dev,
 			scriptType: dev ? 'module' : 'text/javascript',
 			absolute: dev,
@@ -126,9 +149,9 @@ export default {
 		}),
 		dev && serve(),
 		dev && livereload(dest),
-		!dev && zipdir({ dest, name })
+		!dev && zipdir({ dest, name }),
 	],
-	watch: { clearScreen: false, },
+	watch: { clearScreen: false },
 	onwarn,
 };
 
@@ -142,14 +165,14 @@ function serve() {
 	return {
 		writeBundle() {
 			if (server) return;
-			server = require('child_process').spawn('npm', ['run', 'start', '--', '--single', '--dev'], {
+			server = spawn('npm', ['run', 'start', '--', '--single', '--dev'], {
 				stdio: ['ignore', 'inherit', 'inherit'],
-				shell: true
+				shell: true,
 			});
 
 			process.on('SIGTERM', toExit);
 			process.on('exit', toExit);
-		}
+		},
 	};
 }
 
@@ -162,7 +185,7 @@ function zipdir({ dest, name }) {
 			zip(dir, { saveTo }, () => {
 				console.log('Package zipped at ' + saveTo);
 			});
-		}
+		},
 	};
 }
 
