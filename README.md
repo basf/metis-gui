@@ -50,6 +50,11 @@ services:
       PORT: "8080"
       FORCE_HTTPS: "0"
       PROXY_BFF_API_URL: "http://metis-bff:3000"
+      METIS_RUNTIME_CONFIG: |
+        {
+          'API_HOST': location.origin.concat('/api'),
+          'IDPS': ['local'],
+        }
     ports:
       - "9080:8080"
 ```
