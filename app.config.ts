@@ -1,6 +1,7 @@
-import env from './env';
+import { getEnv } from './src/env';
 import { version as pkgVersion } from './package.json';
 
+const env = getEnv();
 const dev = env.NODE_ENV === 'development';
 const dest = 'dist';
 const src = 'src';

@@ -18,6 +18,12 @@ import html from 'rollup-plugin-bundle-html-plus';
 import manifestJson from 'rollup-plugin-manifest-json';
 import zip from 'zip-dir';
 import injectProcessEnv from 'rollup-plugin-inject-process-env';
+import builtins from 'rollup-plugin-node-builtins';
+
+import dotenv from 'dotenv';
+
+dotenv.config();
+const env = getEnv();
 
 import app from './app.config';
 const {
@@ -41,7 +47,7 @@ const {
 
 import svelteConfig from './svelte.config';
 import { spawn } from 'child_process';
-import env from './env';
+import { getEnv } from './src/env';
 
 const dir = `${dest}/build`;
 
@@ -89,9 +95,11 @@ export default {
 			dedupe: ['svelte'],
 			mainFields,
 			extensions,
+			preferBuiltins: false,
 		}),
 		commonjs({ sourceMap, extensions }),
-		injectProcessEnv(env),
+		builtins(),
+		injectProcessEnv(process.env), // set raw env
 		typescript({ sourceMap, inlineSources: sourceMap }),
 		!dev &&
 			legacy &&
