@@ -15,7 +15,7 @@ export const GUI_HOST = RUNTIME_CONFIG.GUI_HOST ||
 export const API_VERSION = 'v0';
 
 export const API_HOST = RUNTIME_CONFIG.API_HOST ||
-	(IS_PROD ? 'https://gate.metis.science' : 'http://localhost:3000');
+	(IS_PROD ? 'https://bff.metis.science' : 'http://localhost:3000');
 
 export const API_BASEURL = `${API_HOST}/${API_VERSION}`;
 

@@ -2,6 +2,11 @@
 
 **This is the first part of the whole Metis infra: [GUI](https://github.com/basf/metis-gui) &rlarr; [BFF](https://github.com/basf/metis-bff) &rlarr; [backend](https://github.com/basf/metis-backend).**
 
+![On-demand cloud simulations](https://github.com/tilde-lab/metis.science/blob/master/src/assets/img/screenshots/cloud-runs.png)
+![Digesting the experiments data](https://github.com/tilde-lab/metis.science/blob/master/src/assets/img/screenshots/all-data.png)
+![Getting the data from various sources](https://github.com/tilde-lab/metis.science/blob/master/src/assets/img/screenshots/optimade-search.png)
+![Exporting and sharing the data across your lab](https://github.com/tilde-lab/metis.science/blob/master/src/assets/img/screenshots/content-organizer.png)
+
 # Installation
 
 ```sh
