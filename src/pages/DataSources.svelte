@@ -1,12 +1,5 @@
 <Main>
 	<Section asyncData={$datasourcesAsync}>
-		<svelte:fragment slot="add" let:add>
-			{#if add || !$datasources.total}
-				<Col col="12">
-					<DataSourceAdd msg={!$datasources.total} />
-				</Col>
-			{/if}
-		</svelte:fragment>
 		<svelte:fragment let:item>
 			<Col col="12">
 				<DataSource datasource={item}>
@@ -28,7 +21,6 @@
 
 	import { Main, Section } from '@/layouts/';
 	import { DataSource } from '@/views/tiles';
-	import { DataSourceAdd } from '@/views/DataSource';
 	import { DataModal } from '@/views/modals';
 	import { TileMenu, TileTags } from '@/components/Tile/';
 	import Sinus from '@/assets/img/sinus.svg';
@@ -77,7 +69,7 @@
 			type === 1 ? runCalc : null,
 			type === 1 ? editCalc : null,
 			type === 1 ? editTag : null,
-			type === 3 ? viewRes : null,
+			(type === 3 || type === 5) ? viewRes : null,
 			deleteData,
 		].filter(Boolean);
 	};

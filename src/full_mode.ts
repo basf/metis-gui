@@ -17,16 +17,16 @@ const routes: Route[] = [
 		component: () => import('@/pages/Profile.svelte'),
 	},
 	{
-		path: '/search',
-		component: () => import('@/pages/Search.svelte'),
+		path: '/todos',
+		component: () => import('@/pages/Todos.svelte'),
 		menu: {
-			title: 'Search',
-			pos: 0,
+			title: 'Tasks',
+			pos: -1,
 		},
 	},
 	{
 		path: '/',
-		component: () => import('@/pages/Data.svelte'),
+		component: () => import('@/pages/DataSources.svelte'),
 		menu: {
 			title: 'Data',
 			pos: 1,
@@ -52,7 +52,7 @@ const routes: Route[] = [
 		path: '/projects',
 		component: () => import('@/pages/Projects.svelte'),
 		menu: {
-			title: 'Projects',
+			title: 'Organizer',
 			pos: 4,
 		},
 	},

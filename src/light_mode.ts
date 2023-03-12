@@ -13,8 +13,20 @@ prefs.basePath = BASE_PATH;
 
 const routes: Route[] = [
 	{
+		path: '/profile',
+		component: () => import('@/pages/Profile.svelte'),
+	},
+	{
+		path: '/todos',
+		component: () => import('@/pages/Todos.svelte'),
+		menu: {
+			title: 'Tasks',
+			pos: -1,
+		},
+	},
+	{
 		path: '/',
-		component: () => import('@/pages/Data.svelte'),
+		component: () => import('@/pages/DataSources.svelte'),
 		menu: {
 			title: 'Data',
 			pos: 1,
@@ -26,6 +38,22 @@ const routes: Route[] = [
 		menu: {
 			title: 'Calculations',
 			pos: 2,
+		},
+	},
+	{
+		path: '/materials',
+		component: () => import('@/pages/Materials.svelte'),
+		menu: {
+			title: 'Materials',
+			pos: 3,
+		},
+	},
+	{
+		path: '/projects',
+		component: () => import('@/pages/Projects.svelte'),
+		menu: {
+			title: 'Organizer',
+			pos: 4,
 		},
 	},
 ];

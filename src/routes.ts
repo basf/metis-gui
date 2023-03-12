@@ -21,6 +21,14 @@ const routes: Route[] = [
 		component: () => import('@/pages/Profile.svelte'),
 	},
 	{
+		path: '/todos',
+		component: () => import('@/pages/Todos.svelte'),
+		menu: {
+			title: 'Tasks',
+			pos: -1,
+		},
+	},
+	{
 		path: '/search',
 		component: () => import('@/pages/Search.svelte'),
 		menu: {
@@ -30,7 +38,7 @@ const routes: Route[] = [
 	},
 	{
 		path: '/datasources',
-		component: () => import('@/pages/Data.svelte'),
+		component: () => import('@/pages/DataSources.svelte'),
 		menu: {
 			title: 'Data',
 			pos: 1,
@@ -56,7 +64,7 @@ const routes: Route[] = [
 		path: '/collections',
 		component: () => import('@/pages/Projects.svelte'),
 		menu: {
-			title: 'Projects',
+			title: 'Organizer',
 			pos: 4,
 		},
 	},
