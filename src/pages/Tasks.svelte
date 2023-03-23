@@ -32,24 +32,39 @@
 			<svelte:fragment let:item>
 				{#if dataSources?.includes(item.id)}
 					<Col col="12">
-						<DataSource datasource={item} />
+						<DataSource datasource={item}>
+							<IconButton
+								icon="edit"
+								on:click={() => {
+									console.log('click datasource', item);
+									setDatasource(item);
+								}}
+							/>
+						</DataSource>
 					</Col>
 				{/if}
 			</svelte:fragment>
 		</Section>
 	{/if}
 </Main>
+<Modal bind:open>content</Modal>
 
 <script lang="ts">
-	import { Col } from 'svelte-spectre';
+	import { Col, IconButton, Modal } from 'svelte-spectre';
 
 	import { Main, Section } from '@/layouts';
 	import { collectionsAsync, collectionDataSourcesAsync } from '@/stores/collections';
 	import { Collection, DataSource } from '@/views/tiles';
-	import { IconButton } from 'svelte-spectre';
 
 	let dataSources: number[] | undefined;
 	function setDatasources(ids = undefined) {
 		dataSources = ids;
+	}
+
+	let open = false;
+	let dataSource;
+	function setDatasource(d) {
+		dataSource = d;
+		open = true;
 	}
 </script>
