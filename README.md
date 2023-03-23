@@ -2,14 +2,17 @@
 
 **This is the first part of the whole Metis infra: [GUI](https://github.com/basf/metis-gui) &rlarr; [BFF](https://github.com/basf/metis-bff) &rlarr; [backend](https://github.com/basf/metis-backend).**
 
-![On-demand cloud simulations](https://github.com/tilde-lab/metis.science/blob/master/src/assets/img/screenshots/cloud-runs.png)
-![Digesting the experiments data](https://github.com/tilde-lab/metis.science/blob/master/src/assets/img/screenshots/all-data.png)
-![Getting the data from various sources](https://github.com/tilde-lab/metis.science/blob/master/src/assets/img/screenshots/optimade-search.png)
-![Exporting and sharing the data across your lab](https://github.com/tilde-lab/metis.science/blob/master/src/assets/img/screenshots/content-organizer.png)
+A Svelte GUI for the Metis materials data servers, highly modular, permissively licensed, minimalistically designed, based on the open [Svelte-Spectre](https://kit.metis.science) user interface kit. Supports various materials data formats, real-time cloud simulations, real-time collaborations, [Optimade](https://optimade.org) structure searches, content organizing and sharing, and many more. Displays the server events instantly as they occur, thanks to the [SSE](https://en.wikipedia.org/wiki/Server-sent_events) server push technology. The users are recognized via the third-party OAuth services, such as Microsoft, LinkedIn, GitHub, ORCID, MPDS, etc.
+
+|![On-demand cloud simulations](https://github.com/tilde-lab/metis.science/blob/master/src/assets/img/screenshots/cloud-runs.png) | ![Digesting the experiments data](https://github.com/tilde-lab/metis.science/blob/master/src/assets/img/screenshots/all-data.png) |
+|:---:|:---:|
+|![Retrieving the data from various sources](https://github.com/tilde-lab/metis.science/blob/master/src/assets/img/screenshots/optimade-search.png) | ![Exporting & sharing the data across your lab](https://github.com/tilde-lab/metis.science/blob/master/src/assets/img/screenshots/content-organizer.png) |
 
 # Installation
 
 ```sh
+git clone https://github.com/basf/metis-gui
+cd metis-gui
 npm install
 ```
 
