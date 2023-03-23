@@ -2,13 +2,15 @@
 	<Tile>
 		<svelte:fragment slot="icon">
 			<div class="tooltip" data-tooltip="by {userDisplayName}">
-				<a href="/?collectionIds={id}"><Avatar size="lg" name={userDisplayName} bg="#ccc">
-					<svelte:fragment slot="sub">
-						{#if !owner && $user}
-							<Avatar size="sm" name="{$user.firstName} {$user.lastName}" />
-						{/if}
-					</svelte:fragment>
-				</Avatar></a>
+				<a href="/?collectionIds={id}"
+					><Avatar size="lg" name={userDisplayName} bg="#ccc">
+						<svelte:fragment slot="sub">
+							{#if !owner && $user}
+								<Avatar size="sm" name="{$user.firstName} {$user.lastName}" />
+							{/if}
+						</svelte:fragment>
+					</Avatar></a
+				>
 			</div>
 		</svelte:fragment>
 		<h5 class="mt-2" slot="title">
@@ -16,15 +18,17 @@
 		</h5>
 		<Badge style={autoColor(typeFlavor)}>{visibility}</Badge>
 		<svelte:fragment slot="action">
-			{#if owner}
-				<IconButton
-					icon="edit"
-					size="sm"
-					variant="primary"
-					title="Edit collection"
-					on:click={() => dispatch('edit', { id })}
-				/>
-			{/if}
+			<slot name="action">
+				{#if owner}
+					<IconButton
+						icon="edit"
+						size="sm"
+						variant="primary"
+						title="Edit collection"
+						on:click={() => dispatch('edit', { id })}
+					/>
+				{/if}
+			</slot>
 		</svelte:fragment>
 	</Tile>
 </div>
