@@ -1,5 +1,7 @@
 {#if mode !== 'light'}
-	<Filter icon={add ? 'minus' : 'plus'} action={addAction} bind:tooltip={addTooltip} />
+	<slot name="filter">
+		<Filter icon={add ? 'minus' : 'plus'} action={addAction} bind:tooltip={addTooltip} />
+	</slot>
 {/if}
 
 <div bind:clientWidth={width} class="py-2">

@@ -17,7 +17,7 @@
 							<IconButton
 								icon="forward"
 								slot="action"
-								on:click={() => showDatasources(item.dataSources)}
+								on:click={() => setDatasources(item.dataSources)}
 							/>
 						</Collection>
 					</Col>
@@ -26,6 +26,9 @@
 		</Section>
 	{:else}
 		<Section asyncData={$collectionDataSourcesAsync}>
+			<div slot="filter">
+				<IconButton icon="back" on:click={() => setDatasources()} />
+			</div>
 			<svelte:fragment let:item>
 				{#if dataSources?.includes(item.id)}
 					<Col col="12">
@@ -46,7 +49,7 @@
 	import { IconButton } from 'svelte-spectre';
 
 	let dataSources: number[] | undefined;
-	function showDatasources(ids) {
+	function setDatasources(ids = undefined) {
 		dataSources = ids;
 	}
 </script>
