@@ -97,6 +97,6 @@ services:
 
 # License
 
-Copyright 2021-2022 BASF SE
+Copyright 2021-2023 BASF SE
 
 BSD 3-Clause
