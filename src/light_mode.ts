@@ -17,8 +17,8 @@ const routes: Route[] = [
 		component: () => import('@/pages/Profile.svelte'),
 	},
 	{
-		path: '/todos',
-		component: () => import('@/pages/Todos.svelte'),
+		path: '/tasks',
+		component: () => import('@/pages/Tasks.svelte'),
 		menu: {
 			title: 'Tasks',
 			pos: -1,
