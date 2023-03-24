@@ -105,6 +105,6 @@
 	}
 
 	function delData(id: number, query: string) {
-		withConfirm(delDataSource, { id, query }, 'Are you sure?', false)?.({ id, query });
+		withConfirm(delDataSource, { id, query }, 'Really delete this item?', false)?.({ id, query });
 	}
 </script>
