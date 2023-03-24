@@ -47,14 +47,23 @@
 		</Section>
 	{/if}
 </Main>
-<Modal bind:open>content</Modal>
+<Modal bind:open>
+	<h3 slot="header">{@html dataSource?.name}</h3>
+	<div class="content">
+		<DataView dataSourceId={dataSource?.id} />
+	</div>
+	<p slot="footer">
+		<Button size="md" on:click={closeModal}>Close</Button>
+	</p>
+</Modal>
 
 <script lang="ts">
-	import { Col, IconButton, Modal } from 'svelte-spectre';
+	import { Col, IconButton, Modal, Button } from 'svelte-spectre';
 
 	import { Main, Section } from '@/layouts';
 	import { collectionsAsync, collectionDataSourcesAsync } from '@/stores/collections';
 	import { Collection, DataSource } from '@/views/tiles';
+	import { DataView } from '@/views/modals';
 
 	let dataSources: number[] | undefined;
 	function setDatasources(ids = undefined) {
@@ -62,6 +71,10 @@
 	}
 
 	let open = false;
+	function closeModal() {
+		open = false;
+	}
+
 	let dataSource;
 	function setDatasource(d) {
 		dataSource = d;
