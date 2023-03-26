@@ -5,7 +5,7 @@
 				{#if item.typeFlavor === 'red'}
 					<Col col="12">
 						<Collection
-							id="{item.id},"
+							id={item.id}
 							title={item.title}
 							description={item.description}
 							visibility={item.visibility}
