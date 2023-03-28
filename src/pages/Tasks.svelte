@@ -36,7 +36,6 @@
 							<IconButton
 								icon="edit"
 								on:click={() => {
-									console.log('click datasource', item);
 									setDatasource(item);
 								}}
 							/>
@@ -47,79 +46,29 @@
 		</Section>
 	{/if}
 </Main>
-<Modal size="fs" bind:open>
-	<h3 slot="header">{@html dataSource?.name}</h3>
-	{#if periodicTable}
-		<div class="content periodic-table">
-			<Autocomplete {predefined} bind:selected placeholder="Type or select 3 elements" />
-			<PeriodicTable bind:selected bind:clear />
-			<div class="buttons">
-				<Button size="md" loading={refinementStarted} on:click={startRefinement}
-					>Start refinement</Button
-				>
-			</div>
-		</div>
-	{:else}
-		<div class="content">
-			<DataView dataSourceId={dataSource?.id} />
-		</div>
-	{/if}
-	<p slot="footer">
-		<Button size="md" on:click={showPeriodicTable}>Show Periodic Table</Button>
-		<Button size="md" on:click={closeModal}>Close</Button>
-	</p>
-</Modal>
+{#if dataSource}
+	<TaskModal {dataSource} open={true} on:close={taskModalClosed} />
+{/if}
 
 <script lang="ts">
-	import { Col, IconButton, Modal, Button, PeriodicTable, Autocomplete } from 'svelte-spectre';
-	import elements from 'svelte-spectre/package/components/PeriodicTable/chemical_content.json';
+	import { Col, IconButton } from 'svelte-spectre';
 
 	import { Main, Section } from '@/layouts';
 	import { collectionsAsync, collectionDataSourcesAsync } from '@/stores/collections';
 	import { Collection, DataSource } from '@/views/tiles';
-	import { DataView } from '@/views/modals';
+	import { TaskModal } from '@/views/modals';
 
 	let dataSources: number[] | undefined;
 	function setDatasources(ids = undefined) {
 		dataSources = ids;
 	}
 
-	let open = false;
-	function closeModal() {
-		open = false;
-	}
-
-	let dataSource;
+	let dataSource = null;
 	function setDatasource(d) {
 		dataSource = d;
-		open = true;
 	}
 
-	let clear;
-	let selected = [];
-	let predefined = Object.entries(elements).flat(2);
-	let periodicTable = false;
-	function showPeriodicTable() {
-		periodicTable = true;
-	}
-
-	$: console.log(selected);
-
-	let refinementStarted = false;
-	function startRefinement() {
-		refinementStarted = true;
-		console.log('start refinement');
+	function taskModalClosed() {
+		dataSource = null;
 	}
 </script>
-
-<style>
-	.periodic-table {
-		display: flex;
-		flex-direction: column;
-		gap: 20px;
-	}
-	.periodic-table .buttons {
-		display: flex;
-		justify-content: right;
-	}
-</style>
