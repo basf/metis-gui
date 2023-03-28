@@ -47,18 +47,25 @@
 		</Section>
 	{/if}
 </Main>
-<Modal bind:open>
+<Modal size="fs" bind:open>
 	<h3 slot="header">{@html dataSource?.name}</h3>
-	<div class="content">
-		<DataView dataSourceId={dataSource?.id} />
-	</div>
+	{#if periodicTable}
+		<div class="content">
+			<PeriodicTable />
+		</div>
+	{:else}
+		<div class="content">
+			<DataView dataSourceId={dataSource?.id} />
+		</div>
+	{/if}
 	<p slot="footer">
+		<Button size="md" on:click={showPeriodicTable}>Show Periodic Table</Button>
 		<Button size="md" on:click={closeModal}>Close</Button>
 	</p>
 </Modal>
 
 <script lang="ts">
-	import { Col, IconButton, Modal, Button } from 'svelte-spectre';
+	import { Col, IconButton, Modal, Button, PeriodicTable } from 'svelte-spectre';
 
 	import { Main, Section } from '@/layouts';
 	import { collectionsAsync, collectionDataSourcesAsync } from '@/stores/collections';
@@ -79,5 +86,10 @@
 	function setDatasource(d) {
 		dataSource = d;
 		open = true;
+	}
+
+	let periodicTable = false;
+	function showPeriodicTable() {
+		periodicTable = true;
 	}
 </script>
