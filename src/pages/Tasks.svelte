@@ -51,7 +51,8 @@
 	<h3 slot="header">{@html dataSource?.name}</h3>
 	{#if periodicTable}
 		<div class="content">
-			<PeriodicTable />
+			<Autocomplete {predefined} bind:selected placeholder="Type or select 3 elements" />
+			<PeriodicTable bind:selected bind:clear />
 		</div>
 	{:else}
 		<div class="content">
@@ -65,7 +66,8 @@
 </Modal>
 
 <script lang="ts">
-	import { Col, IconButton, Modal, Button, PeriodicTable } from 'svelte-spectre';
+	import { Col, IconButton, Modal, Button, PeriodicTable, Autocomplete } from 'svelte-spectre';
+	import elements from 'svelte-spectre/package/components/PeriodicTable/chemical_content.json';
 
 	import { Main, Section } from '@/layouts';
 	import { collectionsAsync, collectionDataSourcesAsync } from '@/stores/collections';
@@ -88,8 +90,13 @@
 		open = true;
 	}
 
+	let clear;
+	let selected = [];
+	let predefined = Object.entries(elements).flat(2);
 	let periodicTable = false;
 	function showPeriodicTable() {
 		periodicTable = true;
 	}
+
+	$: console.log(selected);
 </script>
