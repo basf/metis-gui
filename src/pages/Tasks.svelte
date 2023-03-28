@@ -50,9 +50,14 @@
 <Modal size="fs" bind:open>
 	<h3 slot="header">{@html dataSource?.name}</h3>
 	{#if periodicTable}
-		<div class="content">
+		<div class="content periodic-table">
 			<Autocomplete {predefined} bind:selected placeholder="Type or select 3 elements" />
 			<PeriodicTable bind:selected bind:clear />
+			<div class="buttons">
+				<Button size="md" loading={refinementStarted} on:click={startRefinement}
+					>Start refinement</Button
+				>
+			</div>
 		</div>
 	{:else}
 		<div class="content">
@@ -99,4 +104,22 @@
 	}
 
 	$: console.log(selected);
+
+	let refinementStarted = false;
+	function startRefinement() {
+		refinementStarted = true;
+		console.log('start refinement');
+	}
 </script>
+
+<style>
+	.periodic-table {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+	}
+	.periodic-table .buttons {
+		display: flex;
+		justify-content: right;
+	}
+</style>
