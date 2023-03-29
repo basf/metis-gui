@@ -1,4 +1,4 @@
-<Modal size="fs" bind:open on:close={close}>
+<Modal size="fs" bind:open on:close={closeModal}>
 	<h3 slot="header">{@html dataSource?.name}</h3>
 	{#if periodicTable}
 		<div class="content periodic-table">
@@ -35,7 +35,6 @@
 
 	function closeModal() {
 		open = false;
-		console.log('closed');
 		dispatch('close');
 	}
 
@@ -47,12 +46,9 @@
 		periodicTable = true;
 	}
 
-	$: console.log(selected);
-
 	let refinementStarted = false;
 	function startRefinement() {
 		refinementStarted = true;
-		console.log('start refinement');
 	}
 </script>
 
