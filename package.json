@@ -124,7 +124,7 @@
 		"optimade": "^2.1.0",
 		"optimade-mpds-nlp": "^0.1.3",
 		"sirv-cli": "^1.0.12",
-		"svelte-file-dropzone": "^0.0.15",
+		"svelte-file-dropzone": "^2.0.1",
 		"tinycolor2": "^1.4.2"
 	}
 }
