@@ -5,7 +5,7 @@
 				{#if item.typeFlavor === 'red'}
 					<Col col="12">
 						<Collection
-							id="{item.id},"
+							id={item.id}
 							title={item.title}
 							description={item.description}
 							visibility={item.visibility}
@@ -36,7 +36,6 @@
 							<IconButton
 								icon="edit"
 								on:click={() => {
-									console.log('click datasource', item);
 									setDatasource(item);
 								}}
 							/>
@@ -47,24 +46,29 @@
 		</Section>
 	{/if}
 </Main>
-<Modal bind:open>content</Modal>
+{#if dataSource}
+	<TaskModal {dataSource} open={true} on:close={taskModalClosed} />
+{/if}
 
 <script lang="ts">
-	import { Col, IconButton, Modal } from 'svelte-spectre';
+	import { Col, IconButton } from 'svelte-spectre';
 
 	import { Main, Section } from '@/layouts';
 	import { collectionsAsync, collectionDataSourcesAsync } from '@/stores/collections';
 	import { Collection, DataSource } from '@/views/tiles';
+	import { TaskModal } from '@/views/modals';
 
 	let dataSources: number[] | undefined;
 	function setDatasources(ids = undefined) {
 		dataSources = ids;
 	}
 
-	let open = false;
-	let dataSource;
+	let dataSource = null;
 	function setDatasource(d) {
 		dataSource = d;
-		open = true;
+	}
+
+	function taskModalClosed() {
+		dataSource = null;
 	}
 </script>
