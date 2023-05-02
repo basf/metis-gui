@@ -28,6 +28,11 @@
 	import { DataView } from '@/views/modals';
 	import { createEventDispatcher } from 'svelte';
 
+	import { fragment, query } from 'svelte-pathfinder';
+	import { toast } from 'svelte-spectre';
+	import { engines } from '@/stores/calculations';
+	import { setCalculation } from '@/services/api';
+
 	export let dataSource;
 	export let open = false;
 
@@ -49,6 +54,28 @@
 	let refinementStarted = false;
 	function startRefinement() {
 		refinementStarted = true;
+		runCalculation(dataSource.id);
+	}
+
+	// a copy from DataSource.svelte
+	function runCalculation(id: number) {
+		if ($engines.length > 1) {
+			$fragment = `#edit-engine-${id}`;
+		} else {
+			setCalculation({
+				dataId: id,
+				engine: $engines[0],
+				workflow: 'unused',
+				query: $query.toString(),
+			}).then(() =>
+				toast.success({
+					msg: 'Calculation submitted',
+					timeout: 2000,
+					pos: 'top_right',
+					icon: 'forward',
+				})
+			);
+		}
 	}
 </script>
 
