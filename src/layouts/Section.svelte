@@ -1,6 +1,6 @@
 {#if mode !== 'light'}
 	<slot name="filter">
-		<Filter icon={add ? 'minus' : 'plus'} action={addAction} bind:tooltip={addTooltip} />
+		<FilterPanel icon={add ? 'minus' : 'plus'} action={addAction} bind:tooltip={addTooltip} />
 	</slot>
 {/if}
 
@@ -46,7 +46,7 @@
 	import { Col, Grid, Pagination } from 'svelte-spectre';
 
 	import { Overlay } from '.';
-	import { Filter } from '@/components/Filter';
+	import { FilterPanel } from '@/components/FilterPanel';
 	import * as Loaders from '@/components/loaders';
 
 	import { PAGE_LIMIT } from '@/config';
