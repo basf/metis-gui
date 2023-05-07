@@ -51,7 +51,6 @@ export interface Error {
 export interface Engine {
 	template?: string;
 	schema?: any;
-	input?: string;
 }
 
 export type CollectionFlavor = typeof COLORSET[number];

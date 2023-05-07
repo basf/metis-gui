@@ -13,7 +13,7 @@
 	</Grid>
 </div>
 
-{#await getCalculationEngine(engine)}
+{#await getCalculationEngine(dataSourceId, engine)}
 	<Loaders.Circle big />
 {:then { template, schema }}
 	{#if $fragment.includes('code')}
