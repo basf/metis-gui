@@ -30,7 +30,7 @@
 
 	import { fragment, query } from 'svelte-pathfinder';
 	import { toast } from 'svelte-spectre';
-	import { engines } from '@/stores/calculations';
+	import calculations, { engines } from '@/stores/calculations';
 	import { setCalculation } from '@/services/api';
 
 	export let dataSource;
@@ -62,20 +62,40 @@
 		if ($engines.length > 1) {
 			$fragment = `#edit-engine-${id}`;
 		} else {
-			const { reqId } = await setCalculation({
+			const result = await setCalculation({
 				dataId: id,
 				engine: $engines[0],
 				workflow: 'unused',
 				query: $query.toString(),
 			});
-			console.log('reqId', reqId);
+			console.log('reqId', result.reqId);
 			toast.success({
 				msg: 'Calculation submitted',
 				timeout: 2000,
 				pos: 'top_right',
 				icon: 'forward',
 			});
+
+			const unsubcribe = calculations.subscribe((calc) => {
+				console.log(calc);
+
+				if (calcIsReady(calc, dataSource.id)) {
+					unsubcribe();
+					periodicTable = false;
+					refinementStarted = false;
+					console.log('calc is ready');
+				}
+			});
 		}
+	}
+
+	function calcIsReady(calc, id) {
+		return (
+			Array.isArray(calc.data) &&
+			calc.data
+				.filter(({ parent, parents }) => parent === id || parents.includes(id))
+				.some(({ progress }) => progress === 100)
+		);
 	}
 </script>
 
