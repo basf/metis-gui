@@ -58,23 +58,23 @@
 	}
 
 	// a copy from DataSource.svelte
-	function runCalculation(id: number) {
+	async function runCalculation(id: number) {
 		if ($engines.length > 1) {
 			$fragment = `#edit-engine-${id}`;
 		} else {
-			setCalculation({
+			const { reqId } = await setCalculation({
 				dataId: id,
 				engine: $engines[0],
 				workflow: 'unused',
 				query: $query.toString(),
-			}).then(() =>
-				toast.success({
-					msg: 'Calculation submitted',
-					timeout: 2000,
-					pos: 'top_right',
-					icon: 'forward',
-				})
-			);
+			});
+			console.log('reqId', reqId);
+			toast.success({
+				msg: 'Calculation submitted',
+				timeout: 2000,
+				pos: 'top_right',
+				icon: 'forward',
+			});
 		}
 	}
 </script>
