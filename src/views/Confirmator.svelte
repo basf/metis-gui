@@ -1,4 +1,4 @@
-<Modal size="sm" bind:open={$confirmator.open}>
+<Modal size="md" bind:open={$confirmator.open}>
 	<h3 slot="header">{$confirmator.message}</h3>
 	<svelte:fragment slot="footer">
 		<Button variant="link" on:click={cancelModal}>No</Button>

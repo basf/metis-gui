@@ -16,12 +16,14 @@ type CalculationDTO = {
 	types: CollectionType[]
 }
 
-let unsubscribe: Unsubscriber
+let unsubscribe: Unsubscriber;
 
-export const enginesAsync = asyncable<Promise<string[]>>(getCalculationEngines)
-export const engines = syncable<string[]>(enginesAsync)
+export const enginesAsync = asyncable<Promise<string[]>>(getCalculationEngines);
 
-export const calculationsAsyncReq = asyncable(($query) => getCalculations($query), null, [query])
+export const engines = syncable<string[]>(enginesAsync);
+
+export const calculationsAsyncReq = asyncable(($query) => getCalculations($query), null, [query]);
+
 export const calculationsAsync = streamable<Stream<CalculationDTO>, CalculationDTO>(
 	{
 		url: STREAM_URL,

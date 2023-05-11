@@ -22,7 +22,7 @@
 					withConfirm(
 						delCalculation,
 						{ id: calculation.id, query: $query.toString() },
-						'Are you sure?',
+						'Really delete this item?',
 						false
 					)?.({ id: calculation.id, query: $query.toString() })}
 			/>

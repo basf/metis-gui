@@ -46,11 +46,11 @@ export async function getCalculations(query?: string): Promise<void> {
 }
 
 export async function getCalculationEngines(): Promise<void> {
-	return getJSON(`/calculations/engines`);
+	return fetchJSON(`${API_HOST}/calculations/supported`, { credentials: 'omit' });
 }
 
-export async function getCalculationEngine(engine = 'dummy'): Promise<EngineDTO> {
-	return fetchJSON(`${API_HOST}/calculations/template?engine=${engine}`, { credentials: 'omit' });
+export async function getCalculationEngine(id, engine = 'dummy'): Promise<EngineDTO> {
+	return getJSON(`/calculations/template?id=${id}&engine=${engine}`);
 }
 
 export async function setCalculation({
@@ -65,8 +65,9 @@ export async function setCalculation({
 	input?: string;
 	workflow?: string;
 	query?: string;
-}): Promise<{ reqId: string }> {
-	postJSON(`/webhooks/calc_update${query}`, {});
+}): Promise<void> {
+	postJSON(`/webhooks/calc_update${query}`, {}); // FIXME
+
 	return postJSON(`/calculations${query}`, { dataId, engine, input, workflow });
 }
 

@@ -20,7 +20,7 @@ const routes: Route[] = [
 		path: '/tasks',
 		component: () => import('@/pages/Tasks.svelte'),
 		menu: {
-			title: 'Tasks',
+			title: 'Requests',
 			pos: -1,
 		},
 	},

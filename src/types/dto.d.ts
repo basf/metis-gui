@@ -14,7 +14,6 @@ export interface Calculation extends Timestamps {
 	id: number;
 	name: string;
 	userId: number;
-	status: number;
 	progress: number;
 	result?: DataSource[];
 }
@@ -52,7 +51,6 @@ export interface Error {
 export interface Engine {
 	template?: string;
 	schema?: any;
-	input?: string;
 }
 
 export type CollectionFlavor = typeof COLORSET[number];
