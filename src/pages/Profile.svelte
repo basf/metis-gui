@@ -5,9 +5,26 @@
 		</div>
 		<Tabs slot="nav" items={profile} bind:active block />
 		<div slot="body" class="mt-2">
-			<Tile>
-				<span slot="title">E-mail: <a href="mailto:{$user.email}">{$user.email}</a></span>
-			</Tile>
+			<div class="mt-2">
+				<span>E-mail:</span> <a href="mailto:{$user.email}">{$user.email}</a>
+			</div>
+
+			<div class="mt-2">
+				<span>API key:</span>
+				{#if $loadingAPIKey}
+					loading...
+				{:else if $errorAPIKey}
+					sorry, cannot retrieve...
+				{:else}
+					<span>{$apikey || 'not set'}</span>&nbsp;
+				{/if}
+
+				{#if $apikey}
+				<IconButton on:click={removeAPIKey} variant="primary" icon="delete" shape="circle" size="sm" />
+				{:else}
+				<IconButton on:click={setAPIKey} variant="primary" icon="plus" shape="circle" size="sm" />
+				{/if}
+			</div>
 		</div>
 
 		<svelte:fragment slot="footer">
@@ -17,15 +34,18 @@
 {/if}
 
 <script lang="ts" context="module">
-	import { Avatar, Button, Panel, Tabs, Tile, toast } from 'svelte-spectre';
+	import { Avatar, Button, IconButton, Panel, Tabs, Tile, toast } from 'svelte-spectre';
 
 	import user, { userAsync } from '@/stores/user';
+	import apikeyStore from '@/stores/apikey';
 	import { withConfirm } from '@/stores/confirmator';
 
 	import { logout } from '@/services/api';
 </script>
 
 <script lang="ts">
+	const [apikey, loadingAPIKey, errorAPIKey, controlAPIKey] = apikeyStore();
+
 	let profile = [{ title: 'Profile' }],
 		active = 1;
 
@@ -33,6 +53,14 @@
 		await logout();
 		$userAsync = null;
 		toast.warning({ msg: 'You are logged out', timeout: 4000, pos: 'top_right' });
+	}
+
+	function setAPIKey() {
+		controlAPIKey('set');
+	}
+
+	function removeAPIKey() {
+		controlAPIKey('remove');
 	}
 </script>
 
