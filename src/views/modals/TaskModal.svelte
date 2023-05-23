@@ -28,10 +28,8 @@
 	import { DataView } from '@/views/modals';
 	import { createEventDispatcher } from 'svelte';
 
-	import { fragment, query } from 'svelte-pathfinder';
-	import { toast } from 'svelte-spectre';
-	import calculations, { engines } from '@/stores/calculations';
-	import { setCalculation } from '@/services/api';
+	import calculations from '@/stores/calculations';
+	import { runCalculation } from '@/helpers/calculation';
 
 	export let dataSource;
 	export let open = false;
@@ -52,38 +50,15 @@
 	}
 
 	let refinementStarted = false;
-	function startRefinement() {
+	async function startRefinement() {
 		refinementStarted = true;
-		runCalculation(dataSource.id);
-	}
-
-	// a copy from DataSource.svelte
-	async function runCalculation(id: number) {
-		if ($engines.length > 1) {
-			$fragment = `#edit-engine-${id}`;
-		} else {
-			const result = await setCalculation({
-				dataId: id,
-				engine: $engines[0],
-				workflow: 'unused',
-				query: $query.toString(),
-			});
-			console.log('reqId', result.reqId);
-			toast.success({
-				msg: 'Calculation submitted',
-				timeout: 2000,
-				pos: 'top_right',
-				icon: 'forward',
-			});
-
+		const r = await runCalculation(dataSource.id);
+		if (r) {
 			const unsubcribe = calculations.subscribe((calc) => {
-				console.log(calc);
-
 				if (calcIsReady(calc, dataSource.id)) {
 					unsubcribe();
 					periodicTable = false;
 					refinementStarted = false;
-					console.log('calc is ready');
 				}
 			});
 		}

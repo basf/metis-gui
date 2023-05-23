@@ -17,7 +17,7 @@
 
 <script lang="ts" context="module">
 	import { fragment, query } from 'svelte-pathfinder';
-	import { Col, toast } from 'svelte-spectre';
+	import { Col } from 'svelte-spectre';
 
 	import { Main, Section } from '@/layouts/';
 	import { DataSource } from '@/views/tiles';
@@ -25,12 +25,12 @@
 	import { TileMenu, TileTags } from '@/components/Tile/';
 	import Sinus from '@/assets/img/sinus.svg';
 
-	import { delDataSource, setCalculation } from '@/services/api';
+	import { delDataSource } from '@/services/api';
 
 	import datasources, { datasourcesAsync } from '@/stores/datasources';
 	import { withConfirm } from '@/stores/confirmator';
-	import { engines } from '@/stores/calculations';
 	import user from '@/stores/user';
+	import { runCalculation } from '@/helpers/calculation';
 </script>
 
 <script lang="ts">
@@ -69,7 +69,7 @@
 			type === 1 ? runCalc : null,
 			type === 1 ? editCalc : null,
 			type === 1 ? editTag : null,
-			(type === 3 || type === 5) ? viewRes : null,
+			type === 3 || type === 5 ? viewRes : null,
 			deleteData,
 		].filter(Boolean);
 	};
@@ -90,21 +90,12 @@
 		$fragment = `#view-data-${id}`;
 	}
 
-	function runCalculation(id: number) {
-		if ($engines.length > 1) {
-			$fragment = `#edit-engine-${id}`;
-		} else {
-			setCalculation({ dataId: id, engine: $engines[0], workflow: 'unused', query: $query.toString() })
-			.then(() => toast.success({
-				msg: 'Calculation submitted',
-				timeout: 2000,
-				pos: 'top_right',
-				icon: 'forward'
-			}))
-		};
-	}
-
 	function delData(id: number, query: string) {
-		withConfirm(delDataSource, { id, query }, 'Really delete this item?', false)?.({ id, query });
+		withConfirm(
+			delDataSource,
+			{ id, query },
+			'Really delete this item?',
+			false
+		)?.({ id, query });
 	}
 </script>
