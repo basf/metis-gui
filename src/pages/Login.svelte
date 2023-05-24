@@ -84,10 +84,9 @@
 
 	async function submit() {
 		try {
-			const result = await login(email, password);
-			console.log(result);
+			await login(email, password);
 			$userAsync = me();
-			if (result) {
+			if (await $userAsync) {
 				toast.success({ msg: 'You are logged in', timeout: 4000, pos: 'top_right' });
 			} else {
 				toast.error({
