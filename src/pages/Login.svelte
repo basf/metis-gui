@@ -78,15 +78,24 @@
 	let email = '';
 	let password = '';
 	let errmsg;
-	let providers = IdPs.filter((p)=> p !== 'local');
+	let providers = IdPs.filter((p) => p !== 'local');
 
 	const icons = { github, linkedin, orcid, mpds, basf };
 
 	async function submit() {
 		try {
-			await login(email, password);
+			const result = await login(email, password);
+			console.log(result);
 			$userAsync = me();
-			toast.success({ msg: 'You are logged in', timeout: 4000, pos: 'top_right' });
+			if (result) {
+				toast.success({ msg: 'You are logged in', timeout: 4000, pos: 'top_right' });
+			} else {
+				toast.error({
+					msg: 'Login or password incorrect',
+					timeout: 4000,
+					pos: 'top_right',
+				});
+			}
 		} catch (err) {
 			errmsg = err;
 			toast.error({
