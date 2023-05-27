@@ -20,9 +20,9 @@
 				{/if}
 
 				{#if $apikey}
-				<IconButton on:click={removeAPIKey} variant="primary" icon="delete" shape="circle" size="sm" />
+				<IconButton on:click={() => controlAPIKey('remove')} variant="primary" icon="delete" shape="circle" size="sm" />
 				{:else}
-				<IconButton on:click={setAPIKey} variant="primary" icon="plus" shape="circle" size="sm" />
+				<IconButton on:click={() => controlAPIKey('set')} variant="primary" icon="plus" shape="circle" size="sm" />
 				{/if}
 			</div>
 		</div>
@@ -40,6 +40,8 @@
 	import apikeyStore from '@/stores/apikey';
 	import { withConfirm } from '@/stores/confirmator';
 
+	//import { showTimestamp } from '@/helpers/date';
+
 	import { logout } from '@/services/api';
 </script>
 
@@ -53,14 +55,6 @@
 		await logout();
 		$userAsync = null;
 		toast.warning({ msg: 'You are logged out', timeout: 4000, pos: 'top_right' });
-	}
-
-	function setAPIKey() {
-		controlAPIKey('set');
-	}
-
-	function removeAPIKey() {
-		controlAPIKey('remove');
 	}
 </script>
 

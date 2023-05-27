@@ -121,7 +121,7 @@ export async function getUsers(ids: number[] = []): Promise<UserDTO[]> {
 	return getJSON('/users', { ids: ids.join(',') });
 }
 
-export async function manageAPIKey(action: string): Promise<void> {
+export async function manageAPIKey(action: 'get' | 'set' | 'remove'): Promise<void> {
 	if (action === 'get')
 		return getJSON('/apikey');
 
