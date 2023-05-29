@@ -1,4 +1,5 @@
-import { userAsync } from '@/stores/user';
+import { userAsync } from '@/stores/user'; // FIXME leaking abstraction
+
 import { API_HOST, API_BASEURL } from '@/config';
 import type {
 	User as UserDTO,
@@ -120,6 +121,17 @@ export async function getUsers(ids: number[] = []): Promise<UserDTO[]> {
 	return getJSON('/users', { ids: ids.join(',') });
 }
 
+export async function manageAPIKey(action: 'get' | 'set' | 'remove'): Promise<void> {
+	if (action === 'get')
+		return getJSON('/apikey');
+
+	else if (action === 'set')
+		return putJSON('/apikey');
+
+	else
+		return delJSON('/apikey');
+}
+
 export async function getJSON<T>(
 	path: string,
 	params?: QueryParams,
@@ -194,7 +206,7 @@ export default async function fetchJSON<T>(
 
 	if (!res.ok) {
 		if (res.status === 401) {
-			userAsync.set(null);
+			userAsync.set(null); // FIXME leaking abstraction
 			return null;
 		}
 		const json = await res.json();
