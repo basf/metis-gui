@@ -1,5 +1,8 @@
 <Main>
 	<Section asyncData={$calculationsAsync} addTooltip="Add calculation" addAction={null}>
+		<div slot="filter">
+			<!-- empty -->
+		</div>
 		<svelte:fragment let:item>
 			<Col col="12">
 				<Calculation calculation={item} />
