@@ -3,7 +3,7 @@
 		<Navbar>
 			<nav slot="left">
 				{#if $user && $pattern('/profile')}
-					<IconButton icon="back" size="xl" on:click={back} />
+					<IconButton icon="back" size="xl" on:click={() => back()} />
 				{/if}
 			</nav>
 
@@ -21,7 +21,10 @@
 						<Icon icon="people" />&nbsp;{$user.firstName}&nbsp;{$user.lastName}
 					</Button>
 					{#if mode === 'light'}
-						<IconButton icon="shutdown" on:click={() => withConfirm(doLogout, {}, 'Log out indeed?', false)} />
+						<IconButton
+							icon="shutdown"
+							on:click={() => withConfirm(doLogout, {}, 'Log out indeed?', false)}
+						/>
 					{/if}
 				{/if}
 			</nav>
