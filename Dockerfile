@@ -9,7 +9,7 @@ COPY . .
 RUN npm run build && rm dist/app.zip
 
 
-FROM docker.io/library/nginx:1.23
+FROM docker.io/library/nginx:1.25
 
 ENV NGINX_ENVSUBST_OUTPUT_DIR="/etc/nginx"
 ENV NGINX_ENTRYPOINT_QUIET_LOGS="1"
