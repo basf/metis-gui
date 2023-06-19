@@ -28,6 +28,9 @@
 	import { DataView } from '@/views/modals';
 	import { createEventDispatcher } from 'svelte';
 
+	import calculations from '@/stores/calculations';
+	import { runCalculation } from '@/helpers/calculation';
+
 	export let dataSource;
 	export let open = false;
 
@@ -47,8 +50,27 @@
 	}
 
 	let refinementStarted = false;
-	function startRefinement() {
+	async function startRefinement() {
 		refinementStarted = true;
+		const r = await runCalculation(dataSource.id);
+		if (r) {
+			const unsubcribe = calculations.subscribe((calc) => {
+				if (calcIsReady(calc, dataSource.id)) {
+					unsubcribe();
+					periodicTable = false;
+					refinementStarted = false;
+				}
+			});
+		}
+	}
+
+	function calcIsReady(calc, id) {
+		return (
+			Array.isArray(calc.data) &&
+			calc.data
+				.filter(({ parent, parents }) => parent === id || parents.includes(id))
+				.some(({ progress }) => progress === 100)
+		);
 	}
 </script>
 

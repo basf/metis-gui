@@ -38,7 +38,7 @@ export async function patchDataSourceCollections(
 	return patchJSON(`/datasources/${id}/filters`, collectionIds);
 }
 
-export async function delDataSource({ id, query }: { id: number, query?: string }): Promise<void> {
+export async function delDataSource({ id, query }: { id: number; query?: string }): Promise<void> {
 	return delJSON(`/datasources/${id}${query || ''}`);
 }
 
@@ -47,31 +47,32 @@ export async function getCalculations(query?: string): Promise<void> {
 }
 
 export async function getCalculationEngines(): Promise<void> {
-	return fetchJSON(
-		`${API_HOST}/calculations/supported`,
-		{ credentials: 'omit' }
-	);
+	return fetchJSON(`${API_HOST}/calculations/supported`, { credentials: 'omit' });
 }
 
 export async function getCalculationEngine(id, engine = 'dummy'): Promise<EngineDTO> {
 	return getJSON(`/calculations/template?id=${id}&engine=${engine}`);
 }
 
-export async function setCalculation({ dataId, engine = 'dummy', input, workflow = 'workflow', query = '' }:
-	{
-		dataId: number,
-		engine?: string,
-		input?: string,
-		workflow?: string,
-		query?: string
-	}): Promise<void> {
-
+export async function setCalculation({
+	dataId,
+	engine = 'dummy',
+	input,
+	workflow = 'workflow',
+	query = '',
+}: {
+	dataId: number;
+	engine?: string;
+	input?: string;
+	workflow?: string;
+	query?: string;
+}): Promise<void> {
 	postJSON(`/webhooks/calc_update${query}`, {}); // FIXME
 
 	return postJSON(`/calculations${query}`, { dataId, engine, input, workflow });
 }
 
-export async function delCalculation({ id, query }: { id: number, query?: string }): Promise<void> {
+export async function delCalculation({ id, query }: { id: number; query?: string }): Promise<void> {
 	return delJSON(`/calculations/${id}${query || ''}`);
 }
 
