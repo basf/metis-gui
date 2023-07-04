@@ -76,7 +76,7 @@
 
 	let dataId = '';
 
-	$: dataName = $datasources.data?.find((data) => data.id === +dataId)?.name;
+	$: dataName = $datasources.data.find((data) => data.id === +dataId)?.name;
 
 	async function editCalculation(id: number) {
 		$fragment = `#edit-calculation-${id}`;
