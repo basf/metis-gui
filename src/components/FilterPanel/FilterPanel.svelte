@@ -1,10 +1,5 @@
 <div class="py-2">
 	<Grid>
-		{#if add}
-			<Col col="auto">
-				<IconButton size="lg" {icon} variant="default" {tooltip} on:click={action} />
-			</Col>
-		{/if}
 		<Col>
 			<InputGroup>
 				<Autocomplete
@@ -34,7 +29,7 @@
 
 <script lang="ts" context="module">
 	import { pattern, query, type Param, type Params } from 'svelte-pathfinder';
-	import { Autocomplete, Col, Grid, IconButton, InputGroup, Select } from 'svelte-spectre';
+	import { Autocomplete, Col, Grid, InputGroup, Select } from 'svelte-spectre';
 
 	import { autoColor } from '@/helpers/style';
 	import { filters, type CollectionDTO } from '@/stores/filters';
@@ -53,11 +48,6 @@
 </script>
 
 <script lang="ts">
-	export let add = true;
-	export let icon = 'plus';
-	export let tooltip = 'Add structure';
-	export let action = () => {};
-
 	let selected: Tag[] = [];
 	let predefined: Tag[] = [];
 

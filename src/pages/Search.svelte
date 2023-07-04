@@ -77,11 +77,9 @@
 					<OptimadeApis {apis} bind:meta bind:data {width} />
 				{/if}
 			{:else}
-				<Tile>
-					<div class="text-center distant_msg">
-						Type your search query, select provider, and press the search button.
-					</div>
-				</Tile>
+				<div class="text-center distant_msg">
+					Type your query, select provider, and hit search.
+				</div>
 			{/each}
 		{:catch error}
 			<Tile>
@@ -119,8 +117,10 @@
 
 	import * as Loaders from '@/components/loaders';
 	import AsyncSelect from '@/components/AsyncSelect.svelte';
+
 	import OptimadeApis from '@/views/optimade/OptimadeApis.svelte';
-	import Main from '@/layouts/Main.svelte';
+
+	import { Main } from '@/layouts';
 	import { PAGE_LIMIT } from '@/config';
 
 	const size = 'lg';

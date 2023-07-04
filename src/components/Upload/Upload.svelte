@@ -1,6 +1,6 @@
 <div class="upload">
 	<Dropzone on:drop={select} on:droprejected={onReject}
-		>Upload POSCAR, CIF, or Optimade files</Dropzone
+		>Upload structure or pattern</Dropzone
 	>
 </div>
 <ul>

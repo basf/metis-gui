@@ -1,11 +1,7 @@
 <div class="py-2">
-	{#if msg}
-		<div class="text-center distant_msg">Upload a structure to start...</div>
-	{/if}
-
 	<Grid stack>
 		<Col sm="12">
-			<Input rows={2} placeholder="Paste POSCAR, CIF, or Optimade JSON" bind:value />
+			<Input rows={2} placeholder="Paste structure or pattern" bind:value />
 		</Col>
 		<Divider align={!$media.sm ? 'vertical' : 'horizontal center'} text="OR" />
 		<Col sm="12">
@@ -13,9 +9,7 @@
 		</Col>
 	</Grid>
 
-	<Button variant="primary" block on:click={addDataSourceItem}>
-		{contents.length ? 'Add data' : 'Add structure'}
-	</Button>
+	<Button variant="primary" block on:click={addDataSourceItem}>Upload data</Button>
 </div>
 
 <script lang="ts" context="module">
@@ -28,8 +22,6 @@
 
 <script lang="ts">
 	let value = '';
-
-	export let msg = false;
 
 	let clearFiles: () => void,
 		contents: string[] = [];

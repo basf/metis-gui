@@ -1,6 +1,6 @@
 {#await getDataSource(dataSourceId) then data}
 	<div class="extapp">
-		<iframe name="visualisationFrame" on:load={() => load(data.content)} src={VISUALIZER_URL} frameborder=0 scrolling="no" />
+		<iframe title="visualisation" name="visualisationFrame" on:load={() => load(data.content)} src={VISUALIZER_URL} frameborder=0 scrolling="no" />
 	</div>
 {/await}
 
