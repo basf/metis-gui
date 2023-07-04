@@ -6,7 +6,7 @@ import { toast } from 'svelte-spectre';
 import { getDataSources } from '@/services/api';
 import { STREAM_URL, SYNC_TOASTS_CONFIG } from '@/config';
 
-import { type Unsubscriber } from 'svelte/store'
+import { type Unsubscriber } from 'svelte/store';
 import type { DataSource, Stream, CollectionType } from '@/types/dto';
 
 type DataDTO = {
@@ -16,9 +16,9 @@ type DataDTO = {
 	type: CollectionType[]
 }
 
-let unsubscribe: Unsubscriber
+let unsubscribe: Unsubscriber;
 
-export const datasourcesAsyncReq = asyncable(($query) => getDataSources($query), null, [query])
+export const datasourcesAsyncReq = asyncable(($query) => getDataSources($query), null, [query]);
 
 export const datasourcesAsync = streamable<Stream<DataDTO>, DataDTO>(
 	{
@@ -29,16 +29,16 @@ export const datasourcesAsync = streamable<Stream<DataDTO>, DataDTO>(
 	(res, set) => {
 		//console.log(res);
 		if (res) {
-			toast.primary({ ...SYNC_TOASTS_CONFIG, msg: 'Structures synced' });
+			toast.primary({ ...SYNC_TOASTS_CONFIG, msg: 'User data synced' });
 			set({ ...res });
 		} else {
 			unsubscribe = datasourcesAsyncReq.subscribe(async ($datasourcesAsyncReq) => {
-				// const { reqId } = await $datasourcesAsyncReq
+				// const { reqId } = await $datasourcesAsyncReq;
 				// toast.primary({ ...SYNC_TOASTS_CONFIG, msg: `Structures requested: ${reqId}` });
 			})
 		}
 		return (lastSubscriber) => {
-			if (lastSubscriber) unsubscribe()
+			if (lastSubscriber) unsubscribe();
 		}
 	}
 );

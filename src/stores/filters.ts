@@ -6,7 +6,7 @@ import { toast } from 'svelte-spectre';
 import { getFilters } from '@/services/api';
 import { STREAM_URL, SYNC_TOASTS_CONFIG } from '@/config';
 
-import { type Unsubscriber } from 'svelte/store'
+import { type Unsubscriber } from 'svelte/store';
 import type { CollectionType, Collection, Stream } from '@/types/dto';
 import datasources from './datasources';
 
@@ -16,9 +16,9 @@ export type CollectionDTO = {
 	types: CollectionType[]
 }
 
-let unsubscribe: Unsubscriber
+let unsubscribe: Unsubscriber;
 
-export const filtersAsyncReq = asyncable(getFilters)
+export const filtersAsyncReq = asyncable(getFilters);
 export const filtersAsync = streamable<Stream<CollectionDTO>, CollectionDTO>(
 	{
 		url: STREAM_URL,
@@ -30,6 +30,7 @@ export const filtersAsync = streamable<Stream<CollectionDTO>, CollectionDTO>(
 		if (res) {
 			toast.primary({ ...SYNC_TOASTS_CONFIG, msg: 'Filters synced' });
 			set({ ...res });
+
 		} else {
 			unsubscribe = filtersAsyncReq.subscribe(async ($filtersAsyncReq) => {
 				// const { reqId } = await $filtersAsyncReq
@@ -37,7 +38,7 @@ export const filtersAsync = streamable<Stream<CollectionDTO>, CollectionDTO>(
 			})
 		}
 		return (lastSubscriber) => {
-			lastSubscriber && unsubscribe()
+			lastSubscriber && unsubscribe();
 		}
 	}
 );
