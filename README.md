@@ -8,6 +8,7 @@ A Svelte GUI for the Metis materials data servers, highly modular, permissively 
 |:---:|:---:|
 |![Retrieving the data from various sources](https://github.com/tilde-lab/metis.science/blob/master/src/assets/img/screenshots/optimade-search.png) | ![Exporting & sharing the data across your lab](https://github.com/tilde-lab/metis.science/blob/master/src/assets/img/screenshots/content-organizer.png) |
 
+
 # Installation
 
 ```sh
@@ -16,7 +17,8 @@ cd metis-gui
 npm install
 ```
 
-# Commands
+
+# Technical details
 
 ## Development build
 
@@ -67,15 +69,15 @@ services:
       - "9080:8080"
 ```
 
-# App buildtime config
+## Buildtime config
 
 `./app.config.js`
 
-# App runtime config
+## Runtime config
 
 `./src/config.ts`
 
-# Sources file layout
+## Sources file layout
 
 `assets` - static files etc.
 
@@ -94,6 +96,7 @@ services:
 `types` - TS definitions
 
 `views` - high-level (smarter) modules, cf. `components`
+
 
 # License
 

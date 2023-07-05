@@ -23,3 +23,8 @@ div.distant_msg {
 	max-height: 300px !important;
 	overflow-x: auto !important;
 }
+
+span.link {
+	border-bottom: 1px solid rgb(87, 85, 217);
+	cursor: pointer;
+}

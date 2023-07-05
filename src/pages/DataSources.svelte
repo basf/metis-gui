@@ -1,5 +1,5 @@
 <Main>
-	<Section asyncData={$datasourcesAsync}>
+	<Nodes asyncData={$datasourcesAsync}>
 		<svelte:fragment let:item>
 			<Col col="12">
 				<DataSource datasource={item}>
@@ -10,7 +10,7 @@
 				</DataSource>
 			</Col>
 		</svelte:fragment>
-	</Section>
+	</Nodes>
 </Main>
 
 <DataModal bind:dataId {dataName} />
@@ -19,7 +19,7 @@
 	import { fragment, query } from 'svelte-pathfinder';
 	import { Col } from 'svelte-spectre';
 
-	import { Main, Section } from '@/layouts/';
+	import { Main, Nodes } from '@/layouts/';
 	import { DataSource } from '@/views/tiles';
 	import { DataModal } from '@/views/modals';
 	import { TileMenu, TileTags } from '@/components/Tile/';

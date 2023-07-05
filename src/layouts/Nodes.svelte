@@ -30,7 +30,7 @@
 			{#each data as item (item.id)}
 				<slot {item} />
 			{:else}
-				<div class="text-center distant_msg">No items</div>
+				<div class="text-center distant_msg">Nothing for modeling &mdash; maybe <span class="link" on:click={() => goto('/import')}>add data</span>?</div>
 			{/each}
 		{:catch _error}
 			<Col>
@@ -42,8 +42,8 @@
 
 <script lang="ts" context="module">
 	import { getContext } from 'svelte';
-	import { query } from 'svelte-pathfinder';
-	import { Col, Grid, Pagination } from 'svelte-spectre';
+	import { query, goto } from 'svelte-pathfinder';
+	import { Button, Col, Grid, Pagination } from 'svelte-spectre';
 
 	import { Overlay } from '.';
 	import { FilterPanel } from '@/components/FilterPanel';

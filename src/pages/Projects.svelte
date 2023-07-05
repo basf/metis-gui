@@ -1,5 +1,5 @@
 <Main>
-	<Section
+	<Nodes
 		asyncData={$collectionsAsync}
 		addTooltip="Add collection"
 		addAction={() => openEdit()}
@@ -23,7 +23,7 @@
 				<Collection {...item} on:edit={(e) => openEdit(e.detail.id)} />
 			</Col>
 		</svelte:fragment>
-	</Section>
+	</Nodes>
 </Main>
 
 {#if $fragment}
@@ -43,7 +43,7 @@
 
 	import { Collection } from '@/views/tiles/';
 	import * as Loaders from '@/components/loaders';
-	import { Main, Section } from '@/layouts';
+	import { Main, Nodes } from '@/layouts';
 	import { CollectionEdit } from '@/views/modals';
 
 	import user from '@/stores/user';

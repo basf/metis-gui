@@ -1,6 +1,6 @@
 <Main>
 	{#if !dataSources}
-		<Section asyncData={$collectionsAsync}>
+		<Nodes asyncData={$collectionsAsync}>
 			<svelte:fragment let:item>
 				{#if item.typeFlavor === 'red'}
 					<Col col="12">
@@ -23,9 +23,9 @@
 					</Col>
 				{/if}
 			</svelte:fragment>
-		</Section>
+		</Nodes>
 	{:else}
-		<Section asyncData={$collectionDataSourcesAsync}>
+		<Nodes asyncData={$collectionDataSourcesAsync}>
 			<div slot="filter">
 				<IconButton icon="back" on:click={() => setDatasources()} />
 			</div>
@@ -43,7 +43,7 @@
 					</Col>
 				{/if}
 			</svelte:fragment>
-		</Section>
+		</Nodes>
 	{/if}
 </Main>
 {#if dataSource}
@@ -53,7 +53,7 @@
 <script lang="ts">
 	import { Col, IconButton } from 'svelte-spectre';
 
-	import { Main, Section } from '@/layouts';
+	import { Main, Nodes } from '@/layouts';
 	import { collectionsAsync, collectionDataSourcesAsync } from '@/stores/collections';
 	import { Collection, DataSource } from '@/views/tiles';
 	import { TaskModal } from '@/views/modals';
