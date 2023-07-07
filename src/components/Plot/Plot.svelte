@@ -37,7 +37,7 @@
 	export let source: number[][];
 
 	const xTicks = [0, 45, 90, 135, 180];
-	const yTicks = [0, 50, 100, 200];
+	const yTicks = [0, 25, 50, 100];
 	const padding = { top: 20, right: 130, bottom: 20, left: 65 };
 
 	let width = 500;
@@ -119,7 +119,18 @@
 
 			.path-line {
 				fill: none;
-				stroke: #000;
+				@media (prefers-color-scheme: dark) {
+					stroke: #fff;
+				}
+				@media (prefers-color-scheme: light) {
+					stroke: #000;
+				}
+				:global([color-scheme='dark']) & {
+					stroke: #fff;
+				}
+				:global([color-scheme='light']) & {
+					stroke: #000;
+				}
 				stroke-linejoin: round;
 				stroke-linecap: round;
 				stroke-width: 1;
