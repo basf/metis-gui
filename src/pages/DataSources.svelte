@@ -23,7 +23,7 @@
 	import { DataSource } from '@/views/tiles';
 	import { DataModal } from '@/views/modals';
 	import { TileMenu, TileTags } from '@/components/Tile/';
-	import Sinus from '@/assets/img/sinus.svg';
+	//import Sinus from '@/assets/img/sinus.svg'; // to use as *icon*
 
 	import { delDataSource } from '@/services/api';
 
@@ -52,10 +52,20 @@
 				label: 'Edit Tags',
 				action: editTags,
 			},
+			visRes = {
+				icon: 'download',
+				label: 'View Data',
+				action: visData,
+			},
 			viewRes = {
-				icon: Sinus,
+				icon: 'download',
 				label: 'View Data',
 				action: viewData,
+			},
+			refineRes = {
+				icon: 'search',
+				label: 'Identify Phase',
+				action: function(){},
 			},
 			deleteData = {
 				icon: 'cross',
@@ -65,13 +75,12 @@
 				query: $query.toString(),
 			};
 
-		return [
-			type === 1 ? runCalc : null,
-			type === 1 ? editCalc : null,
-			type === 1 ? editTag : null,
-			type === 3 || type === 5 ? viewRes : null,
-			deleteData,
-		].filter(Boolean);
+		switch(type){
+			case 1: return [runCalc, editCalc, editTag, visRes, deleteData];
+			case 3: return [viewRes, deleteData];
+			case 5: return [refineRes, viewRes, deleteData];
+			default: return [deleteData];
+		}
 	};
 
 	let dataId = '';
@@ -88,6 +97,10 @@
 
 	function viewData(id: number) {
 		$fragment = `#view-data-${id}`;
+	}
+
+	function visData(id: number) {
+		$fragment = `#view-vis-${id}`;
 	}
 
 	function delData(id: number, query: string) {

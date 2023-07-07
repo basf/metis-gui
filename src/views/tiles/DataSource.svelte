@@ -1,10 +1,14 @@
 <div class="tile-data">
 	<Tile>
 		<svelte:fragment slot="icon">
-			{#if datasource.type === 1 && mode !== 'light'}
-				<IconButton tooltip="View details" icon="more-horiz" on:click={() => visData(datasource.id)} />
-			{:else}
-				<span class="placeholder" />
+			{#if mode !== 'light'}
+				{#if datasource.type === 1}
+					<Icon icon="apps" size="2x" color="gray" />
+				{:else if datasource.type === 5}
+					<Icon icon="share" size="2x" color="gray" />
+				{:else}
+					<span class="placeholder" />
+				{/if}
 			{/if}
 		</svelte:fragment>
 		<svelte:fragment slot="title">
@@ -28,7 +32,7 @@
 <script lang="ts" context="module">
 	import { getContext } from 'svelte';
 	import { fragment } from 'svelte-pathfinder';
-	import { IconButton, Tile } from 'svelte-spectre';
+	import { Icon, Tile } from 'svelte-spectre';
 	import user from '@/stores/user';
 	import { showTimestamp } from '@/helpers/date';
 	import Cube from '@/assets/img/cube.svg';
@@ -38,12 +42,7 @@
 
 <script lang="ts">
 	export let datasource: DataSource;
-
 	const mode = getContext('mode');
-
-	function visData(id: number) {
-		$fragment = `#view-vis-${id}`;
-	}
 </script>
 
 <style lang="scss">
@@ -57,6 +56,6 @@
 	}
 	span.placeholder {
 		display: inline-block;
-		width: 32px;
+		width: 30px;
 	}
 </style>
