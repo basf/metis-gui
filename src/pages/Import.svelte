@@ -76,10 +76,6 @@
 				{:else}
 					<OptimadeApis {apis} bind:meta bind:data {width} />
 				{/if}
-			{:else}
-				<div class="text-center distant_msg">
-					Type your query, select provider, and hit search.
-				</div>
 			{/each}
 		{:catch error}
 			<Tile>
@@ -89,6 +85,14 @@
 			</Tile>
 		{/await}
 	</div>
+
+	<div class="text-center distant_msg">
+		Type a query and hit search &mdash; or <span class="link" on:click={toggleUploadable}>upload your data</span>.
+	</div>
+
+	{#if uploadable}
+		<DataSourceAdd />
+	{/if}
 </Main>
 
 <script lang="ts" context="module">
@@ -119,6 +123,7 @@
 	import AsyncSelect from '@/components/AsyncSelect.svelte';
 
 	import OptimadeApis from '@/views/optimade/OptimadeApis.svelte';
+	import { DataSourceAdd } from '@/views/DataSource';
 
 	import { Main } from '@/layouts';
 	import { PAGE_LIMIT } from '@/config';
@@ -142,7 +147,8 @@
 		total: number,
 		meta: Types.Meta,
 		data: Types.Structure[],
-		search = $query.params.q;
+		search = $query.params.q,
+		uploadable: boolean = false;
 
 	function clearPagination() {
 		$query.params.limit = PAGE_LIMIT;
@@ -184,6 +190,10 @@
 	function setPage(page: Param) {
 		page = page === 0 ? 1 : page;
 	}
+
+    function toggleUploadable() {
+        uploadable = !uploadable;
+    }
 
 	$: total = setTotal($query.params.provider, meta?.data_returned, $query.params.page);
 	$: limits = setLimits(meta?.limits, meta?.data_returned);
