@@ -2,7 +2,7 @@
 	<h3 slot="header">{@html dataSource?.name}</h3>
 	{#if periodicTable}
 		<div class="content periodic-table">
-			<Autocomplete {predefined} bind:selected placeholder="Type or select 3 elements" />
+			<Autocomplete {predefined} bind:selected placeholder="Type or select up to 3 elements" />
 			<PeriodicTable bind:selected bind:clear />
 			<div class="buttons">
 				<Button size="md" loading={refinementStarted} on:click={startRefinement}

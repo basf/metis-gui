@@ -3,9 +3,9 @@
 		<svelte:fragment slot="icon">
 			{#if mode !== 'light'}
 				{#if datasource.type === 1}
-					<Icon icon="apps" size="2x" color="gray" />
+					<Icon size="2x">{@html cube}</Icon>
 				{:else if datasource.type === 5}
-					<Icon icon="share" size="2x" color="gray" />
+					<Icon size="2x">{@html sinus}</Icon>
 				{:else}
 					<span class="placeholder" />
 				{/if}
@@ -35,7 +35,8 @@
 	import { Icon, Tile } from 'svelte-spectre';
 	import user from '@/stores/user';
 	import { showTimestamp } from '@/helpers/date';
-	import Cube from '@/assets/img/cube.svg';
+	import cube from '@/assets/img/cube.svg';
+	import sinus from '@/assets/img/sinus.svg';
 
 	import type { DataSource } from '@/types/dto';
 </script>

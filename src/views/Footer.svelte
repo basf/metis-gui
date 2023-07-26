@@ -3,7 +3,7 @@
 		<Navbar>
 			<nav slot="left">
 				This is Metis &mdash;<br />
-				an open-source materials science data organizer.
+				your synchrotron experiments and cloud simulations.
 			</nav>
 			<nav slot="right"><Switch bind:value={$darkTheme}>Dark theme</Switch></nav>
 		</Navbar>

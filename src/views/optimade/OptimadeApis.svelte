@@ -58,11 +58,11 @@
 
 	function setDataSourcesContent(structure: Types.Structure) {
 		setDataSources(JSON.stringify(structure));
-		toast.success({
-			msg: 'Structure added',
-			timeout: 2000,
+		toast.primary({
+			msg: 'Adding to my data',
+			timeout: 2500,
 			pos: 'top_right',
-			icon: 'download',
+			icon: 'check',
 		});
 	}
 </script>

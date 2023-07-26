@@ -30,7 +30,7 @@
 			{#each data as item (item.id)}
 				<slot {item} />
 			{:else}
-				<div class="text-center distant_msg">Nothing for modeling &mdash; maybe <span class="link" on:click={() => goto('/import')}>add data</span>?</div>
+				<div class="text-center distant_msg">Nothing found &mdash; maybe <span class="link" on:click={() => goto('/import')}>add data</span>?</div>
 			{/each}
 		{:catch _error}
 			<Col>

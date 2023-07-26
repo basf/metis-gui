@@ -1,6 +1,6 @@
 <div class="upload">
 	<Dropzone on:drop={select} on:droprejected={onReject}
-		>Upload structure or pattern</Dropzone
+		>select at your PC</Dropzone
 	>
 </div>
 <ul>
@@ -25,7 +25,6 @@
 		const { acceptedFiles } = e.detail;
 
 		files = [...files, ...acceptedFiles];
-
 		dispatch('files', { files });
 	}
 
@@ -40,7 +39,7 @@
 	}
 
 	function onReject() {
-		toast.error({ msg: `Unaccepted file type`, timeout: 4000, pos: 'top_right' });
+		toast.error({ msg: `Wrong file type`, timeout: 4000, pos: 'top_right' });
 	}
 </script>
 
