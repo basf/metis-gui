@@ -25,7 +25,7 @@
 				{/if}
 				{#if providers.length}
 					<Grid align="center">
-						<Col style="text-align:right;">Log in with:</Col>
+						<Col style="text-align:right;">Please click to log in with:</Col>
 						<Col>
 							<div class="oauth-buttons">
 								{#each providers as provider}
@@ -69,9 +69,9 @@
 
 	import github from '@/assets/img/github.svg';
 	import linkedin from '@/assets/img/linkedin.svg';
-	import orcid from '@/assets/img/ORCID-invert.svg';
+	import orcid from '@/assets/img/ORCID.svg';
 	import mpds from '@/assets/img/mpds.svg';
-	import basf from '@/assets/img/BASF-invert.svg';
+	import basf from '@/assets/img/BASF.svg';
 
 	import Logo from '@/components/Logo.svelte';
 
