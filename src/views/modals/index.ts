@@ -6,3 +6,5 @@ export { default as CalculationEdit } from './CalculationEdit.svelte';
 export { default as DataView } from './DataView.svelte';
 export { default as DataIFrame } from './DataIFrame.svelte';
 export { default as TaskModal } from './TaskModal.svelte';
+export { default as PTableModal } from './PTableModal.svelte';
+export { default as RefinedModal } from './RefinedModal.svelte';

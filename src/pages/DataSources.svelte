@@ -15,15 +15,22 @@
 
 <DataModal bind:dataId {dataName} />
 
+{#if targetDS}
+	<PTableModal {targetDS} open={true} on:close={taskModalClosed} on:submitpi={taskSubmitPI} />
+{/if}
+
+{#if paramsPI}
+	<RefinedModal {paramsPI} open={true} on:close={taskModalClosed} on:previous={taskPrevious} />
+{/if}
+
 <script lang="ts" context="module">
 	import { fragment, query } from 'svelte-pathfinder';
 	import { Col } from 'svelte-spectre';
 
 	import { Main, Nodes } from '@/layouts/';
 	import { DataSource } from '@/views/tiles';
-	import { DataModal } from '@/views/modals';
+	import { DataModal, PTableModal, RefinedModal } from '@/views/modals';
 	import { TileMenu, TileTags } from '@/components/Tile/';
-	//import Sinus from '@/assets/img/sinus.svg'; // to use as *icon*
 
 	import { delDataSource } from '@/services/api';
 
@@ -34,6 +41,32 @@
 </script>
 
 <script lang="ts">
+	let targetDS = null,
+		paramsPI = null;
+
+	function setTargetDS(id: number) {
+		targetDS = id;
+		paramsPI = null;
+	}
+
+	function setRefinedDS(id: number, els: string, strict: boolean) {
+		targetDS = null;
+		paramsPI = { id, els, strict };
+	}
+
+	function taskModalClosed() {
+		targetDS = null;
+		paramsPI = null;
+	}
+
+	function taskSubmitPI(event) {
+		setRefinedDS(event.detail.targetDS, event.detail.els, event.detail.strict);
+	}
+
+	function taskPrevious(event) {
+		setTargetDS(event.detail.targetDS);
+	}
+
 	const tileMenuItems = (type: number) => {
 		const runCalc = {
 				icon: 'forward',
@@ -64,8 +97,9 @@
 			},
 			refineRes = {
 				icon: 'search',
+				color: 'success',
 				label: 'Identify Phase',
-				action: function(){},
+				action: setTargetDS,
 			},
 			deleteData = {
 				icon: 'cross',
@@ -77,8 +111,8 @@
 
 		switch(type){
 			case 1: return [runCalc, editCalc, editTag, visRes, deleteData];
-			case 3: return [viewRes, deleteData];
-			case 5: return [refineRes, viewRes, deleteData];
+			case 3: return [					editTag, viewRes, deleteData];
+			case 5: return [		refineRes, editTag, viewRes, deleteData];
 			default: return [deleteData];
 		}
 	};

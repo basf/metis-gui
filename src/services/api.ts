@@ -50,7 +50,7 @@ export async function getCalculationEngines(): Promise<void> {
 	return fetchJSON(`${API_HOST}/calculations/supported`, { credentials: 'omit' });
 }
 
-export async function getCalculationEngine(id, engine = 'dummy'): Promise<EngineDTO> {
+export async function getCalculationEngine(id: number, engine: string = 'dummy'): Promise<EngineDTO> {
 	return getJSON(`/calculations/template?id=${id}&engine=${engine}`);
 }
 
@@ -74,6 +74,10 @@ export async function setCalculation({
 
 export async function delCalculation({ id, query }: { id: number; query?: string }): Promise<void> {
 	return delJSON(`/calculations/${id}${query || ''}`);
+}
+
+export async function setPI(id: number, els: string, strict: boolean): Promise<void> {
+	return postJSON(`/calculations/phaseid`, {id, els, strict: strict ? 1 : 0});
 }
 
 export async function login(email: string, password: string): Promise<void> {

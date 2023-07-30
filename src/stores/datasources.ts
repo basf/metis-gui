@@ -29,7 +29,7 @@ export const datasourcesAsync = streamable<Stream<DataDTO>, DataDTO>(
 	(res, set) => {
 		//console.log(res);
 		if (res) {
-			toast.primary({ ...SYNC_TOASTS_CONFIG, msg: 'User data synced' });
+			toast.primary({ ...SYNC_TOASTS_CONFIG, msg: 'My data synced' });
 			set({ ...res });
 		} else {
 			unsubscribe = datasourcesAsyncReq.subscribe(async ($datasourcesAsyncReq) => {
