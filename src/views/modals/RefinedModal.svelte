@@ -5,6 +5,9 @@
 	{#if !result}
 		<div class="h_spacer"></div>
 		<Loaders.Circle big />
+	{:else if result.error}
+		<div class="distant_msg"></div>
+		<div class="text-center">{result.error}</div>
 	{:else}
 		<div class="distant_msg"></div>
 		<Grid oneline>
@@ -13,7 +16,10 @@
 					<Card pos="top">
 						<img class="img-responsive" src="{src}" alt="{entry}" slot="img" />
 						<div slot="title" class="h5">{@html name}</div>
-						<div slot="subtitle" class="text-gray">ID &bull; {entry} / match #{num + 1}</div>
+						<div slot="subtitle" class="text-gray">ID &bull; {entry} &bull; match #{num + 1}</div>
+						<svelte:fragment slot="footer">
+							<Button variant="primary" on:click={showStub}>Add</Button>
+						</svelte:fragment>
 					</Card>
 					<div class="distant_msg"></div>
 				</Col>
@@ -55,6 +61,10 @@
 		} catch (e) {
 			toast.error({ msg: (err as HttpError).message, timeout: 2500, pos: 'top_right' });
 		}
+	}
+
+	function showStub() {
+		toast.error({ msg: 'Sorry, access denied', timeout: 2500, pos: 'top_right' });
 	}
 </script>
 

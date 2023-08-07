@@ -17,7 +17,7 @@
 		<svelte:fragment slot="subtitle">
 			<small class="text-gray">
 				{#if $user.roleSlug == 'admin'}
-					{showTimestamp(datasource)} by {datasource.userFirstName}
+					Added {showTimestamp(datasource)} by {datasource.userFirstName} {datasource.userLastName}
 				{:else}
 					Added {showTimestamp(datasource)}
 				{/if}

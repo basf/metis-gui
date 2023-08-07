@@ -7,30 +7,30 @@ import { setCalculation } from '@/services/api';
 
 export async function runCalculation(id: number): Promise<boolean> {
 	return new Promise((resolve) => {
-		const unsubscribe = engines.subscribe(async (eng) => {
-			if (!eng) {
+		const unsubscribe = engines.subscribe(async (item) => {
+			if (!item) {
 				return;
 			}
 
 			// console.log(unsubscribe);
 			unsubscribe();
 
-			if (eng.length > 1) {
+			if (item.length > 1) {
 				fragment.set(`#edit-engine-${id}`);
 				resolve(false);
 			} else {
 				await setCalculation({
 					dataId: id,
-					engine: eng[0],
+					engine: item[0],
 					workflow: 'unused',
 					query: get(query).toString(),
 				});
 
 				toast.success({
-					msg: 'Calculation submitted',
+					msg: 'Adding to Calculations',
 					timeout: 2000,
 					pos: 'top_right',
-					icon: 'forward',
+					icon: 'check',
 				});
 
 				resolve(true);

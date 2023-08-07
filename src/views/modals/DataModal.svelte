@@ -96,10 +96,10 @@
 		}).then(() => {
 			closeModal();
 			toast.success({
-				msg: 'Calculation submitted',
+				msg: 'Adding to Calculations',
 				timeout: 2000,
 				pos: 'top_right',
-				icon: 'forward',
+				icon: 'check',
 			});
 		});
 	}
