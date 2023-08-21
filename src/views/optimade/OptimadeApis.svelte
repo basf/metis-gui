@@ -42,6 +42,8 @@
 	import type { Types } from 'optimade';
 
 	import { setDataSources } from '@/services/api';
+
+	import { COMMON_POPUPS } from '@/config';
 </script>
 
 <script lang="ts">
@@ -59,7 +61,7 @@
 	function setDataSourcesContent(structure: Types.Structure) {
 		setDataSources(JSON.stringify(structure));
 		toast.primary({
-			msg: 'Adding to my data',
+			msg: COMMON_POPUPS['add_data'],
 			timeout: 2500,
 			pos: 'top_right',
 			icon: 'check',

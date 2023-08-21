@@ -27,6 +27,8 @@
 	import { CalculationEdit, EngineEdit, TagsEdit, DataView, DataIFrame } from '.';
 	import { patchDataSourceCollections, setCalculation } from '@/services/api';
 	import { media } from '@/stores/media';
+
+	import { COMMON_POPUPS } from '@/config';
 </script>
 
 <script lang="ts">
@@ -96,7 +98,7 @@
 		}).then(() => {
 			closeModal();
 			toast.success({
-				msg: 'Adding to Calculations',
+				msg: COMMON_POPUPS['add_calc'],
 				timeout: 2000,
 				pos: 'top_right',
 				icon: 'check',

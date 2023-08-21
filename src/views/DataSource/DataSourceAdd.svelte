@@ -18,6 +18,8 @@
 
 	import { media } from '@/stores/media';
 	import { setDataSources } from '@/services/api';
+
+	import { COMMON_POPUPS } from '@/config';
 </script>
 
 <script lang="ts">
@@ -48,7 +50,7 @@
 			toast.error({ msg: `Sorry, cannot upload file`, timeout: 4000, pos: 'top_right' });
 		}
 		toast.primary({
-			msg: 'Adding to my data',
+			msg: COMMON_POPUPS['add_data'],
 			timeout: 2500,
 			pos: 'top_right',
 			icon: 'check',

@@ -18,7 +18,7 @@
 						<div slot="title" class="h5">{@html name}</div>
 						<div slot="subtitle" class="text-gray">ID &bull; {entry} &bull; match #{num + 1}</div>
 						<svelte:fragment slot="footer">
-							<Button variant="primary" on:click={showStub}>Add</Button>
+							<Button variant="primary" on:click={importDS(entry)} disabled={added.includes(entry)}>Add</Button>
 						</svelte:fragment>
 					</Card>
 					<div class="distant_msg"></div>
@@ -33,13 +33,16 @@
 	import { Modal, Button, Card, Col, Grid, IconButton, toast } from 'svelte-spectre';
 	import { createEventDispatcher } from 'svelte';
 
-	import { setPI } from '@/services/api';
+	import { setPI, importDataSource } from '@/services/api';
 	import type { HttpError } from '@/services/api';
+
+	import { COMMON_POPUPS } from '@/config';
 
 	export let paramsPI: {id: number, els: string, strict: boolean};
 	export let open: boolean = false;
 
-	let result = false;
+	let result: any = false;
+	let added: string[] = [];
 
 	submitPI();
 
@@ -58,13 +61,22 @@
 	async function submitPI() {
 		try {
 			result = await setPI(paramsPI.id, paramsPI.els, paramsPI.strict);
-		} catch (e) {
-			toast.error({ msg: (err as HttpError).message, timeout: 2500, pos: 'top_right' });
+		} catch (error) {
+			toast.error({ msg: (error as HttpError).message, timeout: 2500, pos: 'top_center' });
 		}
 	}
 
-	function showStub() {
-		toast.error({ msg: 'Sorry, access denied', timeout: 2500, pos: 'top_right' });
+	function importDS(entry) {
+		added.push(entry);
+		added = [...added];
+		importDataSource(entry);
+
+		toast.primary({
+			msg: COMMON_POPUPS['add_data'],
+			timeout: 2500,
+			pos: 'top_center',
+			icon: 'check',
+		});
 	}
 </script>
 

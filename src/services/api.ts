@@ -31,6 +31,10 @@ export async function setDataSources(content: string | string[]): Promise<void> 
 	return postJSON('/datasources', { content });
 }
 
+export async function importDataSource(id: string): Promise<void> {
+	return putJSON(`/datasources`, { id });
+}
+
 export async function patchDataSourceCollections(
 	id: number,
 	collectionIds: number[]

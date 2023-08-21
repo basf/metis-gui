@@ -5,6 +5,8 @@ import { fragment, query } from 'svelte-pathfinder';
 import { engines } from '@/stores/calculations';
 import { setCalculation } from '@/services/api';
 
+import { COMMON_POPUPS } from '@/config';
+
 export async function runCalculation(id: number): Promise<boolean> {
 	return new Promise((resolve) => {
 		const unsubscribe = engines.subscribe(async (item) => {
@@ -27,7 +29,7 @@ export async function runCalculation(id: number): Promise<boolean> {
 				});
 
 				toast.success({
-					msg: 'Adding to Calculations',
+					msg: COMMON_POPUPS['add_calc'],
 					timeout: 2000,
 					pos: 'top_right',
 					icon: 'check',
