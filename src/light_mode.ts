@@ -40,22 +40,6 @@ const routes: Route[] = [
 			pos: 2,
 		},
 	},
-	{
-		path: '/materials',
-		component: () => import('@/pages/Materials.svelte'),
-		menu: {
-			title: 'Materials',
-			pos: 3,
-		},
-	},
-	{
-		path: '/projects',
-		component: () => import('@/pages/Projects.svelte'),
-		menu: {
-			title: 'Organizer',
-			pos: 4,
-		},
-	},
 ];
 
 const app = new App({

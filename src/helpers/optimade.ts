@@ -10,8 +10,10 @@ export function getStructureTitle(item: Types.Structure): string {
 }
 export function addSubTags(string: string): string {
 	let sub = false,
-		html = '';
-	for (let i = 0, len = string.length; i < len; i++) {
+		html = '',
+		stop = string.indexOf('*'); // NB used for collections with slug=phases
+
+	for (let i = 0, len = (stop == -1) ? string.length : stop; i < len; i++) {
 		if (!isNaN(+string[i]) || string[i] == '.') {
 			if (!sub) {
 				html += '<sub>';
@@ -26,5 +28,6 @@ export function addSubTags(string: string): string {
 		html += string[i];
 	}
 	if (sub) html += '</sub>';
+	if (stop !== -1) html += string.substring(stop);
 	return html;
 }

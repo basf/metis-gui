@@ -14,19 +14,11 @@ export const ZOOM = {
 } as const;
 
 export const COLORSET = [
-	'red',
-	'pink',
-	'purple',
-	'indigo',
-	'blue',
-	'cyan',
-	'teal',
-	'green',
-	'lime',
-	'yellow',
-	'orange',
-	'brown',
-	'grey',
+	'#900',
+	'#ccc',
+	'#fff',
+	'#666',
+	'#5755D9',
 ] as const;
 
 export const VISIBILITY = ['private', 'shared', 'community'] as const;
