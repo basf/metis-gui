@@ -28,6 +28,10 @@
 		</div>
 
 		<svelte:fragment slot="footer">
+			<Button on:click={() => goto('/tags')} variant="default" block>Edit tags</Button>
+
+			<div class="mt-2"></div>
+
 			<Button on:click={doLogout} variant="primary" block>Log out</Button>
 		</svelte:fragment>
 	</Panel>
@@ -35,6 +39,7 @@
 
 <script lang="ts" context="module">
 	import { Avatar, Button, IconButton, Panel, Tabs, Tile, toast } from 'svelte-spectre';
+	import { goto } from 'svelte-pathfinder';
 
 	import user, { userAsync } from '@/stores/user';
 	import apikeyStore from '@/stores/apikey';

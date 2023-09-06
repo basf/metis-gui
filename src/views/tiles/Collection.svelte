@@ -1,20 +1,24 @@
 <div class="tile-collection">
 	<Tile>
 		<svelte:fragment slot="icon">
-			<div class="tooltip" data-tooltip="by {userDisplayName}">
-				<a href="/?collectionIds={id}"
-					><Avatar size="lg" name={userDisplayName} bg="#ccc">
+			<div class="tooltip" data-tooltip="{typeLabel}: {title} by {userDisplayName}">
+				<a href="/?collectionIds={id}&limit={PAGE_LIMIT}&visibility=&type=">
+					<Avatar size="lg" name={userDisplayName} bg="{typeFlavor}">
 						<svelte:fragment slot="sub">
 							{#if !owner && $user}
 								<Avatar size="sm" name="{$user.firstName} {$user.lastName}" />
 							{/if}
 						</svelte:fragment>
-					</Avatar></a
-				>
+					</Avatar>
+				</a>
 			</div>
 		</svelte:fragment>
 		<h5 class="mt-2" slot="title">
-			{title}
+			{#if typeSlug == 'phases'}
+				{@html addSubTags(title)}
+			{:else}
+				{title}
+			{/if}
 		</h5>
 		<Badge style={autoColor(typeFlavor)}>{visibility}</Badge>
 		<svelte:fragment slot="action">
@@ -38,7 +42,10 @@
 	import { IconButton, Tile, Avatar, Badge } from 'svelte-spectre';
 
 	import user from '@/stores/user';
+	import { addSubTags } from '@/helpers/optimade';
 	import { autoColor } from '@/helpers/style';
+
+	import { PAGE_LIMIT } from '@/config';
 </script>
 
 <script lang="ts">
@@ -51,6 +58,8 @@
 	export let userId: number;
 	export let userFirstName = '';
 	export let userLastName = '';
+	export let typeSlug = '';
+	export let typeLabel = '';
 	export let typeFlavor = '';
 
 	$: userDisplayName = `${userFirstName} ${userLastName}`;

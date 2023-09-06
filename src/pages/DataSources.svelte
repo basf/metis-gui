@@ -24,7 +24,7 @@
 {/if}
 
 <script lang="ts" context="module">
-	import { fragment, query } from 'svelte-pathfinder';
+	import { fragment, query, goto } from 'svelte-pathfinder';
 	import { Col } from 'svelte-spectre';
 
 	import { Main, Nodes } from '@/layouts/';
@@ -38,6 +38,8 @@
 	import { withConfirm } from '@/stores/confirmator';
 	import user from '@/stores/user';
 	import { runCalculation } from '@/helpers/calculation';
+
+	import { PAGE_LIMIT } from '@/config';
 </script>
 
 <script lang="ts">
@@ -57,6 +59,8 @@
 	function taskModalClosed() {
 		targetDS = null;
 		paramsPI = null;
+		goto(`/?page=1&limit=${PAGE_LIMIT}`); // NB can be omitted, addresses not an immediate SSE update
+		window.scrollTo(0, 0);
 	}
 
 	function taskSubmitPI(event) {
