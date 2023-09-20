@@ -1,10 +1,14 @@
 <Main>
-	<Nodes asyncData={$datasourcesAsync}>
+	<Nodes
+		asyncData={$datasourcesAsync}
+		addTooltip="Add data"
+		addAction={() => goto('/import')}
+	>
 		<svelte:fragment let:item>
 			<Col col="12">
 				<DataSource datasource={item}>
 					<TileTags datasourceId={item.id} />
-					{#if $user?.id === item.userId}
+					{#if $user?.id === item.userId || $user.roleSlug === 'admin'}
 						<TileMenu items={tileMenuItems(item.type)} dataId={item.id} />
 					{/if}
 				</DataSource>

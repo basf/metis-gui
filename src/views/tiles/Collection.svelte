@@ -31,6 +31,13 @@
 						title="Edit collection"
 						on:click={() => dispatch('edit', { id })}
 					/>
+				{:else}
+					<IconButton
+						icon="edit"
+						size="sm"
+						variant="error"
+						title="Editing disabled"
+					/>
 				{/if}
 			</slot>
 		</svelte:fragment>

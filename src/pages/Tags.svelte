@@ -1,8 +1,8 @@
 <Main>
 	<Nodes
 		asyncData={$collectionsAsync}
-		addTooltip="Add collection"
-		addAction={() => openEdit()}
+		addTooltip="Add a new tag"
+		addAction={() => openEdit('new')}
 		bind:width
 	>
 		<svelte:fragment slot="loader">
