@@ -78,7 +78,7 @@
 		"eslint-svelte3-preprocess": "0.0.5",
 		"husky": "^7.0.4",
 		"jest": "^27.0.5",
-		"postcss": "^8.3.5",
+		"postcss": "^8.4.31",
 		"postcss-flexbugs-fixes": "^5.0.2",
 		"postcss-import": "^14.0.2",
 		"postcss-load-config": "^3.1.0",
