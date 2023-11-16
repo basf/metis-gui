@@ -1,5 +1,7 @@
 # Metis data management GUI
 
+<p align="center"><img src="https://github.com/basf/metis-backend/blob/master/logo.png" width="300" /></p>
+
 **This is the first part of the whole Metis infra: [GUI](https://github.com/basf/metis-gui) &rlarr; [BFF](https://github.com/basf/metis-bff) &rlarr; [backend](https://github.com/basf/metis-backend).**
 
 A Svelte GUI for the Metis materials data servers, highly modular, permissively licensed, minimalistically designed, based on the open [Svelte-Spectre](https://kit.metis.science) user interface kit. Supports various materials data formats, real-time cloud simulations, real-time collaborations, [Optimade](https://optimade.org) structure searches, content organizing and sharing, and many more. Displays the server events instantly as they occur, thanks to the [SSE](https://en.wikipedia.org/wiki/Server-sent_events) server push technology. The users are recognized via the third-party OAuth services, such as Microsoft, LinkedIn, GitHub, ORCID, MPDS, etc.
