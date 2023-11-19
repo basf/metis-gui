@@ -16,7 +16,8 @@
 		"test:watch": "npm run test -- --watch",
 		"size": "size-limit",
 		"clean": "mkdir -p ./dist && find ./dist/ -type f -delete",
-		"husky:init": "npx husky install"
+		"husky:init": "npx husky install",
+		"optimade-prefetch": "node node_modules/optimade/prefetch.js"
 	},
 	"engines": {
 		"node": ">= 14"

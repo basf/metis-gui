@@ -71,7 +71,7 @@
 	import linkedin from '@/assets/img/linkedin.svg';
 	import orcid from '@/assets/img/ORCID.svg';
 	import mpds from '@/assets/img/mpds.svg';
-	import basf from '@/assets/img/BASF.svg';
+	import microsoft from '@/assets/img/microsoft.svg';
 
 	import Logo from '@/components/Logo.svelte';
 
@@ -80,7 +80,7 @@
 	let errmsg;
 	let providers = IdPs.filter((p) => p !== 'local');
 
-	const icons = { github, linkedin, orcid, mpds, basf };
+	const icons = { github, linkedin, orcid, mpds, microsoft };
 
 	async function submit() {
 		try {

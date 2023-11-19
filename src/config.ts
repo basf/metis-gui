@@ -35,7 +35,7 @@ export const DOWNLOADABLE_APP_FILENAME = 'index.html';
 
 export const SYNC_TOASTS_CONFIG = { timeout: 2000, pos: 'bottom_right' } as ToastItem;
 
-export const IdPs = RUNTIME_CONFIG.IDPS || ['linkedin', 'github', 'orcid', 'mpds', 'local']; // available: linkedin, github, orcid, mpds, basf, local
+export const IdPs = RUNTIME_CONFIG.IDPS || ['linkedin', 'github', 'local']; // available: linkedin, github, orcid, mpds, microsoft, local
 
 export const PAGE_LIMIT = RUNTIME_CONFIG.PAGE_LIMIT || 200;
 
