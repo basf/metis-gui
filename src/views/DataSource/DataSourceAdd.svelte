@@ -1,7 +1,7 @@
 <div class="py-2">
 	<Grid stack>
 		<Col sm="12">
-			<Input rows={2} placeholder="Paste structure or pattern" bind:value />
+			<Input rows={2} placeholder="Paste input, structure, or pattern" bind:value />
 		</Col>
 		<Divider align={!$media.sm ? 'vertical' : 'horizontal center'} text="OR" />
 		<Col sm="12">
@@ -26,7 +26,8 @@
 	let value = '';
 
 	let clearFiles: () => void,
-		contents: string[] = [];
+		contents: string[] = [],
+		names: string[] = [];
 
 	function isASCII(str) {
 		return /^[\x00-\x7F]*$/.test(str);
@@ -42,13 +43,15 @@
 
 	async function addDataSourceItem() {
 		try {
-			const uploaded = await setDataSources(contents.length ? contents : value);
+			const uploaded = await setDataSources(contents.length ? contents : value, names.length ? names : 'Text-upload');
 			//console.log(uploaded);
 			clearFiles();
 			value = '';
+
 		} catch (error) {
 			toast.error({ msg: `Sorry, cannot upload file`, timeout: 4000, pos: 'top_right' });
 		}
+
 		toast.primary({
 			msg: COMMON_POPUPS['add_data'],
 			timeout: 2500,
@@ -69,10 +72,14 @@
 				}
 
 				contents.push(content);
+				names.push(file.name);
 			}
 			contents = [...contents];
+			names = [...names];
+
 		} else {
 			contents = [];
+			names = [];
 		}
 	}
 </script>

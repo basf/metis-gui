@@ -27,8 +27,8 @@ export async function getDataSources(query?: string): Promise<void> {
 	return getJSON(`/datasources${query || ''}`);
 }
 
-export async function setDataSources(content: string | string[]): Promise<void> {
-	return postJSON('/datasources', { content });
+export async function setDataSources(content: string | string[], name?: string | string[]): Promise<void> {
+	return postJSON('/datasources', { content, name });
 }
 
 export async function importDataSource(id: string): Promise<void> {

@@ -30,6 +30,7 @@
 <script lang="ts" context="module">
 	import { fragment, query, goto } from 'svelte-pathfinder';
 	import { Col } from 'svelte-spectre';
+	import display_icon from '@/assets/img/display.svg';
 
 	import { Main, Nodes } from '@/layouts/';
 	import { DataSource } from '@/views/tiles';
@@ -94,12 +95,12 @@
 				action: editTags,
 			},
 			visRes = {
-				icon: 'download',
+				icon: display_icon,
 				label: 'View Data',
 				action: visData,
 			},
 			viewRes = {
-				icon: 'download',
+				icon: display_icon,
 				label: 'View Data',
 				action: viewData,
 			},
@@ -121,6 +122,7 @@
 			case 1: return [runCalc, editCalc, editTag, visRes, deleteData];
 			case 3: return [					editTag, viewRes, deleteData];
 			case 5: return [		refineRes, editTag, viewRes, deleteData];
+			case 6: return [		editCalc, editTag, deleteData];
 			default: return [deleteData];
 		}
 	};
@@ -146,10 +148,11 @@
 	}
 
 	function delData(id: number, query: string) {
+		const name = $datasources.data.find((data) => data.id === id)?.name.replaceAll('<sub>', '').replaceAll('</sub>', '');
 		withConfirm(
 			delDataSource,
 			{ id, query },
-			'Really delete this item?',
+			'Really delete ' + name + '?',
 			false
 		)?.({ id, query });
 	}

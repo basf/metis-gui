@@ -1,5 +1,5 @@
 {#if !$status.online}
-	<Overlay>Internet connection lost</Overlay>
+	<Overlay>You are offline</Overlay>
 {:else if !$status.heartbeat}
 	<Overlay>No connection to the server</Overlay>
 {:else if $updates}
