@@ -1,10 +1,12 @@
 # Metis data management GUI
 
+<p class="what_is_metis"><dfn>Metis</dfn> is an open scientific framework, materials data organizer, and collaborative online platform for the nanotechnology research. It was designed for the materials research teams at the physical and virtual laboratories. Metis is an AI-ready solution, aiming to bring the recent advances of computer science into a rather conservative area of new materials development and quality control. Metis currently focuses on the X-ray powder diffraction and atomistic simulations. It was started in 2021 in BASF (Ludwigshafen am Rhein, Germany) by Bernd Hinrichsen and Evgeny Blokhin.</p>
+
 <p align="center"><img src="https://github.com/basf/metis-backend/blob/master/logo.png" width="300" /></p>
 
 **This is the first part of the whole Metis infra: [GUI](https://github.com/basf/metis-gui) &rlarr; [BFF](https://github.com/basf/metis-bff) &rlarr; [backend](https://github.com/basf/metis-backend).**
 
-A Svelte GUI for the Metis materials data servers, highly modular, permissively licensed, minimalistically designed, based on the open [Svelte-Spectre](https://kit.metis.science) user interface kit. Supports various materials data formats, real-time cloud simulations, real-time collaborations, [Optimade](https://optimade.org) structure searches, content organizing and sharing, and many more. Displays the server events instantly as they occur, thanks to the [SSE](https://en.wikipedia.org/wiki/Server-sent_events) server push technology. The users are recognized via the third-party OAuth services, such as Microsoft, LinkedIn, GitHub, ORCID, MPDS, etc.
+This is the Svelte GUI for the Metis materials data server, highly modular, permissively licensed, minimalistically designed, based on the open [Svelte-Spectre](https://kit.metis.science) user interface kit. Supports various materials data formats, real-time cloud simulations, real-time collaborations, [Optimade](https://optimade.org) structure searches, content organizing and sharing, and many more. Displays the server events instantly as they occur, thanks to the [SSE](https://en.wikipedia.org/wiki/Server-sent_events) server push technology. The users are recognized via the third-party OAuth services, such as Microsoft, LinkedIn, GitHub, ORCID, MPDS, etc.
 
 |![On-demand cloud simulations](https://github.com/tilde-lab/metis.science/blob/master/src/assets/img/screenshots/cloud-runs.png) | ![Digesting the experiments data](https://github.com/tilde-lab/metis.science/blob/master/src/assets/img/screenshots/all-data.png) |
 |:---:|:---:|
