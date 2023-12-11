@@ -4,7 +4,7 @@
 			<!-- empty -->
 		</div>
 		<svelte:fragment let:item>
-			{#if item.typeSlug === 'requests'}
+			{#if item.typeSlug === 'requests' && item.userId === SERVICE_UID}
 				<Col col="12">
 					<Collection
 						id={item.id}
@@ -19,10 +19,11 @@
 					>
 						<IconButton
 							slot="action"
-							icon="forward"
+							icon="download"
 							variant="link"
 							size="xxl"
-							on:click={() => goto('/?collectionIds=' + item.id + '&limit=' + PAGE_LIMIT + '&visibility=&type=')}
+							tooltip="Download and process data"
+							on:click={() => processCollection(item.id)}
 						/>
 					</Collection>
 				</Col>
@@ -35,9 +36,16 @@
 	import { Col, IconButton } from 'svelte-spectre';
 	import { goto } from 'svelte-pathfinder';
 
+	import { claimCollection } from '@/services/api';
+
 	import { Main, Nodes } from '@/layouts';
 	import { collectionsAsync } from '@/stores/collections';
 	import { Collection } from '@/views/tiles';
 
-	import { PAGE_LIMIT } from '@/config';
+	import { SERVICE_UID, PAGE_LIMIT } from '@/config';
+
+	function processCollection(id: number) {
+		claimCollection(id);
+		goto('/?collectionIds=' + id + '&limit=' + PAGE_LIMIT + '&visibility=&type=');
+	}
 </script>

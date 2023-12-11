@@ -23,6 +23,8 @@ export const STREAM_URL = API_HOST + '/stream';
 
 export const BASE_PATH = RUNTIME_CONFIG.BASE_PATH || '';
 
+export const SERVICE_UID = 3; // service user account, uploading integration data
+
 export const NEW_VERSION_CHECK_DELAY = 60000;
 
 export const VISUALIZER_URL = 'https://tilde-lab.github.io/cifplayer/player.html';

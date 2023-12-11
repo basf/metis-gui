@@ -3,7 +3,7 @@
 		<Navbar>
 			<nav slot="left">
 				This is Metis &mdash;<br />
-				your synchrotron experiments and cloud simulations.
+				your X-ray experiments and cloud simulations.
 			</nav>
 			<nav slot="right"><Switch bind:value={$darkTheme}>Dark theme</Switch></nav>
 		</Navbar>

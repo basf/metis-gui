@@ -20,13 +20,9 @@
 		</svelte:fragment>
 		<svelte:fragment slot="subtitle">
 			<small class="text-gray">
-				{#if $user.roleSlug === 'admin'}
-					Added {showTimestamp(datasource)}
-						{#if $user.id !== datasource.userId}
-							by {datasource.userFirstName} {datasource.userLastName}
-						{/if}
-				{:else}
-					Added {showTimestamp(datasource)}
+				Added {showTimestamp(datasource)}
+				{#if $user.id !== datasource.userId}
+					by {datasource.userFirstName} {datasource.userLastName}
 				{/if}
 			</small>
 		</svelte:fragment>

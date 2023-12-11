@@ -8,8 +8,10 @@
 			<Col col="12">
 				<DataSource datasource={item}>
 					<TileTags datasourceId={item.id} />
-					{#if $user?.id === item.userId || $user.roleSlug === 'admin'}
+					{#if $user?.id === item.userId}
 						<TileMenu items={tileMenuItems(item.type)} dataId={item.id} />
+					{:else}
+						<TileMenu items={noaccess} dataId={item.id} />
 					{/if}
 				</DataSource>
 			</Col>
@@ -41,7 +43,7 @@
 
 	import datasources, { datasourcesAsync } from '@/stores/datasources';
 	import { withConfirm } from '@/stores/confirmator';
-	import user from '@/stores/user';
+	import user from '@/stores/user'; // FIXME TODO clarify accesses to shared collections + admin role
 	import { runCalculation } from '@/helpers/calculation';
 
 	import { PAGE_LIMIT } from '@/config';
@@ -89,11 +91,11 @@
 				label: 'Edit calculation input',
 				action: editCalculation,
 			},
-			editTag = {
+			/*editTag = {
 				icon: 'tag',
 				label: 'Edit Tags',
 				action: editTags,
-			},
+			},*/
 			visRes = {
 				icon: display_icon,
 				label: 'View Data',
@@ -119,13 +121,19 @@
 			};
 
 		switch(type){
-			case 1: return [runCalc, editCalc, editTag, visRes, deleteData];
-			case 3: return [					editTag, viewRes, deleteData];
-			case 5: return [		refineRes, editTag, viewRes, deleteData];
-			case 6: return [		editCalc, editTag, deleteData];
+			case 1: return [runCalc, editCalc, visRes, deleteData];
+			case 3: return [					viewRes, deleteData];
+			case 5: return [		refineRes, viewRes, deleteData];
+			case 6: return [runCalc, editCalc, deleteData];
 			default: return [deleteData];
 		}
 	};
+
+	const noaccess = [{
+		icon: 'stop',
+		color: 'gray',
+		label: 'No access',
+	}];
 
 	let dataId = '';
 

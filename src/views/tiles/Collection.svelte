@@ -1,11 +1,11 @@
-<div class="tile-collection">
+<div class="tile-collection{noaccess}">
 	<Tile>
 		<svelte:fragment slot="icon">
 			<div class="tooltip" data-tooltip="{typeLabel}: {title} by {userDisplayName}">
 				<a href="/?collectionIds={id}&limit={PAGE_LIMIT}&visibility=&type=">
 					<Avatar size="lg" name={userDisplayName} bg="{typeFlavor}">
 						<svelte:fragment slot="sub">
-							{#if !owner && $user}
+							{#if !owner}
 								<Avatar size="sm" name="{$user.firstName} {$user.lastName}" />
 							{/if}
 						</svelte:fragment>
@@ -31,13 +31,6 @@
 						title="Edit collection"
 						on:click={() => dispatch('edit', { id })}
 					/>
-				{:else}
-					<IconButton
-						icon="edit"
-						size="sm"
-						variant="error"
-						title="Editing disabled"
-					/>
 				{/if}
 			</slot>
 		</svelte:fragment>
@@ -47,6 +40,7 @@
 <script lang="ts" context="module">
 	import { createEventDispatcher } from 'svelte';
 	import { IconButton, Tile, Avatar, Badge } from 'svelte-spectre';
+	import { path } from 'svelte-pathfinder';
 
 	import user from '@/stores/user';
 	import { addSubTags } from '@/helpers/optimade';
@@ -71,6 +65,7 @@
 
 	$: userDisplayName = `${userFirstName} ${userLastName}`;
 	$: owner = $user && $user.id === userId;
+	$: noaccess = (owner || $path.toString() !== '/tags') ? '' : ' noaccess';
 </script>
 
 <style lang="scss">
@@ -93,6 +88,9 @@
 				visibility: hidden;
 			}
 		}
+	}
+	.noaccess {
+		cursor: not-allowed;
 	}
 	:global(.tile) {
 		position: relative;

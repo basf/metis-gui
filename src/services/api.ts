@@ -108,6 +108,10 @@ export async function getCollectionDataSources(): Promise<void> {
 	return getJSON(`/collections/datasources`);
 }
 
+export async function claimCollection(collectionId: number): Promise<void> {
+	return postJSON(`/collections/ownership`, { collectionId });
+}
+
 export async function getCollections(query?: string): Promise<void> {
 	return getJSON(`/collections${query || ''}`);
 }
