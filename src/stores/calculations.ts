@@ -19,11 +19,9 @@ type CalculationDTO = {
 let unsubscribe: Unsubscriber;
 
 export const enginesAsync = asyncable<Promise<string[]>>(getCalculationEngines);
-
 export const engines = syncable<string[]>(enginesAsync);
 
 export const calculationsAsyncReq = asyncable(($query) => getCalculations($query), null, [query]);
-
 export const calculationsAsync = streamable<Stream<CalculationDTO>, CalculationDTO>(
 	{
 		url: STREAM_URL,
@@ -37,8 +35,8 @@ export const calculationsAsync = streamable<Stream<CalculationDTO>, CalculationD
 			set({ ...res });
 		} else {
 			unsubscribe = calculationsAsyncReq.subscribe(async ($calculationsAsyncReq) => {
-				// const { reqId } = await $calculationsAsyncReq
-				// toast.primary({ ...SYNC_TOASTS_CONFIG, msg: `Calculations requested: ${reqId}` });
+				//const { reqId } = await $calculationsAsyncReq
+				//toast.primary({ ...SYNC_TOASTS_CONFIG, msg: `Calculations requested: ${reqId}` });
 			})
 		}
 		return (lastSubscriber) => {

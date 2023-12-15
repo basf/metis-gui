@@ -19,7 +19,6 @@ type DataDTO = {
 let unsubscribe: Unsubscriber;
 
 export const datasourcesAsyncReq = asyncable(($query) => getDataSources($query), null, [query]);
-
 export const datasourcesAsync = streamable<Stream<DataDTO>, DataDTO>(
 	{
 		url: STREAM_URL,
@@ -33,8 +32,8 @@ export const datasourcesAsync = streamable<Stream<DataDTO>, DataDTO>(
 			set({ ...res });
 		} else {
 			unsubscribe = datasourcesAsyncReq.subscribe(async ($datasourcesAsyncReq) => {
-				// const { reqId } = await $datasourcesAsyncReq;
-				// toast.primary({ ...SYNC_TOASTS_CONFIG, msg: `Structures requested: ${reqId}` });
+				//const { reqId } = await $datasourcesAsyncReq;
+				//toast.primary({ ...SYNC_TOASTS_CONFIG, msg: `Structures requested: ${reqId}` });
 			})
 		}
 		return (lastSubscriber) => {

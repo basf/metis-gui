@@ -1,6 +1,6 @@
 # Metis data management GUI
 
-<p class="what_is_metis"><dfn>Metis</dfn> is an open scientific framework, materials data organizer, and collaborative online platform for the nanotechnology research. It was designed for the materials research teams at the physical and virtual laboratories. Metis is an AI-ready solution, aiming to bring the recent advances of computer science into a rather conservative area of new materials development and quality control. Metis currently focuses on the X-ray powder diffraction and atomistic simulations. It was started in 2021 in BASF (Ludwigshafen am Rhein, Germany) by Bernd Hinrichsen and Evgeny Blokhin.</p>
+<p class="what_is_metis"><dfn>Metis</dfn> is an open scientific framework, materials data organizer, and collaborative online platform for the nanotechnology research. It was designed for the offline physical and online virtual autonomous laboratories dealing with the materials science. Metis is an AI-ready solution, aiming to bring the recent advances of computer science into a rather conservative area of new materials development and quality control. Metis currently focuses on the X-ray powder diffraction and atomistic simulations. Its development was started in 2021 in BASF (Ludwigshafen am Rhein, Germany) by Bernd Hinrichsen and Evgeny Blokhin.</p>
 
 <p align="center"><img src="https://github.com/basf/metis-backend/blob/master/logo.png" width="300" /></p>
 
@@ -36,7 +36,10 @@ npm run dev
 npm run build
 ```
 
+
 ## Docker Image
+
+**Warning!** Docker support is highly experimental.
 
 The production build is packaged into the [nginx](https://hub.docker.com/_/nginx)
 container. Inherits all of the parent image's configuration capabilities.
@@ -73,15 +76,18 @@ services:
       - "9080:8080"
 ```
 
+
 ## Buildtime config
 
 `./app.config.js`
+
 
 ## Runtime config
 
 `./src/config.ts`
 
-## Sources file layout
+
+## Sources folder layout
 
 `assets` - static files etc.
 
@@ -91,9 +97,9 @@ services:
 
 `layouts` - CSS framework modules
 
-`pages` - concrete content sections
+`pages` - concrete content sections, collections of `views`
 
-`services` - API consumption
+`services` - different APIs consumption
 
 `stores` - where the data flow comes from
 

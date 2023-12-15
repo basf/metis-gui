@@ -1,7 +1,7 @@
 <Main>
-	<Nodes asyncData={$collectionsAsync}>
+	<Nodes asyncData={$collectionsAsync} paginate={false}>
 		<div slot="filter">
-			<!-- empty -->
+			<!-- no filter panel -->
 		</div>
 		<svelte:fragment let:item>
 			{#if item.typeSlug === 'phases'}
@@ -23,6 +23,7 @@
 							icon="forward"
 							variant="link"
 							size="xxl"
+							tooltip="Show all matching data"
 							on:click={() => goto('/?collectionIds=' + item.id + '&limit=' + PAGE_LIMIT + '&visibility=&type=')}
 						/>
 					</Collection>

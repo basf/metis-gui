@@ -33,8 +33,8 @@ export const filtersAsync = streamable<Stream<CollectionDTO>, CollectionDTO>(
 
 		} else {
 			unsubscribe = filtersAsyncReq.subscribe(async ($filtersAsyncReq) => {
-				// const { reqId } = await $filtersAsyncReq
-				// toast.primary({ ...SYNC_TOASTS_CONFIG, msg: `Collections requested: ${reqId}` });
+				//const { reqId } = await $filtersAsyncReq
+				//toast.primary({ ...SYNC_TOASTS_CONFIG, msg: `Collections requested: ${reqId}` });
 			})
 		}
 		return (lastSubscriber) => {

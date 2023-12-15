@@ -1,7 +1,7 @@
 <Main>
 	<Nodes asyncData={$calculationsAsync} addTooltip="Add calculation" addAction={null}>
 		<div slot="filter">
-			<!-- empty -->
+			<!-- no filter panel -->
 		</div>
 		<svelte:fragment let:item>
 			<Col col="12">

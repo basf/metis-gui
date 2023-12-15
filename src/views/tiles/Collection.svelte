@@ -91,6 +91,7 @@
 	}
 	.noaccess {
 		cursor: not-allowed;
+		color: #ddd;
 	}
 	:global(.tile) {
 		position: relative;

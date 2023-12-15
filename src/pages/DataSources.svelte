@@ -50,8 +50,8 @@
 </script>
 
 <script lang="ts">
-	let targetDS = null,
-		paramsPI = null;
+	let targetDS: number | null = null,
+		paramsPI: {id: number, els: string, strict: boolean} | null = null;
 
 	function setTargetDS(id: number) {
 		targetDS = id;

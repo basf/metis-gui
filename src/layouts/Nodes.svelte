@@ -16,7 +16,7 @@
 			</slot>
 		{:then { data, total }}
 			<slot name="add" {add} />
-			{#if total > $query.params.limit}
+			{#if total > $query.params.limit && paginate}
 				<Col col="12">
 					<Pagination
 						bind:page={$query.params.page}
@@ -56,6 +56,7 @@
 	export let add: boolean;
 	export let addTooltip: string;
 	export let addAction = () => (add = !add);
+	export let paginate: boolean = true;
 	export let width: number;
 	export let asyncData = { data: [], total: 0 } || undefined;
 

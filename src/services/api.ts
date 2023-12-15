@@ -31,8 +31,8 @@ export async function setDataSources(content: string | string[], name?: string |
 	return postJSON('/datasources', { content, name });
 }
 
-export async function importDataSource(id: string): Promise<void> {
-	return putJSON(`/datasources`, { id });
+export async function importDataSource(id: string, parent: number): Promise<void> {
+	return putJSON(`/datasources`, { id, parent });
 }
 
 export async function patchDataSourceCollections(

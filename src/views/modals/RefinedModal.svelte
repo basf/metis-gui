@@ -69,7 +69,7 @@
 	function importDS(entry) {
 		added.push(entry);
 		added = [...added];
-		importDataSource(entry);
+		importDataSource(entry, paramsPI.id);
 
 		toast.primary({
 			msg: COMMON_POPUPS['add_data'],

@@ -7,7 +7,7 @@ import { getCollections, getCollectionDataSources } from '@/services/api';
 import { STREAM_URL, SYNC_TOASTS_CONFIG } from '@/config';
 
 import type { CollectionType, Collection, Stream } from '@/types/dto';
-import { type Unsubscriber } from 'svelte/store'
+import { type Unsubscriber } from 'svelte/store';
 
 type CollectionDTO = {
 	reqId: string,
@@ -16,9 +16,9 @@ type CollectionDTO = {
 	types: CollectionType[]
 }
 
-let unsubscribe: Unsubscriber
+let unsubscribe: Unsubscriber;
 
-export const collectionsAsyncReq = asyncable(($query) => getCollections($query), null, [query])
+export const collectionsAsyncReq = asyncable(($query) => getCollections($query), null, [query]);
 
 export const collectionsAsync = streamable<Stream<CollectionDTO>, CollectionDTO>(
 	{
@@ -33,8 +33,8 @@ export const collectionsAsync = streamable<Stream<CollectionDTO>, CollectionDTO>
 			set({ ...res });
 		} else {
 			unsubscribe = collectionsAsyncReq.subscribe(async ($collectionsAsyncReq) => {
-				// const { reqId } = await $collectionsAsyncReq
-				// toast.primary({ ...SYNC_TOASTS_CONFIG, msg: `Collections requested: ${reqId}` });
+				//const { reqId } = await $collectionsAsyncReq
+				//toast.primary({ ...SYNC_TOASTS_CONFIG, msg: `Collections requested: ${reqId}` });
 			})
 		}
 		return (lastSubscriber) => {
@@ -63,4 +63,3 @@ export const collectionDataSourcesAsync = streamable<Stream<CollectionDTO>, Coll
 );
 
 export const datasources = syncable<CollectionDTO>(collectionDataSourcesAsync, { data: [], total: 10, types: [] });
-
