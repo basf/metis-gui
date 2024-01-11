@@ -27,10 +27,14 @@
 					/>
 				</Col>
 			{/if}
-			{#each data as item (item.id)}
+			{#each data.filter(filter) as item (item.id)}
 				<slot {item} />
 			{:else}
-				<div class="text-center distant_msg">Nothing found &mdash; maybe <span class="link" on:click={() => goto('/import')}>add data</span>?</div>
+				<div class="text-center distant_msg">
+					Nothing found &mdash; maybe <span class="link" on:click={() => goto('/import')}
+						>add data</span
+					>?
+				</div>
 			{/each}
 		{:catch _error}
 			<Col>
@@ -53,6 +57,7 @@
 </script>
 
 <script lang="ts">
+	export let filter = (item) => item != null;
 	export let add: boolean;
 	export let addTooltip: string;
 	export let addAction = () => (add = !add);
