@@ -98,7 +98,7 @@
 		"rollup-plugin-svelte": "^7.1.0",
 		"rollup-plugin-terser": "^7.0.2",
 		"rollup-plugin-visualizer": "^5.9.0",
-		"sass": "^1.43.3",
+		"sass": "^1.77.6",
 		"size-limit": "^4.12.0",
 		"svelte": "^3.38.3",
 		"svelte-asyncable": "^2.1.0",
